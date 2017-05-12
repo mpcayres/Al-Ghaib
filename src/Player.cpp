@@ -5,11 +5,11 @@
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
-#include "EndState.hpp"
 
 #define MODULO_SPEED 10
 
 Player* Player::player;
+
 Player::Player(float x, float y): bodySp("img/penguin.png"){
 	box.h = bodySp.GetHeight();
 	box.w = bodySp.GetWidth();
@@ -30,29 +30,29 @@ Player::~Player(){
 }
 
 void Player::Update(float dt){
-	InputManager InputInstance = InputManager::GetInstace();
+	InputManager InputInstance = InputManager::GetInstance();
 
 	if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.y = -MODULO_SPEED;
 		speed.x = 0;
 		rotation = -90;
-	}else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.y = MODULO_SPEED;
 		speed.x = 0;
 		rotation = 90;
-	}else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = MODULO_SPEED;
 		speed.y = 0;
 		rotation = 0;
-	}else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = -MODULO_SPEED;
 		speed.y = 0;
 		rotation = 180;
-	}else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = 0;
 		speed.y = 0;
@@ -63,7 +63,6 @@ void Player::Update(float dt){
 	} else if(InputInstance.IsKeyDown(RIGHT_ARROW_KEY)){
 		//rotation += velocidadeAngular;
 	}
-
 
 	if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
 		box.y += speed.y;
@@ -82,7 +81,7 @@ void Player::Update(float dt){
 }
 
 void Player::Render(){
-	bodySp.Render(box.x + Camera::pos.x, box.y + Camera::pos.y, rotation);
+	bodySp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool Player::IsDead(){
@@ -113,8 +112,8 @@ void Player::NotifyCollision(GameObject& other){
 		sound.Play(0);
 		Camera::Unfollow();
 		Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(box.Center().x, box.Center().y, rotation
-						, "img/penguindeath.png", 5, 0.18, true));
+				new Animation(box.Center().x, box.Center().y, rotation,
+						"img/penguindeath.png", 5, 0.18, true));
 	}
 
 
@@ -124,5 +123,3 @@ bool Player::Is(std::string type){
 	if(type == "Player") return true;
 	else return false;
 }
-
-

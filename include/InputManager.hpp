@@ -1,37 +1,18 @@
-/*
- * InputManager.hpp
- *
- *  Created on: 24 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#ifndef INCLUDE_INPUTMANAGER_HPP_
+#define INCLUDE_INPUTMANAGER_HPP_
 
 #ifdef __APPLE__
 	#include <SDL2.h>
 	#include <SDL_imagem/SDL_image.h>
 #elif __linux__
-    	#include <SDL2/SDL.h>
+    #include <SDL2/SDL.h>
 	#include <SDL2/SDL_image.h>
 #elif _WIN32
 	#include "SDL.h"
 	#include "SDL_image.h"
-#else
-
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <iostream>
 #include <unordered_map>
-
-
-#ifndef INCLUDE_INPUTMANAGER_HPP_
-#define INCLUDE_INPUTMANAGER_HPP_
 
 #define LEFT_ARROW_KEY SDLK_LEFT
 #define RIGHT_ARROW_KEY SDLK_RIGHT
@@ -66,7 +47,7 @@ public:
 
 	bool QuitRequested();
 
-	static InputManager& GetInstace();
+	static InputManager& GetInstance();
 
 private:
 	bool mouseState[6];
@@ -82,16 +63,4 @@ private:
 	int mouseY;
 };
 
-
-
 #endif /* INCLUDE_INPUTMANAGER_HPP_ */
-
-
-
-
-
-
-
-
-
-

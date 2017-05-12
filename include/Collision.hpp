@@ -1,22 +1,10 @@
-/*
- * Collision.h
- *
- *  Created on: 9 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
-
 #ifndef INCLUDE_COLLISION_HPP_
 #define INCLUDE_COLLISION_HPP_
 
-#include <algorithm>
-#include "Geometry.hpp"
 #include <cmath>
+#include <algorithm>
+
+#include "Geometry.hpp"
 
 class Collision {
 

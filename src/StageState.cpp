@@ -1,4 +1,3 @@
-#include "Player.hpp"
 #include "StageState.hpp"
 #include "InputManager.hpp"
 #include "Resources.hpp"
@@ -7,6 +6,7 @@
 #include "Collision.hpp"
 #include "Music.hpp"
 #include "EndState.hpp"
+#include "Player.hpp"
 
 StageState::StageState() : tileSet(64,64,"img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
@@ -37,23 +37,11 @@ void StageState::Resume(){
 }
 
 void StageState::LoadAssets(){
-	bg.Open("img/minionbullet2.png");
-	bg.Open("img/penguinbullet.png");
-	bg.Open("img/cubngun.png");
-	bg.Open("img/penguin.png");
-	bg.Open("img/tileset.png");
-	bg.Open("img/minion.png");
-	bg.Open("img/alien.png");
-	bg.Open("img/minion.png");
-	bg.Open("img/miniondeath.png");
-	bg.Open("img/penguindeath.png");
-	bg.Open("img/aliendeath.png");
 	bg.Open("img/ocean.jpg");
 }
 
 void StageState::Update(float dt){
-	InputManager instance = InputManager::GetInstace();
-	//Input();
+	InputManager instance = InputManager::GetInstance();
 	time.Update(dt);
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
@@ -77,12 +65,9 @@ void StageState::Update(float dt){
 	UpdateArray(dt);
 
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
-		//std::cout<< "\n i:"<<  i << "\n";
 		for(int j = i-1; j >= 0; --j){
-			//std::cout<< j << " ";
 				if(Collision::IsColliding(objectArray[i].get()->box,objectArray[j].get()->box,
 					objectArray[i].get()->rotation, objectArray[j].get()->rotation) == true){
-					//	std::cout<< i << " " << j <<"\n";
 					objectArray[i].get()->NotifyCollision(*objectArray[j].get());
 					objectArray[j].get()->NotifyCollision(*objectArray[i].get());
 				}
@@ -92,14 +77,8 @@ void StageState::Update(float dt){
 
 void StageState::Render(){
 	bg.Render(0,0,0);
-	tileMap.RenderLayer( 0 ,Camera::pos.x,Camera::pos.y);
-
+	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
 	RenderArray();
-
-	for(int j = 1; j < tileMap.GetDepth(); j++) {
-		tileMap.RenderLayer( j, Camera::pos.x*1.5, Camera::pos.y*1.5);
-	}
+	tileMap.Render(Camera::pos.x, Camera::pos.y);
 	
 }
-
-

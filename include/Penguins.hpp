@@ -1,37 +1,12 @@
-/*
- * Penguins.hpp
- *
- *  Created on: 5 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
-#ifdef __APPLE__
-	#include <SDL2.h>
-	#include <SDL_imagem/SDL_image.h>
-#elif __linux__
-    	#include <SDL2/SDL.h>
-	#include <SDL2/SDL_image.h>
-#elif _WIN32
-	#include "SDL.h"
-	#include "SDL_image.h"
-#else
-
-#endif
+#ifndef INCLUDE_PENGUINS_HPP_
+#define INCLUDE_PENGUINS_HPP_
 
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Timer.hpp"
+#include "Geometry.hpp"
 
-
-#ifndef INCLUDE_PENGUINS_HPP_
-#define INCLUDE_PENGUINS_HPP_
-
-class Penguins : public GameObject{
+class Penguins : public GameObject {
 public:
 	Penguins(float x, float y);
 	~Penguins();
@@ -45,7 +20,6 @@ public:
 
 	static Penguins * player;
 
-
 private:
 	Timer time;
 	Sprite bodySp;
@@ -55,12 +29,8 @@ private:
 	float cannonAngle;
 	int hp;
 	int deltaX, deltaY;
-
 	Rect AuxCannon;
 
 };
-
-
-
 
 #endif /* INCLUDE_PENGUINS_HPP_ */

@@ -1,14 +1,5 @@
-/*
- * Font.hpp
- *
- *  Created on: 11 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#ifndef INCLUDE_FONT_HPP_
+#define INCLUDE_FONT_HPP_
 
 #ifdef __APPLE__
 	#include <SDL2.h>
@@ -22,18 +13,10 @@
 	#include "SDL.h"
 	#include "SDL_image.h"
 	#include "SDL_ttf.h"
-#else
-
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <memory>
-
-#ifndef INCLUDE_FONT_HPP_
-#define INCLUDE_FONT_HPP_
-
 
 class Text{
 public:
@@ -41,7 +24,7 @@ public:
 
 	Text();
 	Text(std::string fontFile, int fontSize, TextStyle style, std::string text,
-			SDL_Color color, int x=0,int y=0);
+			SDL_Color color, int x = 0,int y = 0);
 	~Text();
 	void Render(int cameraX = 0, int cameraY = 0);
 	void SetPos(int x, int y, bool centerX = false, bool centerY = false);
@@ -64,6 +47,5 @@ private:
 	Rect box;
 
 };
-
 
 #endif /* INCLUDE_FONT_HPP_ */

@@ -1,14 +1,5 @@
-/*
- * Music.hpp
- *
- *  Created on: 10 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#ifndef INCLUDE_MUSIC_HPP_
+#define INCLUDE_MUSIC_HPP_
 
 #ifdef __APPLE__
 	#include <SDL2.h>
@@ -19,17 +10,10 @@
 #elif _WIN32
 	#include "SDL.h"
 	#include "SDL_mixer.h"
-#else
-
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <string>
 #include <memory>
-
-#ifndef INCLUDE_MUSIC_HPP_
-#define INCLUDE_MUSIC_HPP_
 
 class Music{
 public:
@@ -40,13 +24,10 @@ public:
 	void Stop();
 	void Open(std::string file);
 	bool IsOpen();
+
 private:
 	std::shared_ptr<Mix_Music> music;
 
 };
-
-
-
-
 
 #endif /* INCLUDE_MUSIC_HPP_ */

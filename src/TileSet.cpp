@@ -1,15 +1,3 @@
-/*
- * TileSet.cpp
- *
- *  Created on: 22 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "TileSet.hpp"
 
 TileSet::TileSet(int tileWidth, int tileHeight, std::string file){
@@ -18,22 +6,18 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file){
 	tileSet.Open(file);
 	rows = (tileSet.GetHeight()/tileHeight);
 	columns = (tileSet.GetWidth()/tileWidth);
-
-	//std::cout << rows <<" "<< columns;
 }
 
 void TileSet::Render(unsigned index,float x, float y){
-	int valoresClipx, valoresClipy;
-	int auxLinhas, auxRestoLinhas;
-
 	if (index < (unsigned)(rows*columns)-1){
+		int valoresClipx, valoresClipy;
 		if(index >= (unsigned) columns){
-			auxLinhas = index/columns;
-			auxRestoLinhas = index % columns;
+			int auxLinhas = index/columns;
+			int auxRestoLinhas = index % columns;
 
 			valoresClipx = auxRestoLinhas * tileWidth;
 			valoresClipy = auxLinhas * tileHeight;
-		}else {
+		} else {
 			valoresClipx = index * tileWidth;
 			valoresClipy = 0;
 		}
@@ -49,4 +33,3 @@ int TileSet::GetTileHeight(){
 int TileSet::GetTileWidth(){
 	return tileWidth;
 }
-

@@ -1,15 +1,3 @@
-/*
- * Bullet.cpp
- *
- *  Created on: 16 de abr de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "Bullet.hpp"
 #include "Camera.hpp"
 
@@ -22,8 +10,6 @@ Bullet::Bullet(float x, float y, float angle, float speed, float maxDistance,
 	aux.y = 0;
 	this->speed = aux.Rotate(angle);
 	targetsPlayer = !isPlayer;
-
-
 
 	box.x = x  - sp.GetWidth()/2;
 	box.y = y  - sp.GetHeight()/2;
@@ -41,8 +27,7 @@ void Bullet::Update(float dt){
 }
 
 void Bullet::Render(){
-	sp.Render(box.x + Camera::pos.x,box.y + Camera::pos.y, rotation * 58);
-
+	sp.Render(box.x - Camera::pos.x,box.y - Camera::pos.y, rotation * 58);
 }
 
 bool Bullet::IsDead(){
@@ -65,5 +50,3 @@ bool Bullet::Is(std::string type){
 	if(type == "Bullet") return true;
 	else return false;
 }
-
-

@@ -1,15 +1,3 @@
-/*
- * EndState.cpp
- *
- *  Created on: 11 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "EndState.hpp"
 #include "StageState.hpp"
 #include "Game.hpp"
@@ -32,12 +20,10 @@ EndState::EndState(StateData stateData){
 		music = Music("audio/endStateLose.ogg");
 	}
 
-	music.Play(-1);
-
 }
 
 void EndState::Update(float dt){
-	InputManager instance = InputManager::GetInstace();
+	InputManager instance = InputManager::GetInstance();
 		//Input();
 	if(instance.KeyPress(ESCAPE_KEY)){
 		music.Stop();
@@ -65,6 +51,3 @@ void EndState::Resume(){
 void EndState::Pause(){
 	music.Stop();
 }
-
-
-

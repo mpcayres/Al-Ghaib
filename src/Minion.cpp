@@ -1,17 +1,4 @@
-/*
- * Minion.cpp
- *
- *  Created on: 2 de abr de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "Minion.hpp"
-#include "Geometry.hpp"
 #include "Camera.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
@@ -31,8 +18,6 @@ Minion::Minion(GameObject* minionCenter, float arcOffset){
 	escala = rand()%50;
 	escala = (escala/100) +1;
 	sp.SetScaleX(escala); sp.SetScaleY(escala);
-
-
 }
 
 void Minion::Update(float dt){
@@ -50,7 +35,6 @@ void Minion::Update(float dt){
 	aux.x = box.x; aux2.x = center->box.x;
 	aux.y = box.y; aux2.y = center->box.y;
 
-
 	rotation = aux.Inclination(aux2);
 }
 
@@ -66,7 +50,7 @@ void Minion::Shoot(Vec2 pos){
 }
 
 void Minion::Render(){
-	sp.Render(box.x + Camera::pos.x,box.y + Camera::pos.y, rotation * 58);
+	sp.Render(box.x - Camera::pos.x,box.y - Camera::pos.y, rotation * 58);
 }
 
 bool Minion::IsDead(){
@@ -83,7 +67,3 @@ bool Minion::Is(std::string type){
 	if(type == "Minion") return true;
 	else return false;
 }
-
-
-
-

@@ -1,14 +1,5 @@
-/*
- * Resources.hpp
- *
- *  Created on: 23 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#ifndef INCLUDE_RESOURCES_HPP_
+#define INCLUDE_RESOURCES_HPP_
 
 #ifdef __APPLE__
 	#include <SDL2.h>
@@ -25,19 +16,11 @@
 	#include "SDL_image.h"
 	#include "SDL_mixer.h"
 	#include "SDL_ttf.h"
-#else
-
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <iostream>
+#include <string>
 #include <unordered_map>
 #include <memory>
-
-#ifndef INCLUDE_RESOURCES_HPP_
-#define INCLUDE_RESOURCES_HPP_
 
 class Resources{
 public:
@@ -46,10 +29,12 @@ public:
 	static std::shared_ptr<Mix_Chunk> GetSound(std::string file);
 	static std::shared_ptr<TTF_Font> GetFont(std::string file, int ptsize);
 
-	static void ClearImages();
+	static void ClearImage();
 	static void ClearMusic();
 	static void ClearSound();
 	static void ClearFont();
+
+	static void ClearResources();
 
 private:
 	static std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> imageTable;
@@ -58,6 +43,5 @@ private:
 	static std::unordered_map<std::string, std::shared_ptr<TTF_Font>> fontTable;
 
 };
-
 
 #endif /* INCLUDE_RESOURCES_HPP_ */

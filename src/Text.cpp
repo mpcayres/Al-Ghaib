@@ -1,15 +1,3 @@
-/*
- * Text.cpp
- *
- *  Created on: 11 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "Game.hpp"
 #include "Text.hpp"
 #include "Resources.hpp"
@@ -31,7 +19,6 @@ Text::Text(std::string fontFile, int fontSize, TextStyle style, std::string text
 	if(font != nullptr){
 		RemakeTexture();
 	}
-
 }
 
 Text::Text(){
@@ -68,14 +55,14 @@ void Text::Render(int cameraX, int cameraY){
 
 
 void Text::SetPos(int x, int y, bool centerX, bool centerY){
-	if(centerX == false)
+	if(centerX == false){
 		box.x = x;
-	else{
+	} else{
 		box.x = Game::GetInstance().GetWidth()/2 - box.w/2;
 	}
-	if(centerY == false)
+	if(centerY == false){
 		box.y = y;
-	else{
+	} else{
 		box.y = Game::GetInstance().GetHeight()/2 - box.h/2;
 	}
 }
@@ -109,9 +96,9 @@ void Text::RemakeTexture(){
 
 	if(style == SOLID){
 		aux = TTF_RenderText_Solid(font.get(),text.c_str(), color);
-	}else if(style == SHADED){
+	} else if(style == SHADED){
 		aux = TTF_RenderText_Shaded(font.get(),text.c_str(), color, fundo);
-	}else{
+	} else{
 		aux = TTF_RenderText_Blended(font.get(),text.c_str(), color);
 	}
 

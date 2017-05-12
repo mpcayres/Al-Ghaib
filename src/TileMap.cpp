@@ -1,16 +1,5 @@
-/*
- * TileMap.cpp
- *
- *  Created on: 22 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#include <iostream>
 
-#include "TileSet.hpp"
 #include "TileMap.hpp"
 
 TileMap::TileMap(std::string file, TileSet* tileSet){
@@ -18,58 +7,52 @@ TileMap::TileMap(std::string file, TileSet* tileSet){
 	this->tileSet = tileSet;
 }
 
-/*TODO conferir*/
 void TileMap::Load(std::string file){
-	FILE* arquivo;
-	int aux;
-	arquivo = fopen(file.c_str(), "r");
-	if(arquivo != NULL){
-		fscanf(arquivo, "%d", &mapWidth); fgetc(arquivo);
-		fscanf(arquivo, "%d", &mapHeight); fgetc(arquivo);
-		fscanf(arquivo, "%d", &mapDepth);
-		while(!feof(arquivo)){
-			fgetc(arquivo);
-			fscanf(arquivo,"%d", &aux);
-			aux--;
-			tileMatrix.push_back(aux);
-		//	std::cout <<tileMatrix[i] <<"\n";
-		}
+	FILE* fp = fopen(file.c_str(), "r");
+	if(fp == nullptr){
+		std::cout << "Erro ao abrir o arquivo: " << file << std::endl;
+		exit(1);
 	}
-}
 
-void TileMap::RenderLayer(int Layer, int cameraX, int cameraY){
-	float posx = cameraX, posy = cameraY;
-	unsigned i, aux, tamanho_layer;
-	int larguraTile = tileSet->GetTileWidth();
-
-	aux = mapWidth*mapHeight * Layer;
-	tamanho_layer = (unsigned) (mapWidth*mapHeight);
-
-	for(i = 0; i< tamanho_layer; i++){
-		if(tileMatrix[i+aux] >= 0)
-			tileSet->Render((unsigned)tileMatrix[i+aux],posx,posy);
-		posx = posx + larguraTile;
-		if(posx - cameraX >= mapWidth*larguraTile){
-			posx = cameraX;
-			posy += tileSet->GetTileHeight();
-		}
+	fscanf(fp, "%d,%d,%d,", &mapWidth, &mapHeight, &mapDepth);
+	int num;
+	while(!feof(fp)){
+		fscanf(fp, " %d,", &num);
+		tileMatrix.push_back(num - 1);
 	}
+
+	fclose(fp);
 }
 
 void TileMap::Render(int cameraX, int cameraY){
-	int i;
-
-	for(i = 0; i < mapDepth; i++){
-		if(i == 0)RenderLayer(i, cameraX, cameraY);
-		else RenderLayer(i, cameraX*2, cameraY*2);
+	for(int i = 1; i < mapDepth; i++){
+		TileMap::RenderLayer(i, cameraX, cameraY);
 	}
 }
+
+void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
+	for(int i = 0; i < mapWidth; i++){
+		for(int j = 0; j < mapHeight; j++){
+			int index = At(i, j, layer);
+			if(index >= 0){
+				int posX = DetermParallax(i*tileSet->GetTileWidth(), cameraX, layer);
+				int posY = DetermParallax(j*tileSet->GetTileHeight(), cameraY, layer);
+				tileSet->Render(index, posX, posY);
+			}
+		}
+	}
+}
+
+int TileMap::DetermParallax(int pos, int camera, int layer){
+	return (pos - camera*(layer+1));
+}
+
 void TileMap::SetTileSet(TileSet *tileSet){
 	this->tileSet = tileSet;
 }
 
 int& TileMap::At(int x, int y, int z){
-	return tileMatrix[((y*mapWidth) + x) + (z*x*y)];
+	return ( (int&) tileMatrix.at(x + y*mapWidth + z*mapWidth*mapHeight) );
 }
 
 int TileMap::GetDepth(){

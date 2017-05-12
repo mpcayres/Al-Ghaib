@@ -1,22 +1,8 @@
-/*
- * Sprite.cpp
- *
- *  Created on: 18 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#include <iostream>
+
 #include "Sprite.hpp"
 #include "Game.hpp"
 #include "Resources.hpp"
-
-#define PATHWINDOWS 3
-#define PATHLINUX 2
-
-//SDL_Texture* Resources::GetImage(std::string file);
 
 Sprite::Sprite(){
 	texture = nullptr;
@@ -27,25 +13,20 @@ Sprite::Sprite(){
 }
 
 Sprite::Sprite(std::string file, int frameCount, float frameTime){
-	this->frameCount = frameCount; this->frameTime = frameTime;
 	scaleX = 1; scaleY = 1;
 	texture = nullptr;
 	timeElapsed = 0; currentFrame = 1;
-	Open(file);
+	Open(file, frameCount, frameTime);
 }
 
-Sprite::~Sprite(){
-}
+Sprite::~Sprite(){}
 
-void Sprite::Open(std::string file){
+void Sprite::Open(std::string file, int frameCount, float frameTime){
+	this->frameCount = frameCount; this->frameTime = frameTime;
 	texture = Resources::GetImage(file);
-	if(texture == nullptr){
-		printf("LoadTexture falhou: %s\n", SDL_GetError());
-		exit(1);
-	}
 
-	SDL_QueryTexture(texture.get(),nullptr,nullptr,&width,&height);
-	SetClip(0,0,GetWidth(),height);
+	SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
+	SetClip(0, 0, GetWidth(), height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h){
@@ -54,15 +35,15 @@ void Sprite::SetClip(int x, int y, int w, int h){
 }
 
 bool Sprite::IsOpen(){
-	if(texture == nullptr) return false;
-	else return true;
+	return (texture != nullptr);
 }
 
 void Sprite::Render(int x, int y, float angle){
 	SDL_Rect dst;
 	dst.x = x, dst.y = y;
 	dst.h = clipRect.h*scaleY; dst.w = clipRect.w*scaleX;
-	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(),texture.get(),&clipRect,&dst,angle,nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(),
+			&clipRect, &dst, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void Sprite::SetScaleX(float scale){

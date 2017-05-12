@@ -1,15 +1,3 @@
-/*
- * Penguins.cpp
- *
- *  Created on: 5 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "Penguins.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
@@ -17,9 +5,9 @@
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
-#include "EndState.hpp"
 
 Penguins* Penguins::player;
+
 Penguins::Penguins(float x, float y): bodySp("img/penguin.png"), cannonSp("img/cubngun.png"){
 	box.h = bodySp.GetHeight();
 	box.w = bodySp.GetWidth();
@@ -51,7 +39,7 @@ Penguins::~Penguins(){
 void Penguins::Update(float dt){
 	Vec2 CannonAuxCamera;
 	Vec2 mouseAux;
-	InputManager InputInstance = InputManager::GetInstace();
+	InputManager InputInstance = InputManager::GetInstance();
 	int aceleracaoLinear = 5;
 	float velocidadeAngular = 5;
 	int limite = 15;
@@ -100,7 +88,6 @@ void Penguins::Update(float dt){
 
 	cannonAngle = mouseAux.Sub(CannonAuxCamera).Angle();
 
-
 	if(InputInstance.MousePress(LEFT_MOUSE_BUTTON && time.Get() >= 0.3)) {
 		time.Restart();
 		Shoot();
@@ -112,7 +99,6 @@ void Penguins::Update(float dt){
 void Penguins::Render(){
 	bodySp.Render(box.x + Camera::pos.x, box.y + Camera::pos.y, rotation);
 	cannonSp.Render(AuxCannon.x + Camera::pos.x, AuxCannon.y+ Camera::pos.y, cannonAngle * 58);
-
 }
 
 bool Penguins::IsDead(){
@@ -145,16 +131,12 @@ void Penguins::NotifyCollision(GameObject& other){
 		sound.Play(0);
 		Camera::Unfollow();
 		Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(box.Center().x, box.Center().y, rotation
-						, "img/penguindeath.png", 5, 0.18, true));
+				new Animation(box.Center().x, box.Center().y, rotation,
+						"img/penguindeath.png", 5, 0.18, true));
 	}
-
-
 }
 
 bool Penguins::Is(std::string type){
 	if(type == "Penguins") return true;
 	else return false;
 }
-
-

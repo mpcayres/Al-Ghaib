@@ -1,15 +1,3 @@
-/*
- * Animation.cpp
- *
- *  Created on: 9 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
 #include "Animation.hpp"
 #include "Camera.hpp"
 
@@ -32,7 +20,7 @@ void Animation::Update(float dt){
 }
 
 void Animation::Render(){
-	sp.Render(box.x + - (box.w/2) + Camera::pos.x, box.y - (box.h/2) + Camera::pos.y, rotation *58);
+	sp.Render(box.CenterX() - Camera::pos.x, box.CenterY() - Camera::pos.y, rotation);
 }
 
 bool Animation::IsDead(){
@@ -47,8 +35,3 @@ void Animation::NotifyCollision(GameObject& other){}
 bool Animation::Is(std::string type){
 	return(type == "Animation");
 }
-
-
-
-
-

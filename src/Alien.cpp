@@ -1,5 +1,6 @@
-#include <Player.hpp>
+#include "Player.hpp"
 #include "Alien.hpp"
+#include "Camera.hpp"
 #include "InputManager.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
@@ -7,6 +8,7 @@
 #include "Sound.hpp"
 
 int Alien::alienCount;
+
 Alien::Alien(float x,float y, int nMinions){
 	sp.Open("img/alien.png");
 	Alien::alienCount++;
@@ -37,7 +39,7 @@ Alien::~Alien(){
 
 void Alien::Render(){
 	unsigned i;
-	sp.Render(box.x + Camera::pos.x,box.y + Camera::pos.y, rotation);
+	sp.Render(box.x - Camera::pos.x,box.y - Camera::pos.y, rotation);
 
 	for(i = 0; i< minionArray.size(); i++){
 		minionArray[i].Render();
@@ -50,7 +52,7 @@ bool Alien::IsDead(){
 }
 
 void Alien::Update(float dt){
-	InputManager instance = InputManager::GetInstace();
+	InputManager instance = InputManager::GetInstance();
 	Vec2 aux,aux2, auxtiro;
 	unsigned i, candidato;
 	float distanciaminion = 1000000000;
@@ -83,7 +85,6 @@ void Alien::Update(float dt){
 		}
 	}
 	if(state == MOVING){
-		//std::cout << speed.x <<" " << speed.y<<"\n";
 		if (speed.x < 0 && speed.y < 0){
 			if(box.x + speed.x - 3 <= destination.x &&
 				speed.y + box.y - 3 <= destination.y){
@@ -193,17 +194,13 @@ void Alien::Update(float dt){
 	}
 }
 
-
-
-
-
 void Alien::NotifyCollision(GameObject& other){
-	Sound sound = Sound("audio/boom.wav");
 	if(other.Is("Bullet")){
 		if(!((Bullet&) other).targetsPlayer)
 			hp -= 10;
 	 }
 	if(hp <= 0 ){
+		Sound sound = Sound("audio/boom.wav");
 		sound.Play(0);
 		Game::GetInstance().GetCurrentState().AddObject(
 				new Animation(box.Center().x, box.Center().y, rotation
@@ -221,8 +218,3 @@ bool Alien::Is(std::string type){
 	if(type == "Alien") return true;
 	else return false;
 }
-
-
-
-
-

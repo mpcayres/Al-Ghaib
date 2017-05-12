@@ -1,20 +1,7 @@
-/*
- * TitleState.cpp
- *
- *  Created on: 10 de mai de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
-#include "Game.hpp"
 #include "TitleState.hpp"
+#include "Game.hpp"
 #include "StageState.hpp"
 #include "InputManager.hpp"
-
 
 TitleState::TitleState(){
 	SDL_Color auxcolor = SDL_Color();
@@ -30,7 +17,7 @@ TitleState::TitleState(){
 }
 
 void TitleState::Update(float dt){
-	InputManager instance = InputManager::GetInstace();
+	InputManager instance = InputManager::GetInstance();
 
 	if(instance.KeyPress(ESCAPE_KEY)) quitRequested = true;
 	else quitRequested = instance.QuitRequested();
@@ -66,10 +53,3 @@ void TitleState::Pause(){
 void TitleState::Resume(){
 
 }
-
-
-
-
-
-
-

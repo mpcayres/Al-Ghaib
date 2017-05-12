@@ -1,18 +1,8 @@
-/*
- * Geometry.cpp
- *
- *  Created on: 17 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#include <math.h>
 
 #include "Geometry.hpp"
 
-// Vector //
+// VEC2 //
 Vec2::Vec2(){
 	x = y = 0;
 }
@@ -20,6 +10,31 @@ Vec2::Vec2(){
 Vec2::Vec2(float x1, float y1){
 	x = x1;
 	y = y1;
+}
+
+void Vec2::operator=(const Vec2& v){
+	x = v.x;
+	y = v.y;
+}
+
+void Vec2::operator+=(const Vec2& v){
+	x += v.x;
+	y += v.y;
+}
+
+void Vec2::operator-=(const Vec2& v){
+	x -= v.x;
+	y -= v.y;
+}
+
+void Vec2::operator*=(const float&  p){
+	x *= p;
+	y *= p;
+}
+
+void Vec2::operator/=(const float&  p){
+	x /= p;
+	y /= p;
 }
 
 Vec2 Vec2::operator+(const Vec2& rhs) const {
@@ -32,6 +47,10 @@ Vec2 Vec2::operator-(const Vec2& rhs) const {
 
 Vec2 Vec2::operator*(const float rhs) const {
     return Vec2(x * rhs, y * rhs);
+}
+
+Vec2 Vec2::operator/(const float rhs) const {
+    return Vec2(x / rhs, y / rhs);
 }
 
 Vec2 Vec2::Soma(Vec2 vector){
@@ -75,6 +94,7 @@ float Vec2::Inclination(Vec2 vector){
 	return Sub(vector).Angle();
 }
 
+// RECT //
 Rect::Rect(){
 	x = y = w = h = 0;
 }
@@ -117,14 +137,9 @@ bool Rect::Inside(float x1, float y1){
 	return false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
+void Rect::operator=(const Rect& r){
+	x = r.x;
+	y = r.y;
+	w = r.w;
+	h = r.h;
+}
