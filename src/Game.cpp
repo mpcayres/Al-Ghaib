@@ -41,11 +41,10 @@ Game::Game(std::string title, int width, int height){
 	    exit(1);
 	}
 
-	flags = MIX_INIT_FLAC| MIX_INIT_MP3| MIX_INIT_OGG;//
-	initted = Mix_Init(flags);
-	if(initted != flags){
-		printf("Mix_Init falhou: %s\n", SDL_GetError());
-		exit(1);
+	//flags = MIX_INIT_FLAC| MIX_INIT_MP3| MIX_INIT_OGG;//
+	initted = Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
+	if(initted == 0){
+		std::cout << "Mix_Init falhou: " << Mix_GetError();
 	}
 
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0){
