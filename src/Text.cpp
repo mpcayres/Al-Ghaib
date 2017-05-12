@@ -1,56 +1,87 @@
-#include "Text.h"
-#include "Game.h"
-#include "Resources.h"
-#include <iostream>
+/*
+ * Text.cpp
+ *
+ *  Created on: 11 de mai de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-Text::Text(std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, int x, int y) : 
-	fontSize(fontSize), style(style), text(text), color(color) {
+#include "Game.hpp"
+#include "Text.hpp"
+#include "Resources.hpp"
+
+Text::Text(std::string fontFile, int fontSize, TextStyle style, std::string text,
+		SDL_Color color, int x,int y){
 	texture = nullptr;
-	box.x = x; box.y = y;
+
 	font = Resources::GetFont(fontFile, fontSize);
-	RemakeTexture();
+
+	this->fontSize = fontSize;
+	this->style = style;
+	this->text = text;
+	this->color = color;
+
+	box.x = x;
+	box.y = y;
+
+	if(font != nullptr){
+		RemakeTexture();
+	}
+
+}
+
+Text::Text(){
+	SDL_Color auxcolor = SDL_Color();
+	auxcolor.r = 0;
+	auxcolor.g = 0;
+	auxcolor.b = 0;
+	fontSize = 0;
+	style = SOLID;
+	text = "";
+	color = auxcolor;
+	font = nullptr;
+	texture = nullptr;
+	box.x = 0;
+	box.y = 0;
 }
 
 Text::~Text(){
-	if(texture != nullptr){
-		SDL_DestroyTexture(texture);
-	}
+	if(texture != nullptr) texture = nullptr;
 }
 
 void Text::Render(int cameraX, int cameraY){
 	SDL_Rect src, dst;
 	src.x = 0; src.y = 0;
-	dst.x = box.x - cameraX; dst.y = box.y - cameraY;
-	dst.w = src.w = box.w; dst.h = src.h = box.h;
-	if(SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &src, &dst) != 0){
-		std::cout << SDL_GetError() << std::endl;
-		exit(1);
+	src.w = box.w; src.h = box.h;
+	dst.x = box.x + cameraX, dst.y = box.y + cameraY;
+	dst.h = box.h; dst.w = box.w;
+
+	if(texture != nullptr){
+		SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &src, &dst);
 	}
+
 }
+
 
 void Text::SetPos(int x, int y, bool centerX, bool centerY){
-	box.x = x; box.y = y;
-	if(centerX){
-		box.x -= box.w/2;
+	if(centerX == false)
+		box.x = x;
+	else{
+		box.x = Game::GetInstance().GetWidth()/2 - box.w/2;
 	}
-	if(centerY){
-		box.y -= box.h/2;
+	if(centerY == false)
+		box.y = y;
+	else{
+		box.y = Game::GetInstance().GetHeight()/2 - box.h/2;
 	}
-	RemakeTexture();
-}
-
-void Text::SetText(std::string text){
-	this->text = text;
-	RemakeTexture();
 }
 
 void Text::SetColor(SDL_Color color){
 	this->color = color;
-	RemakeTexture();
-}
-
-void Text::SetStyle(TextStyle style){
-	this->style = style;
 	RemakeTexture();
 }
 
@@ -59,27 +90,39 @@ void Text::SetFontSize(int fontSize){
 	RemakeTexture();
 }
 
-void Text::RemakeTexture(){
-	if(texture != nullptr){
-		SDL_DestroyTexture(texture);
-	}
+void Text::SetStyle(enum TextStyle style){
+	this->style = style;
+	RemakeTexture();
+}
 
-	SDL_Surface* surface;
+void Text::SetText(std::string text){
+	this->text = text;
+	RemakeTexture();
+}
+
+void Text::RemakeTexture(){
+	SDL_Color fundo = SDL_Color();
+	fundo.b = fundo.g, fundo.r = 0;
+	SDL_Surface* aux;
+
+	if(texture != nullptr) texture = nullptr;
 
 	if(style == SOLID){
-		surface = TTF_RenderText_Solid(font.get(), text.c_str(), color);
+		aux = TTF_RenderText_Solid(font.get(),text.c_str(), color);
+	}else if(style == SHADED){
+		aux = TTF_RenderText_Shaded(font.get(),text.c_str(), color, fundo);
+	}else{
+		aux = TTF_RenderText_Blended(font.get(),text.c_str(), color);
 	}
 
-	if(style == SHADED){
-		surface = TTF_RenderText_Shaded(font.get(), text.c_str(), color, { 0, 0, 0, 0 });
-	}
+	box.w = aux->w;
+	box.h = aux->h;
 
-	if(style == BLENDED){
-		surface = TTF_RenderText_Blended(font.get(), text.c_str(), color);
+	texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(),aux);
+	if(texture == NULL){
+		printf("SDL_CreateTextureFromSurface falhou: %s\n", SDL_GetError());
+		exit(1);
 	}
+	SDL_FreeSurface(aux);
 
-	texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(), surface);
-	
-	box.w = surface->w; box.h = surface->h;
-	SDL_FreeSurface(surface);
 }

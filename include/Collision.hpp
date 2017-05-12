@@ -1,8 +1,22 @@
-#include <cmath>
-#include <algorithm>
+/*
+ * Collision.h
+ *
+ *  Created on: 9 de mai de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-#include "Rect.h"
-#include "Vec2.h"
+
+#ifndef INCLUDE_COLLISION_HPP_
+#define INCLUDE_COLLISION_HPP_
+
+#include <algorithm>
+#include "Geometry.hpp"
+#include <cmath>
 
 class Collision {
 
@@ -23,11 +37,11 @@ class Collision {
                         };
 
             for (auto& v : A) {
-                v = Rotate(v - a.CoordCentro(), angleOfA) + a.CoordCentro();
+                v = Rotate(v - a.Center(), angleOfA) + a.Center();
             }
 
             for (auto& v : B) {
-                v = Rotate(v - b.CoordCentro(), angleOfB) + b.CoordCentro();
+                v = Rotate(v - b.Center(), angleOfB) + b.Center();
             }
 
             Vec2 axes[] = { Norm(A[0] - A[1]), Norm(A[1] - A[2]), Norm(B[0] - B[1]), Norm(B[1] - B[2]) };
@@ -72,18 +86,5 @@ class Collision {
         }
 };
 
-// Aqui estão três operadores que sua classe Vec2 deve precisar, se já não tiver. 
-// Se sua classe tiver métodos para Mag, Norm, Dot e/ou Rotate, você pode substituir
-// os usos desses métodos por usos dos seus, mas garanta que deem resultados corretos.
 
-// Vec2 operator+(const Vec2& rhs) const {
-//    return Vec2(x + rhs.x, y + rhs.y);
-// }
-
-// Vec2 operator-(const Vec2& rhs) const {
-//    return Vec2(x - rhs.x, y - rhs.y);
-// }
-
-// Vec2 operator*(const float rhs) const {
-//    return Vec2(x * rhs, y * rhs);
-// }
+#endif /* INCLUDE_COLLISION_HPP_ */

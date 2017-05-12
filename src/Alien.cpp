@@ -1,125 +1,240 @@
-#include "Alien.h"
-#include "Camera.h"
-#include "Bullet.h"
-#include "Game.h"
-#include "Animation.h"
-#include "Penguins.h"
-#include "Sound.h"
-#include <iostream>
+/*
+ * Alien.cpp
+ *
+ *  Created on: 2 de abr de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-#define SPEED		6
-#define ANGSPEED	-360/60
-#define DAMAGE		10
-#define INIHP		30
-#define RESTCD		1
+#include "Alien.hpp"
+#include "InputManager.hpp"
+#include "Game.hpp"
+#include "Animation.hpp"
+#include "Penguins.hpp"
+#include "Bullet.hpp"
+#include "Sound.hpp"
 
-int Alien::alienCount = 0;
-
-Alien::Alien(float x, float y, int nMinions) : sp("img/alien.png") {
+int Alien::alienCount;
+Alien::Alien(float x,float y, int nMinions){
+	sp.Open("img/alien.png");
+	Alien::alienCount++;
 	box.x = x - sp.GetWidth()/2;
 	box.y = y - sp.GetHeight()/2;
-	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
-	hp = INIHP;
-	alienCount++;
+	box.w = sp.GetWidth();
+
+	actionDelay = 2+ rand()%8;
+
+	speed.x = 0;
+	speed.y = 0;
+
+	hp = 50;
+
+	float delta;
+	delta = (2*3.14)/nMinions;
+	for(int i = 0; i< nMinions; i++){
+		minionArray.emplace_back(Minion(this, delta*i));
+	}
+	rotation = 0;
 	state = RESTING;
-	for(int i = 0; i < nMinions; i++){
-		float scale = rand() % 6;
-		scale = (scale/10.0) + 1.0;
-		float angle = (float) (i*360/nMinions);
-
-		Minion minion(this, angle, scale);
-		minionArray.emplace_back(minion);
-	}
 }
 
-Alien::~Alien() {
-	minionArray.clear();
-	alienCount--;
-}
-
-void Alien::Update(float dt){
-	rotation += ANGSPEED*dt;
-
-	if(Penguins::player != nullptr){
-		if(state == RESTING){
-			restTimer.Update(dt);
-			if(restTimer.Get() >= RESTCD){
-				destination = Penguins::player->box.CoordCentro();
-				speed.x = (destination.x - box.CoordCentro().x)*dt;
-				speed.y = (destination.y - box.CoordCentro().y)*dt;
-				speed = speed.NormVec()*SPEED;
-				state = MOVING;
-			}
-		} else if(state == MOVING){
-			bool movX = abs(destination.x - box.CoordCentro().x) <= abs(speed.x);
-			bool movY = abs(destination.y - box.CoordCentro().y) <= abs(speed.y);
-
-			if(movX && movY){
-				box.x += destination.x - box.CoordCentro().x;
-				box.x += destination.y - box.CoordCentro().y;
-
-				Vec2 pos = Penguins::player->box.CoordCentro();
-				float minDist = 0;
-				int minPos = 0;
-				for(unsigned int i = 0; i < minionArray.size(); i++){
-					float dist = pos.DistVec(Vec2(
-							minionArray[i].box.CoordCentro().x,
-							minionArray[i].box.CoordCentro().y));
-					if(dist < minDist || i == 0){
-						minDist = dist;
-						minPos = i;
-					}
-				}
-				minionArray[minPos].Shoot(pos);
-
-				restTimer.Restart();
-				state = RESTING;
-			} else {
-				if(!movX) box.x += speed.x;
-				if(!movY) box.y += speed.y;
-			}
-		}
-	}
-
-	for(unsigned int i = 0; i < minionArray.size(); i++){
-		minionArray[i].Update(dt);
-	}
-
+Alien::~Alien(){
+	Alien::alienCount--;
 }
 
 void Alien::Render(){
-	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-	for(unsigned int i = 0; i < minionArray.size(); i++){
+	unsigned i;
+	sp.Render(box.x + Camera::pos.x,box.y + Camera::pos.y, rotation);
+
+	for(i = 0; i< minionArray.size(); i++){
 		minionArray[i].Render();
 	}
 }
 
 bool Alien::IsDead(){
-	return (hp <= 0);
+	if(hp <= 0) return true;
+	return false;
 }
 
-void Alien::NotifyCollision(GameObject& other){
-	if(other.Is("Bullet")){
-		if(!((Bullet&) other).targetsPlayer){
-			hp -= DAMAGE;
-			if(IsDead()){
-				Game::GetInstance().GetCurrentState().AddObject(
-						new Animation(box.x, box.y, rotation,
-								"img/aliendeath.png", 4, 0.25, 4*0.25, true));
-				for(unsigned int i = 0; i < minionArray.size(); i++){
-					Game::GetInstance().GetCurrentState().AddObject(
-							new Animation(minionArray[i].box.x,
-									minionArray[i].box.y, rotation,
-									"img/miniondeath.png", 4, 0.25, 4*0.25, true));
-				}
-				Sound s = Sound("audio/boom.wav");
-				s.Play(0);
+void Alien::Update(float dt){
+	InputManager instance = InputManager::GetInstace();
+	Vec2 aux,aux2, auxtiro;
+	unsigned i, candidato;
+	float distanciaminion = 1000000000;
+
+	for(unsigned i = 0; i< minionArray.size(); i++){
+			minionArray[i].Update(dt);
+			if(minionArray[i].IsDead() == true){
+				minionArray.erase(minionArray.begin()+ i);
 			}
+	}
+
+	rotation += 1;
+
+	if(state == RESTING){
+		restTimer.Update(dt);
+
+		if(restTimer.Get() >= actionDelay){
+			restTimer.Restart();
+
+			if(Penguins::player != nullptr){
+				destination.x = Penguins::player->box.x;
+				destination.y = Penguins::player->box.y;
+				state = MOVING;
+
+				aux.x = box.x; aux.y = box.y;
+				speed = (destination.Sub(aux)).Normalize();
+				speed.x = speed.x*10;
+				speed.y = speed.y*10;
+			}
+		}
+	}
+	if(state == MOVING){
+		//std::cout << speed.x <<" " << speed.y<<"\n";
+		if (speed.x < 0 && speed.y < 0){
+			if(box.x + speed.x - 3 <= destination.x &&
+				speed.y + box.y - 3 <= destination.y){
+				box.x = destination.x - box.w/2;
+				box.y = destination.y - box.h/2;
+
+				if(Penguins::player != nullptr){
+					aux2.x = Penguins::player->box.x;
+					aux2.y = Penguins::player->box.y;
+					for(i = 0; i < minionArray.size(); i++){
+						auxtiro.x = minionArray[i].box.x;
+						auxtiro.y = minionArray[i].box.y;
+						if(distanciaminion > auxtiro.Distance(destination)){
+							distanciaminion = auxtiro.Distance(destination);
+							candidato = i;
+						}
+					}
+					minionArray[candidato].Shoot(aux2);
+				}
+				state = RESTING;
+
+				restTimer.Restart();
+
+			}else{
+				box.x += speed.x;
+				box.y += speed.y;
+			}
+		}else if (speed.x > 0 && speed.y < 0){
+			if(box.x +speed.x +3 >= destination.x &&
+					speed.y + box.y - 3 <= destination.y){
+				box.x = destination.x;
+				box.y = destination.y;
+
+				if(Penguins::player != nullptr){
+					aux2.x = Penguins::player->box.x;
+					aux2.y = Penguins::player->box.y;
+					for(i = 0; i < minionArray.size(); i++){
+						auxtiro.x = minionArray[i].box.x;
+						auxtiro.y = minionArray[i].box.y;
+						if(distanciaminion > auxtiro.Distance(destination)){
+							distanciaminion = auxtiro.Distance(destination);
+							candidato = i;
+						}
+					}
+					minionArray[candidato].Shoot(aux2);
+				}
+				state = RESTING;
+
+				restTimer.Restart();
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
+		}else if (speed.x < 0 && speed.y > 0){
+			if(box.x +speed.x - 3 <= destination.x &&
+					speed.y + box.y +3 >= destination.y){
+				box.x = destination.x;
+				box.y = destination.y;
+
+				if(Penguins::player != nullptr){
+					aux2.x = Penguins::player->box.x;
+					aux2.y = Penguins::player->box.y;
+					for(i = 0; i < minionArray.size(); i++){
+						auxtiro.x = minionArray[i].box.x;
+						auxtiro.y = minionArray[i].box.y;
+						if(distanciaminion > auxtiro.Distance(destination)){
+							distanciaminion = auxtiro.Distance(destination);
+							candidato = i;
+						}
+					}
+					minionArray[candidato].Shoot(aux2);
+				}
+				state = RESTING;
+
+				restTimer.Restart();
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
+		}else if (speed.x > 0 && speed.y > 0){
+			if(box.x +speed.x + 3 >= destination.x &&
+					speed.y + box.y +3 >= destination.y){
+				box.x = destination.x;
+				box.y = destination.y;
+
+				if(Penguins::player != nullptr){
+					aux2.x = Penguins::player->box.x;
+					aux2.y = Penguins::player->box.y;
+					for(i = 0; i < minionArray.size(); i++){
+						auxtiro.x = minionArray[i].box.x;
+						auxtiro.y = minionArray[i].box.y;
+						if(distanciaminion > auxtiro.Distance(destination)){
+							distanciaminion = auxtiro.Distance(destination);
+							candidato = i;
+						}
+					}
+					minionArray[candidato].Shoot(aux2);
+				}
+				state = RESTING;
+
+				restTimer.Restart();
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
 		}
 	}
 }
 
-bool Alien::Is(std::string type) {
-	return (type == "Alien");
+
+
+
+
+void Alien::NotifyCollision(GameObject& other){
+	Sound sound = Sound("audio/boom.wav");
+	if(other.Is("Bullet")){
+		if(!((Bullet&) other).targetsPlayer)
+			hp -= 10;
+	 }
+	if(hp <= 0 ){
+		sound.Play(0);
+		Game::GetInstance().GetCurrentState().AddObject(
+				new Animation(box.Center().x, box.Center().y, rotation
+						, "img/aliendeath.png", 4, 0.25, true));
+
+		for(unsigned i = 0; i< minionArray.size(); i++){
+				Game::GetInstance().GetCurrentState().AddObject(
+						new Animation(minionArray[i].box.Center().x, minionArray[i].box.Center().y,
+								minionArray[i].rotation, "img/miniondeath.png", 4, 0.25, true));
+		}
+	}
 }
+
+bool Alien::Is(std::string type){
+	if(type == "Alien") return true;
+	else return false;
+}
+
+
+
+
+

@@ -1,83 +1,133 @@
-#include "StageState.h"
-#include "InputManager.h"
-#include "Camera.h"
-#include "Alien.h"
-#include "Penguins.h"
-#include "Collision.h"
-#include "Game.h"
-#include "EndState.h"
-#include "StateData.h"
+/*
+ * State.hpp
+ *
+ *  Created on: 17 de mar de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
+#include "StageState.hpp"
+#include "InputManager.hpp"
+#include "Resources.hpp"
+#include "Camera.hpp"
+#include "Game.hpp"
+#include "Penguins.hpp"
+#include "Collision.hpp"
+#include "Music.hpp"
+#include "EndState.hpp"
 
-#define NUM_ALIENS 5
+StageState::StageState() : tileSet(64,64,"img/tileset.png"),
+				tileMap("map/tileMap.txt", &tileSet) {
+	//std::cout << "\nState initialized";
 
-StageState::StageState() {
-	objectArray.emplace_back( std::unique_ptr<Penguins>(new Penguins(704,640)) );
-	Camera::Follow(Penguins::player);
+	Penguins* P = new Penguins(704, 640);
 
-	for(int i = 0; i < NUM_ALIENS; i++){
-		objectArray.emplace_back(std::unique_ptr<Alien>( new Alien (
-			rand()%MAPLIMIT_W, rand()%MAPLIMIT_H, (rand()%5)+1) ) );
-	}
+	objectArray.emplace_back(new Alien(512,300, 5));
+	objectArray.emplace_back(new Alien(1000,500, 5));
+	objectArray.emplace_back(new Alien(300,600, 5));
+	objectArray.emplace_back(P);
+	Camera::Follow(P);
 
-	bg.Open("img/ocean.jpg");
-	tileSet = new TileSet(64, 64, "img/tileset.png");
-	tileMap = new TileMap("map/tileMap.txt", tileSet);
-	music = new Music("audio/stageState.ogg");
+	music = Music("audio/stageState.ogg");
+	music.Play(-1);
+	quitRequested = false;
+	time = Timer();
+	flagMorte = false;
+
+	LoadAssets();
 }
 
-StageState::~StageState() {
-	music->Stop();
+StageState::~StageState(){
 	objectArray.clear();
-	delete(tileSet);
-	delete(tileMap);
-	delete(music);
+}
+
+void StageState::Pause(){
+	music.Stop();
+}
+
+void StageState::Resume(){
+	music.Play(-1);
+}
+
+void StageState::LoadAssets(){
+	bg.Open("img/minionbullet2.png");
+	bg.Open("img/penguinbullet.png");
+	bg.Open("img/cubngun.png");
+	bg.Open("img/penguin.png");
+	bg.Open("img/tileset.png");
+	bg.Open("img/minion.png");
+	bg.Open("img/alien.png");
+	bg.Open("img/minion.png");
+	bg.Open("img/miniondeath.png");
+	bg.Open("img/penguindeath.png");
+	bg.Open("img/aliendeath.png");
+	bg.Open("img/ocean.jpg");
 }
 
 void StageState::Update(float dt){
-	if(SDL_QuitRequested() || InputManager::GetInstance().QuitRequested()){
-		quitRequested = true;
-	}
-	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
+	InputManager instance = InputManager::GetInstace();
+	//Input();
+	time.Update(dt);
+	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 	}
+	if(Alien::alienCount == 0){
+		if(flagMorte == false){
+			time.Restart();
+			flagMorte = true;
+		}
 
-	Camera::Update(dt);
-	UpdateArray(dt);
-	for(unsigned int i = 0; i < objectArray.size(); i++){
-		for(unsigned int j = i + 1; j < objectArray.size(); j++){
-			if(Collision::IsColliding(objectArray[i]->box, objectArray[j]->box,
-					objectArray[i]->rotation, objectArray[j]->rotation)){
-				objectArray[i]->NotifyCollision(*objectArray[j]);
-				objectArray[j]->NotifyCollision(*objectArray[i]);
-			}
+		if(time.Get() >= 2 && flagMorte == true){
+			popRequested = true;
+			stateData.playerVictory = true;
+			Game::GetInstance().Push(new EndState(stateData));
 		}
 	}
-
 	if(Penguins::player == nullptr){
-		popRequested = true;
-		StateData stateData;
-		stateData.playerVictory = false;
-		Game::GetInstance().Push(new EndState(stateData));
+		if(flagMorte == false){
+			time.Restart();
+			flagMorte = true;
+		}
+
+		if(time.Get() >= 1.5 && flagMorte == true){
+			popRequested = true;
+			stateData.playerVictory = false;
+			Game::GetInstance().Push(new EndState(stateData));
+		}
 	}
-	else if (Alien::alienCount <= 0){
-		popRequested = true;
-		StateData stateData;
-		stateData.playerVictory = true;
-		Game::GetInstance().Push(new EndState(stateData));
+	quitRequested = instance.QuitRequested();
+
+	Camera::Update(dt);
+
+	UpdateArray(dt);
+
+	for(int i = objectArray.size() - 1; i >= 0; --i) {
+		//std::cout<< "\n i:"<<  i << "\n";
+		for(int j = i-1; j >= 0; --j){
+			//std::cout<< j << " ";
+				if(Collision::IsColliding(objectArray[i].get()->box,objectArray[j].get()->box,
+					objectArray[i].get()->rotation, objectArray[j].get()->rotation) == true){
+					//	std::cout<< i << " " << j <<"\n";
+					objectArray[i].get()->NotifyCollision(*objectArray[j].get());
+					objectArray[j].get()->NotifyCollision(*objectArray[i].get());
+				}
+			}
 	}
 }
 
 void StageState::Render(){
-	bg.Render(0, 0);
-	tileMap->RenderLayer(0, Camera::pos.x, Camera::pos.y);
+	bg.Render(0,0,0);
+	tileMap.RenderLayer( 0 ,Camera::pos.x,Camera::pos.y);
+
 	RenderArray();
-	tileMap->Render(Camera::pos.x, Camera::pos.y);
+
+	for(int j = 1; j < tileMap.GetDepth(); j++) {
+		tileMap.RenderLayer( j, Camera::pos.x*1.5, Camera::pos.y*1.5);
+	}
+	
 }
 
-void StageState::Pause(){
-	music->Stop();
-}
 
-void StageState::Resume(){
-	music->Play(-1);
-}

@@ -1,35 +1,54 @@
-#include "State.h"
+/*
+ * State.cpp
+ *
+ *  Created on: 10 de mai de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-State::State() {
-	popRequested = false;
+#include "State.hpp"
+
+State::State(){
 	quitRequested = false;
+	popRequested = false;
 }
 
-State::~State() { }
-
-void State::AddObject(GameObject *ptr){
-	objectArray.emplace_back(ptr);
+State::~State(){
+	objectArray.clear();
 }
 
-bool State::PopRequested(){
-	return popRequested;
+void State::AddObject(GameObject *object){
+	objectArray.emplace_back(object);
+}
+
+void State::UpdateArray(float dt){
+	for(int i = objectArray.size() - 1; i >= 0; --i) {
+		objectArray[i].get()->Update(dt);
+		if(objectArray[i].get()->IsDead() == true){
+			objectArray.erase(objectArray.begin()+ i);
+		}
+	}
+}
+
+void State::RenderArray(){
+	for(int i = objectArray.size() - 1; i >= 0; --i) {
+				objectArray[i].get()->Render();
+	}
 }
 
 bool State::QuitRequested(){
 	return quitRequested;
 }
 
-void State::UpdateArray(float dt){
-	for(unsigned int i = 0; i < objectArray.size(); i++){
-		objectArray[i]->Update(dt);
-		if(objectArray[i]->IsDead())
-			objectArray.erase(objectArray.begin() + i);
-	}
+bool State::PopRequested(){
+	return popRequested;
 }
 
-void State::RenderArray(){
-	for(unsigned int i = 0; i < objectArray.size(); i++){
-		if(objectArray[i]->IsDead() == true) continue;
-		objectArray[i]->Render();
-	}
-}
+
+
+
+

@@ -1,38 +1,62 @@
-#include "TitleState.h"
-#include "StageState.h"
-#include "InputManager.h"
-#include "Game.h"
+/*
+ * TitleState.cpp
+ *
+ *  Created on: 10 de mai de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-TitleState::TitleState() : bg("img/title.jpg"), text("font/Call me maybe.ttf", 40, 
-	Text::BLENDED, "Press space to start...", { 0, 0, 0, 0 }) {
-	text.SetPos(WINDOW_W/2, WINDOW_H/1.2, true, true);
-	timer = Timer();
-	textShow = true;
+#include "Game.hpp"
+#include "TitleState.hpp"
+#include "StageState.hpp"
+#include "InputManager.hpp"
+
+
+TitleState::TitleState(){
+	SDL_Color auxcolor = SDL_Color();
+	auxcolor.r = 0;
+	auxcolor.g = 70;
+	auxcolor.b = 150;
+
+	flagTimer = true;
+	time = Timer();
+	bg = Sprite("img/title.jpg");
+	tx = Text("font/Call me maybe.ttf", 64, Text::TextStyle::BLENDED,"Press space to continue", auxcolor, 0, 0);
+	tx.SetPos(0,0,true,true);
 }
 
 void TitleState::Update(float dt){
-	if(SDL_QuitRequested() || InputManager::GetInstance().QuitRequested()){
-		quitRequested = true;
-	}
-	if(InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
-		popRequested = true;
-	}
+	InputManager instance = InputManager::GetInstace();
 
-	if(InputManager::GetInstance().KeyPress(SPACE_KEY)){
+	if(instance.KeyPress(ESCAPE_KEY)) quitRequested = true;
+	else quitRequested = instance.QuitRequested();
+
+	if(instance.KeyPress(SPACE_KEY)){
 		Game::GetInstance().Push(new StageState());
 	}
-	timer.Update(dt);
-	if(timer.Get() > 2){
-		textShow = !textShow;
-		timer.Restart();
+
+	time.Update(dt);
+
+	if(time.Get()> 0.15 && flagTimer == true){
+		tx.SetText(" ");
+		time.Restart();
+		flagTimer = false;
 	}
+	if(time.Get()> 0.15 && flagTimer == false){
+		tx.SetText("Press space to continue");
+		time.Restart();
+		flagTimer = true;
+	}
+
 }
 
 void TitleState::Render(){
-	bg.Render(0, 0);
-	if(textShow){
-		text.Render(0,0);
-	}
+	bg.Render(0,0,0);
+	tx.Render(0,0);
 }
 
 void TitleState::Pause(){
@@ -42,3 +66,10 @@ void TitleState::Pause(){
 void TitleState::Resume(){
 
 }
+
+
+
+
+
+
+

@@ -1,18 +1,24 @@
-#include "Sound.h"
-#include "Resources.h"
+/*
+ * Sound.cpp
+ *
+ *  Created on: 11 de mai de 2017
+ *      Author: renne
+ */
+
+#include "Sound.hpp"
+#include "Resources.hpp"
 
 Sound::Sound(){
-	chunk = nullptr;
 	channel = -1;
+	chunk = nullptr;
 }
 
 Sound::Sound(std::string file){
-	channel = -1;
 	Open(file);
- }
+}
 
 void Sound::Play(int times){
-	Mix_PlayChannel(channel, chunk.get(), times);
+	channel = Mix_PlayChannel(-1 ,chunk.get(), times);
 }
 
 void Sound::Stop(){
@@ -21,8 +27,15 @@ void Sound::Stop(){
 
 void Sound::Open(std::string file){
 	chunk = Resources::GetSound(file);
+	if(chunk == nullptr){
+		printf("LoadSound falhou: %s\n", SDL_GetError());
+		exit(1);
+	}
+
 }
 
 bool Sound::IsOpen(){
-	return (chunk.get() != nullptr);
+	return(!(chunk == nullptr));
 }
+
+

@@ -1,36 +1,52 @@
-#include "TileSet.h"
+/*
+ * TileSet.cpp
+ *
+ *  Created on: 22 de mar de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-TileSet::TileSet(int tileWidth, int tileHeight, std::string file) :
-		tileSet(file), tileWidth(tileWidth), tileHeight(tileHeight) {
-	if(tileSet.IsOpen()){
-		rows = tileSet.GetHeight()/tileHeight;
-		columns = tileSet.GetWidth()/tileWidth;
+#include "TileSet.hpp"
+
+TileSet::TileSet(int tileWidth, int tileHeight, std::string file){
+	this->tileWidth = tileWidth;
+	this->tileHeight = tileHeight;
+	tileSet.Open(file);
+	rows = (tileSet.GetHeight()/tileHeight);
+	columns = (tileSet.GetWidth()/tileWidth);
+
+	//std::cout << rows <<" "<< columns;
+}
+
+void TileSet::Render(unsigned index,float x, float y){
+	int valoresClipx, valoresClipy;
+	int auxLinhas, auxRestoLinhas;
+
+	if (index < (unsigned)(rows*columns)-1){
+		if(index >= (unsigned) columns){
+			auxLinhas = index/columns;
+			auxRestoLinhas = index % columns;
+
+			valoresClipx = auxRestoLinhas * tileWidth;
+			valoresClipy = auxLinhas * tileHeight;
+		}else {
+			valoresClipx = index * tileWidth;
+			valoresClipy = 0;
+		}
+		tileSet.SetClip(valoresClipx, valoresClipy, tileWidth, tileHeight);
+		tileSet.Render(x ,y, 0);
 	}
 }
 
-void TileSet::Render(unsigned index, float x, float y){
-	if(index < (unsigned) (rows*columns)-1) {
-		int linhas = index/columns;
-		int restLinhas = index % columns;
-
-		int clipX, clipY;
-		if(index >= (unsigned) columns){
-			clipX = restLinhas * tileWidth;
-			clipY = linhas * tileHeight;
-		} else{
-			clipX = index * tileWidth;
-			clipY = 0;
-		}
-
-		tileSet.SetClip(clipX, clipY, tileWidth, tileHeight);
-		tileSet.Render(x, y);
-	}
+int TileSet::GetTileHeight(){
+	return tileHeight;
 }
 
 int TileSet::GetTileWidth(){
 	return tileWidth;
 }
 
-int TileSet::GetTileHeight(){
-	return tileHeight;
-}

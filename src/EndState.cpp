@@ -1,39 +1,70 @@
-#include "EndState.h"
-#include "InputManager.h"
-#include "Game.h"
-#include "StageState.h"
+/*
+ * EndState.cpp
+ *
+ *  Created on: 11 de mai de 2017
+ *      Author: renne
+ *
+ *
+ * Aluno: Renne Ruan Alves Oliveira
+ * Matricula: 14/0030930
+ * Introducao ao Desenvolvimento de Jogos 1/2017
+ */
 
-EndState::EndState(StateData stateData) : bg(stateData.playerVictory ? "img/win.jpg" : "img/lose.jpg"), 
-	instruction("font/Call me maybe.ttf", 30, Text::SOLID, " ", {255, 255, 255, 255}){
-	if (stateData.playerVictory) {
-		music.Open("audio/endStateWin.ogg");
-		instruction.SetText("You have won! Press space to try again or esc to return to the menu");
-	} else {
-		music.Open("audio/endStateLose.ogg");
-		instruction.SetText("You have lost! Press space to try again or esc to return to the menu");
+#include "EndState.hpp"
+#include "StageState.hpp"
+#include "Game.hpp"
+#include "StateData.hpp"
+#include "InputManager.hpp"
+
+EndState::EndState(StateData stateData){
+	SDL_Color color;
+	color.r = 0;
+	color.g = 70;
+	color.b = 160;
+	instruction = Text("font/Call me maybe.ttf", 50, Text::TextStyle::SOLID,
+					"Press ESC to menu or space to try again", color, 0, 0);
+	instruction.SetPos(0,0,true,true);
+	if(stateData.playerVictory == true){
+		bg = Sprite("img/win.jpg");
+		music = Music("audio/endStateWin.ogg");
+	}else{
+		bg = Sprite("img/lose.jpg");
+		music = Music("audio/endStateLose.ogg");
 	}
-	instruction.SetPos(WINDOW_W/2, WINDOW_H/10, true, true);
+
+	music.Play(-1);
+
 }
 
 void EndState::Update(float dt){
-	popRequested = InputManager::GetInstance().KeyPress(ESCAPE_KEY);
-	quitRequested = InputManager::GetInstance().QuitRequested();
-
-	if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
+	InputManager instance = InputManager::GetInstace();
+		//Input();
+	if(instance.KeyPress(ESCAPE_KEY)){
+		music.Stop();
+		popRequested = true;
+	}
+	if(instance.KeyPress(SPACE_KEY)){
+		music.Stop();
 		popRequested = true;
 		Game::GetInstance().Push(new StageState());
 	}
+
+	quitRequested = instance.QuitRequested();
+
 }
 
 void EndState::Render(){
-	bg.Render(0,0);
-	instruction.Render();
+	bg.Render(0,0,0);
+	instruction.Render(0,0);
+}
+
+void EndState::Resume(){
+	music.Play(-1);
 }
 
 void EndState::Pause(){
 	music.Stop();
 }
 
-void EndState::Resume(){
-	music.Play(-1);
-}
+
+
