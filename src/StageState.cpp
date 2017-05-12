@@ -1,33 +1,17 @@
-/*
- * State.hpp
- *
- *  Created on: 17 de mar de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
+#include "Player.hpp"
 #include "StageState.hpp"
 #include "InputManager.hpp"
 #include "Resources.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
-#include "Penguins.hpp"
 #include "Collision.hpp"
 #include "Music.hpp"
 #include "EndState.hpp"
 
 StageState::StageState() : tileSet(64,64,"img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
-	//std::cout << "\nState initialized";
 
-	Penguins* P = new Penguins(704, 640);
-
-	objectArray.emplace_back(new Alien(512,300, 5));
-	objectArray.emplace_back(new Alien(1000,500, 5));
-	objectArray.emplace_back(new Alien(300,600, 5));
+	Player* P = new Player(704, 640);
 	objectArray.emplace_back(P);
 	Camera::Follow(P);
 
@@ -74,19 +58,7 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 	}
-	if(Alien::alienCount == 0){
-		if(flagMorte == false){
-			time.Restart();
-			flagMorte = true;
-		}
-
-		if(time.Get() >= 2 && flagMorte == true){
-			popRequested = true;
-			stateData.playerVictory = true;
-			Game::GetInstance().Push(new EndState(stateData));
-		}
-	}
-	if(Penguins::player == nullptr){
+	if(Player::player == nullptr){
 		if(flagMorte == false){
 			time.Restart();
 			flagMorte = true;

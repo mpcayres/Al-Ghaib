@@ -1,20 +1,8 @@
-/*
- * Alien.cpp
- *
- *  Created on: 2 de abr de 2017
- *      Author: renne
- *
- *
- * Aluno: Renne Ruan Alves Oliveira
- * Matricula: 14/0030930
- * Introducao ao Desenvolvimento de Jogos 1/2017
- */
-
+#include <Player.hpp>
 #include "Alien.hpp"
 #include "InputManager.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
-#include "Penguins.hpp"
 #include "Bullet.hpp"
 #include "Sound.hpp"
 
@@ -82,9 +70,9 @@ void Alien::Update(float dt){
 		if(restTimer.Get() >= actionDelay){
 			restTimer.Restart();
 
-			if(Penguins::player != nullptr){
-				destination.x = Penguins::player->box.x;
-				destination.y = Penguins::player->box.y;
+			if(Player::player != nullptr){
+				destination.x = Player::player->box.x;
+				destination.y = Player::player->box.y;
 				state = MOVING;
 
 				aux.x = box.x; aux.y = box.y;
@@ -102,9 +90,9 @@ void Alien::Update(float dt){
 				box.x = destination.x - box.w/2;
 				box.y = destination.y - box.h/2;
 
-				if(Penguins::player != nullptr){
-					aux2.x = Penguins::player->box.x;
-					aux2.y = Penguins::player->box.y;
+				if(Player::player != nullptr){
+					aux2.x = Player::player->box.x;
+					aux2.y = Player::player->box.y;
 					for(i = 0; i < minionArray.size(); i++){
 						auxtiro.x = minionArray[i].box.x;
 						auxtiro.y = minionArray[i].box.y;
@@ -129,9 +117,9 @@ void Alien::Update(float dt){
 				box.x = destination.x;
 				box.y = destination.y;
 
-				if(Penguins::player != nullptr){
-					aux2.x = Penguins::player->box.x;
-					aux2.y = Penguins::player->box.y;
+				if(Player::player != nullptr){
+					aux2.x = Player::player->box.x;
+					aux2.y = Player::player->box.y;
 					for(i = 0; i < minionArray.size(); i++){
 						auxtiro.x = minionArray[i].box.x;
 						auxtiro.y = minionArray[i].box.y;
@@ -155,9 +143,9 @@ void Alien::Update(float dt){
 				box.x = destination.x;
 				box.y = destination.y;
 
-				if(Penguins::player != nullptr){
-					aux2.x = Penguins::player->box.x;
-					aux2.y = Penguins::player->box.y;
+				if(Player::player != nullptr){
+					aux2.x = Player::player->box.x;
+					aux2.y = Player::player->box.y;
 					for(i = 0; i < minionArray.size(); i++){
 						auxtiro.x = minionArray[i].box.x;
 						auxtiro.y = minionArray[i].box.y;
@@ -181,9 +169,9 @@ void Alien::Update(float dt){
 				box.x = destination.x;
 				box.y = destination.y;
 
-				if(Penguins::player != nullptr){
-					aux2.x = Penguins::player->box.x;
-					aux2.y = Penguins::player->box.y;
+				if(Player::player != nullptr){
+					aux2.x = Player::player->box.x;
+					aux2.y = Player::player->box.y;
 					for(i = 0; i < minionArray.size(); i++){
 						auxtiro.x = minionArray[i].box.x;
 						auxtiro.y = minionArray[i].box.y;
