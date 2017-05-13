@@ -31,10 +31,8 @@ Game::Game(std::string title, int width, int height){
 	    exit(1);
 	}
 
-	if( Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG) != 
-		(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG)){
-		std::cout << "Mix_Init falhou: " << SDL_GetError() << std::endl;
-		exit(1);
+	if(Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == 0){ /* por favor PARA DE MUDAR ESSA IF. grata*/
+		std::cout << "Erro: " << Mix_GetError();
 	}
 
 	if( Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0 ){
