@@ -20,19 +20,25 @@ Game::Game(std::string title, int width, int height){
 
 	instance = this;
 
+	/* SDL_INIT_JOYSTICK | SDL_INIT_HAPTC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS | SDL_INIT_EVERYTHING | SDL_INIT_NOPARACHUTE */
 	if( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0 ){
 		std::cout << "SDL_Init falhou: " << SDL_GetError() << std::endl;
 		exit(1);
 	}
 
-	if( IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF)
-			!= (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF)){
-	    std::cout << "IMG_Init: " << SDL_GetError() << std::endl;
-	    exit(1);
+	int flagsIMG = (IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
+	int initIMG = IMG_Init(flagsIMG);
+	if((initIMG & flagsIMG) != flagsIMG) {
+		std::cout << "IMG_Init: " << SDL_GetError() << std::endl;
+		exit(1);
 	}
 
-	if(Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == 0){ /* por favor PARA DE MUDAR ESSA IF. grata*/
-		std::cout << "Erro: " << Mix_GetError();
+	/* MIX_INIT_FLAC | MIX_INIT_MOD */
+	int flagsMIX = (MIX_INIT_MP3 | MIX_INIT_OGG);
+	int initMIX = Mix_Init(flagsMIX);
+	if((initMIX & flagsMIX) != flagsMIX) {
+		std::cout << "Mix_Init falhou: " << SDL_GetError() << std::endl;
+		exit(1);
 	}
 
 	if( Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0 ){
