@@ -7,6 +7,7 @@
 #include "Sound.hpp"
 
 #define MODULO_SPEED 8
+#define LSHIFT_KEY SDLK_LSHIFT
 #define AUMENTO_VELOCIDADE 2
 
 
