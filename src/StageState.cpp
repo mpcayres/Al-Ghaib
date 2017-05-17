@@ -8,18 +8,20 @@
 #include "EndState.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "StorageObject.hpp"
 
-StageState::StageState() : tileSet(64,64,"img/tileset.png"),
+StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
 	Player* P = new Player(704, 640);
 	Enemy* E = new Enemy(300, 200);
+	StorageObject* S = new StorageObject(200, 400, 1, "img/minion.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(E);
+	objectArray.emplace_back(S);
 	Camera::Follow(P);
 
 	music = Music("audio/stageState.ogg");
-	music.Play(-1);
 	quitRequested = false;
 	time = Timer();
 	flagMorte = false;

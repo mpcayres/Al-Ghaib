@@ -16,8 +16,8 @@ void State::AddObject(GameObject *object){
 void State::UpdateArray(float dt){
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		objectArray[i].get()->Update(dt);
-		if(objectArray[i].get()->IsDead() == true){
-			objectArray.erase(objectArray.begin()+ i);
+		if(objectArray[i].get()->IsDead()){
+			objectArray.erase(objectArray.begin() + i);
 		}
 	}
 }

@@ -4,8 +4,6 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Timer.hpp"
-#include "Geometry.hpp"
-
 class Player : public GameObject{
 public:
 	Player(float x, float y);
@@ -26,7 +24,7 @@ private:
 	Sprite bodySp;
 	Vec2 speed;
 	int hp;
-	bool running = true;
+	bool running;
 };
 
 #endif /* INCLUDE_Player_HPP_ */

@@ -25,6 +25,7 @@ Player::Player(float x, float y): bodySp("img/penguin.png"){
 	rotation = 0;
 	speed.y = speed.x = 0;
 	player = this;
+	running = true;
 }
 
 Player::~Player(){
@@ -116,10 +117,7 @@ void Player::Render(){
 }
 
 bool Player::IsDead(){
-	if(hp <= 0){
-		return true;
-	}
-	return false;
+	return (hp <= 0);
 }
 
 
@@ -146,13 +144,10 @@ void Player::NotifyCollision(GameObject& other){
 				new Animation(box.Center().x, box.Center().y, rotation,
 						"img/penguindeath.png", 5, 0.18, true));
 	}
-
-
 }
 
 bool Player::Is(std::string type){
-	if(type == "Player") return true;
-	else return false;
+	return (type == "Player");
 }
 
 bool Player::getRunning(){

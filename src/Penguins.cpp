@@ -102,10 +102,7 @@ void Penguins::Render(){
 }
 
 bool Penguins::IsDead(){
-	if(hp <= 0){
-		return true;
-	}
-	return false;
+	return (hp <= 0);
 }
 
 
@@ -137,6 +134,5 @@ void Penguins::NotifyCollision(GameObject& other){
 }
 
 bool Penguins::Is(std::string type){
-	if(type == "Penguins") return true;
-	else return false;
+	return (type == "Penguins");
 }

@@ -31,22 +31,20 @@ void Bullet::Render(){
 }
 
 bool Bullet::IsDead(){
-	if(distanceLeft <= 0) return true;
-	return false;
+	return (distanceLeft <= 0);
 }
 
 void Bullet::NotifyCollision(GameObject& other){
 	if(!other.Is("Bullet")){
-		if(targetsPlayer == true && !other.Is("Alien")){
+		if(targetsPlayer && !other.Is("Alien")){
 			distanceLeft = 0;
 		}
-		if(targetsPlayer == false && !other.Is("Penguins")){
+		if(!targetsPlayer && !other.Is("Penguins")){
 			distanceLeft = 0;
 		}
 	}
 }
 
 bool Bullet::Is(std::string type){
-	if(type == "Bullet") return true;
-	else return false;
+	return (type == "Bullet");
 }

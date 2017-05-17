@@ -47,8 +47,7 @@ void Alien::Render(){
 }
 
 bool Alien::IsDead(){
-	if(hp <= 0) return true;
-	return false;
+	return (hp <= 0);
 }
 
 void Alien::Update(float dt){
@@ -215,6 +214,5 @@ void Alien::NotifyCollision(GameObject& other){
 }
 
 bool Alien::Is(std::string type){
-	if(type == "Alien") return true;
-	else return false;
+	return (type == "Alien");
 }

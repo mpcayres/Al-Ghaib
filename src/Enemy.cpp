@@ -132,10 +132,7 @@ void Enemy::Render(){
 }
 
 bool Enemy::IsDead(){
-	if(hp <= 0){
-		return true;
-	}
-	return false;
+	return (hp <= 0);
 }
 
 
@@ -167,6 +164,5 @@ void Enemy::NotifyCollision(GameObject& other){
 }
 
 bool Enemy::Is(std::string type){
-	if(type == "Enemy") return true;
-	else return false;
+	return (type == "Enemy");
 }

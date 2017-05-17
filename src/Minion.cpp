@@ -64,6 +64,5 @@ void Minion::NotifyCollision(GameObject& other){
 }
 
 bool Minion::Is(std::string type){
-	if(type == "Minion") return true;
-	else return false;
+	return (type == "Minion");
 }
