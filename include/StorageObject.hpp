@@ -1,10 +1,3 @@
-/*
- * StorageObject.h
- *
- *  Created on: 17 de mai de 2017
- *      Author: mp_ca
- */
-
 #ifndef SRC_STORAGEOBJECT_H_
 #define SRC_STORAGEOBJECT_H_
 

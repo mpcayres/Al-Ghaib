@@ -23,6 +23,7 @@ bool StorageObject::IsDead(){
 	return dead;
 }
 
+// Talvez colocar pra pegar quando estiver próximo
 void StorageObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){

@@ -16,6 +16,7 @@
 #include "Sprite.hpp"
 #include "Text.hpp"
 #include "Timer.hpp"
+#include "MenuHUD.hpp"
 
 class TitleState : public State {
 public:
@@ -31,6 +32,9 @@ private:
 	Text tx;
 	Timer time;
 	bool flagTimer;
+	MenuHUD menu;
+
+	enum { MENU_START, MENU_CONTINUE, MENU_OPTIONS };
 };
 
 #endif /* INCLUDE_TITLESTATE_HPP_ */
