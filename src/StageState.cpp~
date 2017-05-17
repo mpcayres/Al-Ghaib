@@ -44,6 +44,7 @@ void StageState::LoadAssets(){
 }
 
 void StageState::Update(float dt){
+	printf("StageState::Update(float dt");
 	InputManager instance = InputManager::GetInstance();
 	time.Update(dt);
 	if(instance.KeyPress(ESCAPE_KEY)){

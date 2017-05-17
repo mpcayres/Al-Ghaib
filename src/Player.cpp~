@@ -7,7 +7,6 @@
 #include "Sound.hpp"
 
 #define MODULO_SPEED 8
-#define LSHIFT_KEY SDLK_LSHIFT
 #define AUMENTO_VELOCIDADE 2
 
 
@@ -40,30 +39,55 @@ void Player::Update(float dt){
 		speed.y = -MODULO_SPEED;
 		speed.x = 0;
 		rotation = -90;
+		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+			speed.x *= AUMENTO_VELOCIDADE;
+			speed.y *= AUMENTO_VELOCIDADE;
+			running = true;
+		}
+		else
+			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.y = MODULO_SPEED;
 		speed.x = 0;
 		rotation = 90;
+		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+			speed.x *= AUMENTO_VELOCIDADE;
+			speed.y *= AUMENTO_VELOCIDADE;
+			running = true;
+		}
+		else
+			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = MODULO_SPEED;
 		speed.y = 0;
 		rotation = 0;
+		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+			speed.x *= AUMENTO_VELOCIDADE;
+			speed.y *= AUMENTO_VELOCIDADE;
+			running = true;
+		}
+		else
+			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = -MODULO_SPEED;
 		speed.y = 0;
 		rotation = 180;
+		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+			speed.x *= AUMENTO_VELOCIDADE;
+			speed.y *= AUMENTO_VELOCIDADE;
+			running = true;
+		}
+		else
+			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = 0;
 		speed.y = 0;
 	}
-	if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-		speed.x *= AUMENTO_VELOCIDADE;
-		speed.y *= AUMENTO_VELOCIDADE;
-	}
+
 
 	if(InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		//rotation -= velocidadeAngular;
