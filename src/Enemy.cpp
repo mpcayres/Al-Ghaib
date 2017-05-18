@@ -33,22 +33,22 @@ Enemy::~Enemy(){
 
 void Enemy::Update(float dt){
 	/* dinamica de percepção de ruído vindo do jogador*/
-	printf("\n Distancia para jogador");
+	//printf("\n Distancia para jogador");
 
 	float dist = 0;
-	int running = 1;
+	//int running = 1;
 	dist = box.DistanceRect(Player::player->box);
-	printf("%f", dist);
+	//printf("%f", dist);
 	if(dist < 250)
 		printf("VISTO!");
 
-	printf("\nQuantidade de percepção de ruído acrescentada:");
+	//printf("\nQuantidade de percepção de ruído acrescentada:");
 	if(Player::player->getRunning() == true)
 		running = 10;
 	else
 		running = 1;
-	float noise = ((1/dist)*10)*running;
-	printf("%f", noise);
+	//float noise = ((1/dist)*10)*running;
+	//printf("%f", noise);
 	/*InputManager InputInstance = InputManager::GetInstance();
 
 	if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
