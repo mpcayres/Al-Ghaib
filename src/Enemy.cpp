@@ -32,7 +32,7 @@ Enemy::~Enemy(){
 }
 
 void Enemy::Update(float dt){
-	/* dinamica de percepção de ruído vindo do jogador*/
+	/* dinamica de percepcao de ruido vindo do jogador*/
 	//printf("\n Distancia para jogador");
 
 	float dist = 0;

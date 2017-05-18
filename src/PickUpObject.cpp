@@ -1,8 +1,10 @@
-#include <StorageObject.hpp>
+#include "PickUpObject.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
+#include "Player.hpp"
 
-StorageObject::StorageObject(float x, float y, int id, std::string img) : id(id), sp(img){
+PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img) :
+	obj(obj)/*, objSp(img)*/, sp(img){
 	dead = false;
 	rotation = 0;
 	box.x = x  - sp.GetWidth()/2;
@@ -11,29 +13,29 @@ StorageObject::StorageObject(float x, float y, int id, std::string img) : id(id)
 	box.h = sp.GetHeight();
 }
 
-void StorageObject::Update(float dt){
+void PickUpObject::Update(float dt){
 
 }
 
-void StorageObject::Render(){
+void PickUpObject::Render(){
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
-bool StorageObject::IsDead(){
+bool PickUpObject::IsDead(){
 	return dead;
 }
 
 // Talvez colocar pra pegar quando estiver próximo
-void StorageObject::NotifyCollision(GameObject& other){
+void PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			dead = true;
-			// adicionar ao inventário pelo id
+			Player::player->AddInventory(obj/*, objSp*/);
 			// ver alguma animação
 		}
 	}
 }
 
-bool StorageObject::Is(std::string type){
-	return (type == "StorageObject");
+bool PickUpObject::Is(std::string type){
+	return (type == "PickUpObject");
 }

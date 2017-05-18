@@ -6,9 +6,9 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 
-class StorageObject : public GameObject {
+class PickUpObject : public GameObject {
 public:
-	StorageObject(float x, float y, int id, std::string img);
+	PickUpObject(float x, float y, std::string obj, std::string img);
 
 	void Update(float dt);
 	void Render();
@@ -17,7 +17,8 @@ public:
 	bool Is(std::string type);
 
 private:
-	int id;
+	std::string obj;
+	//std::string objSp;
 	Sprite sp;
 	bool dead;
 };

@@ -5,10 +5,10 @@
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
+#include "InventoryKey.hpp"
 
 #define MODULO_SPEED 8
 #define AUMENTO_VELOCIDADE 2
-
 
 Player* Player::player;
 
@@ -26,6 +26,8 @@ Player::Player(float x, float y): bodySp("img/penguin.png"){
 	speed.y = speed.x = 0;
 	player = this;
 	running = true;
+	inHandIndex = -1; //dependendo do save pode ser diferente
+	showingInventory = false;
 }
 
 Player::~Player(){
@@ -120,7 +122,6 @@ bool Player::IsDead(){
 	return (hp <= 0);
 }
 
-
 void Player::Shoot(){
 	Vec2 aux;
 	aux.x = 70;
@@ -153,3 +154,20 @@ bool Player::Is(std::string type){
 bool Player::getRunning(){
 	return running;
 }
+
+bool Player::GetShowingInventory(){
+	return showingInventory;
+}
+
+void Player::AddInventory(std::string obj/*, std::string objSp*/){
+	// Coloquei os parâmetros como as strings e não o objeto, pq estava dando erro comigo
+	// Coloquei a string da imagem comentada caso seja necessário
+	if(obj == "KeyObject"){
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+	}
+}
+
+// Causava erro na compilação, pq é unique_ptr
+/*std::vector<std::unique_ptr<InventoryObject>> Player::GetInventory(){
+	return inventory;
+}*/

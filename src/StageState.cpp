@@ -1,3 +1,4 @@
+#include "PickUpObject.hpp"
 #include "StageState.hpp"
 #include "InputManager.hpp"
 #include "Resources.hpp"
@@ -8,14 +9,13 @@
 #include "EndState.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
-#include "StorageObject.hpp"
 
 StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
 	Player* P = new Player(704, 640);
 	Enemy* E = new Enemy(300, 200);
-	StorageObject* S = new StorageObject(200, 400, 1, "img/minion.png");
+	PickUpObject* S = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(E);
 	objectArray.emplace_back(S);
