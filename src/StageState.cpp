@@ -17,14 +17,14 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 
 	Player* P = new Player(704, 640);
 	Enemy* E = new Enemy(300, 200);
-	PickUpObject* PO= new PickUpObject(200, 400, "KeyObject", "img/minion.png");
-	SceneObject* SO  = new SceneObject(800, 200, 1, "img/closedwindow.png");
-	EmptyBox* EB  = new EmptyBox(P->box.w , P->box.y);
+	PickUpObject* PO = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
+	EmptyBox* EB = new EmptyBox();
+	SceneObject* SO = new SceneObject(800, 200, 1, "img/closedwindow.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(E);
 	objectArray.emplace_back(PO);
-	objectArray.emplace_back(SO);
 	objectArray.emplace_back(EB);
+	objectArray.emplace_back(SO);
 	Camera::Follow(P);
 
 	music = Music("audio/stageState.ogg");
@@ -79,8 +79,6 @@ void StageState::Update(float dt){
 		for(int j = i-1; j >= 0; --j){
 				if(Collision::IsColliding(objectArray[i].get()->box,objectArray[j].get()->box,
 					objectArray[i].get()->rotation, objectArray[j].get()->rotation) == true){
-					if(objectArray[i]->Is("EmptyBox") || objectArray[j]->Is("EmptyBox"))
-										printf("\n\nSINAL DE VIDA");
 					objectArray[i].get()->NotifyCollision(*objectArray[j].get());
 					objectArray[j].get()->NotifyCollision(*objectArray[i].get());
 				}

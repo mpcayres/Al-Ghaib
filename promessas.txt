@@ -1,0 +1,22 @@
+Programação: 
+30%
+	- movimentação nas coord. cardinais do protagonista usando as setas direcionais do teclado
+	- personagem capaz de correr
+	- personagem capaz de pegar objetos soltos no cenário e armazena-los
+	- personagem capaz de interagir com itens do cenário afetando o estado dos mesmos
+	- menu iniciar com botões de INICIAR, CONTINUAR e SAIR sendo que só os de INICIAR e SAIR são funcionais
+	
+70%
+	- colisões do personagem com objetos presentes para possibilitar interações e limitar movimentações (árvore de movimento)
+	- 3 objetos interativos implementados sendo eles inicialmente (chave, porta, janela)
+	- inventário mostrando os objetos que podem ser utilizados e selecionados implementado
+	- primeira missão pronta e lógica de progressão de missões da história
+	- botão CONTINUAR do menu inicial
+	- lógica de "atenção" que o inimigo possui em relação ao jogador
+
+100%
+	- 3 cenários implementados com seus respectivos objetos e colisões (quarto, sala e corredor)
+	- 2 personagens não jogáveis
+			* personagem 1 - serve para fornecer as missões dentro da linearidade da história
+			* personagem 2 - além de fazer parte da história, servirá de inimigo e obstáculo em momentos pontuais (utiliza path finding)
+	- mais quatro missões prontas com suas respectivas lógicas de progressão de missões da história

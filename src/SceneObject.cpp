@@ -38,8 +38,10 @@ bool SceneObject::IsEstado(){
 
 // Talvez colocar pra pegar quando estiver pr�ximo
 void SceneObject::NotifyCollision(GameObject& other){
+	printf("\num fora");
 	if(other.Is("EmptyBox")){
 		printf("\nBATII");
+		//getchar();
 		Rect box2;
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			if (estado == true){

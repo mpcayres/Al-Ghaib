@@ -12,12 +12,13 @@
 
 #include "Player.hpp"
 #include "Geometry.hpp"
+#include "Sprite.hpp"
 #include "GameObject.hpp"
 #define DISTANCIA 100
 
 class EmptyBox : public GameObject {
 public:
-	EmptyBox(float x, float y);
+	EmptyBox();
 
 	void Update(float dt);
 	void Render();
@@ -27,8 +28,9 @@ public:
 	void setX(int x);
 	void setY(int y);
 
-private:
-	Rect box;
+//private:
+	//Rect box;
+	//Sprite sp;
 };
 
 #endif /* EMPTYBOX_H_ */
