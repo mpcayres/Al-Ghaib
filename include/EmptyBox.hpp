@@ -14,7 +14,7 @@
 #include "Geometry.hpp"
 #include "Sprite.hpp"
 #include "GameObject.hpp"
-#define DISTANCIA 100
+#define DISTANCIA 50
 
 class EmptyBox : public GameObject {
 public:
@@ -27,7 +27,8 @@ public:
 	bool Is(std::string type);
 	void setX(int x);
 	void setY(int y);
-
+private:
+	Timer time;
 //private:
 	//Rect box;
 	//Sprite sp;
