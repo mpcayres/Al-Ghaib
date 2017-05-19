@@ -1,18 +1,18 @@
-#include "Player.hpp"
+#include "Enemy.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
-#include "InventoryKey.hpp"
 
 #define MODULO_SPEED 8
 #define AUMENTO_VELOCIDADE 2
 
-Player* Player::player;
 
-Player::Player(float x, float y): bodySp("img/penguin.png"){
+Enemy* Enemy::enemy;
+
+Enemy::Enemy(float x, float y): bodySp("img/alien.png"){
 	box.h = bodySp.GetHeight();
 	box.w = bodySp.GetWidth();
 
@@ -24,22 +24,18 @@ Player::Player(float x, float y): bodySp("img/penguin.png"){
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
-	player = this;
-	running = true;
-	inHandIndex = -1; //dependendo do save pode ser diferente
-	showingInventory = false;
+	enemy = this;
 }
 
-Player::~Player(){
-	player = nullptr;
+Enemy::~Enemy(){
+	enemy = nullptr;
 }
 
-void Player::Update(float dt){
-	InputManager InputInstance = InputManager::GetInstance();
+void Enemy::Update(float dt){
+	/*InputManager InputInstance = InputManager::GetInstance();
 
 	if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = NORTE;
 		speed.y = -MODULO_SPEED;
 		speed.x = 0;
 		rotation = -90;
@@ -52,7 +48,6 @@ void Player::Update(float dt){
 			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = SUL;
 		speed.y = MODULO_SPEED;
 		speed.x = 0;
 		rotation = 90;
@@ -65,7 +60,6 @@ void Player::Update(float dt){
 			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = LESTE;
 		speed.x = MODULO_SPEED;
 		speed.y = 0;
 		rotation = 0;
@@ -78,7 +72,6 @@ void Player::Update(float dt){
 			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = OESTE;
 		speed.x = -MODULO_SPEED;
 		speed.y = 0;
 		rotation = 180;
@@ -100,7 +93,7 @@ void Player::Update(float dt){
 		//rotation -= velocidadeAngular;
 	} else if(InputInstance.IsKeyDown(RIGHT_ARROW_KEY)){
 		//rotation += velocidadeAngular;
-	}
+	}*/
 
 	if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
 		box.y += speed.y;
@@ -110,33 +103,37 @@ void Player::Update(float dt){
 	}
 
 
-	if(InputInstance.MousePress(LEFT_MOUSE_BUTTON && time.Get() >= 0.3)) {
-		time.Restart();
+	//if(InputInstance.MousePress(LEFT_MOUSE_BUTTON && time.Get() >= 0.3)) {
+	//	time.Restart();
 		//Shoot();
-	}
+	//}
 
 	time.Update(dt);
 }
 
-void Player::Render(){
+void Enemy::Render(){
 	bodySp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
-bool Player::IsDead(){
-	return (hp <= 0);
+bool Enemy::IsDead(){
+	if(hp <= 0){
+		return true;
+	}
+	return false;
 }
 
-void Player::Shoot(){
+
+void Enemy::Shoot(){
 	Vec2 aux;
 	aux.x = 70;
 	aux.y = 0;
 	//aux = aux.Rotate(cannonAngle);
 }
 
-void Player::NotifyCollision(GameObject& other){
+void Enemy::NotifyCollision(GameObject& other){
 	Sound sound = Sound("audio/boom.wav");
 	if(other.Is("Bullet")){
-		if(((Bullet&) other).targetsPlayer)
+		if(((Bullet&) other).targetsEnemy)
 			hp -= 8;
 	 }
 	if(other.Is("Alien")){
@@ -149,31 +146,11 @@ void Player::NotifyCollision(GameObject& other){
 				new Animation(box.Center().x, box.Center().y, rotation,
 						"img/penguindeath.png", 5, 0.18, true));
 	}
+
+
 }
 
-bool Player::Is(std::string type){
-	return (type == "Player");
+bool Enemy::Is(std::string type){
+	if(type == "Enemy") return true;
+	else return false;
 }
-
-bool Player::getRunning(){
-	return running;
-}
-
-bool Player::GetShowingInventory(){
-	return showingInventory;
-}
-
-void Player::AddInventory(std::string obj/*, std::string objSp*/){
-	// Coloquei os par�metros como as strings e n�o o objeto, pq estava dando erro comigo
-	// Coloquei a string da imagem comentada caso seja necess�rio
-	if(obj == "KeyObject"){
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-	}
-}
-int Player::getInvBox(){
-	return direcao;
-}
-// Causava erro na compila��o, pq � unique_ptr
-/*std::vector<std::unique_ptr<InventoryObject>> Player::GetInventory(){
-	return inventory;
-}*/

@@ -39,8 +39,8 @@ void Enemy::Update(float dt){
 	//int running = 1;
 	dist = box.DistanceRect(Player::player->box);
 	//printf("%f", dist);
-	if(dist < 250)
-		printf("VISTO!");
+	//if(dist < 250)
+		//printf("VISTO!");
 
 	//printf("\nQuantidade de percepção de ruído acrescentada:");
 	if(Player::player->getRunning() == true)

@@ -1,0 +1,34 @@
+/*
+ * EmptyBox.h
+ *
+ *  Created on: May 18, 2017
+ *      Author: ingrid
+ */
+
+#ifndef EMPTYBOX_HPP_
+#define EMPTYBOX_HPP_
+
+#include <string>
+
+#include "Player.hpp"
+#include "Geometry.hpp"
+#include "GameObject.hpp"
+#define DISTANCIA 100
+
+class EmptyBox : public GameObject {
+public:
+	EmptyBox(float x, float y);
+
+	void Update(float dt);
+	void Render();
+	bool IsDead();
+	void NotifyCollision(GameObject& other);
+	bool Is(std::string type);
+	void setX(int x);
+	void setY(int y);
+
+private:
+	Rect box;
+};
+
+#endif /* EMPTYBOX_H_ */

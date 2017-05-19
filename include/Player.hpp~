@@ -1,12 +1,10 @@
 #ifndef INCLUDE_Player_HPP_
 #define INCLUDE_Player_HPP_
 
-#include "InventoryObject.hpp"
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Timer.hpp"
-#include <vector>
-#include <memory>
+#include "Geometry.hpp"
 
 class Player : public GameObject{
 public:
@@ -19,11 +17,7 @@ public:
 	void NotifyCollision(GameObject& other);
 	void Shoot();
 	bool Is(std::string type);
-	bool getRunning();
-	bool GetShowingInventory();
-	void AddInventory(std::string obj/*, std::string objSp*/);
-	//std::vector<std::unique_ptr<InventoryObject>> GetInventory();
-	int getInvBox();
+	Player *getPlayer();
 
 	static Player * player;
 
@@ -32,14 +26,7 @@ private:
 	Sprite bodySp;
 	Vec2 speed;
 	int hp;
-	bool running;
-
-	int inHandIndex;
-	bool showingInventory;
-	std::vector<std::unique_ptr<InventoryObject>> inventory;
-
-	enum InvBox{NORTE, SUL, LESTE, OESTE};
-	InvBox direcao;
+	bool running = true;
 };
 
 #endif /* INCLUDE_Player_HPP_ */
