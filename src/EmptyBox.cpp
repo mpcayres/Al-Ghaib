@@ -20,9 +20,12 @@ EmptyBox::EmptyBox( ){
 }
 
 void EmptyBox::Render(){
+	//printf("invbox %d" , Player::player->getInvBox());
+		//printf("\n BOX box.x = %f, box.y = %f", box.x, box.y);
+
 	SDL_Rect dst;
-	dst.x = box.x, dst.y = box.y;
-	dst.h = box.h; dst.w = box.w;
+	dst.x = this->box.x- Camera::pos.x, dst.y = this->box.y- Camera::pos.y;
+	dst.h = this->box.h; dst.w = this->box.w;
 	//SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(),
 	//		&clipRect, &dst, angle, nullptr, SDL_FLIP_NONE);
 	SDL_RenderDrawRect(Game::GetInstance().GetRenderer() , &dst);
@@ -42,36 +45,34 @@ return false;
 }
 
 void EmptyBox::Update(float dt){
-	//printf("invbox %d" , Player::player->getInvBox());
-	//printf("\n BOX box.x = %f, box.y = %f", box.x, box.y);
 	Vec2 rot = Vec2(Player::player->box.x, Player::player->box.y);
-	rot.Rotate(Player::player->rotation);
-	switch(Player::player->getInvBox()){
-	case 0:		//NORTE
-		box.x = rot.x - Camera::pos.x + Player::player->box.h/2;
-		box.y = rot.y - DISTANCIA - Camera::pos.y - Player::player->box.w/2 + 5;
-		box.w = Player::player->box.h;
-		box.h = DISTANCIA;
-		break;
-	case 1:		//SUL
-		box.x = rot.x - Camera::pos.x  + Player::player->box.h/2;
-		box.y = Player::player->box.h + rot.y - Camera::pos.y  + Player::player->box.w/2 - 5;
-		box.w = Player::player->box.h;
-		box.h = DISTANCIA;
-		break;
-	case 2:		//LESTE
-		box.x = Player::player->box.x + Player::player->box.w - Camera::pos.x + 5;
-		box.y = Player::player->box.y - Camera::pos.y;
-		box.w = DISTANCIA;
-		box.h = Player::player->box.h;
-		break;
-	case 3:		//OESTE
-		box.x = Player::player->box.x - DISTANCIA - Camera::pos.x - 5;
-		box.y = Player::player->box.y - Camera::pos.y;
-		box.w = DISTANCIA;
-		box.h = Player::player->box.h;
-		break;
-	}
+			rot.Rotate(Player::player->rotation);
+			switch(Player::player->getInvBox()){
+			case 0:		//NORTE
+				this->box.x = rot.x + Player::player->box.h/2;
+				this->box.y = rot.y - DISTANCIA - Player::player->box.w/2 + 5;
+				this->box.w = Player::player->box.h;
+				this->box.h = DISTANCIA;
+				break;
+			case 1:		//SUL
+				this->box.x = rot.x  + Player::player->box.h/2;
+				this->box.y = Player::player->box.h + rot.y  + Player::player->box.w/2 - 5;
+				this->box.w = Player::player->box.h;
+				this->box.h = DISTANCIA;
+				break;
+			case 2:		//LESTE
+				this->box.x = Player::player->box.x + Player::player->box.w + 5;
+				this->box.y = Player::player->box.y;
+				this->box.w = DISTANCIA;
+				this->box.h = Player::player->box.h;
+				break;
+			case 3:		//OESTE
+				this->box.x = Player::player->box.x - DISTANCIA - 5;
+				this->box.y = Player::player->box.y;
+				this->box.w = DISTANCIA;
+				this->box.h = Player::player->box.h;
+				break;
+			}
 
 }
 
