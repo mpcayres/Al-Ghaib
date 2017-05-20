@@ -5,10 +5,10 @@
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
-#include "InventoryKey.hpp"
 
 #define MODULO_SPEED 8
 #define AUMENTO_VELOCIDADE 2
+
 
 Player* Player::player;
 
@@ -25,9 +25,6 @@ Player::Player(float x, float y): bodySp("img/penguin.png"){
 	rotation = 0;
 	speed.y = speed.x = 0;
 	player = this;
-	running = true;
-	inHandIndex = -1; //dependendo do save pode ser diferente
-	showingInventory = false;
 }
 
 Player::~Player(){
@@ -39,56 +36,40 @@ void Player::Update(float dt){
 
 	if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = NORTE;
 		speed.y = -MODULO_SPEED;
 		speed.x = 0;
 		rotation = -90;
 		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 			speed.x *= AUMENTO_VELOCIDADE;
 			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
 		}
-		else
-			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = SUL;
 		speed.y = MODULO_SPEED;
 		speed.x = 0;
 		rotation = 90;
 		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 			speed.x *= AUMENTO_VELOCIDADE;
 			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
 		}
-		else
-			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = LESTE;
 		speed.x = MODULO_SPEED;
 		speed.y = 0;
 		rotation = 0;
 		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 			speed.x *= AUMENTO_VELOCIDADE;
 			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
 		}
-		else
-			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = OESTE;
 		speed.x = -MODULO_SPEED;
 		speed.y = 0;
 		rotation = 180;
 		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 			speed.x *= AUMENTO_VELOCIDADE;
 			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
 		}
-		else
-			running = false;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = 0;
@@ -103,11 +84,9 @@ void Player::Update(float dt){
 	}
 
 	if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
-		previousPos.y = box.y;
 		box.y += speed.y;
 	}
 	if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
-		previousPos.x = box.x;
 		box.x += speed.x;
 	}
 
@@ -125,8 +104,12 @@ void Player::Render(){
 }
 
 bool Player::IsDead(){
-	return (hp <= 0);
+	if(hp <= 0){
+		return true;
+	}
+	return false;
 }
+
 
 void Player::Shoot(){
 	Vec2 aux;
@@ -151,31 +134,11 @@ void Player::NotifyCollision(GameObject& other){
 				new Animation(box.Center().x, box.Center().y, rotation,
 						"img/penguindeath.png", 5, 0.18, true));
 	}
+
+
 }
 
 bool Player::Is(std::string type){
-	return (type == "Player");
+	if(type == "Player") return true;
+	else return false;
 }
-
-bool Player::getRunning(){
-	return running;
-}
-
-bool Player::GetShowingInventory(){
-	return showingInventory;
-}
-
-void Player::AddInventory(std::string obj/*, std::string objSp*/){
-	// Coloquei os par�metros como as strings e n�o o objeto, pq estava dando erro comigo
-	// Coloquei a string da imagem comentada caso seja necess�rio
-	if(obj == "KeyObject"){
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-	}
-}
-int Player::getInvBox(){
-	return direcao;
-}
-// Causava erro na compila��o, pq � unique_ptr
-/*std::vector<std::unique_ptr<InventoryObject>> Player::GetInventory(){
-	return inventory;
-}*/

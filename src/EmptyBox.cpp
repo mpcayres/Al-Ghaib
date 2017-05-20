@@ -13,7 +13,7 @@
 
 EmptyBox::EmptyBox( ){
 	rotation = 0;
-	this->box.x = Player::player->box.x + Player::player->box.w + OFFSET;
+	this->box.x = Player::player->box.x + Player::player->box.w;
 	this->box.y = Player::player->box.y;
 	this->box.w = DISTANCIA;
 	this->box.h = Player::player->box.h;
@@ -50,26 +50,26 @@ void EmptyBox::Update(float dt){
 			switch(Player::player->getInvBox()){
 			case 0:		//NORTE
 				this->box.x = rot.x + Player::player->box.h/2;
-				this->box.y = rot.y - DISTANCIA - Player::player->box.w/2 + OFFSET;
+				this->box.y = rot.y - DISTANCIA/* - Player::player->box.w/2*/;
 				this->box.w = Player::player->box.h;
-				this->box.h = DISTANCIA;
+				this->box.h = DISTANCIA + Player::player->box.w;
 				break;
 			case 1:		//SUL
 				this->box.x = rot.x  + Player::player->box.h/2;
-				this->box.y = Player::player->box.h + rot.y  + Player::player->box.w/2 - OFFSET;
+				this->box.y = /*Player::player->box.h*/ + rot.y /* + Player::player->box.w/2*/;
 				this->box.w = Player::player->box.h;
-				this->box.h = DISTANCIA;
+				this->box.h = DISTANCIA + Player::player->box.w;
 				break;
 			case 2:		//LESTE
-				this->box.x = Player::player->box.x + Player::player->box.w + OFFSET;
+				this->box.x = Player::player->box.x /*+ Player::player->box.w*/;
 				this->box.y = Player::player->box.y;
-				this->box.w = DISTANCIA;
+				this->box.w = DISTANCIA + Player::player->box.w;
 				this->box.h = Player::player->box.h;
 				break;
 			case 3:		//OESTE
-				this->box.x = Player::player->box.x - DISTANCIA - OFFSET;
+				this->box.x = Player::player->box.x - DISTANCIA;
 				this->box.y = Player::player->box.y;
-				this->box.w = DISTANCIA;
+				this->box.w = DISTANCIA + Player::player->box.w;
 				this->box.h = Player::player->box.h;
 				break;
 			}

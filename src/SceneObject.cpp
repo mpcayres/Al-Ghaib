@@ -9,9 +9,10 @@
 #include "SceneObject.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
+#include "Player.hpp"
 
 //Foi implementada como a janela, talvez a classe tenha filhos
-//Mas do jeito que está pode ser reaproveitada com imagens diferentes
+//Mas do jeito que estï¿½ pode ser reaproveitada com imagens diferentes
 SceneObject::SceneObject(float x, float y, int id, std::string img) :
 	id(id), sp(img){
 	estado = false;
@@ -43,7 +44,7 @@ void SceneObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		//printf("\nBATII");
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			if(estado){
+			if(estado){ //ok
 				estado = false;
 				sp.Open("img/closedwindow.png");
 				box.x = box.x + box.w/2 - sp.GetWidth()/2;
@@ -59,6 +60,21 @@ void SceneObject::NotifyCollision(GameObject& other){
 				box.h = sp.GetHeight();
 			}
 		}
+
+	}
+	if(other.Is("Player")){
+		/*if(Player::player->box.CenterX()>box.x){
+			Player::player->box.x += Player::player->box.w/2;
+		}
+		else if(Player::player->box.CenterX()<box.x){
+			Player::player->box.x -= Player::player->box.w/2;
+		}*/
+		if(Player::player->box.CenterY() < box.y + box.h){
+			Player::player->box.y = Player::player->previousPos.y;
+		}
+		/*else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
+			Player::player->box.y = Player::player->previousPos.y;
+		}*/
 	}
 }
 
