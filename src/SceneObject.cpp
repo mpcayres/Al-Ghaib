@@ -3,14 +3,15 @@
 #include "InputManager.hpp"
 #include "Player.hpp"
 
+//#include <iostream>
+
 //Foi implementada como a janela, talvez a classe tenha filhos
 //Mas do jeito que esta pode ser reaproveitada com imagens diferentes
 SceneObject::SceneObject(float x, float y, int id, std::string img) :
 	id(id), sp(img){
 	estado = false;
 	rotation = 0;
-	box.x = x - sp.GetWidth()/2;
-	box.y = y - sp.GetHeight()/2;
+	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
 }
@@ -50,18 +51,29 @@ void SceneObject::NotifyCollision(GameObject& other){
 				box.y = box.y + box.h/2 - sp.GetHeight()/2;
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
+
+				//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
+				//Ainda dá problema em bordas
+				//Nesse caso não precisa no eixo y
+				if(Player::player->box.x < box.x + box.w &&
+						Player::player->box.x + Player::player->box.w > box.x + box.w){
+					Player::player->box.x = box.x + box.w + 1;
+					//std::cout << "1" << std::endl;
+				} else if(Player::player->box.x + Player::player->box.w > box.x &&
+						Player::player->box.x < box.x){
+					Player::player->box.x = box.x - Player::player->box.w - 1;
+					//std::cout << "2" << std::endl;
+				}
+				/*if(Player::player->box.y < box.y + box.h &&
+						Player::player->box.y + Player::player->box.h > box.y + box.h){
+					Player::player->box.y = box.y + box.h + 1;
+					//std::cout << "3" << std::endl;
+				} else if(Player::player->box.y + Player::player->box.h > box.y &&
+						Player::player->box.y < box.y){
+					Player::player->box.y = box.y - Player::player->box.h - 1;
+					//std::cout << "4" << std::endl;
+				}*/
 			}
-			//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
-			/*if(Player::player->box.x < box.x + box.w){
-				Player::player->box.x = box.x + box.w + 1;
-			} else if(Player::player->box.x + Player::player->box.w > box.x){
-				Player::player->box.x = box.x - 1;
-			}
-			if(Player::player->box.y < box.y + box.h){
-				Player::player->box.y = box.y + box.h + 1;
-			} else if(Player::player->box.y + Player::player->box.h > box.y){
-				Player::player->box.y = box.y - 1;
-			}*/
 		}
 	}
 	if(other.Is("Player")){
@@ -72,20 +84,20 @@ void SceneObject::NotifyCollision(GameObject& other){
 			Player::player->box.x -= Player::player->box.w/2;
 		}
 		if(Player::player->box.CenterY() < box.y + box.h){
- +			Player::player->box.y = Player::player->previousPos.y;
- +		}
- +		else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
- +			Player::player->box.y = Player::player->previousPos.y;
- +		}*/
+ 			Player::player->box.y = Player::player->previousPos.y;
+ 		}
+ 		else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
+ 			Player::player->box.y = Player::player->previousPos.y;
+ 		}*/
 		// Coloquei assim e está funcionando o suficiente
-		/*if(Player::player->box.x < box.x + box.w ||
+		if(Player::player->box.x < box.x + box.w ||
 				Player::player->box.x + Player::player->box.w > box.x){
 			Player::player->box.x = Player::player->previousPos.x;
 		}
 		if(Player::player->box.y < box.y + box.h ||
 				Player::player->box.y + Player::player->box.h > box.y){
 			Player::player->box.y = Player::player->previousPos.y;
-		}*/
+		}
 	}
 }
 

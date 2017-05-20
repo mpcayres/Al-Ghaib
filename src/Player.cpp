@@ -13,8 +13,7 @@
 Player* Player::player;
 
 Player::Player(float x, float y): bodySp("img/penguin.png"){
-	box.x = x - bodySp.GetWidth()/2;
-	box.y = y - bodySp.GetHeight()/2;
+	box.x = x; box.y = y;
 	box.h = bodySp.GetHeight();
 	box.w = bodySp.GetWidth();
 	//time = Timer();
@@ -95,16 +94,16 @@ void Player::Update(float dt){
 	}
 
 	//Um problema, quando vc gira estando perto do objeto, independente da forma, pode dar umas travadas
-	if(colliding && dirCollision == direcao){
+	//if(colliding && dirCollision == direcao){
 		//Tentei isso de baixo tbm, mas ficou comédia
 		/*if(dirCollision == NORTE || dirCollision == SUL){
 			box.y = previousPos.y;
 		} else if(dirCollision == LESTE || dirCollision == OESTE){
 			box.x = previousPos.x;
 		}*/
-		colliding = false;
-		dirCollision = NONE;
-	} else{
+	//	colliding = false;
+	//	dirCollision = NONE;
+	//} else{
 		if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
 			previousPos.y = box.y;
 			box.y += speed.y;
@@ -113,7 +112,7 @@ void Player::Update(float dt){
 			previousPos.x = box.x;
 			box.x += speed.x;
 		}
-	}
+	//}
 
 	/*if(InputInstance.MousePress(LEFT_MOUSE_BUTTON && time.Get() >= 0.3)) {
 		time.Restart();
