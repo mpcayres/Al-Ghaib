@@ -1,11 +1,3 @@
-/*
-
-
- * SceneObject.hpp
- *
- *  Created on: May 18, 2017
- *      Author: ingrid
- */
 #ifndef SRC_SCENEOBJECT_HPP_
 #define SRC_SCENEOBJECT_HPP_
 

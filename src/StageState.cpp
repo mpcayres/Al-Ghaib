@@ -44,7 +44,7 @@ void StageState::Pause(){
 }
 
 void StageState::Resume(){
-	music.Play(-1);
+	//music.Play(-1);
 }
 
 void StageState::LoadAssets(){
@@ -77,12 +77,14 @@ void StageState::Update(float dt){
 
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		for(int j = i-1; j >= 0; --j){
-				if(Collision::IsColliding(objectArray[i].get()->box,objectArray[j].get()->box,
-					objectArray[i].get()->rotation, objectArray[j].get()->rotation) == true){
-					objectArray[i].get()->NotifyCollision(*objectArray[j].get());
-					objectArray[j].get()->NotifyCollision(*objectArray[i].get());
-				}
+			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
+				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
+
+				objectArray[i].get()->NotifyCollision(*objectArray[j].get());
+				objectArray[j].get()->NotifyCollision(*objectArray[i].get());
+
 			}
+		}
 	}
 }
 
@@ -91,5 +93,4 @@ void StageState::Render(){
 	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
 	RenderArray();
 	tileMap.Render(Camera::pos.x, Camera::pos.y);
-	
 }

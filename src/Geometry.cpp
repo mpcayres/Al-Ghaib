@@ -66,12 +66,7 @@ Vec2 Vec2::Mult(int escalar){
 }
 
 Vec2 Vec2::Rotate(float angle){
-	float x1, y1;
-
-	x1 = (x * cos(angle)) - (y * sin(angle));
-	y1 = (y * cos(angle)) + (x * sin(angle));
-
-	return Vec2(x1,y1);
+	return Vec2((x*cos(angle) - y*sin(angle)), (y*cos(angle) + x*sin(angle)));
 }
 
 Vec2 Vec2::Normalize(){

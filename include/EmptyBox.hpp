@@ -1,10 +1,3 @@
-/*
- * EmptyBox.h
- *
- *  Created on: May 18, 2017
- *      Author: ingrid
- */
-
 #ifndef EMPTYBOX_HPP_
 #define EMPTYBOX_HPP_
 
@@ -30,8 +23,7 @@ public:
 	void setX(int x);
 	void setY(int y);
 private:
-	Timer time;
-//private:
+	//Timer time;
 	//Rect box;
 	//Sprite sp;
 };

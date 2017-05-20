@@ -1,18 +1,10 @@
-/*
- * SceneObject.cpp
-
- *
- *  Created on: May 18, 2017
- *      Author: ingrid
- */
-
 #include "SceneObject.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
 #include "Player.hpp"
 
 //Foi implementada como a janela, talvez a classe tenha filhos
-//Mas do jeito que estï¿½ pode ser reaproveitada com imagens diferentes
+//Mas do jeito que esta pode ser reaproveitada com imagens diferentes
 SceneObject::SceneObject(float x, float y, int id, std::string img) :
 	id(id), sp(img){
 	estado = false;
@@ -59,8 +51,18 @@ void SceneObject::NotifyCollision(GameObject& other){
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 			}
+			//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
+			/*if(Player::player->box.x < box.x + box.w){
+				Player::player->box.x = box.x + box.w + 1;
+			} else if(Player::player->box.x + Player::player->box.w > box.x){
+				Player::player->box.x = box.x - 1;
+			}
+			if(Player::player->box.y < box.y + box.h){
+				Player::player->box.y = box.y + box.h + 1;
+			} else if(Player::player->box.y + Player::player->box.h > box.y){
+				Player::player->box.y = box.y - 1;
+			}*/
 		}
-
 	}
 	if(other.Is("Player")){
 		/*if(Player::player->box.CenterX()>box.x){
@@ -68,11 +70,20 @@ void SceneObject::NotifyCollision(GameObject& other){
 		}
 		else if(Player::player->box.CenterX()<box.x){
 			Player::player->box.x -= Player::player->box.w/2;
-		}*/
-		if(Player::player->box.CenterY() < box.y + box.h){
-			Player::player->box.y = Player::player->previousPos.y;
 		}
-		/*else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
+		if(Player::player->box.CenterY() < box.y + box.h){
+ +			Player::player->box.y = Player::player->previousPos.y;
+ +		}
+ +		else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
+ +			Player::player->box.y = Player::player->previousPos.y;
+ +		}*/
+		// Coloquei assim e está funcionando o suficiente
+		/*if(Player::player->box.x < box.x + box.w ||
+				Player::player->box.x + Player::player->box.w > box.x){
+			Player::player->box.x = Player::player->previousPos.x;
+		}
+		if(Player::player->box.y < box.y + box.h ||
+				Player::player->box.y + Player::player->box.h > box.y){
 			Player::player->box.y = Player::player->previousPos.y;
 		}*/
 	}

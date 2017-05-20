@@ -35,9 +35,9 @@ void Enemy::Update(float dt){
 	/* dinamica de percepcao de ruido vindo do jogador*/
 	//printf("\n Distancia para jogador");
 
-	float dist = 0;
+	//float dist = 0;
 	//int running = 1;
-	dist = box.DistanceRect(Player::player->box);
+	//dist = box.DistanceRect(Player::player->box);
 	//printf("%f", dist);
 	//if(dist < 250)
 		//printf("VISTO!");

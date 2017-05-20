@@ -1,8 +1,7 @@
 #ifndef INCLUDE_GEOMETRY_HPP_
 #define INCLUDE_GEOMETRY_HPP_
 
-class Vec2;
-class Rect;
+#define PI 3.14159265
 
 class Vec2 {
 public:

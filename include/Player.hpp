@@ -4,7 +4,7 @@
 #include "InventoryObject.hpp"
 #include "GameObject.hpp"
 #include "Sprite.hpp"
-#include "Timer.hpp"
+//#include "Timer.hpp"
 #include <vector>
 #include <memory>
 
@@ -30,7 +30,7 @@ public:
 	Rect previousPos;
 
 private:
-	Timer time;
+	//Timer time;
 	Sprite bodySp;
 	Vec2 speed;
 	int hp;
@@ -40,8 +40,10 @@ private:
 	bool showingInventory;
 	std::vector<std::unique_ptr<InventoryObject>> inventory;
 
-	enum InvBox{NORTE, SUL, LESTE, OESTE};
+	enum InvBox{NORTE, SUL, LESTE, OESTE, NONE};
 	InvBox direcao;
+	InvBox dirCollision;
+	bool colliding;
 
 };
 
