@@ -10,12 +10,14 @@
 #include "Camera.hpp"
 #include "InputManager.hpp"
 
-SceneObject::SceneObject(float x, float y, int id, std::string img) : id(id), sp(img){
-	//sp.Open(img);
+//Foi implementada como a janela, talvez a classe tenha filhos
+//Mas do jeito que está pode ser reaproveitada com imagens diferentes
+SceneObject::SceneObject(float x, float y, int id, std::string img) :
+	id(id), sp(img){
 	estado = false;
 	rotation = 0;
-	box.x = x  - sp.GetWidth()/2;
-	box.y = y  - sp.GetHeight()/2;
+	box.x = x - sp.GetWidth()/2;
+	box.y = y - sp.GetHeight()/2;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
 }
@@ -36,46 +38,26 @@ bool SceneObject::IsEstado(){
 	return estado;
 }
 
-// Talvez colocar pra pegar quando estiver prï¿½ximo
 void SceneObject::NotifyCollision(GameObject& other){
-	printf("\num fora");
+	//printf("\num fora");
 	if(other.Is("EmptyBox")){
-		printf("\nBATII");
-		//getchar();
-		Rect box2;
+		//printf("\nBATII");
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			if (estado == true){
+			if(estado){
 				estado = false;
-				printf("dasdsa");
 				sp.Open("img/closedwindow.png");
-				box2.x = box.x;
-				box2.y = box.y;
-				box2.h = sp.GetHeight();
-				box2.w = sp.GetWidth();
-				//box.x = box.x + (box.Center().Distance(box2.Center()));
-				//box.y = box.y + (box.Center().Distance(box2.Center()));
-				//box = box + (box2.Center() - box.Center());
-				//printf("\n TO CLOSED WINDOWbox x %f, y %f -- box 2 x %f, y %f", box.Center().x, box.Center().y, box2.Center().x, box2.Center().y);
-				box.x = box.x + (box2.Center().x - box.Center().x);
-				box.y = box.y + (box2.Center().y - box.Center().y);
-
-				printf("AQUIII");
-
-			}
-			else{ //ok
+				box.x = box.x + box.w/2 - sp.GetWidth()/2;
+				box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				box.w = sp.GetWidth();
+				box.h = sp.GetHeight();
+			} else{ //ok
 				estado = true;
 				sp.Open("img/openwindow.png");
-				box2.x = box.x;
-				box2.y = box.y;
-				box2.h = sp.GetHeight();
-				box2.w = sp.GetWidth();
-				//printf("\n TO OPEN WINDOW - -box x %f, y %f -- box 2 x %f, y %f", box.Center().x, box.Center().y, box2.Center().x, box2.Center().y);
-
-				box.x = box.x + (box.Center() - box2.Center()).x;
-				box.y = box.y + (box.Center() - box2.Center()).y;
+				box.x = box.x + box.w/2 - sp.GetWidth()/2;
+				box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				box.w = sp.GetWidth();
+				box.h = sp.GetHeight();
 			}
-			// adicionar ao inventï¿½rio pelo id
-			// ver alguma animaï¿½ï¿½o
 		}
 	}
 }

@@ -13,10 +13,10 @@
 
 EmptyBox::EmptyBox( ){
 	rotation = 0;
-	box.x = Player::player->box.x + Player::player->box.w - Camera::pos.x;
-	box.y = Player::player->box.y - Camera::pos.y;
-	box.w = DISTANCIA;
-	box.h = Player::player->box.h;
+	this->box.x = Player::player->box.x + Player::player->box.w + OFFSET;
+	this->box.y = Player::player->box.y;
+	this->box.w = DISTANCIA;
+	this->box.h = Player::player->box.h;
 }
 
 void EmptyBox::Render(){
@@ -33,7 +33,7 @@ void EmptyBox::Render(){
 	/* Creating the surface. */
 	//s = SDL_CreateRGBSurface(0, box.w, box.h, 32, 0, 0, 0, 0);
 	/* Filling the surface with red color. */
-	//SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 255, 0, 0));
+	//SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 2OFFSETOFFSET, 0, 0));
 
 
 
@@ -50,24 +50,24 @@ void EmptyBox::Update(float dt){
 			switch(Player::player->getInvBox()){
 			case 0:		//NORTE
 				this->box.x = rot.x + Player::player->box.h/2;
-				this->box.y = rot.y - DISTANCIA - Player::player->box.w/2 + 5;
+				this->box.y = rot.y - DISTANCIA - Player::player->box.w/2 + OFFSET;
 				this->box.w = Player::player->box.h;
 				this->box.h = DISTANCIA;
 				break;
 			case 1:		//SUL
 				this->box.x = rot.x  + Player::player->box.h/2;
-				this->box.y = Player::player->box.h + rot.y  + Player::player->box.w/2 - 5;
+				this->box.y = Player::player->box.h + rot.y  + Player::player->box.w/2 - OFFSET;
 				this->box.w = Player::player->box.h;
 				this->box.h = DISTANCIA;
 				break;
 			case 2:		//LESTE
-				this->box.x = Player::player->box.x + Player::player->box.w + 5;
+				this->box.x = Player::player->box.x + Player::player->box.w + OFFSET;
 				this->box.y = Player::player->box.y;
 				this->box.w = DISTANCIA;
 				this->box.h = Player::player->box.h;
 				break;
 			case 3:		//OESTE
-				this->box.x = Player::player->box.x - DISTANCIA - 5;
+				this->box.x = Player::player->box.x - DISTANCIA - OFFSET;
 				this->box.y = Player::player->box.y;
 				this->box.w = DISTANCIA;
 				this->box.h = Player::player->box.h;
@@ -79,9 +79,9 @@ void EmptyBox::Update(float dt){
 
 // Talvez colocar pra pegar quando estiver pr�ximo
 void EmptyBox::NotifyCollision(GameObject& other){
-	printf("\nhere");
+	//printf("\nhere");
 	if(other.Is("SceneObject")){
-		printf("\nbatendo");
+		//printf("\nbatendo");
 	}
 }
 
