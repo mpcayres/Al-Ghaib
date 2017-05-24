@@ -8,6 +8,7 @@ MovingObject::MovingObject(float x, float y, std::string img) : sp(img){
 	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
+	previousPos = Vec2(x,y);
 }
 
 bool MovingObject::IsDead(){
@@ -25,6 +26,7 @@ void MovingObject::Render(){
 void MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().IsKeyDown(Z_KEY)){
+			previousPos = Vec2(box.x, box.y);
 			box.x += Player::player->GetSpeed().x;
 			box.y += Player::player->GetSpeed().y;
 		}
@@ -38,6 +40,10 @@ void MovingObject::NotifyCollision(GameObject& other){
 				Player::player->box.y + Player::player->box.h > box.y){
 			Player::player->box.y = Player::player->previousPos.y;
 		}
+	}
+	if(other.Is("SceneObject")){
+		box.x = previousPos.x;
+		box.y = previousPos.y;
 	}
 }
 

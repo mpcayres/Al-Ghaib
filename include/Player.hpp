@@ -27,7 +27,7 @@ public:
 	Vec2 GetSpeed();
 
 	static Player * player;
-	Rect previousPos;
+	Vec2 previousPos;
 	enum InvBox{SUL, NORTE, LESTE, OESTE, NONE};
 
 private:

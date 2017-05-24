@@ -20,9 +20,9 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 	EmptyBox* EB = new EmptyBox();
 	Enemy* E = new Enemy(300, 200);
 	PickUpObject* PO = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
-	SceneObject* Window = new SceneObject(600, 400, 1, "img/closedwindow.png", "img/openwindow.png");
-	SceneObject* Door = new SceneObject(1000, 200, 1, "img/doorclosed.png", "img/dooropened.png");
-	MovingObject* Table = new MovingObject(400, 600, "img/optionsS.png");
+	SceneObject* Window = new SceneObject(500, 400, 1, "img/closedwindow.png", "img/openwindow.png", true);
+	SceneObject* Door = new SceneObject(800, 200, 1, "img/doorclosed.png", "img/dooropened.png", false);
+	MovingObject* Table = new MovingObject(300, 600, "img/optionsS.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
 	objectArray.emplace_back(E);

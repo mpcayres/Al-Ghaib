@@ -8,7 +8,7 @@
 
 class SceneObject : public GameObject {
 public:
-	SceneObject(float x, float y, int id, std::string img, std::string change2);
+	SceneObject(float x, float y, int id, std::string img, std::string img2, bool alinha);
 
 	void Update(float dt);
 	void Render();
@@ -22,6 +22,7 @@ private:
 	Sprite sp;
 	bool estado;
 	std::string change1, change2;
+	bool alinhaCentro; // pode virar inteiro se tiver outros possíveis alinhamentos
 };
 
 #endif  /* SCENEOBJECT_H_ */

@@ -24,6 +24,7 @@ public:
 
 private:
 	Sprite sp;
+	Vec2 previousPos;
 };
 
 #endif /* SRC_MOVINGOBJECT_H_ */

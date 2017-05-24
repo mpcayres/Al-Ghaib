@@ -7,10 +7,10 @@
 
 //Foi implementada como a janela, talvez a classe tenha filhos
 //Mas do jeito que esta pode ser reaproveitada com imagens diferentes
-SceneObject::SceneObject(float x, float y, int id, std::string img, std::string change2) :
-	id(id), sp(img){
+SceneObject::SceneObject(float x, float y, int id, std::string img, std::string img2, bool alinha) :
+	id(id), sp(img), alinhaCentro(alinha){
 	this->change1 = img;
-	this->change2 = change2;
+	this->change2 = img2;
 	estado = false;
 	rotation = 0;
 	box.x = x; box.y = y;
@@ -35,40 +35,44 @@ bool SceneObject::IsEstado(){
 }
 
 void SceneObject::NotifyCollision(GameObject& other){
-	//printf("\num fora");
 	if(other.Is("EmptyBox")){
-		//printf("\nBATII");
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			if(estado){ //ok
+			if(estado){
 				estado = false;
 				sp.Open(change1);
-				box.x = box.x + box.w/2 - sp.GetWidth()/2;
-				box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				if(alinhaCentro){
+					box.x = box.x + box.w/2 - sp.GetWidth()/2;
+					box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				}
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
-			} else{ //ok
+			} else{
 				estado = true;
 				sp.Open(change2);
-				box.x = box.x + box.w/2 - sp.GetWidth()/2;
-				box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				if(alinhaCentro){
+					box.x = box.x + box.w/2 - sp.GetWidth()/2;
+					box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				}
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 
-				//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
-				//Nesse caso n�o precisa no eixo y
-				if(Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)/*Player::player->GetDirecao() == Player::LESTE ||*/
-					//	Player::player->GetDirecao() == Player::OESTE){
-				if((Player::player->box.x < box.x + box.w &&
-						Player::player->box.x + Player::player->box.w > box.x + box.w )
-						|| (box.InsideX(Player::player->box) &&
-								Player::player->box.CenterX() >= box.CenterX())){
-					Player::player->box.x = box.x + box.w + 1;
-				} else if((Player::player->box.x + Player::player->box.w > box.x &&
-						Player::player->box.x < box.x)
-						|| (box.InsideX(Player::player->box) &&
-								Player::player->box.CenterX() < box.CenterX())){
-					Player::player->box.x = box.x - Player::player->box.w - 1;
-				}
+				//Nesse caso nao precisa no eixo y
+				if((Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)
+					&& (Player::player->GetDirecao() == Player::LESTE ||
+						Player::player->GetDirecao() == Player::OESTE)){
+
+					if((Player::player->box.x < box.x + box.w &&
+							Player::player->box.x + Player::player->box.w > box.x + box.w )
+							|| (box.InsideX(Player::player->box) &&
+									Player::player->box.CenterX() >= box.CenterX())){
+						Player::player->box.x = box.x + box.w + 1;
+					} else if((Player::player->box.x + Player::player->box.w > box.x &&
+							Player::player->box.x < box.x)
+							|| (box.InsideX(Player::player->box) &&
+									Player::player->box.CenterX() < box.CenterX())){
+						Player::player->box.x = box.x - Player::player->box.w - 1;
+					}
+
 				}
 				/*if(Player::player->GetDirecao() == Player::NORTE ||
 						Player::player->GetDirecao() == Player::SUL){
@@ -88,6 +92,8 @@ void SceneObject::NotifyCollision(GameObject& other){
 				}*/
 			}
 		}
+	}
+
 	if(other.Is("Player")){
 		/*if(Player::player->box.CenterX()>box.x){
 			Player::player->box.x += Player::player->box.w/2;
@@ -101,7 +107,7 @@ void SceneObject::NotifyCollision(GameObject& other){
  		else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
  			Player::player->box.y = Player::player->previousPos.y;
  		}*/
-		// Coloquei assim e est� funcionando o suficiente
+
 		if((Player::player->box.CenterX() < box.x /*+ box.w*/ /*- Player::player->box.w*/ ||
 				Player::player->box.CenterX() /*+ Player::player->box.w */> box.x /*- Player::player->box.w*/ )
 				&&(Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)) {

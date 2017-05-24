@@ -19,6 +19,7 @@ Player::Player(float x, float y) :
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();
+	previousPos = Vec2(x,y);
 	//time = Timer();
 
 	hp = 30;
