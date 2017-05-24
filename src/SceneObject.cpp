@@ -56,19 +56,19 @@ void SceneObject::NotifyCollision(GameObject& other){
 
 				//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
 				//Nesse caso n�o precisa no eixo y
-				if(Player::player->GetDirecao() == Player::LESTE ||
-						Player::player->GetDirecao() == Player::OESTE){
-					if((Player::player->box.x < box.x + box.w &&
-							Player::player->box.x + Player::player->box.w > box.x + box.w )
-							|| (box.InsideX(Player::player->box) &&
-									Player::player->box.CenterX() >= box.CenterX())){
-						Player::player->box.x = box.x + box.w + 1;
-					} else if((Player::player->box.x + Player::player->box.w > box.x &&
-							Player::player->box.x < box.x)
-							|| (box.InsideX(Player::player->box) &&
-									Player::player->box.CenterX() < box.CenterX())){
-						Player::player->box.x = box.x - Player::player->box.w - 1;
-					}
+				if(Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)/*Player::player->GetDirecao() == Player::LESTE ||*/
+					//	Player::player->GetDirecao() == Player::OESTE){
+				if((Player::player->box.x < box.x + box.w &&
+						Player::player->box.x + Player::player->box.w > box.x + box.w )
+						|| (box.InsideX(Player::player->box) &&
+								Player::player->box.CenterX() >= box.CenterX())){
+					Player::player->box.x = box.x + box.w + 1;
+				} else if((Player::player->box.x + Player::player->box.w > box.x &&
+						Player::player->box.x < box.x)
+						|| (box.InsideX(Player::player->box) &&
+								Player::player->box.CenterX() < box.CenterX())){
+					Player::player->box.x = box.x - Player::player->box.w - 1;
+				}
 				}
 				/*if(Player::player->GetDirecao() == Player::NORTE ||
 						Player::player->GetDirecao() == Player::SUL){
@@ -88,7 +88,6 @@ void SceneObject::NotifyCollision(GameObject& other){
 				}*/
 			}
 		}
-	}
 	if(other.Is("Player")){
 		/*if(Player::player->box.CenterX()>box.x){
 			Player::player->box.x += Player::player->box.w/2;
@@ -106,8 +105,8 @@ void SceneObject::NotifyCollision(GameObject& other){
 		if((Player::player->box.CenterX() < box.x /*+ box.w*/ /*- Player::player->box.w*/ ||
 				Player::player->box.CenterX() /*+ Player::player->box.w */> box.x /*- Player::player->box.w*/ )
 				&&(Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)) {
-					Player::player->box.x = Player::player->previousPos.x;
 
+				Player::player->box.x = Player::player->previousPos.x;
 
 		}
 
