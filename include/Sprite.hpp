@@ -18,22 +18,24 @@
 class Sprite{
 public:
 	Sprite();
-	Sprite(std::string file, int frameCount = 1, float frameTime = 1);
+	Sprite(std::string file, int frameCount = 1, float frameTime = 1, int tamCount = 1);
 	~Sprite();
 
 	void SetScaleX(float scale);
 	void SetScaleY(float scale);
 
-	void Update(float dt);
-	void SetFrame(int frame);
+	void Update(float dt, int posH = 0);
+	void SetFrame(int frame, int posH = 0);
 	void SetFrameCount(int frameCount);
 	void SetFrameTime(float frameTime);
 
-	void Open(std::string file, int frameCount = 1, float frameTime = 1);
+	void Open(std::string file, int frameCount = 1, float frameTime = 1, int tamCount = 1);
 	void SetClip(int x, int y, int w, int h);
 	void Render(int x, int y, float angle);
 	int GetWidth();
 	int GetHeight();
+	int GetScaledWidth();
+	int GetScaledHeight();
 	bool IsOpen();
 
 private:
@@ -47,6 +49,7 @@ private:
 	int currentFrame;
 	float timeElapsed;
 	float frameTime;
+	int tamCount;
 };
 
 #endif /* INCLUDE_SPRITE_HPP_ */

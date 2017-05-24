@@ -12,6 +12,42 @@ EmptyBox::EmptyBox( ){
 	box.h = Player::player->box.h;
 }
 
+void EmptyBox::Update(float dt){
+	/*Vec2 rot = Vec2(Player::player->box.x - Player::player->box.CenterX(),
+			Player::player->box.y - Player::player->box.CenterY());
+	rot = rot.Rotate(Player::player->rotation*PI/180);*/
+	switch(Player::player->GetDirecao()){
+		case Player::NORTE:		//NORTE
+			//box.x = rot.x + Player::player->box.CenterX();
+			//box.y = rot.y + Player::player->box.CenterY() - DISTANCIA;
+			box.x = Player::player->box.x;
+			box.y = Player::player->box.y - DISTANCIA;
+			box.w = Player::player->box.h;
+			box.h = DISTANCIA + Player::player->box.w;
+			break;
+		case Player::SUL:		//SUL
+			//box.x = rot.x + Player::player->box.CenterX();
+			//box.y = rot.y + Player::player->box.CenterY();
+			box.x = Player::player->box.x;
+			box.y = Player::player->box.y;
+			box.w = Player::player->box.h;
+			box.h = DISTANCIA + Player::player->box.w;
+			break;
+		case Player::LESTE:		//LESTE
+			box.x = Player::player->box.x;
+			box.y = Player::player->box.y;
+			box.w = DISTANCIA + Player::player->box.w;
+			box.h = Player::player->box.h;
+			break;
+		case Player::OESTE:		//OESTE
+			box.x = Player::player->box.x - DISTANCIA;
+			box.y = Player::player->box.y;
+			box.w = DISTANCIA + Player::player->box.w;
+			box.h = Player::player->box.h;
+			break;
+	}
+}
+
 void EmptyBox::Render(){
 	SDL_Rect dst;
 	dst.x = box.x - Camera::pos.x; dst.y = box.y - Camera::pos.y;
@@ -23,45 +59,11 @@ bool EmptyBox::IsDead(){
 	return false;
 }
 
-void EmptyBox::Update(float dt){
-	Vec2 rot = Vec2(Player::player->box.x - Player::player->box.CenterX(),
-			Player::player->box.y - Player::player->box.CenterY());
-	rot = rot.Rotate(Player::player->rotation*PI/180);
-	switch(Player::player->getInvBox()){
-		case 0:		//NORTE
-			box.x = rot.x + Player::player->box.CenterX();
-			box.y = rot.y + Player::player->box.CenterY() - Player::player->box.w - DISTANCIA;
-			box.w = Player::player->box.h;
-			box.h = DISTANCIA + Player::player->box.w;
-			break;
-		case 1:		//SUL
-			box.x = rot.x + Player::player->box.CenterX() - Player::player->box.h;
-			box.y = rot.y + Player::player->box.CenterY();
-			box.w = Player::player->box.h;
-			box.h = DISTANCIA + Player::player->box.w;
-			break;
-		case 2:		//LESTE
-			box.x = Player::player->box.x;
-			box.y = Player::player->box.y;
-			box.w = DISTANCIA + Player::player->box.w;
-			box.h = Player::player->box.h;
-			break;
-		case 3:		//OESTE
-			box.x = Player::player->box.x - DISTANCIA;
-			box.y = Player::player->box.y;
-			box.w = DISTANCIA + Player::player->box.w;
-			box.h = Player::player->box.h;
-			break;
-	}
-}
-
-
-// Talvez colocar pra pegar quando estiver pr�ximo
 void EmptyBox::NotifyCollision(GameObject& other){
 	//printf("\nhere");
-	if(other.Is("SceneObject")){
+	/*if(other.Is("SceneObject")){
 		//printf("\nbatendo");
-	}
+	}*/
 }
 
 bool EmptyBox::Is(std::string type){

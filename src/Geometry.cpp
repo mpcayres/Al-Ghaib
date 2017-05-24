@@ -124,12 +124,20 @@ float Rect::DistanceRect(Rect rectangle){
 }
 
 bool Rect::Inside(float x1, float y1){
-	if(x1 >= x && x1 <= x+w){
-		if(y1 >= y && y1 <= y+h){
-			return true;
-		}
-	}
-	return false;
+	return (x1 >= x && x1 <= x+w && y1 >= y && y1 <= y+h);
+}
+
+bool Rect::Inside(Rect v2){
+	return (v2.x >= x && v2.x + v2.w <= x+w
+			&& v2.y >= y && v2.y + v2.h <= y+h);
+}
+
+bool Rect::InsideX(Rect v2){
+	return (v2.x >= x && v2.x + v2.w <= x+w);
+}
+
+bool Rect::InsideY(Rect v2){
+	return (v2.y >= y && v2.y + v2.h <= y+h);
 }
 
 void Rect::operator=(const Rect& r){

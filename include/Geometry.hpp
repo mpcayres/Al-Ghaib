@@ -45,6 +45,9 @@ public:
 	float CenterY();
 	float DistanceRect(Rect rectangle2);
 	bool Inside(float x, float y);
+	bool Inside(Rect v2);
+	bool InsideX(Rect v2);
+	bool InsideY(Rect v2);
 
 	void operator=(const Rect& r);
 };

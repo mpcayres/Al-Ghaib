@@ -23,15 +23,16 @@ public:
 	bool GetShowingInventory();
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	//std::vector<std::unique_ptr<InventoryObject>> GetInventory();
-	int getInvBox();
+	int GetDirecao();
 
 	static Player * player;
-
 	Rect previousPos;
+	enum InvBox{SUL, NORTE, LESTE, OESTE, NONE};
 
 private:
 	//Timer time;
-	Sprite bodySp;
+	float timeAnim;
+	Sprite sp;
 	Vec2 speed;
 	int hp;
 	bool running;
@@ -40,7 +41,6 @@ private:
 	bool showingInventory;
 	std::vector<std::unique_ptr<InventoryObject>> inventory;
 
-	enum InvBox{NORTE, SUL, LESTE, OESTE, NONE};
 	InvBox direcao;
 	InvBox dirCollision;
 	bool colliding;

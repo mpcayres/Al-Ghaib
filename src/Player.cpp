@@ -12,17 +12,20 @@
 
 Player* Player::player;
 
-Player::Player(float x, float y): bodySp("img/penguin.png"){
+Player::Player(float x, float y) :
+		timeAnim(0.1), sp("img/kinder.jpg", 20, timeAnim, 4){
+	sp.SetScaleX(2.5);
+	sp.SetScaleY(2.5);
 	box.x = x; box.y = y;
-	box.h = bodySp.GetHeight();
-	box.w = bodySp.GetWidth();
+	box.w = sp.GetScaledWidth();
+	box.h = sp.GetScaledHeight();
 	//time = Timer();
 
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
 	player = this;
-	running = true;
+	running = false;
 
 	inHandIndex = -1; //dependendo do save pode ser diferente
 	showingInventory = false;
@@ -44,56 +47,39 @@ void Player::Update(float dt){
 		direcao = NORTE;
 		speed.y = -MODULO_SPEED;
 		speed.x = 0;
-		rotation = -90;
-		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-			speed.x *= AUMENTO_VELOCIDADE;
-			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
-		} else
-			running = false;
+		//rotation = -90;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		direcao = SUL;
 		speed.y = MODULO_SPEED;
 		speed.x = 0;
-		rotation = 90;
-		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-			speed.x *= AUMENTO_VELOCIDADE;
-			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
-		} else
-			running = false;
+		//rotation = 90;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		direcao = LESTE;
 		speed.x = MODULO_SPEED;
 		speed.y = 0;
-		rotation = 0;
-		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-			speed.x *= AUMENTO_VELOCIDADE;
-			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
-		} else
-			running = false;
+		//rotation = 0;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		direcao = OESTE;
 		speed.x = -MODULO_SPEED;
 		speed.y = 0;
-		rotation = 180;
-		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-			speed.x *= AUMENTO_VELOCIDADE;
-			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
-		} else
-			running = false;
+		//rotation = 180;
 	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 		speed.x = 0;
 		speed.y = 0;
 	}
 
-	//Um problema, quando vc gira estando perto do objeto, independente da forma, pode dar umas travadas
+	if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+		speed.x *= AUMENTO_VELOCIDADE;
+		speed.y *= AUMENTO_VELOCIDADE;
+		running = true;
+	} else
+		running = false;
+
+	//Deixei essa parte aqui pra caso preciso em outro caso
 	//if(colliding && dirCollision == direcao){
 		//Tentei isso de baixo tbm, mas ficou comédia
 		/*if(dirCollision == NORTE || dirCollision == SUL){
@@ -104,13 +90,13 @@ void Player::Update(float dt){
 	//	colliding = false;
 	//	dirCollision = NONE;
 	//} else{
-		if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
-			previousPos.y = box.y;
-			box.y += speed.y;
-		}
 		if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
 			previousPos.x = box.x;
 			box.x += speed.x;
+		}
+		if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
+			previousPos.y = box.y;
+			box.y += speed.y;
 		}
 	//}
 
@@ -120,10 +106,19 @@ void Player::Update(float dt){
 	}
 
 	time.Update(dt);*/
+
+	if(speed.x != 0 || speed.y != 0){
+		if(running){
+			sp.SetFrameTime(timeAnim/20);
+		} else{
+			sp.SetFrameTime(timeAnim);
+		}
+		sp.Update(dt, direcao);
+	}
 }
 
 void Player::Render(){
-	bodySp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool Player::IsDead(){
@@ -179,7 +174,7 @@ void Player::AddInventory(std::string obj/*, std::string objSp*/){
 	}
 }
 
-int Player::getInvBox(){
+int Player::GetDirecao(){
 	return direcao;
 }
 // Causava erro na compilacao, pq e unique_ptr

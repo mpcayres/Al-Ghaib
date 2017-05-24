@@ -8,25 +8,26 @@ Sprite::Sprite(){
 	texture = nullptr;
 	height = 0; width = 0;
 	scaleX = 1; scaleY = 1;
-	frameCount = 1; frameTime = 1;
+	frameCount = 1; frameTime = 1; tamCount = 1;
 	timeElapsed = 0; currentFrame = 1;
 }
 
-Sprite::Sprite(std::string file, int frameCount, float frameTime){
+Sprite::Sprite(std::string file, int frameCount, float frameTime, int tamCount){
 	scaleX = 1; scaleY = 1;
 	texture = nullptr;
 	timeElapsed = 0; currentFrame = 1;
-	Open(file, frameCount, frameTime);
+	Open(file, frameCount, frameTime, tamCount);
 }
 
 Sprite::~Sprite(){}
 
-void Sprite::Open(std::string file, int frameCount, float frameTime){
+void Sprite::Open(std::string file, int frameCount, float frameTime, int tamCount){
 	this->frameCount = frameCount; this->frameTime = frameTime;
+	this->tamCount = tamCount;
 	texture = Resources::GetImage(file);
 
 	SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
-	SetClip(0, 0, GetWidth(), height);
+	SetClip(0, 0, GetWidth(), GetHeight());
 }
 
 void Sprite::SetClip(int x, int y, int w, int h){
@@ -44,31 +45,32 @@ void Sprite::Render(int x, int y, float angle){
 	dst.h = clipRect.h*scaleY; dst.w = clipRect.w*scaleX;
 	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(),
 			&clipRect, &dst, angle, nullptr, SDL_FLIP_NONE);
-	SDL_RenderDrawRect(Game::GetInstance().GetRenderer() , &dst);
+	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
 
 }
 
 void Sprite::SetScaleX(float scale){
 	scaleX = scale;
 }
+
 void Sprite::SetScaleY(float scale){
 	scaleY = scale;
 }
 
-void Sprite::Update(float dt){
+void Sprite::Update(float dt, int posH){
 	timeElapsed += dt;
 
 	if (timeElapsed >= frameTime){
 		timeElapsed -= frameTime;
 		currentFrame++;
 		if(currentFrame > frameCount) currentFrame = 1;
-		SetFrame(currentFrame);
+		SetFrame(currentFrame, posH);
 	}
 }
 
-void Sprite::SetFrame(int frame){
+void Sprite::SetFrame(int frame, int posH){
 	currentFrame = frame;
-	SetClip((frame-1)*GetWidth(), 0, GetWidth(),GetHeight());
+	SetClip((frame-1)*GetWidth(), posH*GetHeight(), GetWidth(), GetHeight());
 }
 
 void Sprite::SetFrameCount(int frameCountA){
@@ -80,8 +82,17 @@ void Sprite::SetFrameTime(float frameTimeA){
 }
 
 int Sprite::GetWidth(){
+	return width/frameCount;
+}
+
+int Sprite::GetHeight(){
+	return height/tamCount;
+}
+
+int Sprite::GetScaledWidth(){
 	return (width * scaleX)/frameCount;
 }
-int Sprite::GetHeight(){
-	return height * scaleY;
+
+int Sprite::GetScaledHeight(){
+	return (height * scaleY)/tamCount;
 }

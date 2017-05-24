@@ -53,25 +53,36 @@ void SceneObject::NotifyCollision(GameObject& other){
 				box.h = sp.GetHeight();
 
 				//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
-				//Ainda dá problema em bordas
 				//Nesse caso não precisa no eixo y
-				if(Player::player->box.x < box.x + box.w &&
-						Player::player->box.x + Player::player->box.w > box.x + box.w){
-					Player::player->box.x = box.x + box.w + 1;
-					//std::cout << "1" << std::endl;
-				} else if(Player::player->box.x + Player::player->box.w > box.x &&
-						Player::player->box.x < box.x){
-					Player::player->box.x = box.x - Player::player->box.w - 1;
-					//std::cout << "2" << std::endl;
+				if(Player::player->GetDirecao() == Player::LESTE ||
+						Player::player->GetDirecao() == Player::OESTE){
+					if((Player::player->box.x < box.x + box.w &&
+							Player::player->box.x + Player::player->box.w > box.x + box.w)
+							|| (box.InsideX(Player::player->box) &&
+									Player::player->box.CenterX() >= box.CenterX())){
+						Player::player->box.x = box.x + box.w + 1;
+					} else if((Player::player->box.x + Player::player->box.w > box.x &&
+							Player::player->box.x < box.x)
+							|| (box.InsideX(Player::player->box) &&
+									Player::player->box.CenterX() < box.CenterX())){
+						Player::player->box.x = box.x - Player::player->box.w - 1;
+					}
 				}
-				/*if(Player::player->box.y < box.y + box.h &&
-						Player::player->box.y + Player::player->box.h > box.y + box.h){
-					Player::player->box.y = box.y + box.h + 1;
-					//std::cout << "3" << std::endl;
-				} else if(Player::player->box.y + Player::player->box.h > box.y &&
-						Player::player->box.y < box.y){
-					Player::player->box.y = box.y - Player::player->box.h - 1;
-					//std::cout << "4" << std::endl;
+				/*if(Player::player->GetDirecao() == Player::NORTE ||
+						Player::player->GetDirecao() == Player::SUL){
+					if((Player::player->box.y < box.y + box.h &&
+							Player::player->box.y + Player::player->box.h > box.y + box.h)
+							|| (box.InsideY(Player::player->box) &&
+									Player::player->box.CenterY() >= box.CenterY())){
+						Player::player->box.y = box.y + box.h + 1;
+						//std::cout << "3" << std::endl;
+					} else if((Player::player->box.y + Player::player->box.h > box.y &&
+							Player::player->box.y < box.y)
+							|| (box.InsideY(Player::player->box) &&
+									Player::player->box.CenterY() < box.CenterY()){
+						Player::player->box.y = box.y - Player::player->box.h - 1;
+						//std::cout << "4" << std::endl;
+					}
 				}*/
 			}
 		}
