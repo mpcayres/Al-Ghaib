@@ -10,23 +10,26 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "SceneObject.hpp"
+#include "MovingObject.hpp"
 #include "EmptyBox.hpp"
 
 StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
-	Player* P = new Player(704, 640);
+	Player* P = new Player(600, 600);
 	EmptyBox* EB = new EmptyBox();
 	Enemy* E = new Enemy(300, 200);
 	PickUpObject* PO = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
-	SceneObject* Window = new SceneObject(800, 200, 1, "img/closedwindow.png", "img/openwindow.png");
+	SceneObject* Window = new SceneObject(600, 400, 1, "img/closedwindow.png", "img/openwindow.png");
 	SceneObject* Door = new SceneObject(1000, 200, 1, "img/doorclosed.png", "img/dooropened.png");
+	MovingObject* Table = new MovingObject(400, 600, "img/optionsS.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
 	objectArray.emplace_back(E);
 	objectArray.emplace_back(PO);
 	objectArray.emplace_back(Window);
 	objectArray.emplace_back(Door);
+	objectArray.emplace_back(Table);
 	Camera::Follow(P);
 
 	music = Music("audio/stageState.ogg");

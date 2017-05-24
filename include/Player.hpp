@@ -24,6 +24,7 @@ public:
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	//std::vector<std::unique_ptr<InventoryObject>> GetInventory();
 	int GetDirecao();
+	Vec2 GetSpeed();
 
 	static Player * player;
 	Rect previousPos;

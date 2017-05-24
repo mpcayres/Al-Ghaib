@@ -177,6 +177,10 @@ void Player::AddInventory(std::string obj/*, std::string objSp*/){
 int Player::GetDirecao(){
 	return direcao;
 }
+
+Vec2 Player::GetSpeed(){
+	return speed;
+}
 // Causava erro na compilacao, pq e unique_ptr
 /*std::vector<std::unique_ptr<InventoryObject>> Player::GetInventory(){
 	return inventory;
