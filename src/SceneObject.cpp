@@ -7,8 +7,10 @@
 
 //Foi implementada como a janela, talvez a classe tenha filhos
 //Mas do jeito que esta pode ser reaproveitada com imagens diferentes
-SceneObject::SceneObject(float x, float y, int id, std::string img) :
+SceneObject::SceneObject(float x, float y, int id, std::string img, std::string change2) :
 	id(id), sp(img){
+	this->change1 = img;
+	this->change2 = change2;
 	estado = false;
 	rotation = 0;
 	box.x = x; box.y = y;
@@ -39,25 +41,25 @@ void SceneObject::NotifyCollision(GameObject& other){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			if(estado){ //ok
 				estado = false;
-				sp.Open("img/closedwindow.png");
+				sp.Open(change1);
 				box.x = box.x + box.w/2 - sp.GetWidth()/2;
 				box.y = box.y + box.h/2 - sp.GetHeight()/2;
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 			} else{ //ok
 				estado = true;
-				sp.Open("img/openwindow.png");
+				sp.Open(change2);
 				box.x = box.x + box.w/2 - sp.GetWidth()/2;
 				box.y = box.y + box.h/2 - sp.GetHeight()/2;
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 
 				//Tentando arrumar para quando o objeto aumenta e o player fica preso dentro
-				//Nesse caso não precisa no eixo y
+				//Nesse caso nï¿½o precisa no eixo y
 				if(Player::player->GetDirecao() == Player::LESTE ||
 						Player::player->GetDirecao() == Player::OESTE){
 					if((Player::player->box.x < box.x + box.w &&
-							Player::player->box.x + Player::player->box.w > box.x + box.w)
+							Player::player->box.x + Player::player->box.w > box.x + box.w )
 							|| (box.InsideX(Player::player->box) &&
 									Player::player->box.CenterX() >= box.CenterX())){
 						Player::player->box.x = box.x + box.w + 1;
@@ -100,13 +102,17 @@ void SceneObject::NotifyCollision(GameObject& other){
  		else if(Player::player->box.y + Player::player->box.h < box.y + box.h){
  			Player::player->box.y = Player::player->previousPos.y;
  		}*/
-		// Coloquei assim e está funcionando o suficiente
-		if(Player::player->box.x < box.x + box.w ||
-				Player::player->box.x + Player::player->box.w > box.x){
-			Player::player->box.x = Player::player->previousPos.x;
+		// Coloquei assim e estï¿½ funcionando o suficiente
+		if((Player::player->box.CenterX() < box.x /*+ box.w*/ /*- Player::player->box.w*/ ||
+				Player::player->box.CenterX() /*+ Player::player->box.w */> box.x /*- Player::player->box.w*/ )
+				&&(Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)) {
+					Player::player->box.x = Player::player->previousPos.x;
+
+
 		}
-		if(Player::player->box.y < box.y + box.h ||
-				Player::player->box.y + Player::player->box.h > box.y){
+
+		if(Player::player->box.y + Player::player->box.h - 10 < box.y + box.h  /*- Player::player->box.h*/||
+				Player::player->box.y/* + Player::player->box.h*/ > box.y + box.h /*- Player::player->box.h*/){
 			Player::player->box.y = Player::player->previousPos.y;
 		}
 	}

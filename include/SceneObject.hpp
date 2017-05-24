@@ -8,7 +8,7 @@
 
 class SceneObject : public GameObject {
 public:
-	SceneObject(float x, float y, int id, std::string img);
+	SceneObject(float x, float y, int id, std::string img, std::string change2);
 
 	void Update(float dt);
 	void Render();
@@ -21,6 +21,7 @@ private:
 	int id;
 	Sprite sp;
 	bool estado;
+	std::string change1, change2;
 };
 
 #endif  /* SCENEOBJECT_H_ */

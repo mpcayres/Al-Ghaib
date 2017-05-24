@@ -19,12 +19,14 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 	EmptyBox* EB = new EmptyBox();
 	Enemy* E = new Enemy(300, 200);
 	PickUpObject* PO = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
-	SceneObject* SO = new SceneObject(800, 200, 1, "img/closedwindow.png");
+	SceneObject* Window = new SceneObject(800, 200, 1, "img/closedwindow.png", "img/openwindow.png");
+	SceneObject* Door = new SceneObject(1000, 200, 1, "img/doorclosed.png", "img/dooropened.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
 	objectArray.emplace_back(E);
 	objectArray.emplace_back(PO);
-	objectArray.emplace_back(SO);
+	objectArray.emplace_back(Window);
+	objectArray.emplace_back(Door);
 	Camera::Follow(P);
 
 	music = Music("audio/stageState.ogg");
