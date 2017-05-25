@@ -5,14 +5,14 @@
 
 TitleState::TitleState() : menu(50, 50) {
 	SDL_Color auxcolor = SDL_Color();
-	auxcolor.r = 0;
-	auxcolor.g = 70;
-	auxcolor.b = 150;
+	auxcolor.r = 255;
+	auxcolor.g = 10;
+	auxcolor.b = 10;
 
 	flagTimer = true;
 	time = Timer();
 	bg = Sprite("img/title.jpg");
-	tx = Text("font/Call me maybe.ttf", 64, Text::TextStyle::BLENDED, "Press space to continue", auxcolor, 0, 0);
+	tx = Text("font/Call me maybe.ttf", 64, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 }
 
@@ -30,7 +30,7 @@ void TitleState::Update(float dt){
 		flagTimer = false;
 	}
 	if(time.Get()> 0.15 && flagTimer == false){
-		tx.SetText("Press space to continue");
+		tx.SetText("AL GHAIB");
 		time.Restart();
 		flagTimer = true;
 	}
@@ -44,11 +44,14 @@ void TitleState::Update(float dt){
 				break;
 			case MENU_CONTINUE:
 				Game::GetInstance().Push(new StageState());
-				// em uma missão salva
+				// em uma missï¿½o salva
 				break;
 			case MENU_OPTIONS:
 				//popRequested = true;
-				//push na tela de opções
+				//push na tela de opï¿½ï¿½es
+				break;
+			case MENU_EXIT:
+				quitRequested = true;
 				break;
 		}
 	}
