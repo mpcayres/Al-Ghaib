@@ -44,6 +44,7 @@ void MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("SceneObject")){
 		box.x = previousPos.x;
 		box.y = previousPos.y;
+
 	}
 }
 

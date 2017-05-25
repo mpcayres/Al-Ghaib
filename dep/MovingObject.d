@@ -1,9 +1,9 @@
-bin/SceneObject.o: src/SceneObject.cpp include/SceneObject.hpp \
+bin/MovingObject.o: src/MovingObject.cpp include/MovingObject.hpp \
  include/GameObject.hpp include/Geometry.hpp include/Sprite.hpp \
  include/Camera.hpp include/InputManager.hpp include/Player.hpp \
- include/InventoryObject.hpp include/MovingObject.hpp
+ include/InventoryObject.hpp
 
-include/SceneObject.hpp:
+include/MovingObject.hpp:
 
 include/GameObject.hpp:
 
@@ -18,5 +18,3 @@ include/InputManager.hpp:
 include/Player.hpp:
 
 include/InventoryObject.hpp:
-
-include/MovingObject.hpp:

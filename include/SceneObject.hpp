@@ -5,6 +5,7 @@
 
 #include "GameObject.hpp"
 #include "Sprite.hpp"
+#define  OFFSET_PISO 10
 
 class SceneObject : public GameObject {
 public:
@@ -22,7 +23,7 @@ private:
 	Sprite sp;
 	bool estado;
 	std::string change1, change2;
-	bool alinhaCentro; // pode virar inteiro se tiver outros possíveis alinhamentos
+	bool alinhaCentro; // pode virar inteiro se tiver outros possï¿½veis alinhamentos
 };
 
 #endif  /* SCENEOBJECT_H_ */

@@ -5,6 +5,9 @@
 
 #include "GameObject.hpp"
 #include "Sprite.hpp"
+#include "Game.hpp"
+
+#define OFFSET_SCREEN 10
 
 class PickUpObject : public GameObject {
 public:
@@ -21,6 +24,7 @@ private:
 	//std::string objSp;
 	Sprite sp;
 	bool dead;
+	bool selected; //provavelmente vai mudar quando tiver o inventario
 };
 
 #endif /* SRC_STORAGEOBJECT_H_ */

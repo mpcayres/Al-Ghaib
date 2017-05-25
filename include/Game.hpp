@@ -23,6 +23,10 @@
 #include <memory>
 
 #include "State.hpp"
+#define SCREEN_SIZE_W 1024
+#define SCREEN_SIZE_H 600
+
+
 
 class Game{
 public:
