@@ -1,7 +1,7 @@
 #include "MenuHUD.hpp"
 #include "InputManager.hpp"
 
-// Não temos o fundo do menu e sequer se haverá kkk
+// Nï¿½o temos o fundo do menu e sequer se haverï¿½ kkk
 MenuHUD::MenuHUD(float x, float y) : sp("img/fundoMenu.png") {
 	box.x = x;// - sp.GetWidth()/2;
 	box.y = y;// - sp.GetHeight()/2;
@@ -12,8 +12,10 @@ MenuHUD::MenuHUD(float x, float y) : sp("img/fundoMenu.png") {
 	buttons.emplace_back(Sprite("img/start.png"));
 	buttons.emplace_back(Sprite("img/continue.png"));
 	buttons.emplace_back(Sprite("img/options.png"));
+	buttons.emplace_back(Sprite("img/options.png"));
 	buttonsSelected.emplace_back(Sprite("img/startS.png"));
 	buttonsSelected.emplace_back(Sprite("img/continueS.png"));
+	buttonsSelected.emplace_back(Sprite("img/optionsS.png"));
 	buttonsSelected.emplace_back(Sprite("img/optionsS.png"));
 }
 

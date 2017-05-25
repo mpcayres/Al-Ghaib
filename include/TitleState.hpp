@@ -34,7 +34,7 @@ private:
 	bool flagTimer;
 	MenuHUD menu;
 
-	enum { MENU_START, MENU_CONTINUE, MENU_OPTIONS };
+	enum { MENU_START, MENU_CONTINUE, MENU_OPTIONS, MENU_EXIT };
 };
 
 #endif /* INCLUDE_TITLESTATE_HPP_ */
