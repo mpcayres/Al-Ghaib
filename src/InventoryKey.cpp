@@ -8,8 +8,8 @@ InventoryKey::InventoryKey(/*std::string file*/){
 InventoryKey::~InventoryKey(){
 }
 
-void InventoryKey::Render(){
-	sp.Render(0,0,0);
+void InventoryKey::Render(int x, int y){
+	sp.Render(x,y,0);
 }
 
 void InventoryKey::Action(){ }

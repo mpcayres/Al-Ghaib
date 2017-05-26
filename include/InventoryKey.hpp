@@ -8,7 +8,7 @@ public:
 	InventoryKey();
 	~InventoryKey();
 
-	void Render();
+	void Render(int x, int y);
 	void Action();
 	bool IsObject(std::string type);
 
