@@ -52,28 +52,29 @@ Player::~Player(){
 void Player::Update(float dt){
 	InputManager InputInstance = InputManager::GetInstance();
 
+	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
 	if(showingInventory == false){
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = NORTE;
+			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = NORTE;
 			speed.y = -MODULO_SPEED;
 			speed.x = 0;
 			//rotation = -90;
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = SUL;
+			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = SUL;
 			speed.y = MODULO_SPEED;
 			speed.x = 0;
 			//rotation = 90;
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = LESTE;
+			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = LESTE;
 			speed.x = MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 0;
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = OESTE;
+			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = OESTE;
 			speed.x = -MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 180;
