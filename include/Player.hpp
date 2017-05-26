@@ -22,7 +22,8 @@ public:
 	bool getRunning();
 	bool GetShowingInventory();
 	void AddInventory(std::string obj/*, std::string objSp*/);
-	//std::vector<std::unique_ptr<InventoryObject>> GetInventory();
+	void RenderInventory();
+
 	int GetDirecao();
 	Vec2 GetSpeed();
 
@@ -34,13 +35,15 @@ private:
 	//Timer time;
 	float timeAnim;
 	Sprite sp;
+	Sprite spInventory, spInventorybox, spInventoryboxSelected;
+
 	Vec2 speed;
 	int hp;
 	bool running;
 
 	int inHandIndex;
 	bool showingInventory;
-	std::vector<std::unique_ptr<InventoryObject>> inventory;
+	std::vector<InventoryObject*> inventory;
 
 	InvBox direcao;
 	InvBox dirCollision;

@@ -11,7 +11,7 @@ class InventoryObject{
 public:
 	virtual ~InventoryObject(){};
 
-	virtual void Render() = 0;
+	virtual void Render(int x, int y) = 0;
 	virtual void Action() = 0;
 	virtual bool IsObject(std::string type) = 0;
 };

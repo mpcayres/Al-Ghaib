@@ -97,5 +97,9 @@ void StageState::Render(){
 	bg.Render(0,0,0);
 	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
 	RenderArray();
-	tileMap.Render(Camera::pos.x, Camera::pos.y);
+	//tileMap.Render(Camera::pos.x, Camera::pos.y);
+
+	if(Player::player->GetShowingInventory()){
+		Player::player->RenderInventory();
+	}
 }

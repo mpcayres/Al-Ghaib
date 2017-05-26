@@ -16,6 +16,15 @@ Player::Player(float x, float y) :
 		timeAnim(0.1), sp("img/kinder.jpg", 20, timeAnim, 4){
 	sp.SetScaleX(2.5);
 	sp.SetScaleY(2.5);
+
+	spInventory = Sprite("img/inventory.png", 1, 1, 1);
+	spInventory.SetScaleX(2);
+	spInventory.SetScaleY(2);
+	spInventorybox = Sprite("img/box.png", 1, 1, 1);
+	spInventorybox.SetScaleX(1.5);
+	spInventorybox.SetScaleY(1.5);
+	spInventoryboxSelected = Sprite("img/box-select.png", 1, 1, 1);
+
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();
@@ -43,42 +52,43 @@ Player::~Player(){
 void Player::Update(float dt){
 	InputManager InputInstance = InputManager::GetInstance();
 
-	if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = NORTE;
-		speed.y = -MODULO_SPEED;
-		speed.x = 0;
-		//rotation = -90;
-	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = SUL;
-		speed.y = MODULO_SPEED;
-		speed.x = 0;
-		//rotation = 90;
-	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-			InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = LESTE;
-		speed.x = MODULO_SPEED;
-		speed.y = 0;
-		//rotation = 0;
-	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		direcao = OESTE;
-		speed.x = -MODULO_SPEED;
-		speed.y = 0;
-		//rotation = 180;
-	} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-		speed.x = 0;
-		speed.y = 0;
-	}
+	if(showingInventory == false){
+		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+			direcao = NORTE;
+			speed.y = -MODULO_SPEED;
+			speed.x = 0;
+			//rotation = -90;
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+			direcao = SUL;
+			speed.y = MODULO_SPEED;
+			speed.x = 0;
+			//rotation = 90;
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+			direcao = LESTE;
+			speed.x = MODULO_SPEED;
+			speed.y = 0;
+			//rotation = 0;
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+			direcao = OESTE;
+			speed.x = -MODULO_SPEED;
+			speed.y = 0;
+			//rotation = 180;
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+			speed.x = 0;
+			speed.y = 0;
+		}
 
-	if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-		speed.x *= AUMENTO_VELOCIDADE;
-		speed.y *= AUMENTO_VELOCIDADE;
-		running = true;
-	} else
-		running = false;
+		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+			speed.x *= AUMENTO_VELOCIDADE;
+			speed.y *= AUMENTO_VELOCIDADE;
+			running = true;
+		} else
+			running = false;
 
 	//Deixei essa parte aqui pra caso preciso em outro caso
 	//if(colliding && dirCollision == direcao){
@@ -99,14 +109,12 @@ void Player::Update(float dt){
 			previousPos.y = box.y;
 			box.y += speed.y;
 		}
-	//}
-
-	/*if(InputInstance.MousePress(LEFT_MOUSE_BUTTON && time.Get() >= 0.3)) {
-		time.Restart();
-		//Shoot();
+		if(InputInstance.KeyPress(I_KEY))
+			showingInventory = true;
+	}else{
+		if(InputInstance.KeyPress(I_KEY))
+			showingInventory = false;
 	}
-
-	time.Update(dt);*/
 
 	if(speed.x != 0 || speed.y != 0){
 		if(running){
@@ -163,8 +171,35 @@ bool Player::getRunning(){
 	return running;
 }
 
-bool Player::GetShowingInventory(){
-	return showingInventory;
+bool Player::GetShowingInventory(){return showingInventory;}
+
+void Player::RenderInventory(){
+	int posX, posY, posXCaixa, posYCaixa;
+	int bordaX, bordaY;
+	int widthMinorSquare, heightMinorSquare;
+
+	bordaX = spInventory.GetScaledWidth()/9;
+	bordaY = spInventory.GetScaledHeight()/8;
+
+	posXCaixa = Game::GetInstance().GetWidth()/2 - (spInventory.GetScaledWidth()/2);
+	posYCaixa = Game::GetInstance().GetHeight()/2 - (spInventory.GetScaledHeight()/2);
+	spInventory.Render(posXCaixa,posYCaixa, 0);
+
+	posX = posXCaixa + bordaX;
+	posY = posYCaixa + bordaY + 40;
+
+	widthMinorSquare = spInventorybox.GetScaledWidth()/2;
+	heightMinorSquare = spInventorybox.GetScaledHeight()/2;
+	for(unsigned i = 0; i < inventory.size() && i < 16 ;i++) {
+		spInventorybox.Render(posX, posY, 0);
+		inventory[i]->Render(posX, posY);
+
+		posX += bordaX*2;
+		if(posX >= posXCaixa + bordaX*8){
+			posX = posXCaixa + bordaX;
+			posY += bordaY*1.5;
+		}
+	}
 }
 
 void Player::AddInventory(std::string obj/*, std::string objSp*/){
@@ -182,7 +217,3 @@ int Player::GetDirecao(){
 Vec2 Player::GetSpeed(){
 	return speed;
 }
-// Causava erro na compilacao, pq e unique_ptr
-/*std::vector<std::unique_ptr<InventoryObject>> Player::GetInventory(){
-	return inventory;
-}*/
