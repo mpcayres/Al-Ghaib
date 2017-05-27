@@ -17,3 +17,12 @@ void InventoryKey::Action(){ }
 bool InventoryKey::IsObject(std::string type){
 	return (type == "KeyObject");
 }
+
+int InventoryKey::GetWidth(){ return sp.GetWidth();}
+
+int InventoryKey::GetHeight(){ return sp.GetHeight(); }
+
+void InventoryKey::SetScaleX(float scale) { sp.SetScaleX(scale);}
+
+void InventoryKey::SetScaleY(float scale) { sp.SetScaleY(scale);}
+

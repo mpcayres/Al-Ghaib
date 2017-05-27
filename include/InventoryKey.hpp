@@ -11,6 +11,10 @@ public:
 	void Render(int x, int y);
 	void Action();
 	bool IsObject(std::string type);
+	int GetHeight();
+	int GetWidth();
+	void SetScaleX(float scale);
+	void SetScaleY(float scale);
 
 private:
 	Sprite sp;

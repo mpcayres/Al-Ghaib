@@ -182,12 +182,15 @@ bool Player::getRunning(){
 bool Player::GetShowingInventory(){return showingInventory;}
 
 void Player::RenderInventory(){
-	int posX, posY, posXCaixa, posYCaixa;
+	int posX, posY, posXCenter, posYCenter, posXCaixa, posYCaixa;
 	int bordaX, bordaY;
+	float scaleX = 1, scaleY = 1;
 	int widthMinorSquare, heightMinorSquare;
 
 	bordaX = spInventory.GetScaledWidth()/9;
 	bordaY = spInventory.GetScaledHeight()/8;
+	widthMinorSquare = spInventorybox.GetScaledWidth();
+	heightMinorSquare = spInventorybox.GetScaledHeight();
 
 	posXCaixa = Game::GetInstance().GetWidth()/2 - (spInventory.GetScaledWidth()/2);
 	posYCaixa = Game::GetInstance().GetHeight()/2 - (spInventory.GetScaledHeight()/2);
@@ -196,17 +199,35 @@ void Player::RenderInventory(){
 	posX = posXCaixa + bordaX;
 	posY = posYCaixa + bordaY + 40;
 
-	widthMinorSquare = spInventorybox.GetScaledWidth()/2;
-	heightMinorSquare = spInventorybox.GetScaledHeight()/2;
+
 	for(unsigned i = 0; i < inventory.size() && i < 16 ;i++) {
 		spInventorybox.Render(posX, posY, 0);
-		inventory[i]->Render(posX, posY);
+
+
+		if(inventory[i]->GetWidth()> widthMinorSquare){
+			scaleX = float(widthMinorSquare)/float(inventory[i]->GetWidth());
+			inventory[i]->SetScaleX(scaleX);
+			posXCenter = posX;
+		}else{
+			posXCenter = posX + (widthMinorSquare - inventory[i]->GetWidth())/2;
+		}
+		if(inventory[i]->GetHeight()> heightMinorSquare){
+			scaleY = float(heightMinorSquare)/float(inventory[i]->GetHeight());
+			inventory[i]->SetScaleY(scaleY);
+			posYCenter = posY;
+		}else{
+			posYCenter = posY + (heightMinorSquare - inventory[i]->GetHeight())/2;
+		}
+
+		inventory[i]->Render(posXCenter, posYCenter);
 
 		posX += bordaX*2;
 		if(posX >= posXCaixa + bordaX*8){
 			posX = posXCaixa + bordaX;
 			posY += bordaY*1.5;
 		}
+
+		scaleX = scaleY = 1;
 	}
 }
 
