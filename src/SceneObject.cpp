@@ -58,7 +58,7 @@ void SceneObject::NotifyCollision(GameObject& other){
 				box.h = sp.GetHeight();
 
 				//Nesse caso nao precisa no eixo y
-				if((Player::player->box.y + Player::player->box.h - 10 < box.y + box.h)
+				if((Player::player->box.y + Player::player->box.h - OFFSET_PISO < box.y + box.h)
 					&& (Player::player->GetDirecao() == Player::LESTE ||
 						Player::player->GetDirecao() == Player::OESTE)){
 
@@ -122,24 +122,24 @@ void SceneObject::NotifyCollision(GameObject& other){
 			Player::player->box.y = Player::player->previousPos.y;
 		}
 	}
-	if (other.Is("MovingObject")){
+	if (other.Is("MovingObject") || other.Is("Enemy")){
 		if(other.box.y + other.box.h - OFFSET_PISO < box.y + box.h)
 							/*&& (Player::player->GetDirecao() == Player::LESTE ||
 								Player::player->GetDirecao() == Player::OESTE))*/{
 
-							if((other.box.x < box.x + box.w &&
-									other.box.x + other.box.w > box.x + box.w )
-									|| (box.InsideX(other.box) &&
-											other.box.CenterX() >= box.CenterX())){
-								other.box.x = box.x + box.w + 1;
-							} else if((other.box.x + other.box.w > box.x &&
-									other.box.x < box.x)
-									|| (box.InsideX(Player::player->box) &&
-											other.box.CenterX() < box.CenterX())){
+				if((other.box.x < box.x + box.w &&
+						other.box.x + other.box.w > box.x + box.w )
+						|| (box.InsideX(other.box) &&
+						other.box.CenterX() >= box.CenterX())){
+									other.box.x = box.x + box.w + 1;
+				} else if((other.box.x + other.box.w > box.x &&
+						other.box.x < box.x)
+						|| (box.InsideX(Player::player->box) &&
+						other.box.CenterX() < box.CenterX())){
 								other.box.x = box.x - other.box.w - 1;
-							}
+				}
 
-						}
+		}
 	}
 }
 

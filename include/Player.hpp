@@ -4,6 +4,8 @@
 #include "InventoryObject.hpp"
 #include "GameObject.hpp"
 #include "Sprite.hpp"
+
+#include "InputManager.hpp"
 //#include "Timer.hpp"
 #include <vector>
 #include <memory>
@@ -30,6 +32,7 @@ public:
 	static Player * player;
 	Vec2 previousPos;
 	enum InvBox{SUL, NORTE, LESTE, OESTE, NONE};
+	void Running(InputManager InputInstance);
 
 private:
 	//Timer time;
@@ -48,6 +51,7 @@ private:
 	InvBox direcao;
 	InvBox dirCollision;
 	bool colliding;
+	InputManager InputInstance;
 
 };
 

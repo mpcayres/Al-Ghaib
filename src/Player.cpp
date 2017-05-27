@@ -1,5 +1,4 @@
 #include "Player.hpp"
-#include "InputManager.hpp"
 #include "Camera.hpp"
 #include "Bullet.hpp"
 #include "Game.hpp"
@@ -50,7 +49,7 @@ Player::~Player(){
 }
 
 void Player::Update(float dt){
-	InputManager InputInstance = InputManager::GetInstance();
+	InputInstance = InputManager::GetInstance();
 
 	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
 	if(showingInventory == false){
@@ -60,40 +59,46 @@ void Player::Update(float dt){
 			speed.y = -MODULO_SPEED;
 			speed.x = 0;
 			//rotation = -90;
+			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = SUL;
 			speed.y = MODULO_SPEED;
 			speed.x = 0;
 			//rotation = 90;
+			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = LESTE;
 			speed.x = MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 0;
+			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = OESTE;
 			speed.x = -MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 180;
+			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			speed.x = 0;
 			speed.y = 0;
 		}
 
-		if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+
+		//chato, eu sei, mas isso  aqui em baixo não pode ficar fora assim se não o movimento fica bugado
+		/*if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 			speed.x *= AUMENTO_VELOCIDADE;
 			speed.y *= AUMENTO_VELOCIDADE;
 			running = true;
 		} else
-			running = false;
+			running = false;*/
 
 	//Deixei essa parte aqui pra caso preciso em outro caso
 	//if(colliding && dirCollision == direcao){
-		//Tentei isso de baixo tbm, mas ficou com�dia
+		//Tentei isso de baixo tbm, mas ficou com�dia
 		/*if(dirCollision == NORTE || dirCollision == SUL){
 			box.y = previousPos.y;
 		} else if(dirCollision == LESTE || dirCollision == OESTE){
@@ -142,25 +147,27 @@ void Player::Shoot(){
 	//aux = aux.Rotate(cannonAngle);
 }
 
+void Player::Running(InputManager InputInstance){
+	if(InputInstance.IsKeyDown(LSHIFT_KEY)){
+		speed.x *= AUMENTO_VELOCIDADE;
+		speed.y *= AUMENTO_VELOCIDADE;
+		running = true;
+	} else
+		running = false;
+
+
+}
 void Player::NotifyCollision(GameObject& other){
 	if(other.Is("SceneObject")){
 		colliding = true;
 		dirCollision = direcao;
 	}
-	if(other.Is("Bullet")){
-		if(((Bullet&) other).targetsPlayer)
-			hp -= 8;
-	}
-	if(other.Is("Alien")){
-		hp = 0;
-	}
-	if(hp <= 0){
-		Sound sound = Sound("audio/boom.wav");
-		sound.Play(0);
-		Camera::Unfollow();
-		Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(box.Center().x, box.Center().y, rotation,
-						"img/penguindeath.png", 5, 0.18, true));
+
+	if(other.Is("Enemy")){
+		//hp = 0;
+		//Camera::Unfollow();
+		printf("CAUGHT YOU!");
+
 	}
 }
 

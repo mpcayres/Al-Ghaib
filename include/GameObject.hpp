@@ -19,6 +19,7 @@ public:
 	float rotation;
 	Rect box;
 
+
 };
 
 #endif /* INCLUDE_GAMEOBJECT_HPP_ */
