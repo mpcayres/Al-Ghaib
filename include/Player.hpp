@@ -4,6 +4,7 @@
 #include "InventoryObject.hpp"
 #include "GameObject.hpp"
 #include "Sprite.hpp"
+#include "Game.hpp"
 
 #include "InputManager.hpp"
 //#include "Timer.hpp"
@@ -25,6 +26,7 @@ public:
 	bool GetShowingInventory();
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	void RenderInventory();
+	void RenderInHand();
 
 	int GetDirecao();
 	Vec2 GetSpeed();

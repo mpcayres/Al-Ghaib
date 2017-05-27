@@ -101,5 +101,7 @@ void StageState::Render(){
 
 	if(Player::player->GetShowingInventory()){
 		Player::player->RenderInventory();
+	}else{
+		Player::player->RenderInHand();
 	}
 }

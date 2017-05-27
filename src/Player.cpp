@@ -258,9 +258,39 @@ void Player::RenderInventory(){
 	}
 }
 
+void Player::RenderInHand(){
+	int posX, posY, scaleX, scaleY;
+	int offset = 10, widthMinorSquare, heightMinorSquare;
+	int posXCenter, posYCenter;
+	posX = SCREEN_SIZE_W - 8*offset;
+	posY = offset;
+	widthMinorSquare = spInventorybox.GetScaledWidth();
+	heightMinorSquare = spInventorybox.GetScaledHeight();
+
+	spInventoryboxSelected.Render(posX,posY, 0);
+	if(inHandIndex >= 0){
+		if(inventory[inHandIndex]->GetWidth()> widthMinorSquare){
+			scaleX = float(widthMinorSquare)/float(inventory[inHandIndex]->GetWidth());
+			inventory[inHandIndex]->SetScaleX(scaleX);
+			posXCenter = posX;
+		}else{
+			posXCenter = posX + (widthMinorSquare - inventory[inHandIndex]->GetWidth())/2;
+		}
+		if(inventory[inHandIndex]->GetHeight()> heightMinorSquare){
+			scaleY = float(heightMinorSquare)/float(inventory[inHandIndex]->GetHeight());
+			inventory[inHandIndex]->SetScaleY(scaleY);
+			posYCenter = posY;
+		}else{
+			posYCenter = posY + (heightMinorSquare - inventory[inHandIndex]->GetHeight())/2;
+		}
+		inventory[inHandIndex]->Render(posXCenter, posYCenter);
+	}
+}
+
 void Player::AddInventory(std::string obj/*, std::string objSp*/){
 	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
 	// Coloquei a string da imagem comentada caso seja necessario
+	if(inHandIndex < 0) inHandIndex = 0;
 	if(obj == "KeyObject"){
 		inventory.emplace_back(new InventoryKey(/*objSp*/));
 		inventory.emplace_back(new InventoryKey(/*objSp*/));

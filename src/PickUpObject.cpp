@@ -19,11 +19,6 @@ void PickUpObject::Update(float dt){
 }
 
 void PickUpObject::Render(){
-	if(selected){
-		box.x = Camera::pos.x + SCREEN_SIZE_W - 8*OFFSET_SCREEN;
-		box.y = Camera::pos.y + OFFSET_SCREEN;
-
-	}
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
@@ -36,11 +31,8 @@ void PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			//dead = true;  // botar dead em condições diferentes. se não estiver selecionado ou mostrando no inventario
-			selected = true;
+			dead = true;
 			Player::player->AddInventory(obj/*, objSp*/);
-			//box.x = Camera::pos.x + SCREEN_SIZE_W - OFFSET_SCREEN;
-			//box.y = Camera::pos.y - SCREEN_SIZE_H + OFFSET_SCREEN;
-			// ver alguma anima��o
 		}
 	}
 }
