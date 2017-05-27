@@ -44,7 +44,7 @@ private:
 	int hp;
 	bool running;
 
-	int inHandIndex;
+	int inHandIndex, inventoryIndex;
 	bool showingInventory;
 	std::vector<InventoryObject*> inventory;
 

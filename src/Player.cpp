@@ -17,12 +17,11 @@ Player::Player(float x, float y) :
 	sp.SetScaleY(2.5);
 
 	spInventory = Sprite("img/inventory.png", 1, 1, 1);
-	spInventory.SetScaleX(2);
-	spInventory.SetScaleY(2);
+	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
 	spInventorybox = Sprite("img/box.png", 1, 1, 1);
-	spInventorybox.SetScaleX(1.5);
-	spInventorybox.SetScaleY(1.5);
+	spInventorybox.SetScaleX(1.5); spInventorybox.SetScaleY(1.5);
 	spInventoryboxSelected = Sprite("img/box-select.png", 1, 1, 1);
+	spInventoryboxSelected.SetScaleX(1.5); spInventoryboxSelected.SetScaleY(1.5);
 
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
@@ -38,6 +37,7 @@ Player::Player(float x, float y) :
 
 	inHandIndex = -1; //dependendo do save pode ser diferente
 	showingInventory = false;
+	inventoryIndex = inHandIndex;
 
 	direcao = LESTE;
 	dirCollision = NONE;
@@ -115,11 +115,37 @@ void Player::Update(float dt){
 			previousPos.y = box.y;
 			box.y += speed.y;
 		}
-		if(InputInstance.KeyPress(I_KEY))
+		if(InputInstance.KeyPress(I_KEY)){
 			showingInventory = true;
+			inventoryIndex = inHandIndex;
+		}
 	}else{
+		/*MOVIMENTACAO DO INVENTARIO*/
 		if(InputInstance.KeyPress(I_KEY))
 			showingInventory = false;
+		if(InputInstance.KeyPress(UP_ARROW_KEY) && inventoryIndex > 3){
+			// 3 porcausa da primeira linha de itens 0 1 2 3
+			inventoryIndex -= 4;
+		}
+		if(InputInstance.KeyPress(DOWN_ARROW_KEY) && inventoryIndex < 12){
+			// 12 porcausa da ultima linha de itens 12 13 14 15
+			if(inventoryIndex + 4 <= (int) inventory.size()-1)
+				inventoryIndex += 4;
+		}
+		if(InputInstance.KeyPress(LEFT_ARROW_KEY) && inventoryIndex%4 != 0){
+			// %4 porcausa da primeira coluna de itens 0 4 8 12
+			inventoryIndex -= 1;
+		}
+		if(InputInstance.KeyPress(RIGHT_ARROW_KEY) && (inventoryIndex+1)%4 != 0 && inventory.size() > 1){
+			// %index+1 porcausa da ultima coluna 3 7 11 15
+			if(inventoryIndex + 1 <= (int) inventory.size()-1 && inventoryIndex + 1 < 16)
+				inventoryIndex += 1;
+		}
+		if(InputInstance.KeyPress(Z_KEY)){
+			inHandIndex = inventoryIndex;
+			showingInventory = false;
+		}
+		/* */
 	}
 
 	if(speed.x != 0 || speed.y != 0){
@@ -199,9 +225,10 @@ void Player::RenderInventory(){
 	posX = posXCaixa + bordaX;
 	posY = posYCaixa + bordaY + 40;
 
-
+	if(inventoryIndex < 0) inventoryIndex = 0;
 	for(unsigned i = 0; i < inventory.size() && i < 16 ;i++) {
-		spInventorybox.Render(posX, posY, 0);
+		if((int) i == inventoryIndex) spInventoryboxSelected.Render(posX, posY, 0);
+		else spInventorybox.Render(posX, posY, 0);
 
 
 		if(inventory[i]->GetWidth()> widthMinorSquare){
@@ -235,6 +262,13 @@ void Player::AddInventory(std::string obj/*, std::string objSp*/){
 	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
 	// Coloquei a string da imagem comentada caso seja necessario
 	if(obj == "KeyObject"){
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
+		inventory.emplace_back(new InventoryKey(/*objSp*/));
 		inventory.emplace_back(new InventoryKey(/*objSp*/));
 	}
 }
