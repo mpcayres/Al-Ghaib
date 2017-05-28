@@ -27,6 +27,8 @@ public:
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	void RenderInventory();
 	void RenderInHand();
+	InventoryObject* GetInHand();
+	void DeleteInventory();
 
 	int GetDirecao();
 	Vec2 GetSpeed();

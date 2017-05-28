@@ -1,6 +1,7 @@
 #include "EmptyBox.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
+#include "SceneObject.hpp"
 #include "Player.hpp"
 #include "Game.hpp"
 
@@ -10,6 +11,7 @@ EmptyBox::EmptyBox( ){
 	box.y = Player::player->box.y;
 	box.w = DISTANCIA;
 	box.h = Player::player->box.h;
+	inHand = Player::player->GetInHand();
 }
 
 void EmptyBox::Update(float dt){
@@ -46,6 +48,7 @@ void EmptyBox::Update(float dt){
 			box.h = Player::player->box.h;
 			break;
 	}
+	inHand = Player::player->GetInHand();
 }
 
 void EmptyBox::Render(){
@@ -60,10 +63,12 @@ bool EmptyBox::IsDead(){
 }
 
 void EmptyBox::NotifyCollision(GameObject& other){
-	//printf("\nhere");
-	/*if(other.Is("SceneObject")){
-		//printf("\nbatendo");
-	}*/
+	if(other.Is("SceneObject")){
+		if(InputManager::GetInstance().KeyPress(X_KEY) && inHand != nullptr){
+			if(inHand->Action(&other) == true)
+				Player::player->DeleteInventory();
+		}
+	}
 }
 
 bool EmptyBox::Is(std::string type){

@@ -3,8 +3,11 @@
 
 #include <string>
 
+
 #include "GameObject.hpp"
 #include "Sprite.hpp"
+#include "InventoryObject.hpp"
+
 #define  OFFSET_PISO 10
 
 class SceneObject : public GameObject {
@@ -17,6 +20,7 @@ public:
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
 	bool Is(std::string type);
+	bool RecieveAction(InventoryObject* other);
 
 private:
 	int id;
@@ -24,6 +28,8 @@ private:
 	bool estado;
 	std::string change1, change2;
 	bool alinhaCentro; // pode virar inteiro se tiver outros poss�veis alinhamentos
+
+	bool lock;
 };
 
 #endif  /* SCENEOBJECT_H_ */

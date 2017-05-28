@@ -23,9 +23,8 @@ public:
 	void setX(int x);
 	void setY(int y);
 private:
-	//Timer time;
-	//Rect box;
-	//Sprite sp;
+	InventoryObject* inHand;
+
 };
 
 #endif /* EMPTYBOX_H_ */

@@ -40,12 +40,12 @@ Enemy::~Enemy(){
 void Enemy::Update(float dt){
 	Vec2 aux, aux2;
 	/* dinamica de percepcao de ruido vindo do jogador*/
-	printf("\n Distancia para jogador");
+	//printf("\n Distancia para jogador");
 
 	float dist = 0;
 	int running = 1;
 	dist = box.DistanceRect(Player::player->box);
-	printf("\n%f", dist);
+	//printf("\n%f", dist);
 
 	if(dist < 250){
 		/*if(Player::player != nullptr){
@@ -61,7 +61,7 @@ void Enemy::Update(float dt){
 		seen = true;
 	}
 
-	printf("\nQuantidade de percepção de ruído acrescentada:");
+	//printf("\nQuantidade de percepção de ruído acrescentada:");
 	if(Player::player->getRunning() == true)
 		running = 10;
 	else if(!InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY) && !InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY) &&
@@ -71,12 +71,12 @@ void Enemy::Update(float dt){
 	else
 		running = 1;
 	float noise = ((1/dist)*10)*running;
-	printf("\n%f", noise);
+	//printf("\n%f", noise);
 	if(ruido >= 20){
 		seen = true;
 	}
 	ruido += noise;
-	printf("\n%f", ruido);
+	//printf("\n%f", ruido);
 
 
 	if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){

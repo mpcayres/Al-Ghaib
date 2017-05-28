@@ -192,7 +192,7 @@ void Player::NotifyCollision(GameObject& other){
 	if(other.Is("Enemy")){
 		//hp = 0;
 		//Camera::Unfollow();
-		printf("CAUGHT YOU!");
+		//printf("CAUGHT YOU!");
 
 	}
 }
@@ -298,9 +298,12 @@ void Player::AddInventory(std::string obj/*, std::string objSp*/){
 		inventory.emplace_back(new InventoryKey(/*objSp*/));
 		inventory.emplace_back(new InventoryKey(/*objSp*/));
 		inventory.emplace_back(new InventoryKey(/*objSp*/));
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
 	}
+}
+
+InventoryObject* Player::GetInHand(){
+	if(inHandIndex >= 0) return inventory[inHandIndex];
+	else return nullptr;
 }
 
 int Player::GetDirecao(){
@@ -309,4 +312,14 @@ int Player::GetDirecao(){
 
 Vec2 Player::GetSpeed(){
 	return speed;
+}
+
+void Player::DeleteInventory(){
+	if(inventory.size() == 1){
+		inventory.erase(inventory.begin() + inHandIndex);
+		inHandIndex = -1;
+	}else{
+		inventory.erase(inventory.begin() + inHandIndex);
+		inHandIndex = 0 ;
+	}
 }

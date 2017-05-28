@@ -17,6 +17,8 @@ SceneObject::SceneObject(float x, float y, int id, std::string img, std::string 
 	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
+
+	lock = true;
 }
 
 bool SceneObject::IsDead(){
@@ -37,7 +39,7 @@ bool SceneObject::IsEstado(){
 
 void SceneObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
-		if(InputManager::GetInstance().KeyPress(Z_KEY)){
+		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
 			if(estado){
 				estado = false;
 				sp.Open(change1);
@@ -145,4 +147,14 @@ void SceneObject::NotifyCollision(GameObject& other){
 
 bool SceneObject::Is(std::string type){
 	return (type == "SceneObject");
+}
+
+bool SceneObject::RecieveAction(InventoryObject* other){
+	if(other->IsObject("InventoryKey")){
+		if(lock == true){
+			lock = false;
+			return true;
+		}
+	}
+	return false;
 }

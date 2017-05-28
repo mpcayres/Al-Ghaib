@@ -9,7 +9,7 @@ public:
 	~InventoryKey();
 
 	void Render(int x, int y);
-	void Action();
+	bool Action(GameObject* other);
 	bool IsObject(std::string type);
 	int GetHeight();
 	int GetWidth();
