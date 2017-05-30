@@ -3,7 +3,7 @@
 
 InventoryKey::InventoryKey(/*std::string file*/){
 	//Acho melhor não passar como string pq aí só está atrelado a própria classe, não depende de outra ter essa info
-	sp = Sprite("img/minion.png");
+	sp = Sprite("img/minionbullet1.png");
 }
 
 InventoryKey::~InventoryKey(){ }

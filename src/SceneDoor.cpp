@@ -60,3 +60,7 @@ bool SceneDoor::ReceiveAction(InventoryObject* other){
 bool SceneDoor::GetChangeState(){
 	return changeState;
 }
+
+void SceneDoor::SetChangeState(bool t){
+	changeState = t;
+}

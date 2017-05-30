@@ -23,6 +23,7 @@ void HallState::Resume(){
 }
 
 void HallState::LoadAssets(){
+	background.Open("img/ocean.jpg");
 	bg.Open("img/corredor.png");
 }
 
@@ -51,6 +52,7 @@ void HallState::Update(float dt){
 }
 
 void HallState::Render(){
+	background.Render(0,0,0);
 	bg.Render(0,0,0);
 	RenderArray();
 

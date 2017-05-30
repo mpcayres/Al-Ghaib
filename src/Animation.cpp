@@ -16,7 +16,7 @@ Animation::Animation(float x, float y, float rotation, std::string sprite,
 
 void Animation::Update(float dt){
 	endTimer.Update(dt);
-	sp.Update(dt);
+	sp.Update(dt,0,false);
 }
 
 void Animation::Render(){

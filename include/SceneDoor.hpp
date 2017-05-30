@@ -11,6 +11,7 @@ public:
 	bool Is(std::string type);
 	bool ReceiveAction(InventoryObject* other);
 	static bool GetChangeState();
+	static void SetChangeState(bool t);
 
 private:
 	bool lock;

@@ -18,16 +18,16 @@
 StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
-	Player* P = new Player(600, 600);
+	Player* P = new Player(600, 400);
 	EmptyBox* EB = new EmptyBox();
-	Enemy* E = new Enemy(300, 200);
-	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png");
-	PickUpObject* PO = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
-	SceneWindow* Window = new SceneWindow(500, 400, "img/closedwindow.png", "img/openwindow.png");
-	MovingObject* Table = new MovingObject(300, 600, "img/box.png");
+	//Enemy* E = new Enemy(300, 200);
+	SceneDoor* Door = new SceneDoor(800, 100, "img/doorclosed.png", "img/dooropened.png");
+	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
+	SceneWindow* Window = new SceneWindow(500, 100, "img/closedwindow.png", "img/openwindow.png");
+	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
-	objectArray.emplace_back(E);
+	//objectArray.emplace_back(E);
 	objectArray.emplace_back(PO);
 	objectArray.emplace_back(Window);
 	objectArray.emplace_back(Door);
@@ -78,6 +78,7 @@ void StageState::Update(float dt){
 	}
 	if(SceneDoor::GetChangeState()){
 		popRequested = true;
+		SceneDoor::SetChangeState(false);
 		Game::GetInstance().Push(new HallState());
 	}
 	quitRequested = instance.QuitRequested();

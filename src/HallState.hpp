@@ -18,6 +18,7 @@ public:
 	void Render();
 
 private:
+	Sprite background;
 	Sprite bg;
 };
 

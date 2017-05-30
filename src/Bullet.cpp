@@ -23,7 +23,7 @@ void Bullet::Update(float dt){
 	box.y += dt* speed.y;
 
 	distanceLeft -= dt * speed.Abs();
-	sp.Update(dt);
+	sp.Update(dt,0,false);
 }
 
 void Bullet::Render(){
