@@ -60,13 +60,18 @@ void Sprite::SetScaleY(float scale){
 	scaleY = scale;
 }
 
-void Sprite::Update(float dt, int posH){
+void Sprite::Update(float dt, int posH, bool shift){
 	timeElapsed += dt;
 
 	if (timeElapsed >= frameTime){
 		timeElapsed -= frameTime;
-		currentFrame++;
-		if(currentFrame > frameCount) currentFrame = 1;
+		if(shift){
+			currentFrame--;
+			if(currentFrame < 1) currentFrame = frameCount;
+		} else{
+			currentFrame++;
+			if(currentFrame > frameCount) currentFrame = 1;
+		}
 		SetFrame(currentFrame, posH);
 	}
 }

@@ -41,6 +41,7 @@ Player::Player(float x, float y) :
 	inventoryIndex = inHandIndex;
 
 	direcao = LESTE;
+	direcaoShift = false;
 }
 
 Player::~Player(){
@@ -52,9 +53,14 @@ void Player::Update(float dt){
 
 	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
 	if(!showingInventory){
+		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = NORTE;
+			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == NORTE || direcao == SUL)){
+				if(direcao == SUL) direcaoShift = true;
+			} else{
+				direcao = NORTE;
+			}
 			speed.y = -MODULO_SPEED;
 			speed.x = 0;
 			//rotation = -90;
@@ -62,21 +68,33 @@ void Player::Update(float dt){
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = SUL;
+			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == NORTE || direcao == SUL)){
+				if(direcao == NORTE) direcaoShift = true;
+			} else{
+				direcao = SUL;
+			}
 			speed.y = MODULO_SPEED;
 			speed.x = 0;
 			//rotation = 90;
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = LESTE;
+			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == LESTE || direcao == OESTE)){
+				if(direcao == OESTE) direcaoShift = true;
+			} else{
+				direcao = LESTE;
+			}
 			speed.x = MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 0;
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			direcao = OESTE;
+			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == LESTE || direcao == OESTE)){
+				if(direcao == LESTE) direcaoShift = true;
+			} else{
+				direcao = OESTE;
+			}
 			speed.x = -MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 180;
@@ -129,8 +147,8 @@ void Player::Update(float dt){
 	}
 
 	if(speed.x != 0 || speed.y != 0){
-		spKinder.Update(dt, direcao);
-		spKinderRun.Update(dt, direcao);
+		spKinder.Update(dt, direcao, direcaoShift);
+		spKinderRun.Update(dt, direcao, direcaoShift);
 	}
 }
 
@@ -147,9 +165,7 @@ bool Player::IsDead(){
 }
 
 void Player::Shoot(){
-	Vec2 aux;
-	aux.x = 70;
-	aux.y = 0;
+
 }
 
 void Player::Running(InputManager InputInstance){

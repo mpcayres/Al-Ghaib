@@ -24,7 +24,7 @@ public:
 	void SetScaleX(float scale);
 	void SetScaleY(float scale);
 
-	void Update(float dt, int posH = 0);
+	void Update(float dt, int posH = 0, bool shift = false);
 	void SetFrame(int frame, int posH = 0);
 	void SetFrameCount(int frameCount);
 	void SetFrameTime(float frameTime);

@@ -43,7 +43,8 @@ void MovingObject::NotifyCollision(GameObject& other){
 		}
 	}
 
-	if(other.Is("SceneObject") || other.Is("MovingObject")){
+	if(other.Is("SceneObject") || other.Is("SceneWindow") ||
+			other.Is("SceneDoor") || other.Is("MovingObject")){
 		box.x = previousPos.x;
 		box.y = previousPos.y;
 	}

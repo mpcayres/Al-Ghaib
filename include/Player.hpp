@@ -53,7 +53,7 @@ private:
 
 	InvBox direcao;
 	InputManager InputInstance;
-
+	bool direcaoShift;
 };
 
 #endif /* INCLUDE_Player_HPP_ */
