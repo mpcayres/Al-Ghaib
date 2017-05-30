@@ -7,6 +7,7 @@
 HallState::HallState() {
 	Player* P = new Player(400, 400);
 	objectArray.emplace_back(P);
+	//Camera::Follow(P);
 
 	quitRequested = false;
 	LoadAssets();

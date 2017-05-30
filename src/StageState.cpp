@@ -43,6 +43,7 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 }
 
 StageState::~StageState(){
+	Camera::Unfollow();
 	objectArray.clear();
 }
 

@@ -106,14 +106,14 @@ void Player::Update(float dt){
 		}
 
 		//Mudar lógica de borda
-		if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
+		//if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
 			previousPos.x = box.x;
 			box.x += speed.x;
-		}
-		if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
+		//}
+		//if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
 			previousPos.y = box.y;
 			box.y += speed.y;
-		}
+		//}
 		if(InputInstance.KeyPress(I_KEY)){
 			showingInventory = true;
 			inventoryIndex = inHandIndex;
