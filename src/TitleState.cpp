@@ -3,18 +3,25 @@
 #include "StageState.hpp"
 #include "InputManager.hpp"
 
+Music TitleState::intro, TitleState::music;
+bool TitleState::stopMusic;
+
 TitleState::TitleState() : menu(50, 50) {
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 255;
 	auxcolor.g = 10;
 	auxcolor.b = 10;
 
-	flagTimer = true;
+	flagTimer = true; stopMusic = false;
 	time = Timer();
 	bg = Sprite("img/title.jpg");
 	bg.SetScaleX(1.7); bg.SetScaleY(1.5);
 	tx = Text("font/Call me maybe.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
+	intro = Music("audio/menu-intro.wav");
+	music = Music("audio/menu-loop.wav");
+	intro.Play(1);
+	Mix_HookMusicFinished(&TitleState::LinkMusic);
 }
 
 void TitleState::Update(float dt){
@@ -42,17 +49,19 @@ void TitleState::Update(float dt){
 		menu.SetSelected(false);
 		switch(menu.GetOption()){
 			case MENU_START:
+				Pause();
 				Game::GetInstance().Push(new StageState());
 				break;
 			case MENU_CONTINUE:
+				Pause();
 				Game::GetInstance().Push(new StageState());
 				// em uma missao salva
 				break;
 			case MENU_OPTIONS:
-				//popRequested = true;
-				//push na tela de opcoees
+				//push na tela de opcoes
 				break;
 			case MENU_EXIT:
+				Pause();
 				quitRequested = true;
 				break;
 		}
@@ -67,9 +76,18 @@ void TitleState::Render(){
 }
 
 void TitleState::Pause(){
-
+	stopMusic = true;
+	intro.Stop();
+	music.Stop();
 }
 
 void TitleState::Resume(){
+	stopMusic = false;
+	intro.Play(1);
+}
 
+void TitleState::LinkMusic(){
+	if(!stopMusic){
+		music.Play(-1);
+	}
 }

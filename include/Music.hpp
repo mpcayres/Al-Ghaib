@@ -5,7 +5,7 @@
 	#include <SDL2.h>
 	#include <SDL_mixer/SDL_mixer.h>
 #elif __linux__
-    	#include <SDL2/SDL.h>
+    #include <SDL2/SDL.h>
 	#include <SDL2/SDL_mixer.h>
 #elif _WIN32
 	#include "SDL.h"
