@@ -113,7 +113,7 @@ void Player::Update(float dt){
 		//if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
 			previousPos.y = box.y;
 			box.y += speed.y;
-			printf("\n%f - %f", box.x, box.y);
+			//printf("\n%f - %f", box.x, box.y);
 		//}
 		if(InputInstance.KeyPress(I_KEY)){
 			showingInventory = true;

@@ -11,11 +11,11 @@ MenuHUD::MenuHUD(float x, float y) /*: sp("img/fundoMenu.png")*/ {
 	buttons.emplace_back(Sprite("img/new-game.png"));
 	buttons.emplace_back(Sprite("img/load-game.png"));
 	buttons.emplace_back(Sprite("img/option.png"));
-	buttons.emplace_back(Sprite("img/option.png"));
+	buttons.emplace_back(Sprite("img/sair.png"));
 	buttonsSelected.emplace_back(Sprite("img/new-game-select.png"));
 	buttonsSelected.emplace_back(Sprite("img/load-game-select.png"));
 	buttonsSelected.emplace_back(Sprite("img/option-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/option-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/sair-select.png"));
 }
 
 MenuHUD::~MenuHUD() { }
@@ -40,10 +40,10 @@ void MenuHUD::Render(){
 	for(unsigned int i = 0; i < buttons.size(); i++){
 		if((int) i == optSelected){
 			buttonsSelected[i].Render(box.x + 10,
-					box.y + i*buttonsSelected[i].GetHeight() + 10, 0);
+					box.y + i*buttonsSelected[0].GetHeight() + 10, 0);
 		} else{
 			buttons[i].Render(box.x + 10,
-					box.y + i*buttons[i].GetHeight() + 10, 0);
+					box.y + i*buttons[0].GetHeight() + 10, 0);
 		}
 	}
 
