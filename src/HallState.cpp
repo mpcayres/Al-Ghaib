@@ -3,10 +3,16 @@
 #include "Camera.hpp"
 #include "Player.hpp"
 #include "Collision.hpp"
+#include "Walls.hpp"
 
 HallState::HallState() {
 	Player* P = new Player(400, 400);
+	Walls *Wall1 = new Walls(604, 260, 141, 135);
+
+	Walls *Wall2 = new Walls(1054, 260, 141, 135);
 	objectArray.emplace_back(P);
+	objectArray.emplace_back(Wall1);
+	objectArray.emplace_back(Wall2);
 	//Camera::Follow(P);
 
 	quitRequested = false;
@@ -39,17 +45,17 @@ void HallState::Update(float dt){
 	Camera::Update(dt);
 	UpdateArray(dt);
 
-	/*for(int i = objectArray.size() - 1; i >= 0; --i) {
-		for(int j = i-1; j >= 0; --j){
-			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
-				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
+		/*for(int i = objectArray.size() - 1; i >= 0; --i) {
+			for(int j = i-1; j >= 0; --j){
+				if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
+					objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
 
-				objectArray[i].get()->NotifyCollision(*objectArray[j].get());
-				objectArray[j].get()->NotifyCollision(*objectArray[i].get());
+					objectArray[i].get()->NotifyCollision(*objectArray[j].get());
+					objectArray[j].get()->NotifyCollision(*objectArray[i].get());
 
+				}
 			}
-		}
-	}*/
+		}*/
 }
 
 void HallState::Render(){

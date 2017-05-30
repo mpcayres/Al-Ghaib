@@ -14,12 +14,14 @@
 #include "MovingObject.hpp"
 #include "EmptyBox.hpp"
 #include "HallState.hpp"
+#include "Walls.hpp"
 
 StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
 	Player* P = new Player(600, 400);
 	EmptyBox* EB = new EmptyBox();
+	//Walls *Wall = new Walls(700, 400, 100,100);
 	//Enemy* E = new Enemy(300, 200);
 	SceneDoor* Door = new SceneDoor(800, 100, "img/doorclosed.png", "img/dooropened.png");
 	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
@@ -27,6 +29,7 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
+	//objectArray.emplace_back(Wall);
 	//objectArray.emplace_back(E);
 	objectArray.emplace_back(PO);
 	objectArray.emplace_back(Window);

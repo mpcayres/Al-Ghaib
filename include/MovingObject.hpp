@@ -22,9 +22,10 @@ public:
 	void NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 
+	Vec2 previousPos;
+
 private:
 	Sprite sp;
-	Vec2 previousPos;
 };
 
 #endif /* SRC_MOVINGOBJECT_H_ */
