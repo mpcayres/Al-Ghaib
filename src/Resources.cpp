@@ -70,43 +70,45 @@ std::shared_ptr<TTF_Font> Resources::GetFont(std::string file, int ptsize){
 }
 
 void Resources::ClearImage(){
-	for(std::unordered_map<std::string, std::shared_ptr<SDL_Texture>>::iterator i = imageTable.begin();
-		i != imageTable.end(); i++){
+	std::unordered_map<std::string, std::shared_ptr<SDL_Texture>>::iterator i, aux;
+	for(i = imageTable.begin(); i != imageTable.end(); ){
+		//std::cout << (*i).first << std::endl;
 		if((*i).second.unique()){
-			imageTable.erase(i);
-		}
+			//std::cout << "UNIQUE: " << (*i).first << std::endl;
+			aux = i; i++;
+			imageTable.erase(aux);
+		} else i++;
 	}
-	imageTable.clear();
 }
 
 void Resources::ClearMusic(){
-	for(std::unordered_map<std::string, std::shared_ptr<Mix_Music>>::iterator i = musicTable.begin();
-		i != musicTable.end(); i++){
+	std::unordered_map<std::string, std::shared_ptr<Mix_Music>>::iterator i, aux;
+	for(i = musicTable.begin(); i != musicTable.end(); ){
 		if((*i).second.unique()){
-			musicTable.erase(i);
-		}
+			aux = i; i++;
+			musicTable.erase(aux);
+		} else i++;
 	}
-	musicTable.clear();
 }
 
 void Resources::ClearSound(){
-	for(std::unordered_map<std::string, std::shared_ptr<Mix_Chunk>>::iterator i = soundTable.begin();
-		i != soundTable.end(); i++){
+	std::unordered_map<std::string, std::shared_ptr<Mix_Chunk>>::iterator i, aux;
+	for(i = soundTable.begin(); i != soundTable.end(); ){
 		if((*i).second.unique()){
-			soundTable.erase(i);
-		}
+			aux = i; i++;
+			soundTable.erase(aux);
+		} else i++;
 	}
-	soundTable.clear();
 }
 
 void Resources::ClearFont(){
-	for(std::unordered_map<std::string, std::shared_ptr<TTF_Font>>::iterator i = fontTable.begin();
-		i != fontTable.end(); i++){
+	std::unordered_map<std::string, std::shared_ptr<TTF_Font>>::iterator i, aux;
+	for(i = fontTable.begin(); i != fontTable.end(); ){
 		if((*i).second.unique()){
-			fontTable.erase(i);
-		}
+			aux = i; i++;
+			fontTable.erase(aux);
+		} else i++;
 	}
-	fontTable.clear();
 }
 
 void Resources::ClearResources(){

@@ -71,6 +71,7 @@ Game::Game(std::string title, int width, int height){
 Game::~Game(){
 	if(storedState != nullptr) delete(storedState);
 	while(!stateStack.empty()) stateStack.pop();
+	Resources::ClearResources();
 
 	IMG_Quit();
 	Mix_CloseAudio();
@@ -109,7 +110,6 @@ void Game::Run(){
 			}
 			SDL_Delay(33);
 		}
-		Resources::ClearResources();
 	}
 }
 
