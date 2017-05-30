@@ -16,7 +16,7 @@ TitleState::TitleState() : menu(50, 50) {
 	time = Timer();
 	bg = Sprite("img/title.jpg");
 	bg.SetScaleX(1.7); bg.SetScaleY(1.5);
-	tx = Text("font/Call me maybe.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
+	tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
