@@ -11,7 +11,7 @@ Sound::Sound(std::string file){
 }
 
 void Sound::Play(int times){
-	channel = Mix_PlayChannel(-1 ,chunk.get(), times);
+	channel = Mix_PlayChannel(-1, chunk.get(), times);
 }
 
 void Sound::Stop(){
