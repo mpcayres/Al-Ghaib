@@ -31,6 +31,7 @@ void MovingObject::NotifyCollision(GameObject& other){
 			box.y += Player::player->GetSpeed().y;
 		}
 	}
+
 	if(other.Is("Player")){
 		if(Player::player->box.x < box.x + box.w ||
 				Player::player->box.x + Player::player->box.w > box.x){
@@ -41,27 +42,19 @@ void MovingObject::NotifyCollision(GameObject& other){
 			Player::player->box.y = Player::player->previousPos.y;
 		}
 	}
-	if(other.Is("SceneObject")){
+
+	if(other.Is("SceneObject") || other.Is("MovingObject")){
 		box.x = previousPos.x;
 		box.y = previousPos.y;
-
 	}
 
 	if (other.Is("Enemy")){
-		if(other.box.y + other.box.h < box.y + box.h){
-
-				if((other.box.x < box.x + box.w &&
-						other.box.x + other.box.w > box.x + box.w )
-						|| (box.InsideX(other.box) &&
-						other.box.CenterX() >= box.CenterX())){
-									other.box.x = box.x + box.w + 1;
-				} else if((other.box.x + other.box.w > box.x &&
-						other.box.x < box.x)
-						|| (box.InsideX(Player::player->box) &&
-						other.box.CenterX() < box.CenterX())){
-								other.box.x = box.x - other.box.w - 1;
-				}
-
+		if(other.box.x < box.x + box.w ||
+				other.box.x + other.box.w > box.x){
+			other.box.x = box.x + box.w + 1;
+		} else if(other.box.y < box.y + box.h ||
+				other.box.y + other.box.h > box.y){
+			other.box.x = box.x - other.box.w - 1;
 		}
 	}
 }

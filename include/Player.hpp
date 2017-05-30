@@ -21,6 +21,7 @@ public:
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
 	void Shoot();
+	void Running(InputManager InputInstance);
 	bool Is(std::string type);
 	bool getRunning();
 	bool GetShowingInventory();
@@ -35,13 +36,11 @@ public:
 
 	static Player * player;
 	Vec2 previousPos;
-	enum InvBox{SUL, NORTE, LESTE, OESTE, NONE};
-	void Running(InputManager InputInstance);
+	enum InvBox{SUL, NORTE, LESTE, OESTE};
 
 private:
 	//Timer time;
-	float timeAnim;
-	Sprite sp;
+	Sprite spKinder, spKinderRun;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 
 	Vec2 speed;
@@ -53,8 +52,6 @@ private:
 	std::vector<InventoryObject*> inventory;
 
 	InvBox direcao;
-	InvBox dirCollision;
-	bool colliding;
 	InputManager InputInstance;
 
 };

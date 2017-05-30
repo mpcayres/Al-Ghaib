@@ -1,7 +1,7 @@
 #include "EmptyBox.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
-#include "SceneObject.hpp"
+#include "SceneDoor.hpp"
 #include "Player.hpp"
 #include "Game.hpp"
 
@@ -63,7 +63,7 @@ bool EmptyBox::IsDead(){
 }
 
 void EmptyBox::NotifyCollision(GameObject& other){
-	if(other.Is("SceneObject")){
+	if(other.Is("SceneDoor")){
 		if(InputManager::GetInstance().KeyPress(X_KEY) && inHand != nullptr){
 			if(inHand->Action(&other) == true)
 				Player::player->DeleteInventory();

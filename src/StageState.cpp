@@ -9,9 +9,11 @@
 #include "EndState.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
-#include "SceneObject.hpp"
+#include "SceneWindow.hpp"
+#include "SceneDoor.hpp"
 #include "MovingObject.hpp"
 #include "EmptyBox.hpp"
+#include "HallState.hpp"
 
 StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
@@ -19,10 +21,10 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 	Player* P = new Player(600, 600);
 	EmptyBox* EB = new EmptyBox();
 	Enemy* E = new Enemy(300, 200);
+	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png");
 	PickUpObject* PO = new PickUpObject(200, 400, "KeyObject", "img/minion.png");
-	SceneObject* Window = new SceneObject(500, 400, 1, "img/closedwindow.png", "img/openwindow.png", true);
-	SceneObject* Door = new SceneObject(800, 200, 1, "img/doorclosed.png", "img/dooropened.png", false);
-	MovingObject* Table = new MovingObject(300, 600, "img/optionsS.png");
+	SceneWindow* Window = new SceneWindow(500, 400, "img/closedwindow.png", "img/openwindow.png");
+	MovingObject* Table = new MovingObject(300, 600, "img/box.png");
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
 	objectArray.emplace_back(E);
@@ -74,10 +76,13 @@ void StageState::Update(float dt){
 			Game::GetInstance().Push(new EndState(stateData));
 		}
 	}
+	if(SceneDoor::GetChangeState()){
+		popRequested = true;
+		Game::GetInstance().Push(new HallState());
+	}
 	quitRequested = instance.QuitRequested();
 
 	Camera::Update(dt);
-
 	UpdateArray(dt);
 
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
@@ -101,7 +106,7 @@ void StageState::Render(){
 
 	if(Player::player->GetShowingInventory()){
 		Player::player->RenderInventory();
-	}else{
+	} else{
 		Player::player->RenderInHand();
 	}
 }

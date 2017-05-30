@@ -6,15 +6,16 @@
 #include "Sound.hpp"
 #include "InventoryKey.hpp"
 
-#define MODULO_SPEED 8
+#define MODULO_SPEED 6
 #define AUMENTO_VELOCIDADE 2
 
 Player* Player::player;
 
 Player::Player(float x, float y) :
-		timeAnim(0.1), sp("img/kinder.jpg", 20, timeAnim, 4){
-	sp.SetScaleX(2.5);
-	sp.SetScaleY(2.5);
+		spKinder("img/kinder.png", 20, 0.06, 4),
+		spKinderRun("img/kinder-run.png", 15, 0.1, 4) {
+	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
+	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 
 	spInventory = Sprite("img/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
@@ -24,8 +25,8 @@ Player::Player(float x, float y) :
 	spInventoryboxSelected.SetScaleX(1.5); spInventoryboxSelected.SetScaleY(1.5);
 
 	box.x = x; box.y = y;
-	box.w = sp.GetScaledWidth();
-	box.h = sp.GetScaledHeight();
+	box.w = spKinder.GetScaledWidth();
+	box.h = spKinder.GetScaledHeight();
 	previousPos = Vec2(x,y);
 	//time = Timer();
 
@@ -40,8 +41,6 @@ Player::Player(float x, float y) :
 	inventoryIndex = inHandIndex;
 
 	direcao = LESTE;
-	dirCollision = NONE;
-	colliding = false;
 }
 
 Player::~Player(){
@@ -52,31 +51,32 @@ void Player::Update(float dt){
 	InputInstance = InputManager::GetInstance();
 
 	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
-	if(showingInventory == false){
+	if(!showingInventory){
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = NORTE;
+			direcao = NORTE;
 			speed.y = -MODULO_SPEED;
 			speed.x = 0;
 			//rotation = -90;
+			//nao pode ficar fora, senao o movimento fica bugado
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = SUL;
+			direcao = SUL;
 			speed.y = MODULO_SPEED;
 			speed.x = 0;
 			//rotation = 90;
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = LESTE;
+			direcao = LESTE;
 			speed.x = MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 0;
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(!InputManager::GetInstance().IsKeyDown(Z_KEY)) direcao = OESTE;
+			direcao = OESTE;
 			speed.x = -MODULO_SPEED;
 			speed.y = 0;
 			//rotation = 180;
@@ -87,26 +87,7 @@ void Player::Update(float dt){
 			speed.y = 0;
 		}
 
-
-		//chato, eu sei, mas isso  aqui em baixo não pode ficar fora assim se não o movimento fica bugado
-		/*if(InputInstance.IsKeyDown(LSHIFT_KEY)){
-			speed.x *= AUMENTO_VELOCIDADE;
-			speed.y *= AUMENTO_VELOCIDADE;
-			running = true;
-		} else
-			running = false;*/
-
-	//Deixei essa parte aqui pra caso preciso em outro caso
-	//if(colliding && dirCollision == direcao){
-		//Tentei isso de baixo tbm, mas ficou com�dia
-		/*if(dirCollision == NORTE || dirCollision == SUL){
-			box.y = previousPos.y;
-		} else if(dirCollision == LESTE || dirCollision == OESTE){
-			box.x = previousPos.x;
-		}*/
-	//	colliding = false;
-	//	dirCollision = NONE;
-	//} else{
+		//Mudar l�gica de borda
 		if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
 			previousPos.x = box.x;
 			box.x += speed.x;
@@ -119,7 +100,7 @@ void Player::Update(float dt){
 			showingInventory = true;
 			inventoryIndex = inHandIndex;
 		}
-	}else{
+	} else{
 		/*MOVIMENTACAO DO INVENTARIO*/
 		if(InputInstance.KeyPress(I_KEY))
 			showingInventory = false;
@@ -145,21 +126,20 @@ void Player::Update(float dt){
 			inHandIndex = inventoryIndex;
 			showingInventory = false;
 		}
-		/* */
 	}
 
 	if(speed.x != 0 || speed.y != 0){
-		if(running){
-			sp.SetFrameTime(timeAnim/20);
-		} else{
-			sp.SetFrameTime(timeAnim);
-		}
-		sp.Update(dt, direcao);
+		spKinder.Update(dt, direcao);
+		spKinderRun.Update(dt, direcao);
 	}
 }
 
 void Player::Render(){
-	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(running){
+		spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	} else{
+		spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	}
 }
 
 bool Player::IsDead(){
@@ -170,7 +150,6 @@ void Player::Shoot(){
 	Vec2 aux;
 	aux.x = 70;
 	aux.y = 0;
-	//aux = aux.Rotate(cannonAngle);
 }
 
 void Player::Running(InputManager InputInstance){
@@ -178,23 +157,17 @@ void Player::Running(InputManager InputInstance){
 		speed.x *= AUMENTO_VELOCIDADE;
 		speed.y *= AUMENTO_VELOCIDADE;
 		running = true;
-	} else
+	} else{
 		running = false;
-
-
-}
-void Player::NotifyCollision(GameObject& other){
-	if(other.Is("SceneObject")){
-		colliding = true;
-		dirCollision = direcao;
 	}
+}
 
-	if(other.Is("Enemy")){
+void Player::NotifyCollision(GameObject& other){
+	/*if(other.Is("Enemy")){
 		//hp = 0;
 		//Camera::Unfollow();
 		//printf("CAUGHT YOU!");
-
-	}
+	}*/
 }
 
 bool Player::Is(std::string type){
@@ -205,7 +178,9 @@ bool Player::getRunning(){
 	return running;
 }
 
-bool Player::GetShowingInventory(){return showingInventory;}
+bool Player::GetShowingInventory(){
+	return showingInventory;
+}
 
 void Player::RenderInventory(){
 	int posX, posY, posXCenter, posYCenter, posXCaixa, posYCaixa;

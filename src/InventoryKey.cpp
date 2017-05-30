@@ -1,23 +1,20 @@
 #include "InventoryKey.hpp"
-#include "SceneObject.hpp"
+#include "SceneDoor.hpp"
 
 InventoryKey::InventoryKey(/*std::string file*/){
 	//Acho melhor não passar como string pq aí só está atrelado a própria classe, não depende de outra ter essa info
 	sp = Sprite("img/minion.png");
 }
 
-InventoryKey::~InventoryKey(){
-}
+InventoryKey::~InventoryKey(){ }
 
 void InventoryKey::Render(int x, int y){
-	sp.Render(x,y,0);
+	sp.Render(x, y, 0);
 }
 
 bool InventoryKey::Action(GameObject* other){
-	if(other->Is("SceneObject")){
-		if(((SceneObject*)other)->RecieveAction(this) == true){
-			return true;
-		}
+	if(other->Is("SceneDoor")){
+		return (((SceneDoor*)other)->ReceiveAction(this));
 	}
 	return false;
 }

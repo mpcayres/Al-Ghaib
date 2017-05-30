@@ -3,16 +3,19 @@
 
 #include <string>
 
-
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "InventoryObject.hpp"
+#include "Camera.hpp"
+#include "InputManager.hpp"
+#include "Player.hpp"
+#include "MovingObject.hpp"
 
 #define  OFFSET_PISO 10
 
 class SceneObject : public GameObject {
 public:
-	SceneObject(float x, float y, int id, std::string img, std::string img2, bool alinha);
+	SceneObject(float x, float y, std::string img, std::string img2);
 
 	void Update(float dt);
 	void Render();
@@ -20,16 +23,11 @@ public:
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
 	bool Is(std::string type);
-	bool RecieveAction(InventoryObject* other);
 
-private:
-	int id;
+protected:
 	Sprite sp;
 	bool estado;
 	std::string change1, change2;
-	bool alinhaCentro; // pode virar inteiro se tiver outros poss�veis alinhamentos
-
-	bool lock;
 };
 
 #endif  /* SCENEOBJECT_H_ */

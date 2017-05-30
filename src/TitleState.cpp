@@ -12,6 +12,7 @@ TitleState::TitleState() : menu(50, 50) {
 	flagTimer = true;
 	time = Timer();
 	bg = Sprite("img/title.jpg");
+	bg.SetScaleX(1.7); bg.SetScaleY(1.5);
 	tx = Text("font/Call me maybe.ttf", 64, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 }
@@ -44,11 +45,11 @@ void TitleState::Update(float dt){
 				break;
 			case MENU_CONTINUE:
 				Game::GetInstance().Push(new StageState());
-				// em uma miss�o salva
+				// em uma missao salva
 				break;
 			case MENU_OPTIONS:
 				//popRequested = true;
-				//push na tela de op��es
+				//push na tela de opcoees
 				break;
 			case MENU_EXIT:
 				quitRequested = true;

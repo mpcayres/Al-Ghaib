@@ -19,7 +19,7 @@ public:
 	void SetSelected(bool s);
 
 private:
-	Sprite sp;
+	//Sprite sp;
 	Rect box;
 	std::vector<Sprite> buttons;
 	std::vector<Sprite> buttonsSelected;

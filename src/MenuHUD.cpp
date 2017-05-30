@@ -1,22 +1,21 @@
 #include "MenuHUD.hpp"
 #include "InputManager.hpp"
 
-// N�o temos o fundo do menu e sequer se haver� kkk
-MenuHUD::MenuHUD(float x, float y) : sp("img/fundoMenu.png") {
+MenuHUD::MenuHUD(float x, float y) /*: sp("img/fundoMenu.png")*/ {
 	box.x = x;// - sp.GetWidth()/2;
 	box.y = y;// - sp.GetHeight()/2;
-	box.h = sp.GetHeight();
-	box.w = sp.GetWidth();
+	//box.h = sp.GetHeight();
+	//box.w = sp.GetWidth();
 	selected = false;
 	optSelected = 0;
-	buttons.emplace_back(Sprite("img/start.png"));
-	buttons.emplace_back(Sprite("img/continue.png"));
-	buttons.emplace_back(Sprite("img/options.png"));
-	buttons.emplace_back(Sprite("img/options.png"));
-	buttonsSelected.emplace_back(Sprite("img/startS.png"));
-	buttonsSelected.emplace_back(Sprite("img/continueS.png"));
-	buttonsSelected.emplace_back(Sprite("img/optionsS.png"));
-	buttonsSelected.emplace_back(Sprite("img/optionsS.png"));
+	buttons.emplace_back(Sprite("img/new-game.png"));
+	buttons.emplace_back(Sprite("img/load-game.png"));
+	buttons.emplace_back(Sprite("img/option.png"));
+	buttons.emplace_back(Sprite("img/option.png"));
+	buttonsSelected.emplace_back(Sprite("img/new-game-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/load-game-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/option-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/option-select.png"));
 }
 
 MenuHUD::~MenuHUD() { }
@@ -37,7 +36,7 @@ void MenuHUD::Update(float dt){
 }
 
 void MenuHUD::Render(){
-	sp.Render(box.x, box.y, 0);
+	//sp.Render(box.x, box.y, 0);
 	for(unsigned int i = 0; i < buttons.size(); i++){
 		if((int) i == optSelected){
 			buttonsSelected[i].Render(box.x + 10,
