@@ -44,12 +44,9 @@ void Sprite::Render(int x, int y, float angle){
 	dst.x = x, dst.y = y;
 	dst.h = clipRect.h*scaleY; dst.w = clipRect.w*scaleX;
 
-
-
 	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(),
 			&clipRect, &dst, angle, nullptr, SDL_FLIP_NONE);
-	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
-
+	//SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
 }
 
 void Sprite::SetScaleX(float scale){
@@ -72,8 +69,8 @@ void Sprite::Update(float dt, int posH, bool shift){
 			currentFrame++;
 			if(currentFrame > frameCount) currentFrame = 1;
 		}
-		SetFrame(currentFrame, posH);
 	}
+	SetFrame(currentFrame, posH);
 }
 
 void Sprite::SetFrame(int frame, int posH){
