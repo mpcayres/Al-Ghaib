@@ -103,6 +103,23 @@ void Player::Update(float dt){
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			speed.x = 0;
 			speed.y = 0;
+			if(direcao == NORTE){
+				spKinder.SetFrame(1, 1);
+				spKinderRun.SetFrame(1, 1);
+			}
+			if(direcao == SUL){
+				spKinder.SetFrame(1, 0);
+				spKinderRun.SetFrame(1, 0);
+			}
+			if(direcao == LESTE){
+				spKinder.SetFrame(1, 2);
+				spKinderRun.SetFrame(1, 2);
+			}
+			if(direcao == OESTE){
+				spKinder.SetFrame(1, 3);
+				spKinderRun.SetFrame(1, 3);
+			}
+
 		}
 
 		if(box.x + speed.x < limits.w - box.w && box.x + speed.x > limits.x){
