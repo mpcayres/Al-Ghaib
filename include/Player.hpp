@@ -30,6 +30,7 @@ public:
 	void RenderInHand();
 	InventoryObject* GetInHand();
 	void DeleteInventory();
+	void SetMovementLimits(Rect limits);
 
 	int GetDirecao();
 	Vec2 GetSpeed();
@@ -54,6 +55,8 @@ private:
 	InvBox direcao;
 	InputManager InputInstance;
 	bool direcaoShift;
+
+	Rect limits;
 };
 
 #endif /* INCLUDE_Player_HPP_ */

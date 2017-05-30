@@ -21,10 +21,12 @@ public:
 
 	void Update(float dt);
 	void Render();
+	Rect GetStateLimits();
 
 	StateData stateData;
 
 private:
+	Rect limits;
 	Sprite bg;
 	TileSet tileSet;
 	TileMap tileMap;

@@ -27,8 +27,15 @@ void MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().IsKeyDown(Z_KEY)){
 			previousPos = Vec2(box.x, box.y);
-			box.x += Player::player->GetSpeed().x;
-			box.y += Player::player->GetSpeed().y;
+
+			if(box.x + Player::player->GetSpeed().x < limits.w - box.w && box.x + Player::player->GetSpeed().x > limits.x){
+				box.x += Player::player->GetSpeed().x;
+				if((Player::player->box).Intersect(box)) box.x -= Player::player->GetSpeed().x;
+			}
+			if(box.y + Player::player->GetSpeed().y < limits.h - box.h && box.y + Player::player->GetSpeed().y > limits.y){
+				box.y += Player::player->GetSpeed().y;
+				if((Player::player->box).Intersect(box)) box.y -= Player::player->GetSpeed().y;
+			}
 		}
 	}
 
@@ -69,6 +76,13 @@ void MovingObject::NotifyCollision(GameObject& other){
 			other.box.x = box.x - other.box.w - 1;
 		}
 	}
+}
+
+void MovingObject::SetMovementLimits(Rect limits){
+	this->limits.x = limits.x;
+	this->limits.y = limits.y;
+	this->limits.w = limits.w;
+	this->limits.h = limits.h;
 }
 
 bool MovingObject::Is(std::string type){

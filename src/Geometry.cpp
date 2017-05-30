@@ -140,6 +140,15 @@ bool Rect::InsideY(Rect v2){
 	return (v2.y >= y && v2.y + v2.h <= y+h);
 }
 
+bool Rect::Intersect(Rect v2){
+	if((v2.x+ v2.w >= x && v2.x+ v2.w <= x+w)||
+			(v2.x >= x && v2.x <= x+w)){
+		if(v2.y + v2.h >= y && v2.y+ v2.h <= y+h) return true;
+		if(v2.y >= y && v2.y <= y+h) return true;
+	}
+	return false;
+}
+
 void Rect::operator=(const Rect& r){
 	x = r.x;
 	y = r.y;

@@ -21,11 +21,12 @@ public:
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
 	bool Is(std::string type);
-
+	void SetMovementLimits(Rect limits);
 	Vec2 previousPos;
 
 private:
 	Sprite sp;
+	Rect limits;
 };
 
 #endif /* SRC_MOVINGOBJECT_H_ */

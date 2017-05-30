@@ -64,3 +64,38 @@ int TileMap::GetHeight(){
 int TileMap::GetWidth(){
 	return mapWidth;
 }
+
+Rect TileMap::FindLimits(){
+	Rect aux;
+	int lastX, lastY, firstX, firstY;
+	int i;
+	int first = -1, last;
+
+	for(i = 0; i< (mapHeight*mapWidth)-1 ; i++){
+		if(tileMatrix[i] >= 0){
+			if(first == -1) first = i;
+			last = i;
+		}
+	}
+
+	firstX = (first%mapWidth) * tileSet->GetTileWidth();
+	if(first > mapWidth){
+		firstY = (first/mapWidth)* tileSet->GetTileHeight();
+	}else firstY = 0;
+
+	lastX = (last%mapWidth) * tileSet->GetTileWidth();
+	if(last > mapWidth){
+		lastY = (last/mapWidth)* tileSet->GetTileHeight();
+	}else lastY = 0;
+
+	lastX += tileSet->GetTileWidth();
+	lastY += tileSet->GetTileHeight();
+
+	aux.x = firstX;
+	aux.y = firstY;
+	aux.w = lastX;
+	aux.h = lastY;
+
+	return aux;
+}
+

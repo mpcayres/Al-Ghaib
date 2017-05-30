@@ -19,7 +19,9 @@
 StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
+	limits = tileMap.FindLimits();
 	Player* P = new Player(600, 400);
+	P->SetMovementLimits(limits);
 	EmptyBox* EB = new EmptyBox();
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	//Enemy* E = new Enemy(300, 200);
@@ -27,6 +29,7 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
 	SceneWindow* Window = new SceneWindow(500, 100, "img/closedwindow.png", "img/openwindow.png");
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
+	Table->SetMovementLimits(limits);
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall);

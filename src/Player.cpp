@@ -105,16 +105,14 @@ void Player::Update(float dt){
 			speed.y = 0;
 		}
 
-		//Mudar l�gica de borda
-		//if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
+		if(box.x + speed.x < limits.w - box.w && box.x + speed.x > limits.x){
 			previousPos.x = box.x;
 			box.x += speed.x;
-		//}
-		//if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
+		}
+		if(box.y + speed.y < limits.h - box.h && box.y + speed.y > limits.y){
 			previousPos.y = box.y;
 			box.y += speed.y;
-			//printf("\n%f - %f", box.x, box.y);
-		//}
+		}
 		if(InputInstance.KeyPress(I_KEY)){
 			showingInventory = true;
 			inventoryIndex = inHandIndex;
@@ -151,6 +149,14 @@ void Player::Update(float dt){
 		spKinder.Update(dt, direcao, direcaoShift);
 		spKinderRun.Update(dt, direcao, direcaoShift);
 	}
+}
+
+
+void Player::SetMovementLimits(Rect limits){
+	this->limits.x = limits.x;
+	this->limits.y = limits.y;
+	this->limits.w = limits.w;
+	this->limits.h = limits.h;
 }
 
 void Player::Render(){

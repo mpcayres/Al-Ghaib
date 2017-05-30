@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "TileSet.hpp"
+#include "Geometry.hpp"
 
 class TileMap{
 public:
@@ -18,6 +19,7 @@ public:
 	int GetWidth();
 	int GetHeight();
 	int GetDepth();
+	Rect FindLimits();
 
 private:
 	std::vector<int> tileMatrix;
