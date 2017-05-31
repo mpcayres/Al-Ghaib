@@ -101,3 +101,7 @@ int Sprite::GetScaledWidth(){
 int Sprite::GetScaledHeight(){
 	return (height * scaleY)/tamCount;
 }
+
+int Sprite::GetCurrentFrame(){
+	return currentFrame;
+}

@@ -6,8 +6,9 @@
 #include "Sound.hpp"
 #include "InventoryKey.hpp"
 
-#define MODULO_SPEED 6
-#define AUMENTO_VELOCIDADE 2
+#define MODULO_SPEED		6
+#define AUMENTO_VELOCIDADE	2
+#define DESACELERA			1
 
 Player* Player::player;
 
@@ -103,23 +104,22 @@ void Player::Update(float dt){
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			speed.x = 0;
 			speed.y = 0;
-			if(direcao == NORTE){
-				spKinder.SetFrame(1, 1);
-				spKinderRun.SetFrame(1, 1);
-			}
-			if(direcao == SUL){
-				spKinder.SetFrame(1, 0);
-				spKinderRun.SetFrame(1, 0);
-			}
-			if(direcao == LESTE){
-				spKinder.SetFrame(1, 2);
-				spKinderRun.SetFrame(1, 2);
-			}
-			if(direcao == OESTE){
-				spKinder.SetFrame(1, 3);
-				spKinderRun.SetFrame(1, 3);
-			}
+			running = false;
+		}
 
+		if(speed.x != 0 || speed.y != 0){
+			spKinder.Update(dt, direcao, direcaoShift);
+			spKinderRun.Update(dt, direcao, direcaoShift);
+		} else{
+			if((spKinder.GetCurrentFrame() > 1 && spKinder.GetCurrentFrame() < 12) ||
+					(spKinder.GetCurrentFrame() > 12 && spKinder.GetCurrentFrame() <= 20)){
+				if(direcao == NORTE) speed.y = -DESACELERA;
+				if(direcao == SUL) speed.y = DESACELERA;
+				if(direcao == LESTE) speed.x = DESACELERA;
+				if(direcao == OESTE) speed.x = -DESACELERA;
+
+				spKinder.Update(dt, direcao, direcaoShift);
+			}
 		}
 
 		if(box.x + speed.x < limits.w - box.w && box.x + speed.x > limits.x){
@@ -134,6 +134,7 @@ void Player::Update(float dt){
 			showingInventory = true;
 			inventoryIndex = inHandIndex;
 		}
+
 	} else{
 		/*MOVIMENTACAO DO INVENTARIO*/
 		if(InputInstance.KeyPress(I_KEY))
@@ -162,10 +163,6 @@ void Player::Update(float dt){
 		}
 	}
 
-	if(speed.x != 0 || speed.y != 0){
-		spKinder.Update(dt, direcao, direcaoShift);
-		spKinderRun.Update(dt, direcao, direcaoShift);
-	}
 }
 
 

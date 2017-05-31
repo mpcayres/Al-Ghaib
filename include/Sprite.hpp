@@ -36,6 +36,7 @@ public:
 	int GetHeight();
 	int GetScaledWidth();
 	int GetScaledHeight();
+	int GetCurrentFrame();
 	bool IsOpen();
 
 private:

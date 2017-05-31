@@ -55,7 +55,7 @@ void EmptyBox::Render(){
 	SDL_Rect dst;
 	dst.x = box.x - Camera::pos.x; dst.y = box.y - Camera::pos.y;
 	dst.h = box.h; dst.w = box.w;
-	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
+	//SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
 }
 
 bool EmptyBox::IsDead(){
