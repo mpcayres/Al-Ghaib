@@ -23,10 +23,10 @@
 #include <memory>
 
 #include "State.hpp"
+#include "MissionManager.hpp"
+
 #define SCREEN_SIZE_W 1024
 #define SCREEN_SIZE_H 600
-
-
 
 class Game{
 public:
@@ -38,6 +38,7 @@ public:
 	void Run();
 	SDL_Renderer* GetRenderer();
 	State& GetCurrentState();
+	MissionManager& GetMissionManager();
 	static Game& GetInstance();
 
 	void Push(State* state);
@@ -54,8 +55,9 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	State* storedState;
+	MissionManager* missionManager;
 
-	std::stack<std::unique_ptr<State>>  stateStack;
+	std::stack<std::unique_ptr<State>> stateStack;
 
 	int frameStart;
 	float dt;

@@ -11,7 +11,7 @@
 
 class StageState : public State {
 public:
-	StageState();
+	StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial);
 	~StageState();
 
 	void Pause();

@@ -6,7 +6,7 @@
 
 class HallState : public State {
 public:
-	HallState();
+	HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial);
 	~HallState();
 
 	void Pause();

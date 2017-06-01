@@ -66,12 +66,15 @@ Game::Game(std::string title, int width, int height){
 
 	srand(time(NULL));
 	storedState = nullptr;
+	missionManager = new MissionManager();
 }
 
 Game::~Game(){
-	if(storedState != nullptr) delete(storedState);
+	if(storedState != nullptr) delete (storedState);
 	while(!stateStack.empty()) stateStack.pop();
 	Resources::ClearResources();
+
+	if(missionManager != nullptr) delete (missionManager);
 
 	IMG_Quit();
 	Mix_CloseAudio();
@@ -133,6 +136,10 @@ Game& Game::GetInstance(){
 
 State& Game::GetCurrentState(){
 	return *stateStack.top();
+}
+
+MissionManager& Game::GetMissionManager(){
+	return *missionManager;
 }
 
 SDL_Renderer* Game::GetRenderer(){

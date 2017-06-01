@@ -1,6 +1,5 @@
 #include "TitleState.hpp"
 #include "Game.hpp"
-#include "StageState.hpp"
 #include "InputManager.hpp"
 
 Music TitleState::intro, TitleState::music;
@@ -50,12 +49,12 @@ void TitleState::Update(float dt){
 		switch(menu.GetOption()){
 			case MENU_START:
 				Pause();
-				Game::GetInstance().Push(new StageState());
+				Game::GetInstance().GetMissionManager().ChangeMission(1);
 				break;
 			case MENU_CONTINUE:
 				Pause();
-				Game::GetInstance().Push(new StageState());
-				// em uma missao salva
+				Game::GetInstance().GetMissionManager().ChangeMission(1);
+				//em uma missao salva
 				break;
 			case MENU_OPTIONS:
 				//push na tela de opcoes

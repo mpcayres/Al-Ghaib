@@ -32,7 +32,7 @@ void EndState::Update(float dt){
 	if(instance.KeyPress(SPACE_KEY)){
 		music.Stop();
 		popRequested = true;
-		Game::GetInstance().Push(new StageState());
+		//Game::GetInstance().Push(new StageState());
 	}
 
 	quitRequested = instance.QuitRequested();

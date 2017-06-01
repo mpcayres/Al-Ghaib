@@ -5,8 +5,9 @@
 #include "Collision.hpp"
 #include "Walls.hpp"
 
-HallState::HallState() {
+HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial) {
 	SetInitialObjectArray();
+	//objectArray.emplace_back(std::move(obj));
 	//Camera::Follow(P);
 
 	quitRequested = false;
