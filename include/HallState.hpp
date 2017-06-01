@@ -17,6 +17,8 @@ public:
 	void Update(float dt);
 	void Render();
 
+	void SetInitialObjectArray();
+
 private:
 	Sprite background;
 	Sprite bg;

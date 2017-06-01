@@ -21,6 +21,8 @@ public:
 
 	void Update(float dt);
 	void Render();
+
+	void SetInitialObjectArray();
 	Rect GetStateLimits();
 
 	StateData stateData;

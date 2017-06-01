@@ -40,7 +40,7 @@ Enemy::~Enemy(){
 void Enemy::Update(float dt){
 	Vec2 aux, aux2;
 	/* dinamica de percepcao de ruido vindo do jogador*/
-	printf("\n Distancia para jogador");
+	printf("\nDistancia para jogador");
 
 	float dist = 0;
 	int running = 1;
@@ -61,7 +61,7 @@ void Enemy::Update(float dt){
 		seen = true;
 	}
 
-	printf("\nQuantidade de percepção de ruído acrescentada:");
+	printf("\nQuantidade de percepcao de ruido acrescentada:");
 	if(Player::player->getRunning() == true)
 		running = 10;
 	else if(!InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY) && !InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY) &&
@@ -85,8 +85,6 @@ void Enemy::Update(float dt){
 	if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
 		box.x += speed.x;
 	}
-	
-
 
 	time.Update(dt);
 
@@ -142,14 +140,14 @@ void Enemy::Pursuit(){
 	Vec2 aux;
 
 	if(Player::player != nullptr){
-				destination.x = Player::player->box.x;
-				destination.y = Player::player->box.y;
-				//seen = true;
+		destination.x = Player::player->box.x;
+		destination.y = Player::player->box.y;
+		//seen = true;
 
-				aux.x = box.x; aux.y = box.y;
-				speed = (destination.Sub(aux)).Normalize();
-				speed.x = speed.x*SPEED_CONTROL;
-				speed.y = speed.y*SPEED_CONTROL;
+		aux.x = box.x; aux.y = box.y;
+		speed = (destination.Sub(aux)).Normalize();
+		speed.x = speed.x*SPEED_CONTROL;
+		speed.y = speed.y*SPEED_CONTROL;
 	}
 
 	if (speed.x < 0 && speed.y < 0){
@@ -160,11 +158,11 @@ void Enemy::Pursuit(){
 
 			//seen = false;
 
-		}else{
+		} else{
 			box.x += speed.x;
 			box.y += speed.y;
 		}
-	}else if (speed.x > 0 && speed.y < 0){
+	} else if (speed.x > 0 && speed.y < 0){
 		if(box.x +speed.x +  VALUE >= destination.x &&
 				speed.y + box.y -  VALUE <= destination.y){
 			box.x = destination.x;
@@ -176,7 +174,7 @@ void Enemy::Pursuit(){
 				box.x += speed.x;
 				box.y += speed.y;
 			}
-	}else if (speed.x < 0 && speed.y > 0){
+	} else if (speed.x < 0 && speed.y > 0){
 		if(box.x +speed.x -  VALUE <= destination.x &&
 				speed.y + box.y +  VALUE >= destination.y){
 			box.x = destination.x;
@@ -188,17 +186,17 @@ void Enemy::Pursuit(){
 				box.x += speed.x;
 				box.y += speed.y;
 			}
-	}else if (speed.x > 0 && speed.y > 0){
-		if(box.x +speed.x +  VALUE >= destination.x &&
+	} else if (speed.x > 0 && speed.y > 0){
+		if(box.x +speed.x + VALUE >= destination.x &&
 				speed.y + box.y + VALUE >= destination.y){
 			box.x = destination.x;
 			box.y = destination.y;
 
 			//seen = false;
-			}else{
-				box.x += speed.x;
-				box.y += speed.y;
-			}
+		} else{
+			box.x += speed.x;
+			box.y += speed.y;
+		}
 	}
 
 }

@@ -6,14 +6,7 @@
 #include "Walls.hpp"
 
 HallState::HallState() {
-	Player* P = new Player(400, 400);
-	P->SetMovementLimits(Rect(330,130,1350,530));
-	Walls *Wall1 = new Walls(605, 260, 141, 135);
-	Walls *Wall2 = new Walls(1061, 260, 141, 135);
-
-	objectArray.emplace_back(P);
-	objectArray.emplace_back(Wall1);
-	objectArray.emplace_back(Wall2);
+	SetInitialObjectArray();
 	//Camera::Follow(P);
 
 	quitRequested = false;
@@ -69,4 +62,15 @@ void HallState::Render(){
 	} else{
 		Player::player->RenderInHand();
 	}*/
+}
+
+void HallState::SetInitialObjectArray(){
+	Player* P = new Player(400, 400);
+	P->SetMovementLimits(Rect(330,130,1350,530));
+	Walls *Wall1 = new Walls(605, 260, 141, 135);
+	Walls *Wall2 = new Walls(1061, 260, 141, 135);
+
+	objectArray.emplace_back(P);
+	objectArray.emplace_back(Wall1);
+	objectArray.emplace_back(Wall2);
 }

@@ -20,25 +20,7 @@ StageState::StageState() : tileSet(64, 64, "img/tileset.png"),
 				tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	Player* P = new Player(600, 400);
-	P->SetMovementLimits(limits);
-	EmptyBox* EB = new EmptyBox();
-	//Walls *Wall = new Walls(700, 400, 100,100);
-	Enemy* E = new Enemy(1100, 500);
-	SceneDoor* Door = new SceneDoor(800, 100, "img/doorclosed.png", "img/dooropened.png");
-	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
-	SceneWindow* Window = new SceneWindow(500, 100, "img/closedwindow.png", "img/openwindow.png");
-	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
-	Table->SetMovementLimits(limits);
-	objectArray.emplace_back(P);
-	objectArray.emplace_back(EB);
-	//objectArray.emplace_back(Wall);
-	objectArray.emplace_back(E);
-	objectArray.emplace_back(PO);
-	objectArray.emplace_back(Window);
-	objectArray.emplace_back(Door);
-	objectArray.emplace_back(Table);
-	Camera::Follow(P);
+	SetInitialObjectArray();
 
 	music = Music("audio/stageState.ogg");
 	quitRequested = false;
@@ -117,4 +99,29 @@ void StageState::Render(){
 	} else{
 		Player::player->RenderInHand();
 	}
+}
+
+void StageState::SetInitialObjectArray(){
+	Player* P = new Player(600, 400);
+	P->SetMovementLimits(limits);
+	Camera::Follow(P);
+
+	EmptyBox* EB = new EmptyBox();
+	//Walls *Wall = new Walls(700, 400, 100,100);
+	Enemy* E = new Enemy(1100, 500);
+	SceneDoor* Door = new SceneDoor(800, 100, "img/doorclosed.png", "img/dooropened.png");
+	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
+	SceneWindow* Window = new SceneWindow(500, 100, "img/closedwindow.png", "img/openwindow.png");
+
+	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
+	Table->SetMovementLimits(limits);
+
+	objectArray.emplace_back(P);
+	objectArray.emplace_back(EB);
+	//objectArray.emplace_back(Wall);
+	objectArray.emplace_back(E);
+	objectArray.emplace_back(PO);
+	objectArray.emplace_back(Window);
+	objectArray.emplace_back(Door);
+	objectArray.emplace_back(Table);
 }

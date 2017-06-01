@@ -8,7 +8,7 @@
 #include "Sprite.hpp"
 #include "GameObject.hpp"
 
-#define DISTANCIA	30
+#define DISTANCIA	20
 #define OFFSET		5
 
 class EmptyBox : public GameObject {

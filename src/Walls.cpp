@@ -15,15 +15,18 @@ Walls::Walls(float x, float y, float w, float h){
 	box.w = w;
 	box.h = h;
 }
+
 Walls::~Walls(){
 
 }
+
 void Walls::Render(){
-	SDL_Rect dst;
+	/*SDL_Rect dst;
 	dst.x = box.x - Camera::pos.x; dst.y = box.y - Camera::pos.y;
 	dst.h = box.h; dst.w = box.w;
-	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
+	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);*/
 }
+
 void Walls::NotifyCollision(GameObject& other){
 
 	if(other.Is("Player")){
@@ -38,43 +41,45 @@ void Walls::NotifyCollision(GameObject& other){
 	}
 
 
-		if (other.Is("Enemy")){
-			if(other.box.x < box.x + box.w ||
-					other.box.x + other.box.w > box.x){
-				other.box.x = box.x + box.w + 1;
-			} else if(other.box.y < box.y + box.h ||
-					other.box.y + other.box.h > box.y){
-				other.box.x = box.x - other.box.w - 1;
-			}
+	if (other.Is("Enemy")){
+		if(other.box.x < box.x + box.w ||
+				other.box.x + other.box.w > box.x){
+			other.box.x = box.x + box.w + 1;
+		} else if(other.box.y < box.y + box.h ||
+				other.box.y + other.box.h > box.y){
+			other.box.x = box.x - other.box.w - 1;
+		}
+	}
+
+	if (other.Is("MovingObject")){
+		if(other.box.y + other.box.h < box.y + box.h)
+							/*&& (Player::player->GetDirecao() == Player::LESTE ||
+								Player::player->GetDirecao() == Player::OESTE))*/{
+
+				if((other.box.x < box.x + box.w &&
+						other.box.x + other.box.w > box.x + box.w )
+						|| (box.InsideX(other.box) &&
+						other.box.CenterX() >= box.CenterX())){
+									other.box.x = box.x + box.w + 1;
+				} else if((other.box.x + other.box.w > box.x &&
+						other.box.x < box.x)
+						|| (box.InsideX(Player::player->box) &&
+						other.box.CenterX() < box.CenterX())){
+								other.box.x = box.x - other.box.w - 1;
+				}
+
 		}
 
-		if (other.Is("MovingObject")){
-			if(other.box.y + other.box.h < box.y + box.h)
-								/*&& (Player::player->GetDirecao() == Player::LESTE ||
-									Player::player->GetDirecao() == Player::OESTE))*/{
-
-					if((other.box.x < box.x + box.w &&
-							other.box.x + other.box.w > box.x + box.w )
-							|| (box.InsideX(other.box) &&
-							other.box.CenterX() >= box.CenterX())){
-										other.box.x = box.x + box.w + 1;
-					} else if((other.box.x + other.box.w > box.x &&
-							other.box.x < box.x)
-							|| (box.InsideX(Player::player->box) &&
-							other.box.CenterX() < box.CenterX())){
-									other.box.x = box.x - other.box.w - 1;
-					}
-
-			}
-
-		}
+	}
 }
+
 bool Walls::Is(std::string type){
 	return (type == "Wall");
 }
+
 bool Walls::IsDead(){
 	return false;
 }
+
 void Walls::Update(float dt){
 }
-
