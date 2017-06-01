@@ -6,6 +6,8 @@
 #include "Animation.hpp"
 #include "Sound.hpp"
 
+
+
 #define MODULO_SPEED 8
 #define AUMENTO_VALUE 2
 
@@ -88,9 +90,13 @@ void Enemy::Update(float dt){
 
 	time.Update(dt);
 
-
 		if(!seen){
+			if (time.Get() > ENEMY_COOLDOWN)
+			time.Restart();
 
+			printf("ruido = %f", ruido);
+
+			ruido -= (ruido*0.01);
 		}
 		if(seen){
 			Pursuit();
