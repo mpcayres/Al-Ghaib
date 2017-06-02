@@ -2,6 +2,7 @@
 #include "Camera.hpp"
 #include "InputManager.hpp"
 #include "Player.hpp"
+#include "Geometry.hpp"
 
 MovingObject::MovingObject(float x, float y, std::string img) : sp(img){
 	rotation = 0;

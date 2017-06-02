@@ -66,15 +66,19 @@ Game::Game(std::string title, int width, int height){
 
 	srand(time(NULL));
 	storedState = nullptr;
+	storedMission = nullptr;
 	missionManager = new MissionManager();
 }
 
 Game::~Game(){
 	if(storedState != nullptr) delete (storedState);
 	while(!stateStack.empty()) stateStack.pop();
-	Resources::ClearResources();
 
+	printf("\n5");
 	if(missionManager != nullptr) delete (missionManager);
+
+	Resources::ClearResources();
+	printf("\n6");
 
 	IMG_Quit();
 	Mix_CloseAudio();
@@ -95,6 +99,15 @@ void Game::Run(){
 			InputManager::GetInstance().Update();
 			GetCurrentState().Update(dt);
 			GetCurrentState().Render();
+
+			if(storedMission != nullptr){
+				printf("\n1");
+				if(!storedMission->PopRequested()){
+					storedMission->Update(dt);
+					storedMission->Render();
+				}
+				printf("\n2");
+			}
 			SDL_RenderPresent(renderer);
 
 			if(GetCurrentState().PopRequested()){
@@ -116,8 +129,11 @@ void Game::Run(){
 				//std::cout << "4: " << typeid(GetCurrentState()).name() << std::endl;
 			}
 			SDL_Delay(33);
+			printf("\n3");
 		}
+		printf("\n4");
 	}
+	printf("\n5");
 }
 
 void Game::CalculateDeltaTime(){
@@ -132,6 +148,11 @@ float Game::GetDeltaTime(){
 
 void Game::Push(State *state){
 	storedState = state;
+}
+
+
+void Game::Push(Mission *mission){
+	storedMission = mission;
 }
 
 Game& Game::GetInstance(){
