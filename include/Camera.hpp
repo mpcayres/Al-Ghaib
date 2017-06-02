@@ -4,9 +4,13 @@
 #include "GameObject.hpp"
 #include "Geometry.hpp"
 
+#define CAMERA_TYPE1 1
+#define CAMERA_TYPE2 2
+
+
 class Camera {
 public:
-	static void Follow(GameObject* newFocus);
+	static void Follow(GameObject* newFocus, int type);
 	static void Unfollow();
 	static void Update(float dt);
 
@@ -15,6 +19,7 @@ public:
 
 private:
 	static GameObject* focus;
+	static int type;
 };
 
 #endif

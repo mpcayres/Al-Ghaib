@@ -6,7 +6,7 @@
 #include "Sound.hpp"
 #include "InventoryKey.hpp"
 
-#define MODULO_SPEED		3
+#define MODULO_SPEED		5
 #define AUMENTO_VELOCIDADE	2
 #define DESACELERA			1
 

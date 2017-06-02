@@ -34,6 +34,7 @@ void HallState::Update(float dt){
 
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
+		Camera::Unfollow();
 	}
 	quitRequested = instance.QuitRequested();
 
@@ -55,7 +56,7 @@ void HallState::Update(float dt){
 
 void HallState::Render(){
 	background.Render(0,0,0);
-	bg.Render(0,0,0);
+	bg.Render(0 - Camera::pos.x, Camera::pos.y,0);
 	RenderArray();
 
 	/*if(Player::player->GetShowingInventory()){
@@ -67,11 +68,12 @@ void HallState::Render(){
 
 void HallState::SetInitialObjectArray(){
 	Player* P = new Player(400, 400);
-	P->SetMovementLimits(Rect(330,130,1350,530));
-	Walls *Wall1 = new Walls(605, 260, 141, 135);
-	Walls *Wall2 = new Walls(1061, 260, 141, 135);
+	Camera::Follow(P, CAMERA_TYPE2);
+	P->SetMovementLimits(Rect(-1500,-15000,13500,53000));
+	//Walls *Wall1 = new Walls(605, 260, 141, 135);
+	//Walls *Wall2 = new Walls(1061, 260, 141, 135);
 
 	objectArray.emplace_back(P);
-	objectArray.emplace_back(Wall1);
-	objectArray.emplace_back(Wall2);
+	//objectArray.emplace_back(Wall1);
+	//objectArray.emplace_back(Wall2);
 }

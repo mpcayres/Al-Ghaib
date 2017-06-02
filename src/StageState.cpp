@@ -31,7 +31,7 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 }
 
 StageState::~StageState(){
-	Camera::Unfollow();
+	//Camera::Unfollow();
 	objectArray.clear();
 }
 
@@ -61,12 +61,14 @@ void StageState::Update(float dt){
 
 		if(time.Get() >= 1.5 && flagMorte == true){
 			popRequested = true;
+			Camera::Unfollow();
 			stateData.playerVictory = false;
 			Game::GetInstance().Push(new EndState(stateData));
 		}
 	}
 	if(SceneDoor::GetChangeState()){
 		popRequested = true;
+		Camera::Unfollow();
 		SceneDoor::SetChangeState(false);
 		Game::GetInstance().GetMissionManager().ChangeState(std::move(objectArray), "StageState", "HallState");
 	}
@@ -105,14 +107,14 @@ void StageState::Render(){
 void StageState::SetInitialObjectArray(){
 	Player* P = new Player(600, 400);
 	P->SetMovementLimits(limits);
-	Camera::Follow(P);
+	Camera::Follow(P, CAMERA_TYPE1);
 
 	EmptyBox* EB = new EmptyBox();
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	Enemy* E = new Enemy(1100, 500);
-	SceneDoor* Door = new SceneDoor(800, 100, "img/doorclosed.png", "img/dooropened.png");
+	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png");
 	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
-	SceneWindow* Window = new SceneWindow(500, 100, "img/closedwindow.png", "img/openwindow.png");
+	SceneWindow* Window = new SceneWindow(500, 200, "img/closedwindow.png", "img/openwindow.png");
 
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
 	Table->SetMovementLimits(limits);
