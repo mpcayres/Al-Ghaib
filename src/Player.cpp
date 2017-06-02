@@ -18,6 +18,9 @@ Player::Player(float x, float y) :
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 
+	spNoise = Sprite("img/sprite-energia.png", 8 , 1 ,1);
+	spNoise.SetScaleX(0.6); spNoise.SetScaleY(0.6);
+
 	spInventory = Sprite("img/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
 	spInventorybox = Sprite("img/box.png", 1, 1, 1);
@@ -132,7 +135,7 @@ void Player::Update(float dt){
 			multiplicador = 0;
 		}
 		ruido += 0.2 * multiplicador;
-		if (ruido > 100) ruido = 100;
+		if (ruido > 84) ruido = 84; // impedir bug na mostra
 
 		if(multiplicador == 0 && ruido > 0){
 			time.Update(dt);
@@ -300,6 +303,19 @@ void Player::RenderInHand(){
 		}
 		inventory[inHandIndex]->Render(posXCenter, posYCenter);
 	}
+}
+
+void Player::RenderNoise(){
+	int posX, posY;
+	int offset = 10;
+	int aux;
+	posX = SCREEN_SIZE_W - 17*offset;
+	posY = offset;
+
+	aux = (ruido/12) + 1;
+	spNoise.SetFrame(aux);
+	spNoise.Render(posX, posY, 0);
+
 }
 
 void Player::AddInventory(std::string obj/*, std::string objSp*/){

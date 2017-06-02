@@ -98,6 +98,7 @@ void StageState::Render(){
 		Player::player->RenderInventory();
 	} else{
 		Player::player->RenderInHand();
+		Player::player->RenderNoise();
 	}
 }
 

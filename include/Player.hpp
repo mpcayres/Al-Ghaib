@@ -28,6 +28,8 @@ public:
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	void RenderInventory();
 	void RenderInHand();
+	void RenderNoise();
+
 	InventoryObject* GetInHand();
 	void DeleteInventory();
 	void SetMovementLimits(Rect limits);
@@ -43,6 +45,7 @@ private:
 	Timer time;
 	Sprite spKinder, spKinderRun;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
+	Sprite spNoise;
 
 	Vec2 speed;
 	int hp;
