@@ -6,11 +6,8 @@
 #include "Animation.hpp"
 #include "Sound.hpp"
 
-
-
 #define MODULO_SPEED 8
 #define AUMENTO_VALUE 2
-
 
 Enemy* Enemy::enemy;
 
@@ -45,7 +42,7 @@ void Enemy::Update(float dt){
 	if(dist < 300){
 		seen = true;
 	}
-	float noise = ((100/dist))*Player::player->getRuido();
+	float noise = ((100/dist))*Player::player->GetRuido();
 	//printf("N: %f\n", noise);
 	if(noise >= 15){
 		seen = true;

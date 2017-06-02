@@ -7,10 +7,8 @@
 #include "Collision.hpp"
 #include "Music.hpp"
 #include "EndState.hpp"
-#include "Player.hpp"
 #include "Enemy.hpp"
 #include "SceneWindow.hpp"
-#include "SceneDoor.hpp"
 #include "MovingObject.hpp"
 #include "EmptyBox.hpp"
 #include "Walls.hpp"
@@ -19,8 +17,14 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	SetInitialObjectArray();
-	//objectArray.emplace_back(std::move(obj));
+	if(inicial){
+		SetInitialObjectArray();
+	} else{
+		objectArray = std::move(obj);
+		P->SetPosition(800,400);
+		Camera::Follow(P, CAMERA_TYPE1);
+		P->SetMovementLimits(limits);
+	}
 
 	music = Music("audio/stageState.ogg");
 	quitRequested = false;
@@ -31,7 +35,7 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 }
 
 StageState::~StageState(){
-	//Camera::Unfollow();
+	Camera::Unfollow();
 	objectArray.clear();
 }
 
@@ -52,8 +56,9 @@ void StageState::Update(float dt){
 	time.Update(dt);
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
+		Camera::Unfollow();
 	}
-	if(Player::player == nullptr){
+	/*if(Player::player == nullptr){
 		if(flagMorte == false){
 			time.Restart();
 			flagMorte = true;
@@ -63,14 +68,21 @@ void StageState::Update(float dt){
 			popRequested = true;
 			Camera::Unfollow();
 			stateData.playerVictory = false;
-			Game::GetInstance().Push(new EndState(stateData));
+			//Game::GetInstance().Push(new EndState(stateData));
 		}
-	}
-	if(SceneDoor::GetChangeState()){
+	}*/
+	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
-		SceneDoor::SetChangeState(false);
-		Game::GetInstance().GetMissionManager().ChangeState(std::move(objectArray), "StageState", "HallState");
+		Game::GetInstance().GetMissionManager().
+				ChangeState(std::move(objectArray), "StageState", "HallState");
+	}
+	if(Door->GetChangeState()){
+		Door->SetChangeState(false);
+		popRequested = true;
+		Camera::Unfollow();
+		Game::GetInstance().GetMissionManager().
+				ChangeState(std::move(objectArray), "StageState", Door->GetDest());
 	}
 	quitRequested = instance.QuitRequested();
 
@@ -105,14 +117,14 @@ void StageState::Render(){
 }
 
 void StageState::SetInitialObjectArray(){
-	Player* P = new Player(600, 400);
-	P->SetMovementLimits(limits);
+	P = new Player(600,400);
 	Camera::Follow(P, CAMERA_TYPE1);
+	P->SetMovementLimits(limits);
 
 	EmptyBox* EB = new EmptyBox();
 	//Walls *Wall = new Walls(700, 400, 100,100);
-	Enemy* E = new Enemy(1100, 500);
-	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png");
+	//Enemy* E = new Enemy(1100, 500);
+	Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png", "HallState");
 	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
 	SceneWindow* Window = new SceneWindow(500, 200, "img/closedwindow.png", "img/openwindow.png");
 
@@ -122,7 +134,7 @@ void StageState::SetInitialObjectArray(){
 	objectArray.emplace_back(P);
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall);
-	objectArray.emplace_back(E);
+	//objectArray.emplace_back(E);
 	objectArray.emplace_back(PO);
 	objectArray.emplace_back(Window);
 	objectArray.emplace_back(Door);

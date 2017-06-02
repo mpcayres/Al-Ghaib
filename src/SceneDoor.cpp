@@ -1,9 +1,7 @@
 #include "SceneDoor.hpp"
 
-bool SceneDoor::changeState;
-
-SceneDoor::SceneDoor(float x, float y, std::string img, std::string img2) :
-	SceneObject(x, y, img, img2) {
+SceneDoor::SceneDoor(float x, float y, std::string img, std::string img2, std::string dest) :
+	SceneObject(x, y, img, img2), dest(dest) {
 	lock = true;
 	changeState = false;
 }
@@ -17,6 +15,7 @@ void SceneDoor::NotifyCollision(GameObject& other){
 			} else{
 				estado = true;
 				sp.Open(change2);
+				box.x += box.w - sp.GetWidth();
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 
@@ -61,6 +60,10 @@ bool SceneDoor::GetChangeState(){
 	return changeState;
 }
 
-void SceneDoor::SetChangeState(bool t){
-	changeState = t;
+void SceneDoor::SetChangeState(bool change){
+	changeState = change;
+}
+
+std::string SceneDoor::GetDest(){
+	return dest;
 }

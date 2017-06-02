@@ -21,9 +21,10 @@ public:
 	void Render();
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
+	void SetPosition(int x, int y);
 	void Running(InputManager InputInstance);
 	bool Is(std::string type);
-	float getRuido();
+	float GetRuido();
 	bool GetShowingInventory();
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	void RenderInventory();

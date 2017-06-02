@@ -206,6 +206,10 @@ Vec2 Player::GetSpeed(){
 	return speed;
 }
 
+void Player::SetPosition(int x, int y){
+	box.x = x; box.y = y;
+}
+
 void Player::Running(InputManager InputInstance){
 	if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 		speed.x *= AUMENTO_VELOCIDADE;
@@ -217,7 +221,7 @@ void Player::Running(InputManager InputInstance){
 }
 
 
-float Player::getRuido(){
+float Player::GetRuido(){
 	return ruido;
 }
 
@@ -362,7 +366,6 @@ bool Player::Is(std::string type){
 	return (type == "Player");
 }
 
-
 void Player::Render(){
 	if(running){
 		spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
@@ -374,6 +377,3 @@ void Player::Render(){
 bool Player::IsDead(){
 	return (hp <= 0);
 }
-
-
-
