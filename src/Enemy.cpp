@@ -23,9 +23,7 @@ Enemy::Enemy(float x, float y): sp("img/m2.png"){
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();
 
-	running = false;
 	seen = false;
-	ruido = 0;
 
 	time = Timer();
 
@@ -41,45 +39,17 @@ Enemy::~Enemy(){
 
 void Enemy::Update(float dt){
 	Vec2 aux, aux2;
-	/* dinamica de percepcao de ruido vindo do jogador*/
-	printf("\nDistancia para jogador");
 
 	float dist = 0;
-	int running = 1;
 	dist = box.DistanceRect(Player::player->box);
-	printf("\n%f", dist);
-
-	if(dist < 100){
-		/*if(Player::player != nullptr){
-			destination.x = Player::player->box.x;
-			destination.y = Player::player->box.y;
-			seen = true;
-
-			aux.x = box.x; aux.y = box.y;
-			speed = (destination.Sub(aux)).Normalize();
-			speed.x = speed.x*SPEED_CONTROL;
-			speed.y = speed.y*SPEED_CONTROL;
-		}*/
+	if(dist < 300){
 		seen = true;
 	}
-
-	printf("\nQuantidade de percepcao de ruido acrescentada:");
-	if(Player::player->getRunning() == true)
-		running = 10;
-	else if(!InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY) && !InputManager::GetInstance().IsKeyDown(DOWN_ARROW_KEY) &&
-			!InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY) && !InputManager::GetInstance().IsKeyDown(RIGHT_ARROW_KEY)){
-		running = 0;
-	}
-	else
-		running = 1;
-	float noise = ((1/dist)*10)*running;
-	printf("\n%f", noise);
-	if(ruido >= 20){
+	float noise = ((100/dist))*Player::player->getRuido();
+	//printf("N: %f\n", noise);
+	if(noise >= 15){
 		seen = true;
 	}
-	ruido += noise;
-	printf("\n%f", ruido);
-
 
 	if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
 		box.y += speed.y;
@@ -88,19 +58,7 @@ void Enemy::Update(float dt){
 		box.x += speed.x;
 	}
 
-	time.Update(dt);
-
-		if(!seen){
-			if (time.Get() > ENEMY_COOLDOWN)
-			time.Restart();
-
-			printf("ruido = %f", ruido);
-
-			ruido -= (ruido*0.01);
-		}
-		if(seen){
-			Pursuit();
-		}
+	if(seen == true) Pursuit();
 }
 
 void Enemy::Render(){

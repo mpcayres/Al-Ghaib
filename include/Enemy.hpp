@@ -32,10 +32,8 @@ private:
 	Sprite sp;
 	Vec2 speed;
 	int hp;
-	bool running;
 	bool seen;
 	Vec2 destination;
-	float ruido;
 };
 
 #endif /* INCLUDE_Enemy_HPP_ */

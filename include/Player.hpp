@@ -5,6 +5,7 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Game.hpp"
+#include "Timer.hpp"
 
 #include "InputManager.hpp"
 //#include "Timer.hpp"
@@ -20,10 +21,9 @@ public:
 	void Render();
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
-	void Shoot();
 	void Running(InputManager InputInstance);
 	bool Is(std::string type);
-	bool getRunning();
+	float getRuido();
 	bool GetShowingInventory();
 	void AddInventory(std::string obj/*, std::string objSp*/);
 	void RenderInventory();
@@ -40,7 +40,7 @@ public:
 	enum InvBox{SUL, NORTE, LESTE, OESTE};
 
 private:
-	//Timer time;
+	Timer time;
 	Sprite spKinder, spKinderRun;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 
@@ -55,6 +55,8 @@ private:
 	InvBox direcao;
 	InputManager InputInstance;
 	bool direcaoShift;
+
+	float ruido;
 
 	Rect limits;
 };

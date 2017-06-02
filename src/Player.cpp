@@ -6,7 +6,7 @@
 #include "Sound.hpp"
 #include "InventoryKey.hpp"
 
-#define MODULO_SPEED		2
+#define MODULO_SPEED		3
 #define AUMENTO_VELOCIDADE	2
 #define DESACELERA			1
 
@@ -29,7 +29,7 @@ Player::Player(float x, float y) :
 	box.w = spKinder.GetScaledWidth();
 	box.h = spKinder.GetScaledHeight();
 	previousPos = Vec2(x,y);
-	//time = Timer();
+	time = Timer();
 
 	hp = 30;
 	rotation = 0;
@@ -43,13 +43,18 @@ Player::Player(float x, float y) :
 
 	direcao = LESTE;
 	direcaoShift = false;
+
+	ruido = 0;
 }
 
 Player::~Player(){
 	player = nullptr;
 }
 
+
+/* Update - Movimentação */
 void Player::Update(float dt){
+	int multiplicador;
 	InputInstance = InputManager::GetInstance();
 
 	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
@@ -110,6 +115,9 @@ void Player::Update(float dt){
 		if(speed.x != 0 || speed.y != 0){
 			spKinder.Update(dt, direcao, direcaoShift);
 			spKinderRun.Update(dt, direcao, direcaoShift);
+
+			if(running == true) multiplicador = 10;
+			else multiplicador = 1;
 		} else{
 			if((spKinder.GetCurrentFrame() > 1 && spKinder.GetCurrentFrame() < 12) ||
 					(spKinder.GetCurrentFrame() > 12 && spKinder.GetCurrentFrame() <= 20)){
@@ -120,7 +128,21 @@ void Player::Update(float dt){
 
 				spKinder.Update(dt, direcao, direcaoShift);
 			}
+
+			multiplicador = 0;
 		}
+		ruido += 0.2 * multiplicador;
+		if (ruido > 100) ruido = 100;
+
+		if(multiplicador == 0 && ruido > 0){
+			time.Update(dt);
+			if (time.Get() > 0.3){
+				time.Restart();
+				ruido -= (ruido*0.2);
+			}
+		}
+
+		//printf("%f\n", ruido);
 
 		if(box.x + speed.x < limits.w - box.w && box.x + speed.x > limits.x){
 			previousPos.x = box.x;
@@ -173,20 +195,12 @@ void Player::SetMovementLimits(Rect limits){
 	this->limits.h = limits.h;
 }
 
-void Player::Render(){
-	if(running){
-		spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-	} else{
-		spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-	}
+int Player::GetDirecao(){
+	return direcao;
 }
 
-bool Player::IsDead(){
-	return (hp <= 0);
-}
-
-void Player::Shoot(){
-
+Vec2 Player::GetSpeed(){
+	return speed;
 }
 
 void Player::Running(InputManager InputInstance){
@@ -199,20 +213,9 @@ void Player::Running(InputManager InputInstance){
 	}
 }
 
-void Player::NotifyCollision(GameObject& other){
-	/*if(other.Is("Enemy")){
-		//hp = 0;
-		//Camera::Unfollow();
-		//printf("CAUGHT YOU!");
-	}*/
-}
 
-bool Player::Is(std::string type){
-	return (type == "Player");
-}
-
-bool Player::getRunning(){
-	return running;
+float Player::getRuido(){
+	return ruido;
 }
 
 bool Player::GetShowingInventory(){
@@ -318,14 +321,6 @@ InventoryObject* Player::GetInHand(){
 	else return nullptr;
 }
 
-int Player::GetDirecao(){
-	return direcao;
-}
-
-Vec2 Player::GetSpeed(){
-	return speed;
-}
-
 void Player::DeleteInventory(){
 	if(inventory.size() == 1){
 		inventory.erase(inventory.begin() + inHandIndex);
@@ -335,3 +330,34 @@ void Player::DeleteInventory(){
 		inHandIndex = 0 ;
 	}
 }
+
+
+/* FUNÇÕES GERAIS */
+
+void Player::NotifyCollision(GameObject& other){
+	/*if(other.Is("Enemy")){
+		//hp = 0;
+		//Camera::Unfollow();
+		//printf("CAUGHT YOU!");
+	}*/
+}
+
+bool Player::Is(std::string type){
+	return (type == "Player");
+}
+
+
+void Player::Render(){
+	if(running){
+		spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	} else{
+		spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	}
+}
+
+bool Player::IsDead(){
+	return (hp <= 0);
+}
+
+
+
