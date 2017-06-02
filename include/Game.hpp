@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #ifdef __APPLE__
 	#include <SDL2.h>
@@ -24,6 +24,7 @@
 
 #include "State.hpp"
 #include "MissionManager.hpp"
+#include "Mission.hpp"
 
 #define SCREEN_SIZE_W 1024
 #define SCREEN_SIZE_H 600
@@ -42,6 +43,9 @@ public:
 	static Game& GetInstance();
 
 	void Push(State* state);
+	void Push(Mission* mission);
+
+	Mission* storedMission;
 
 	float GetDeltaTime();
 
