@@ -17,7 +17,18 @@ public:
 	std::vector<std::unique_ptr<GameObject>> GetObjectStage();
 	std::vector<std::unique_ptr<GameObject>> GetObjectHall();
 
+	virtual void Pause() = 0;
+	virtual void Resume() = 0;
+
+	virtual void Update(float dt) = 0;
+	virtual void Render() = 0;
+
+	bool PopRequested();
+	bool QuitRequested();
+
 protected:
+	bool popRequested, quitRequested;
+
 	virtual void SetObjectStage() = 0;
 	virtual void SetObjectHall() = 0;
 

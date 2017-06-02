@@ -1,7 +1,7 @@
 #include "Mission.hpp"
 
 Mission::Mission() {
-
+	popRequested = false;
 }
 
 Mission::~Mission() {
@@ -19,3 +19,13 @@ std::vector<std::unique_ptr<GameObject>> Mission::GetObjectStage(){
 std::vector<std::unique_ptr<GameObject>> Mission::GetObjectHall(){
 	return std::move(objectHall);
 }
+
+
+bool Mission::PopRequested(){
+	return popRequested;
+}
+
+bool Mission::QuitRequested(){
+	return quitRequested;
+}
+

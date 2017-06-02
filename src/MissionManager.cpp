@@ -52,11 +52,12 @@ void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew
 }
 
 void MissionManager::SetMission(){
-	//Mission é um abstract para as Mission1,2,3...
+	//Mission ï¿½ um abstract para as Mission1,2,3...
 	if(mission != nullptr) delete mission;
 	switch(numMission){
 		case 1:
 			mission = new Mission1();
+			Game::GetInstance().storedMission = mission;
 			break;
 		default:
 			break;
