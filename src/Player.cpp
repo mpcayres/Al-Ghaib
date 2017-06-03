@@ -10,7 +10,6 @@
 #define AUMENTO_VELOCIDADE	2
 #define DESACELERA			1
 
-Player* Player::player;
 
 Player::Player(float x, float y) :
 		spKinder("img/kinder.png", 20, 0.06, 4),
@@ -37,7 +36,7 @@ Player::Player(float x, float y) :
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
-	player = this;
+	//player = this;
 	running = false;
 
 	inHandIndex = -1; //dependendo do save pode ser diferente
@@ -51,7 +50,7 @@ Player::Player(float x, float y) :
 }
 
 Player::~Player(){
-	player = nullptr;
+	//player = nullptr;
 }
 
 

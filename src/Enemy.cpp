@@ -5,6 +5,7 @@
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
+#include "MissionManager.hpp"
 
 #define MODULO_SPEED 8
 #define AUMENTO_VALUE 2
@@ -38,11 +39,11 @@ void Enemy::Update(float dt){
 	Vec2 aux, aux2;
 
 	float dist = 0;
-	dist = box.DistanceRect(Player::player->box);
+	dist = box.DistanceRect(MissionManager::player->box);
 	if(dist < 300){
 		seen = true;
 	}
-	float noise = ((100/dist))*Player::player->GetRuido();
+	float noise = ((100/dist))*MissionManager::player->GetRuido();
 	//printf("N: %f\n", noise);
 	if(noise >= 15){
 		seen = true;
@@ -77,11 +78,11 @@ void Enemy::Shoot(){
 void Enemy::NotifyCollision(GameObject& other){
 	if(other.Is("SceneObject")){
 
-			if(seen && Player::player != nullptr){
-				//if(Player::player != nullptr){
+			if(seen && MissionManager::player != nullptr){
+				//if(MissionManager::player != nullptr){
 				Vec2 aux;
-				destination.x = Player::player->box.x;
-				destination.y = Player::player->box.y;
+				destination.x = MissionManager::player->box.x;
+				destination.y = MissionManager::player->box.y;
 				//seen = true;
 
 				aux.x = box.x; aux.y = box.y;
@@ -100,9 +101,9 @@ void Enemy::NotifyCollision(GameObject& other){
 void Enemy::Pursuit(){
 	Vec2 aux;
 
-	if(Player::player != nullptr){
-		destination.x = Player::player->box.x;
-		destination.y = Player::player->box.y;
+	if(MissionManager::player != nullptr){
+		destination.x = MissionManager::player->box.x;
+		destination.y = MissionManager::player->box.y;
 		//seen = true;
 
 		aux.x = box.x; aux.y = box.y;

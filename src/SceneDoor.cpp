@@ -1,4 +1,5 @@
 #include "SceneDoor.hpp"
+#include "MissionManager.hpp"
 
 SceneDoor::SceneDoor(float x, float y, std::string img, std::string img2, std::string dest) :
 	SceneObject(x, y, img, img2), dest(dest) {
@@ -20,20 +21,20 @@ void SceneDoor::NotifyCollision(GameObject& other){
 				box.h = sp.GetHeight();
 
 				//Nesse caso nao precisa no eixo y
-				if((Player::player->box.y + Player::player->box.h - OFFSET_PISO < box.y + box.h)
-					&& (Player::player->GetDirecao() == Player::LESTE ||
-						Player::player->GetDirecao() == Player::OESTE)){
+				if((MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h)
+					&& (MissionManager::player->GetDirecao() == Player::LESTE ||
+						MissionManager::player->GetDirecao() == Player::OESTE)){
 
-					if((Player::player->box.x < box.x + box.w &&
-							Player::player->box.x + Player::player->box.w > box.x + box.w )
-							|| (box.InsideX(Player::player->box) &&
-									Player::player->box.CenterX() >= box.CenterX())){
-						Player::player->box.x = box.x + box.w + 1;
-					} else if((Player::player->box.x + Player::player->box.w > box.x &&
-							Player::player->box.x < box.x)
-							|| (box.InsideX(Player::player->box) &&
-									Player::player->box.CenterX() < box.CenterX())){
-						Player::player->box.x = box.x - Player::player->box.w - 1;
+					if((MissionManager::player->box.x < box.x + box.w &&
+							MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
+							|| (box.InsideX(MissionManager::player->box) &&
+									MissionManager::player->box.CenterX() >= box.CenterX())){
+						MissionManager::player->box.x = box.x + box.w + 1;
+					} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
+							MissionManager::player->box.x < box.x)
+							|| (box.InsideX(MissionManager::player->box) &&
+									MissionManager::player->box.CenterX() < box.CenterX())){
+						MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
 					}
 
 				}

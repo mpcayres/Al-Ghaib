@@ -1,8 +1,8 @@
 #include "Mission1.hpp"
+#include "SceneWindow.hpp"
 
 Mission1::Mission1() {
 	initialState = "StageState";
-
 
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 205;
@@ -18,8 +18,6 @@ Mission1::Mission1() {
 	intro.Play(1);
 	Mix_HookMusicFinished(&TitleState::LinkMusic);*/
 
-
-
 	SetObjectStage();
 	SetObjectHall();
 }
@@ -29,24 +27,24 @@ Mission1::~Mission1() {
 }
 
 void Mission1::SetObjectStage(){
-
+	SceneWindow* Window = new SceneWindow(350, 200, "img/closedwindow.png", "img/openwindow.png");
+	objectStage.emplace_back(Window);
 }
 
 void Mission1::SetObjectHall(){
 
 }
 
-
 void  Mission1::Update(float dt){
 
 	InputManager instance = InputManager::GetInstance();
 
 	if(instance.KeyPress(ESCAPE_KEY)){
-			popRequested = true;
+		popRequested = true;
 	}
 	//quitRequested = instance.QuitRequested();
 
-	printf("teste \n");
+	//printf("teste \n");
 	time.Update(dt);
 	if(time.Get()> 2 && flagTimer == true){
 		tx.SetText(" ");
@@ -58,7 +56,6 @@ void  Mission1::Update(float dt){
 		//time.Restart();
 		flagTimer = true;
 	}*/
-
 
 }
 

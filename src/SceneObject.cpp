@@ -1,4 +1,5 @@
 #include "SceneObject.hpp"
+#include "MissionManager.hpp"
 
 SceneObject::SceneObject(float x, float y, std::string img, std::string img2) : sp(img) {
 	this->change1 = img;
@@ -28,24 +29,24 @@ bool SceneObject::IsEstado(){
 
 void SceneObject::NotifyCollision(GameObject& other){
 	if(other.Is("Player")){
-		if((Player::player->box.CenterX() < box.x /*+ box.w*/ /*- Player::player->box.w*/ ||
-				Player::player->box.CenterX() /*+ Player::player->box.w */> box.x /*- Player::player->box.w*/ )
-				&&(Player::player->box.y + Player::player->box.h - OFFSET_PISO < box.y + box.h)) {
+		if((MissionManager::player->box.CenterX() < box.x /*+ box.w*/ /*- MissionManager::player->box.w*/ ||
+				MissionManager::player->box.CenterX() /*+ MissionManager::player->box.w */> box.x /*- MissionManager::player->box.w*/ )
+				&&(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h)) {
 
-				Player::player->box.x = Player::player->previousPos.x;
+				MissionManager::player->box.x = MissionManager::player->previousPos.x;
 
 		}
 
-		if(Player::player->box.y + Player::player->box.h - OFFSET_PISO < box.y + box.h  /*- Player::player->box.h*/||
-				Player::player->box.y/* + Player::player->box.h*/ > box.y + box.h /*- Player::player->box.h*/){
-			Player::player->box.y = Player::player->previousPos.y;
+		if(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h  /*- MissionManager::player->box.h*/||
+				MissionManager::player->box.y/* + MissionManager::player->box.h*/ > box.y + box.h /*- MissionManager::player->box.h*/){
+			MissionManager::player->box.y = MissionManager::player->previousPos.y;
 		}
 	}
 
 	if (other.Is("MovingObject") || other.Is("Enemy")){
 		if(other.box.y + other.box.h - OFFSET_PISO < box.y + box.h)
-							/*&& (Player::player->GetDirecao() == Player::LESTE ||
-								Player::player->GetDirecao() == Player::OESTE))*/{
+							/*&& (MissionManager::player->GetDirecao() == Player::LESTE ||
+								MissionManager::player->GetDirecao() == Player::OESTE))*/{
 
 				if((other.box.x < box.x + box.w &&
 						other.box.x + other.box.w > box.x + box.w )
@@ -54,7 +55,7 @@ void SceneObject::NotifyCollision(GameObject& other){
 									other.box.x = box.x + box.w + 1;
 				} else if((other.box.x + other.box.w > box.x &&
 						other.box.x < box.x)
-						|| (box.InsideX(Player::player->box) &&
+						|| (box.InsideX(MissionManager::player->box) &&
 						other.box.CenterX() < box.CenterX())){
 								other.box.x = box.x - other.box.w - 1;
 				}

@@ -6,9 +6,9 @@
 #include "Sprite.hpp"
 #include "Game.hpp"
 #include "Timer.hpp"
-
 #include "InputManager.hpp"
 //#include "Timer.hpp"
+
 #include <vector>
 #include <memory>
 
@@ -38,7 +38,6 @@ public:
 	int GetDirecao();
 	Vec2 GetSpeed();
 
-	static Player * player;
 	Vec2 previousPos;
 	enum InvBox{SUL, NORTE, LESTE, OESTE};
 

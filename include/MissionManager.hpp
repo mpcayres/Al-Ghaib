@@ -3,9 +3,12 @@
 
 #include "GameObject.hpp"
 #include "Mission.hpp"
+#include "Player.hpp"
 #include <vector>
 #include <memory>
 #include <string>
+
+class Player;
 
 class MissionManager {
 public:
@@ -19,6 +22,9 @@ public:
 	void ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest);
 	void SetMission();
 	void ChangeMission(int num);
+	//static void DeletePlayer();
+
+	static Player* player;
 
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;

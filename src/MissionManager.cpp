@@ -5,7 +5,8 @@
 #include "Mission1.hpp"
 
 #include <iostream>
-int cont = 0;
+
+Player* MissionManager::player;
 
 //Colocar nos objetos todas as condicoes deles, inclusive se estao abertos ou fechados
 
@@ -16,7 +17,10 @@ MissionManager::MissionManager() {
 }
 
 MissionManager::~MissionManager() {
+	objectStage.clear();
+	objectHall.clear();
 	if(mission != nullptr) delete mission;
+	player = nullptr;
 }
 
 void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig){
@@ -30,25 +34,27 @@ void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, 
 void MissionManager::SetState(std::string dest){
 	//inicial serve para indicar se e a 1a vez que o State esta sendo construido
 	if(dest == "StageState"){
-		std::cout << "2.1" << std::endl;
-		std::cout << "SIZE3: " << objectStage.size() << std::endl;
+		std::cout << "SS.1" << std::endl;
+		std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage));
 		initStage = false;
-		std::cout << "2.2" << std::endl;
-		cont++;
+		std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
+		std::cout << "HS.1" << std::endl;
+		std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall));
 		initHall = false;
+		std::cout << "HS.2" << std::endl;
 	}
 }
 
 //quando for chamar pelos estados para mudar de State, usar esse
 void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest){
-	std::cout << "1" << std::endl;
+	//std::cout << "1" << std::endl;
 	SetObject(std::move(objNew), orig);
-	std::cout << "2" << std::endl;
+	//std::cout << "2" << std::endl;
 	SetState(dest);
-	std::cout << "3" << std::endl;
+	//std::cout << "3" << std::endl;
 }
 
 void MissionManager::SetMission(){
@@ -70,7 +76,14 @@ void MissionManager::SetMission(){
 
 //em caso de vitoria, especificado em cada missao
 void MissionManager::ChangeMission(int num){
+	player = new Player(0,0); //passar as informacoes do save
 	numMission = num;
 	SetMission();
 	SetState(mission->GetInitialState());
 }
+
+//acho que talvez nao precise, nao fica fazendo processamento extra enquanto esta fora do jogo
+/*void MissionManager::DeletePlayer(){
+	//delete player;
+	std::cout << "Player NULL" << std::endl;
+}*/

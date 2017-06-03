@@ -29,6 +29,8 @@
 #define SCREEN_SIZE_W 1024
 #define SCREEN_SIZE_H 600
 
+class MissionManager;
+
 class Game{
 public:
 	Game(std::string title, int width, int height);

@@ -4,6 +4,8 @@
 #include "GameObject.hpp"
 #include <vector>
 #include <memory>
+#include <string>
+#include <algorithm>
 
 class State{
 public:
@@ -20,6 +22,7 @@ public:
 
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
+	//void RemovePlayer(std::string s);
 
 protected:
 	virtual void UpdateArray(float dt);

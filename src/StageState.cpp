@@ -9,9 +9,13 @@
 #include "EndState.hpp"
 #include "Enemy.hpp"
 #include "SceneWindow.hpp"
+#include "SceneDoor.hpp"
 #include "MovingObject.hpp"
 #include "EmptyBox.hpp"
 #include "Walls.hpp"
+#include "MissionManager.hpp"
+
+#include <iostream>
 
 StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial) :
 	tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
@@ -19,15 +23,20 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	limits = tileMap.FindLimits();
 	if(inicial){
 		SetInitialObjectArray();
+		objectArray.insert( objectArray.end(),
+				std::make_move_iterator(obj.begin()),
+				std::make_move_iterator(obj.end()) );
 	} else{
 		objectArray = std::move(obj);
-		P->SetPosition(800,400);
-		Camera::Follow(P, CAMERA_TYPE1);
-		P->SetMovementLimits(limits);
+		MissionManager::player->SetPosition(800,400);
+		Camera::Follow(MissionManager::player, CAMERA_TYPE1);
+		MissionManager::player->SetMovementLimits(limits);
+		////objectArray.emplace_back(MissionManager::player);
 	}
 
 	music = Music("audio/stageState.ogg");
 	quitRequested = false;
+	popRequested = false;
 	time = Timer();
 	flagMorte = false;
 
@@ -57,8 +66,10 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
+		//RemovePlayer(typeid(*MissionManager::player).name());
+		//MissionManager::DeletePlayer();
 	}
-	/*if(Player::player == nullptr){
+	/*if(MissionManager::player == nullptr){
 		if(flagMorte == false){
 			time.Restart();
 			flagMorte = true;
@@ -74,15 +85,9 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
+		//RemovePlayer(typeid(*MissionManager::player).name());
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState", "HallState");
-	}
-	if(Door->GetChangeState()){
-		Door->SetChangeState(false);
-		popRequested = true;
-		Camera::Unfollow();
-		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "StageState", Door->GetDest());
 	}
 	quitRequested = instance.QuitRequested();
 
@@ -90,6 +95,21 @@ void StageState::Update(float dt){
 	UpdateArray(dt);
 
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
+		/*if(objectArray[i].get()->Is("SceneDoor")){
+			//std::cout << "DOOR" << std::endl;
+			if(((SceneDoor*)objectArray[i].get())->GetChangeState()){
+				//std::cout << "DOOR2" << std::endl;
+				((SceneDoor*)objectArray[i].get())->SetChangeState(false);
+				popRequested = true;
+				Camera::Unfollow();
+				//RemovePlayer(typeid(*MissionManager::player).name());
+				std::cout << "DOOR3 " << ((SceneDoor*)objectArray[i].get())->GetDest() << std::endl;
+				//Nao sei pq aqui nao esta funcionando
+				Game::GetInstance().GetMissionManager().
+						ChangeState(std::move(objectArray), "StageState", ((SceneDoor*)objectArray[i].get())->GetDest());
+				std::cout << "DOOR4" << std::endl;
+			}
+		}*/
 		for(int j = i-1; j >= 0; --j){
 			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
 				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
@@ -108,30 +128,30 @@ void StageState::Render(){
 	RenderArray();
 	//tileMap.Render(Camera::pos.x, Camera::pos.y);
 
-	if(Player::player->GetShowingInventory()){
-		Player::player->RenderInventory();
+	if(MissionManager::player->GetShowingInventory()){
+		MissionManager::player->RenderInventory();
 	} else{
-		Player::player->RenderInHand();
-		Player::player->RenderNoise();
+		MissionManager::player->RenderInHand();
+		MissionManager::player->RenderNoise();
 	}
 }
 
 void StageState::SetInitialObjectArray(){
-	P = new Player(600,400);
-	Camera::Follow(P, CAMERA_TYPE1);
-	P->SetMovementLimits(limits);
+	MissionManager::player->SetPosition(600,400);
+	Camera::Follow(MissionManager::player, CAMERA_TYPE1);
+	MissionManager::player->SetMovementLimits(limits);
 
 	EmptyBox* EB = new EmptyBox();
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	//Enemy* E = new Enemy(1100, 500);
-	Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png", "HallState");
+	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png", "HallState");
 	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
 	SceneWindow* Window = new SceneWindow(500, 200, "img/closedwindow.png", "img/openwindow.png");
 
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
 	Table->SetMovementLimits(limits);
 
-	objectArray.emplace_back(P);
+	objectArray.emplace_back(MissionManager::player);
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall);
 	//objectArray.emplace_back(E);

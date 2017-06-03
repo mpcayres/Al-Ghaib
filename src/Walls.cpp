@@ -4,7 +4,7 @@
 #include "Sprite.hpp"
 #include "Game.hpp"
 #include "Player.hpp"
-
+#include "MissionManager.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
 
@@ -30,13 +30,13 @@ void Walls::Render(){
 void Walls::NotifyCollision(GameObject& other){
 
 	if(other.Is("Player")){
-		if(Player::player->box.x < box.x + box.w ||
-			Player::player->box.x + Player::player->box.w > box.x){
-				Player::player->box.x = Player::player->previousPos.x;
+		if(MissionManager::player->box.x < box.x + box.w ||
+			MissionManager::player->box.x + MissionManager::player->box.w > box.x){
+				MissionManager::player->box.x = MissionManager::player->previousPos.x;
 		}
-		if(Player::player->box.y < box.y + box.h ||
-			Player::player->box.y + Player::player->box.h > box.y){
-				Player::player->box.y = Player::player->previousPos.y;
+		if(MissionManager::player->box.y < box.y + box.h ||
+			MissionManager::player->box.y + MissionManager::player->box.h > box.y){
+				MissionManager::player->box.y = MissionManager::player->previousPos.y;
 		}
 	}
 
@@ -53,8 +53,8 @@ void Walls::NotifyCollision(GameObject& other){
 
 	if (other.Is("MovingObject")){
 		if(other.box.y + other.box.h < box.y + box.h)
-							/*&& (Player::player->GetDirecao() == Player::LESTE ||
-								Player::player->GetDirecao() == Player::OESTE))*/{
+							/*&& (MissionManager::player->GetDirecao() == Player::LESTE ||
+								MissionManager::player->GetDirecao() == Player::OESTE))*/{
 
 				if((other.box.x < box.x + box.w &&
 						other.box.x + other.box.w > box.x + box.w )
@@ -63,7 +63,7 @@ void Walls::NotifyCollision(GameObject& other){
 									other.box.x = box.x + box.w + 1;
 				} else if((other.box.x + other.box.w > box.x &&
 						other.box.x < box.x)
-						|| (box.InsideX(Player::player->box) &&
+						|| (box.InsideX(MissionManager::player->box) &&
 						other.box.CenterX() < box.CenterX())){
 								other.box.x = box.x - other.box.w - 1;
 				}

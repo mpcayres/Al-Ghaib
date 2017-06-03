@@ -23,7 +23,7 @@ void Camera::Update(float dt){
 		if(type == 1){
 			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 			pos.y = focus->box.CenterY() - Game::GetInstance().GetHeight()/2;
-		}else if(type == 2){
+		} else if(type == 2){
 			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 			pos.y = 0;
 		}

@@ -3,52 +3,53 @@
 #include "InputManager.hpp"
 #include "SceneDoor.hpp"
 #include "Player.hpp"
+#include "MissionManager.hpp"
 #include "Game.hpp"
 
 EmptyBox::EmptyBox( ){
 	rotation = 0;
-	box.x = Player::player->box.x + Player::player->box.w;
-	box.y = Player::player->box.y;
+	box.x = MissionManager::player->box.x + MissionManager::player->box.w;
+	box.y = MissionManager::player->box.y;
 	box.w = DISTANCIA;
-	box.h = Player::player->box.h;
-	inHand = Player::player->GetInHand();
+	box.h = MissionManager::player->box.h;
+	inHand = MissionManager::player->GetInHand();
 }
 
 void EmptyBox::Update(float dt){
-	/*Vec2 rot = Vec2(Player::player->box.x - Player::player->box.CenterX(),
-			Player::player->box.y - Player::player->box.CenterY());
-	rot = rot.Rotate(Player::player->rotation*PI/180);*/
-	switch(Player::player->GetDirecao()){
+	/*Vec2 rot = Vec2(MissionManager::player->box.x - MissionManager::player->box.CenterX(),
+			MissionManager::player->box.y - MissionManager::player->box.CenterY());
+	rot = rot.Rotate(MissionManager::player->rotation*PI/180);*/
+	switch(MissionManager::player->GetDirecao()){
 		case Player::NORTE:		//NORTE
-			//box.x = rot.x + Player::player->box.CenterX();
-			//box.y = rot.y + Player::player->box.CenterY() - DISTANCIA;
-			box.x = Player::player->box.x;
-			box.y = Player::player->box.y - DISTANCIA;
-			box.w = Player::player->box.h;
-			box.h = DISTANCIA + Player::player->box.w;
+			//box.x = rot.x + MissionManager::player->box.CenterX();
+			//box.y = rot.y + MissionManager::player->box.CenterY() - DISTANCIA;
+			box.x = MissionManager::player->box.x;
+			box.y = MissionManager::player->box.y - DISTANCIA;
+			box.w = MissionManager::player->box.h;
+			box.h = DISTANCIA + MissionManager::player->box.w;
 			break;
 		case Player::SUL:		//SUL
-			//box.x = rot.x + Player::player->box.CenterX();
-			//box.y = rot.y + Player::player->box.CenterY();
-			box.x = Player::player->box.x;
-			box.y = Player::player->box.y;
-			box.w = Player::player->box.h;
-			box.h = DISTANCIA + Player::player->box.w;
+			//box.x = rot.x + MissionManager::player->box.CenterX();
+			//box.y = rot.y + MissionManager::player->box.CenterY();
+			box.x = MissionManager::player->box.x;
+			box.y = MissionManager::player->box.y;
+			box.w = MissionManager::player->box.h;
+			box.h = DISTANCIA + MissionManager::player->box.w;
 			break;
 		case Player::LESTE:		//LESTE
-			box.x = Player::player->box.x;
-			box.y = Player::player->box.y;
-			box.w = DISTANCIA + Player::player->box.w;
-			box.h = Player::player->box.h;
+			box.x = MissionManager::player->box.x;
+			box.y = MissionManager::player->box.y;
+			box.w = DISTANCIA + MissionManager::player->box.w;
+			box.h = MissionManager::player->box.h;
 			break;
 		case Player::OESTE:		//OESTE
-			box.x = Player::player->box.x - DISTANCIA;
-			box.y = Player::player->box.y;
-			box.w = DISTANCIA + Player::player->box.w;
-			box.h = Player::player->box.h;
+			box.x = MissionManager::player->box.x - DISTANCIA;
+			box.y = MissionManager::player->box.y;
+			box.w = DISTANCIA + MissionManager::player->box.w;
+			box.h = MissionManager::player->box.h;
 			break;
 	}
-	inHand = Player::player->GetInHand();
+	inHand = MissionManager::player->GetInHand();
 }
 
 void EmptyBox::Render(){
@@ -66,7 +67,7 @@ void EmptyBox::NotifyCollision(GameObject& other){
 	if(other.Is("SceneDoor")){
 		if(InputManager::GetInstance().KeyPress(X_KEY) && inHand != nullptr){
 			if(inHand->Action(&other) == true)
-				Player::player->DeleteInventory();
+				MissionManager::player->DeleteInventory();
 		}
 	}
 }

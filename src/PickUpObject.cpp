@@ -32,7 +32,7 @@ void PickUpObject::NotifyCollision(GameObject& other){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			//dead = true;  // botar dead em condições diferentes. se não estiver selecionado ou mostrando no inventario
 			dead = true;
-			Player::player->AddInventory(obj/*, objSp*/);
+			MissionManager::player->AddInventory(obj/*, objSp*/);
 		}
 	}
 }

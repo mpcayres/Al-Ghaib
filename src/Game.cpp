@@ -71,14 +71,15 @@ Game::Game(std::string title, int width, int height){
 }
 
 Game::~Game(){
+	printf("D.1\n");
 	if(storedState != nullptr) delete (storedState);
 	while(!stateStack.empty()) stateStack.pop();
 
-	printf("\n5");
-	if(missionManager != nullptr) delete (missionManager);
+	printf("D.2\n");
+	//if(missionManager != nullptr) delete (missionManager); //esta dando seg fault
 
 	Resources::ClearResources();
-	printf("\n6");
+	printf("D.3\n");
 
 	IMG_Quit();
 	Mix_CloseAudio();
@@ -101,39 +102,39 @@ void Game::Run(){
 			GetCurrentState().Render();
 
 			if(storedMission != nullptr){
-				printf("\n1");
+				//printf("\n1");
 				if(!storedMission->PopRequested()){
 					storedMission->Update(dt);
 					storedMission->Render();
 				}
-				printf("\n2");
+				//printf("\n2");
 			}
 			SDL_RenderPresent(renderer);
 
 			if(GetCurrentState().PopRequested()){
-				//std::cout << "1: " << typeid(GetCurrentState()).name() << std::endl;
+				std::cout << "1: " << typeid(GetCurrentState()).name() << std::endl;
 				GetCurrentState().Pause();
 				stateStack.pop();
 				Resources::ClearResources();
 				if(!stateStack.empty())
 					GetCurrentState().Resume();
-				//std::cout << "2: " << typeid(GetCurrentState()).name() << std::endl;
+				std::cout << "2: " << typeid(GetCurrentState()).name() << std::endl;
 			}
 			if(storedState != nullptr){
-				//std::cout << "3: " << typeid(GetCurrentState()).name() << std::endl;
+				std::cout << "3: " << typeid(GetCurrentState()).name() << std::endl;
 				if(!stateStack.empty())
 					GetCurrentState().Pause();
 				stateStack.push(std::unique_ptr<State>(storedState));
 				GetCurrentState().Resume();
 				storedState = nullptr;
-				//std::cout << "4: " << typeid(GetCurrentState()).name() << std::endl;
+				std::cout << "4: " << typeid(GetCurrentState()).name() << std::endl;
 			}
 			SDL_Delay(33);
-			printf("\n3");
+			//printf("\n3");
 		}
-		printf("\n4");
+		//printf("\n4");
 	}
-	printf("\n5");
+	//printf("\n5");
 }
 
 void Game::CalculateDeltaTime(){

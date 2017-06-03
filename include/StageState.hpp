@@ -8,8 +8,7 @@
 #include "Music.hpp"
 #include "Timer.hpp"
 #include "StateData.hpp"
-#include "Player.hpp"
-#include "SceneDoor.hpp"
+
 
 class StageState : public State {
 public:
@@ -37,9 +36,6 @@ private:
 	Timer time;
 	Music music;
 	bool flagMorte;
-
-	Player* P;
-	SceneDoor* Door;
 };
 
 #endif /* INCLUDE_STATE_HPP_ */

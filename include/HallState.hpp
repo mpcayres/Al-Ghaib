@@ -3,8 +3,6 @@
 
 #include "State.hpp"
 #include "Sprite.hpp"
-#include "Player.hpp"
-#include "SceneDoor.hpp"
 
 class HallState : public State {
 public:
@@ -24,9 +22,6 @@ public:
 private:
 	Sprite background;
 	Sprite bg;
-
-	Player* P;
-	SceneDoor* Door;
 };
 
 #endif /* SRC_HALLSTATE_HPP_ */
