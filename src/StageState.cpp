@@ -22,15 +22,17 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 
 	limits = tileMap.FindLimits();
 	if(inicial){
+		std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
 		objectArray.insert( objectArray.end(),
 				std::make_move_iterator(obj.begin()),
 				std::make_move_iterator(obj.end()) );
 	} else{
-		objectArray = std::move(obj);
+		std::cout << "SSC1.2" << std::endl;
 		MissionManager::player->SetPosition(800,400);
 		Camera::Follow(MissionManager::player, CAMERA_TYPE1);
 		MissionManager::player->SetMovementLimits(limits);
+		objectArray = std::move(obj);
 		////objectArray.emplace_back(MissionManager::player);
 	}
 
@@ -39,12 +41,11 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	popRequested = false;
 	time = Timer();
 	flagMorte = false;
-
 	LoadAssets();
+	std::cout << "SSC2" << std::endl;
 }
 
 StageState::~StageState(){
-	Camera::Unfollow();
 	objectArray.clear();
 }
 
@@ -85,7 +86,6 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
-		//RemovePlayer(typeid(*MissionManager::player).name());
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState", "HallState");
 	}
@@ -94,22 +94,14 @@ void StageState::Update(float dt){
 	Camera::Update(dt);
 	UpdateArray(dt);
 
+	int changeIndex = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
-		/*if(objectArray[i].get()->Is("SceneDoor")){
+		if(objectArray[i].get()->Is("SceneDoor")){
 			//std::cout << "DOOR" << std::endl;
 			if(((SceneDoor*)objectArray[i].get())->GetChangeState()){
-				//std::cout << "DOOR2" << std::endl;
-				((SceneDoor*)objectArray[i].get())->SetChangeState(false);
-				popRequested = true;
-				Camera::Unfollow();
-				//RemovePlayer(typeid(*MissionManager::player).name());
-				std::cout << "DOOR3 " << ((SceneDoor*)objectArray[i].get())->GetDest() << std::endl;
-				//Nao sei pq aqui nao esta funcionando
-				Game::GetInstance().GetMissionManager().
-						ChangeState(std::move(objectArray), "StageState", ((SceneDoor*)objectArray[i].get())->GetDest());
-				std::cout << "DOOR4" << std::endl;
+				changeIndex = i;
 			}
-		}*/
+		}
 		for(int j = i-1; j >= 0; --j){
 			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
 				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
@@ -119,6 +111,19 @@ void StageState::Update(float dt){
 
 			}
 		}
+	}
+
+	if(changeIndex != -1){
+		//std::cout << "DOOR2 " << changeIndex << std::endl;
+		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
+		popRequested = true;
+		Camera::Unfollow();
+		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
+		//Nao sei pq aqui nao esta funcionando
+		Game::GetInstance().GetMissionManager().
+				ChangeState(std::move(objectArray), "StageState",
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest());
+		//std::cout << "DOOR4" << std::endl;
 	}
 }
 

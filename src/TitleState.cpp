@@ -81,6 +81,7 @@ void TitleState::Pause(){
 }
 
 void TitleState::Resume(){
+	Game::GetInstance().GetMissionManager().DeleteStates();
 	stopMusic = false;
 	intro.Play(1);
 }

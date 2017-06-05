@@ -18,10 +18,10 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial)
 				std::make_move_iterator(obj.end()) );
 	} else{
 		std::cout << "HSC1.2" << std::endl;
-		objectArray = std::move(obj);
 		MissionManager::player->SetPosition(400,400);
 		Camera::Follow(MissionManager::player, CAMERA_TYPE2);
 		MissionManager::player->SetMovementLimits(Rect(-1500,-15000,13500,53000));
+		objectArray = std::move(obj);
 	}
 
 	quitRequested = false;
@@ -31,7 +31,6 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial)
 }
 
 HallState::~HallState() {
-	Camera::Unfollow();
 	objectArray.clear();
 }
 
@@ -65,22 +64,14 @@ void HallState::Update(float dt){
 	Camera::Update(dt);
 	UpdateArray(dt);
 
+	int changeIndex = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
-		/*if(objectArray[i].get()->Is("SceneDoor")){
+		if(objectArray[i].get()->Is("SceneDoor")){
 			//std::cout << "DOOR" << std::endl;
 			if(((SceneDoor*)objectArray[i].get())->GetChangeState()){
-				//std::cout << "DOOR2" << std::endl;
-				((SceneDoor*)objectArray[i].get())->SetChangeState(false);
-				popRequested = true;
-				Camera::Unfollow();
-				//RemovePlayer(typeid(*MissionManager::player).name());
-				std::cout << "DOOR3 " << ((SceneDoor*)objectArray[i].get())->GetDest() << std::endl;
-				//Nao sei pq aqui nao esta funcionando
-				Game::GetInstance().GetMissionManager().
-						ChangeState(std::move(objectArray), "HallState", ((SceneDoor*)objectArray[i].get())->GetDest());
-				std::cout << "DOOR4" << std::endl;
+				changeIndex = i;
 			}
-		}*/
+		}
 		for(int j = i-1; j >= 0; --j){
 			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
 				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
@@ -90,6 +81,19 @@ void HallState::Update(float dt){
 
 			}
 		}
+	}
+
+	if(changeIndex != -1){
+		//std::cout << "DOOR2 " << changeIndex << std::endl;
+		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
+		popRequested = true;
+		Camera::Unfollow();
+		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
+		//Nao sei pq aqui nao esta funcionando
+		Game::GetInstance().GetMissionManager().
+				ChangeState(std::move(objectArray), "HallState",
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest());
+		//std::cout << "DOOR4" << std::endl;
 	}
 }
 

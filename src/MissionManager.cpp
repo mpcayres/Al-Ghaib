@@ -25,8 +25,10 @@ MissionManager::~MissionManager() {
 
 void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig){
 	if(orig == "StageState"){
+		std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 		objectStage = std::move(objNew);
 	} else if(orig == "HallState"){
+		std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 		objectHall = std::move(objNew);
 	}
 }
@@ -58,8 +60,8 @@ void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew
 }
 
 void MissionManager::SetMission(){
-	//Mission � um abstract para as Mission1,2,3...
-	if(mission != nullptr) delete mission;
+	//Mission e um abstract para as Mission1,2,3...
+	//if(mission != nullptr) delete mission;
 	switch(numMission){
 		case 1:
 			mission = new Mission1();
@@ -69,9 +71,15 @@ void MissionManager::SetMission(){
 			break;
 	}
 
+	//SWAP efetivamente libera a memoria ao inves de clear, pq nao necessariamente estarao vazios
+	//objectStage.clear(); objectHall.clear();
+	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
+	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
+	//std::cout << "INI_MIS1: " << objectStage.size() << " " << objectHall.size() << std::endl;
 	initStage = initHall = true;
 	objectStage = std::move(mission->GetObjectStage());
 	objectHall = std::move(mission->GetObjectHall());
+	//std::cout << "INI_MIS2: " << objectStage.size() << " " << objectHall.size() << std::endl;
 }
 
 //em caso de vitoria, especificado em cada missao
@@ -82,8 +90,10 @@ void MissionManager::ChangeMission(int num){
 	SetState(mission->GetInitialState());
 }
 
-//acho que talvez nao precise, nao fica fazendo processamento extra enquanto esta fora do jogo
-/*void MissionManager::DeletePlayer(){
+//Ver para liberar memoria dos dados e do player quando vai para o Menu
+void MissionManager::DeleteStates(){
 	//delete player;
+	//std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
+	//std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::cout << "Player NULL" << std::endl;
-}*/
+}

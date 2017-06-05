@@ -1,6 +1,8 @@
 #include "Mission1.hpp"
 #include "SceneWindow.hpp"
 
+#include <iostream>
+
 Mission1::Mission1() {
 	initialState = "StageState";
 
@@ -20,6 +22,8 @@ Mission1::Mission1() {
 
 	SetObjectStage();
 	SetObjectHall();
+
+	//std::cout << "INIT_MIS1" << std::endl;
 }
 
 Mission1::~Mission1() {
@@ -32,7 +36,8 @@ void Mission1::SetObjectStage(){
 }
 
 void Mission1::SetObjectHall(){
-
+	SceneWindow* Window = new SceneWindow(350, 70, "img/closedwindow.png", "img/openwindow.png");
+	objectHall.emplace_back(Window);
 }
 
 void  Mission1::Update(float dt){
@@ -64,6 +69,7 @@ void  Mission1::Render(){
 	tx.Render(0,0);
 
 }
+
 void  Mission1::Pause(){
 }
 

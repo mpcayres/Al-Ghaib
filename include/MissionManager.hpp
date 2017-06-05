@@ -22,7 +22,7 @@ public:
 	void ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest);
 	void SetMission();
 	void ChangeMission(int num);
-	//static void DeletePlayer();
+	void DeleteStates();
 
 	static Player* player;
 
