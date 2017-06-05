@@ -1,4 +1,7 @@
 #include "State.hpp"
+#include "Player.hpp"
+#include "MissionManager.hpp"
+#include "Camera.hpp"
 
 State::State(){
 	quitRequested = false;
@@ -23,7 +26,7 @@ void State::UpdateArray(float dt){
 }
 
 void State::RenderArray(){
-	for(int i = objectArray.size() - 1; i >= 0; --i) {
+	for(unsigned int i = 0; i < objectArray.size(); i++) {
 		objectArray[i].get()->Render();
 	}
 }
@@ -36,19 +39,19 @@ bool State::PopRequested(){
 	return popRequested;
 }
 
-//esta funcionando sem remover, pq e estatico. As formas que achei acabam deletando o proprio player
-/*void State::RemovePlayer(std::string s){
-	/*std::vector<unique_ptr<GameObject>>::iterator object = 
-        find_if(objectArray.begin(), objectArray.end(),
-                [&](unique_ptr<GameObject> & obj){ return obj->name() == objName;}
-               );
-    objectArray.erase(std::remove(objectArray.begin(), objectArray.end(), *object));
-    return std::move(*object);/
-    /*objectArray.erase(std::remove_if(
-        objectArray.begin(), objectArray.end(), [s](const std::unique_ptr<GameObject>& e) 
-                                    {   std::cout << s << " " << typeid(*e).name() << std::endl;
-                                    	return s == typeid(*e).name(); }), objectArray.end());/
-    std::remove_if(
-        objectArray.begin(), objectArray.end(), [s](const std::unique_ptr<GameObject>& e) 
-                                    { return s == typeid(*e).name(); });
-}*/
+void State::SetPlayer(int x, int y, int type, Rect limits){
+	MissionManager::player->SetPosition(x, y);
+	Camera::Follow(MissionManager::player, type);
+	MissionManager::player->SetMovementLimits(limits);
+}
+
+void State::RemovePlayer(){
+	for(unsigned int i = 0; i < objectArray.size(); i++) {
+		if(objectArray[i].get()->Is("Player")){
+			//std::cout << "remove " << objectArray.size() << " " << i << std::endl;
+			MissionManager::player = (Player*) objectArray[i].release();
+			objectArray.erase(objectArray.begin() + i);
+			//std::cout << "alive " << objectArray.size() << " " << MissionManager::player->Is("Player") << std::endl;
+		}
+	}
+}

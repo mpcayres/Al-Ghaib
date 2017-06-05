@@ -21,20 +21,18 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
+	SetPlayer(600, 400, CAMERA_TYPE1, limits);
 	if(inicial){
-		std::cout << "SSC1.1" << std::endl;
+		//std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
 		objectArray.insert( objectArray.end(),
 				std::make_move_iterator(obj.begin()),
 				std::make_move_iterator(obj.end()) );
 	} else{
-		std::cout << "SSC1.2" << std::endl;
-		MissionManager::player->SetPosition(800,400);
-		Camera::Follow(MissionManager::player, CAMERA_TYPE1);
-		MissionManager::player->SetMovementLimits(limits);
+		//std::cout << "SSC1.2" << std::endl;
 		objectArray = std::move(obj);
-		////objectArray.emplace_back(MissionManager::player);
 	}
+	objectArray.emplace_back(MissionManager::player);
 
 	music = Music("audio/stageState.ogg");
 	quitRequested = false;
@@ -42,7 +40,7 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	time = Timer();
 	flagMorte = false;
 	LoadAssets();
-	std::cout << "SSC2" << std::endl;
+	//std::cout << "SSC2" << std::endl;
 }
 
 StageState::~StageState(){
@@ -86,6 +84,7 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
+		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState", "HallState");
 	}
@@ -118,6 +117,7 @@ void StageState::Update(float dt){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
 		popRequested = true;
 		Camera::Unfollow();
+		RemovePlayer();
 		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
@@ -142,10 +142,6 @@ void StageState::Render(){
 }
 
 void StageState::SetInitialObjectArray(){
-	MissionManager::player->SetPosition(600,400);
-	Camera::Follow(MissionManager::player, CAMERA_TYPE1);
-	MissionManager::player->SetMovementLimits(limits);
-
 	EmptyBox* EB = new EmptyBox();
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	//Enemy* E = new Enemy(1100, 500);
@@ -156,7 +152,6 @@ void StageState::SetInitialObjectArray(){
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
 	Table->SetMovementLimits(limits);
 
-	objectArray.emplace_back(MissionManager::player);
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall);
 	//objectArray.emplace_back(E);

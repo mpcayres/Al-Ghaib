@@ -22,7 +22,8 @@ public:
 
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
-	//void RemovePlayer(std::string s);
+	void SetPlayer(int x, int y, int type, Rect limits);
+	void RemovePlayer();
 
 protected:
 	virtual void UpdateArray(float dt);

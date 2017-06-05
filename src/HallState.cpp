@@ -10,24 +10,23 @@
 #include <iostream>
 
 HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial) {
+	SetPlayer(400, 400, CAMERA_TYPE2, Rect(-1500,-15000,13500,53000));
 	if(inicial){
-		std::cout << "HSC1.1" << std::endl;
+		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
 		objectArray.insert( objectArray.end(),
 				std::make_move_iterator(obj.begin()),
 				std::make_move_iterator(obj.end()) );
 	} else{
-		std::cout << "HSC1.2" << std::endl;
-		MissionManager::player->SetPosition(400,400);
-		Camera::Follow(MissionManager::player, CAMERA_TYPE2);
-		MissionManager::player->SetMovementLimits(Rect(-1500,-15000,13500,53000));
+		//std::cout << "HSC1.2" << std::endl;
 		objectArray = std::move(obj);
 	}
+	objectArray.emplace_back(MissionManager::player);
 
 	quitRequested = false;
 	popRequested = false;
 	LoadAssets();
-	std::cout << "HSC2" << std::endl;
+	//std::cout << "HSC2" << std::endl;
 }
 
 HallState::~HallState() {
@@ -56,6 +55,7 @@ void HallState::Update(float dt){
 	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
+		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "HallState", "StageState");
 	}
@@ -88,6 +88,7 @@ void HallState::Update(float dt){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
 		popRequested = true;
 		Camera::Unfollow();
+		RemovePlayer();
 		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
@@ -112,9 +113,6 @@ void HallState::Render(){
 }
 
 void HallState::SetInitialObjectArray(){
-	MissionManager::player->SetPosition(400,400);
-	Camera::Follow(MissionManager::player, CAMERA_TYPE2);
-	MissionManager::player->SetMovementLimits(Rect(-1500,-15000,13500,53000));
 	EmptyBox* EB = new EmptyBox();
 
 	//Walls *Wall1 = new Walls(605, 260, 141, 135);
@@ -122,7 +120,6 @@ void HallState::SetInitialObjectArray(){
 	PickUpObject* PO = new PickUpObject(500, 400, "KeyObject", "img/minionbullet1.png");
 	SceneDoor* Door = new SceneDoor(500, 100, "img/doorclosed.png", "img/dooropened.png", "StageState");
 
-	objectArray.emplace_back(MissionManager::player);
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall1);
 	//objectArray.emplace_back(Wall2);
