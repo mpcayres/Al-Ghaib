@@ -47,6 +47,7 @@ Player::Player(float x, float y) :
 	direcaoShift = false;
 
 	ruido = 0;
+	hidden = false;
 }
 
 Player::~Player(){
@@ -60,7 +61,7 @@ void Player::Update(float dt){
 	InputInstance = InputManager::GetInstance();
 
 	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
-	if(!showingInventory){
+	if(!showingInventory && !hidden){
 		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
@@ -159,7 +160,7 @@ void Player::Update(float dt){
 			inventoryIndex = inHandIndex;
 		}
 
-	} else{
+	} else if(showingInventory){
 		/*MOVIMENTACAO DO INVENTARIO*/
 		if(InputInstance.KeyPress(I_KEY))
 			showingInventory = false;
@@ -185,6 +186,8 @@ void Player::Update(float dt){
 			inHandIndex = inventoryIndex;
 			showingInventory = false;
 		}
+	} else if(hidden){
+		//pode fazer o ruido diminuir lentamente e colocar um cooldown para sair do esconderijo
 	}
 
 }
@@ -350,6 +353,10 @@ void Player::DeleteInventory(){
 	}
 }
 
+void Player::ChangeHiddenState(){
+	hidden = !hidden;
+}
+
 
 /* FUNÇÕES GERAIS */
 
@@ -366,10 +373,12 @@ bool Player::Is(std::string type){
 }
 
 void Player::Render(){
-	if(running){
-		spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-	} else{
-		spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(!hidden){
+		if(running){
+			spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		} else{
+			spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		}
 	}
 }
 

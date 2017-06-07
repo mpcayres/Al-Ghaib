@@ -1,14 +1,12 @@
-#ifndef SRC_MOVINGOBJECT_H_
-#define SRC_MOVINGOBJECT_H_
-
-#include <string>
+#ifndef INCLUDE_STEALTHOBJECT_HPP_
+#define INCLUDE_STEALTHOBJECT_HPP_
 
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 
-class MovingObject : public GameObject {
+class StealthObject :public GameObject {
 public:
-	MovingObject(float x, float y, std::string img);
+	StealthObject(float x, float y, std::string img);
 
 	void Update(float dt);
 	void Render();
@@ -23,4 +21,4 @@ private:
 	Rect limits;
 };
 
-#endif /* SRC_MOVINGOBJECT_H_ */
+#endif /* INCLUDE_STEALTHOBJECT_HPP_ */

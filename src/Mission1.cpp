@@ -1,5 +1,6 @@
 #include "Mission1.hpp"
 #include "SceneWindow.hpp"
+#include "StealthObject.hpp"
 
 #include <iostream>
 
@@ -33,6 +34,8 @@ Mission1::~Mission1() {
 void Mission1::SetObjectStage(){
 	SceneWindow* Window = new SceneWindow(350, 200, "img/closedwindow.png", "img/openwindow.png");
 	objectStage.emplace_back(Window);
+	StealthObject* Stealth = new StealthObject(700, 500, "img/closedwindow.png");
+	objectStage.emplace_back(Stealth);
 }
 
 void Mission1::SetObjectHall(){

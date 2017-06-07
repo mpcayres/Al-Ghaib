@@ -34,6 +34,7 @@ public:
 	InventoryObject* GetInHand();
 	void DeleteInventory();
 	void SetMovementLimits(Rect limits);
+	void ChangeHiddenState();
 
 	int GetDirecao();
 	Vec2 GetSpeed();
@@ -60,6 +61,7 @@ private:
 	bool direcaoShift;
 
 	float ruido;
+	bool hidden;
 
 	Rect limits;
 };
