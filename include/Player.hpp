@@ -43,7 +43,7 @@ public:
 	enum InvBox{SUL, NORTE, LESTE, OESTE};
 
 private:
-	Timer time;
+	Timer timeRuido, timeCooldown;
 	Sprite spKinder, spKinderRun;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 	Sprite spNoise;

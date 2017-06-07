@@ -31,7 +31,8 @@ Player::Player(float x, float y) :
 	box.w = spKinder.GetScaledWidth();
 	box.h = spKinder.GetScaledHeight();
 	previousPos = Vec2(x,y);
-	time = Timer();
+	timeRuido = Timer();
+	timeCooldown = Timer();
 
 	hp = 30;
 	rotation = 0;
@@ -138,9 +139,9 @@ void Player::Update(float dt){
 		if (ruido > 84) ruido = 84; // impedir bug na mostra
 
 		if(multiplicador == 0 && ruido > 0){
-			time.Update(dt);
-			if (time.Get() > 0.3){
-				time.Restart();
+			timeRuido.Update(dt);
+			if (timeRuido.Get() > 0.3){
+				timeRuido.Restart();
 				ruido -= (ruido*0.2);
 			}
 		}
@@ -187,7 +188,19 @@ void Player::Update(float dt){
 			showingInventory = false;
 		}
 	} else if(hidden){
-		//pode fazer o ruido diminuir lentamente e colocar um cooldown para sair do esconderijo
+		multiplicador = 0;
+		if(ruido > 0){
+			timeRuido.Update(dt);
+			if(timeRuido.Get() > 0.3){
+				timeRuido.Restart();
+				ruido -= (ruido*0.2); //pode colocar um fator diferente ja que esta escondido
+			}
+		}
+
+		timeCooldown.Update(dt);
+		if(timeCooldown.Get() > 1.5){
+			ChangeHiddenState();
+		}
 	}
 
 }
@@ -355,6 +368,7 @@ void Player::DeleteInventory(){
 
 void Player::ChangeHiddenState(){
 	hidden = !hidden;
+	timeCooldown.Restart();
 }
 
 
