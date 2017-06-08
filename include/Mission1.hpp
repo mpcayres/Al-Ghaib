@@ -23,6 +23,8 @@
 #include "InputManager.hpp"
 #include "Text.hpp"
 #include "Timer.hpp"
+#include "Sprite.hpp"
+#include "Player.hpp"
 
 class Mission1 : public Mission {
 public:
@@ -34,12 +36,16 @@ public:
 
 	void Update(float dt);
 	void Render();
+	bool tried;
 protected:
 	void SetObjectStage();
 	void SetObjectHall();
+	bool EnterPressed();
 
 	Text tx;
+	Text falas;
 	Timer time;
+	Sprite blackSquare;
 	bool flagTimer;
 };
 

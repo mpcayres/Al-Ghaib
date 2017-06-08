@@ -1,21 +1,25 @@
 #include "Mission1.hpp"
 #include "SceneWindow.hpp"
 #include "StealthObject.hpp"
+#include "SceneDoor.hpp"
 
 #include <iostream>
 
-Mission1::Mission1() {
+Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialState = "StageState";
 
 	SDL_Color auxcolor = SDL_Color();
-	auxcolor.r = 205;
+	auxcolor.r = 102;
 	auxcolor.g = 0;
-	auxcolor.b = 240;
+	auxcolor.b = 0;
 
 	flagTimer = true; //stopMusic = false;
 	time = Timer();
 	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 1", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
+
+	falas =  Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
+	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -53,23 +57,50 @@ void  Mission1::Update(float dt){
 	//quitRequested = instance.QuitRequested();
 
 	//printf("teste \n");
+
+
 	time.Update(dt);
-	if(time.Get()> 2 && flagTimer == true){
+
+
+	if(flagTimer == true && time.Get() > 3){
 		tx.SetText(" ");
 		//time.Restart();
 		flagTimer = false;
 	}
-	/*if(time.Get()> 3 && flagTimer == false){
-		tx.SetText("MISSION 1");
+	if( time.Get() > 5.5){
+		falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
+		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		//time.Restart();
-		flagTimer = true;
-	}*/
+		//flagTimer = true;
+	}
 
+	if( time.Get() > 7){
+			falas.SetText(" ");
+	}
+
+}
+
+
+bool Mission1::EnterPressed(){
+	if(InputManager::GetInstance().KeyPress(ENTER_KEY) ){
+		printf("enter");
+		return true;
+	}
+	return false;
 }
 
 void  Mission1::Render(){
 	//printf("teste2 \n");
+	if(time.Get() < 3 ){
+			blackSquare.Render(0, 0, 0);
+	}
+
 	tx.Render(0,0);
+
+
+	if (time.Get()>4){
+		falas.Render(0,0);
+	}
 
 }
 

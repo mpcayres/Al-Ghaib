@@ -2,6 +2,7 @@
 #define SRC_SCENEDOOR_HPP_
 
 #include "SceneObject.hpp"
+#include "Text.hpp"
 
 class SceneDoor : public SceneObject {
 public:
@@ -13,11 +14,13 @@ public:
 	bool GetChangeState();
 	void SetChangeState(bool change);
 	std::string GetDest();
+	//bool Tried();
 
 private:
 	bool lock;
 	std::string dest;
 	bool changeState;
+	//bool tried;
 };
 
 #endif /* SRC_SCENEDOOR_HPP_ */

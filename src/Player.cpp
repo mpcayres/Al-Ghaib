@@ -56,7 +56,7 @@ Player::~Player(){
 }
 
 
-/* Update - Movimentação */
+/* Update - Movimentaï¿½ï¿½o */
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
@@ -372,7 +372,7 @@ void Player::ChangeHiddenState(){
 }
 
 
-/* FUNÇÕES GERAIS */
+/* FUNï¿½ï¿½ES GERAIS */
 
 void Player::NotifyCollision(GameObject& other){
 	/*if(other.Is("Enemy")){
