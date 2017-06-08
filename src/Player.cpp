@@ -49,6 +49,8 @@ Player::Player(float x, float y) :
 
 	ruido = 0;
 	hidden = false;
+
+	door = false;
 }
 
 Player::~Player(){
@@ -399,3 +401,12 @@ void Player::Render(){
 bool Player::IsDead(){
 	return (hp <= 0);
 }
+
+bool Player::GetDoor(){
+	return door;
+}
+
+void Player::SetDoor(bool value){
+	door = value;
+}
+

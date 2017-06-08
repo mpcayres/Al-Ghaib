@@ -81,7 +81,9 @@ void MissionManager::SetMission(){
 	objectHall = std::move(mission->GetObjectHall());
 	//std::cout << "INI_MIS2: " << objectStage.size() << " " << objectHall.size() << std::endl;
 }
-
+Mission *MissionManager::GetMission(){
+	return mission;
+}
 //em caso de vitoria, especificado em cada missao
 void MissionManager::ChangeMission(int num){
 	player = new Player(0,0); //passar as informacoes do save

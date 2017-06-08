@@ -7,6 +7,7 @@
 
 Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialState = "StageState";
+	//door = false;
 
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 102;
@@ -15,11 +16,13 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 
 	flagTimer = true; //stopMusic = false;
 	time = Timer();
+	cooldown = Timer();
 	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 1", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 
 	falas =  Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+	ultimoTempo = 3;
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -50,7 +53,7 @@ void Mission1::SetObjectHall(){
 void  Mission1::Update(float dt){
 
 	InputManager instance = InputManager::GetInstance();
-
+	bool trancada = false;
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 	}
@@ -60,23 +63,51 @@ void  Mission1::Update(float dt){
 
 
 	time.Update(dt);
+	//cooldown.Update(dt);
 
 
+	cooldown.Update(dt);
 	if(flagTimer == true && time.Get() > 3){
 		tx.SetText(" ");
 		//time.Restart();
 		flagTimer = false;
 	}
-	if( time.Get() > 5.5){
+	if( time.Get() > 5.5 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 5.5*/){
 		falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
 		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-		//time.Restart();
+		ultimoTempo = 5.5;
+
 		//flagTimer = true;
 	}
 
-	if( time.Get() > 7){
+	if( time.Get() > 7 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
 			falas.SetText(" ");
+			ultimoTempo = 7;
 	}
+	if(MissionManager::player->GetDoor() && trancada == false){
+		falas.SetText("ESTÁ TRANCADA");
+		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		trancada = true;
+		MissionManager::player->SetDoor(false);
+		cooldown.Restart();
+		time.Restart();
+		while(time.Get()< ultimoTempo){
+			time.Update(dt);
+		}
+	}
+
+
+	if(cooldown.Get() > 2 && trancada == true){
+		//cooldown.Restart();
+		falas.SetText(" ");
+		trancada = false;
+		cooldown.Restart();
+		time.Restart();
+		while(time.Get()< ultimoTempo){
+			time.Update(dt);
+		}
+	}
+
 
 }
 

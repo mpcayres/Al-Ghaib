@@ -29,3 +29,11 @@ bool Mission::QuitRequested(){
 	return quitRequested;
 }
 
+/*bool Mission::GetDoor(){
+	return door;
+}
+
+void Mission::SetDoor(bool value){
+	door = value;
+}*/
+

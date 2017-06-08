@@ -39,8 +39,12 @@ public:
 	int GetDirecao();
 	Vec2 GetSpeed();
 
+
 	Vec2 previousPos;
 	enum InvBox{SUL, NORTE, LESTE, OESTE};
+
+	bool GetDoor();
+	void SetDoor(bool value);
 
 private:
 	Timer timeRuido, timeCooldown;
@@ -59,6 +63,8 @@ private:
 	InvBox direcao;
 	InputManager InputInstance;
 	bool direcaoShift;
+
+	bool door;
 
 	float ruido;
 	bool hidden;

@@ -1,12 +1,11 @@
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
+#include "Mission.hpp"
+#include "Player.hpp"
 
 SceneDoor::SceneDoor(float x, float y, std::string img, std::string img2, std::string dest) :
 	SceneObject(x, y, img, img2), dest(dest) {
-	SDL_Color auxcolor = SDL_Color();
-	auxcolor.r = 102;
-	auxcolor.g = 0;
-	auxcolor.b = 0;
+
 	lock = true;
 	changeState = false;
 	//tried = false;
@@ -16,7 +15,9 @@ void SceneDoor::NotifyCollision(GameObject& other){
 	SceneObject::NotifyCollision(other);
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == true){
-			// mensagem de q n pode abrir porta
+				MissionManager::player->SetDoor(true);
+				printf("entrei");
+
 		}
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
 			if(estado){

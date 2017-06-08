@@ -26,8 +26,13 @@ public:
 	bool PopRequested();
 	bool QuitRequested();
 
+	//bool GetDoor();
+	//void SetDoor(bool value);
+
+
 protected:
 	bool popRequested, quitRequested;
+	//bool door;
 
 	virtual void SetObjectStage() = 0;
 	virtual void SetObjectHall() = 0;

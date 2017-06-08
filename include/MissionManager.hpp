@@ -23,6 +23,7 @@ public:
 	void SetMission();
 	void ChangeMission(int num);
 	void DeleteStates();
+	Mission *GetMission();
 
 	static Player* player;
 

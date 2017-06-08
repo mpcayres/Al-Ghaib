@@ -44,8 +44,10 @@ protected:
 
 	Text tx;
 	Text falas;
+	Timer cooldown;
 	Timer time;
 	Sprite blackSquare;
+	float ultimoTempo;
 	bool flagTimer;
 };
 
