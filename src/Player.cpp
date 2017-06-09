@@ -166,6 +166,9 @@ void Player::Update(float dt){
 			showingInventory = true;
 			inventoryIndex = inHandIndex;
 		}
+		if(InputInstance.KeyPress(G_KEY)){
+			Camera::Move(box.x+100, box.y+100, 3);
+		}
 
 	} else if(showingInventory){
 		/*MOVIMENTACAO DO INVENTARIO*/
