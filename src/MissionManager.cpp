@@ -8,6 +8,7 @@
 #include <iostream>
 
 Player* MissionManager::player;
+std::string MissionManager::stage;
 
 //Colocar nos objetos todas as condicoes deles, inclusive se estao abertos ou fechados
 
@@ -41,12 +42,16 @@ void MissionManager::SetState(std::string dest){
 		std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage));
 		initStage = false;
+		stage = "StageState";
+		//std::cout << "ESSE AQUI OH: " << stage << std::endl;
 		std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
 		std::cout << "HS.1" << std::endl;
 		std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall));
 		initHall = false;
+		stage = "HallState";
+		//std::cout << "ESSE AQUI OH 2: " << stage << std::endl;
 		std::cout << "HS.2" << std::endl;
 	}
 }
@@ -103,4 +108,9 @@ void MissionManager::DeleteStates(){
 	//std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	//std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::cout << "Player NULL" << std::endl;
+}
+
+bool MissionManager::GetStage(std::string type){
+	return (type == stage);
+
 }

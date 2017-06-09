@@ -24,12 +24,14 @@ public:
 	void ChangeMission(int num);
 	void DeleteStates();
 	Mission *GetMission();
+	static bool GetStage(std::string type);
 
 	static Player* player;
 
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
 	Mission *mission;
+	static std::string stage;
 	int numMission;
 	bool initStage, initHall;
 };

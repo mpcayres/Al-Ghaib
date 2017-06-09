@@ -50,6 +50,7 @@ protected:
 	float ultimoTempo;
 	bool flagTimer;
 	bool trancada;
+	bool begin;
 };
 
 #endif /* SRC_MISSION1_HPP_ */

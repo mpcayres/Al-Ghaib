@@ -8,6 +8,7 @@
 Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialState = "StageState";
 	trancada = false;
+	begin = true;
 
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 102;
@@ -58,58 +59,49 @@ void  Mission1::Update(float dt){
 		popRequested = true;
 	}
 	//quitRequested = instance.QuitRequested();
-
 	if(instance.KeyPress(ENTER_KEY)){
 		std::cout << "ENTER PRESSED" << std::endl;
 		if(time.Get() < 3 ){
 			time.Set(3);
+			begin = false;
 		}
 	}
-
 	time.Update(dt);
 	cooldown.Update(dt);
-
-	if(flagTimer == true && time.Get() > 3){
-		tx.SetText(" ");
-		//time.Restart();
-		flagTimer = false;
-	}
-	if( time.Get() > 5.5 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 5.5*/){
-		falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
-		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-		ultimoTempo = 5.5;
-
-		//flagTimer = true;
+	if(time.Get() > 3 ){
+		begin = false;
 	}
 
-	if( time.Get() > 7 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-		falas.SetText(" ");
-		ultimoTempo = 7;
-	}
-	/*if(MissionManager::player->GetDoor() && trancada == false){
-		falas.SetText("ESTA´ TRANCADA");
-		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-		trancada = true;
-		MissionManager::player->SetDoor(false);
-		cooldown.Restart();
-		time.Restart();
-		while(time.Get() < ultimoTempo){
-			time.Update(dt);
+	if(MissionManager::GetStage("StageState")){
+		std::cout << "StageState" << std::endl;
+		if(flagTimer == true && time.Get() > 3){
+			tx.SetText(" ");
+			//time.Restart();
+			flagTimer = false;
 		}
+		if( time.Get() > 5.5 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 5.5*/){
+			falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			ultimoTempo = 5.5;
+
+			//flagTimer = true;
+		}
+
+		if( time.Get() > 7 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+			falas.SetText(" ");
+			ultimoTempo = 7;
+		}
+
+		MessageDoor(dt);
 	}
 
-	if(cooldown.Get() > 2 && trancada == true){
-		//cooldown.Restart();
-		falas.SetText(" ");
-		trancada = false;
-		cooldown.Restart();
-		time.Restart();
-		//time.Set(ultimoTempo); -> perguntar Grid
-		while(time.Get() < ultimoTempo){
-			time.Update(dt);
-		}
-	}*/
-	MessageDoor(dt);
+	if(MissionManager::GetStage("HallState")){
+			std::cout << "HallState" << std::endl;
+			time.Restart();
+			//ultimoTempo = 0;
+
+			MessageDoor(dt);
+	}
 
 }
 void Mission1::MessageDoor(float dt){
@@ -140,7 +132,7 @@ void Mission1::MessageDoor(float dt){
 }
 void  Mission1::Render(){
 	//printf("teste2 \n");
-	if(time.Get() < 3 ){
+	if(/*time.Get() < 3*/ begin ){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 	}
