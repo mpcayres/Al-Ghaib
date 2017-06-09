@@ -14,6 +14,8 @@ public:
 	virtual ~Mission();
 
 	std::string GetInitialState();
+	int GetInitialX();
+	int GetInitialY();
 	std::vector<std::unique_ptr<GameObject>> GetObjectStage();
 	std::vector<std::unique_ptr<GameObject>> GetObjectHall();
 
@@ -39,6 +41,7 @@ protected:
 
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
 	std::string initialState;
+	int initialX, initialY;
 };
 
 #endif /* SRC_MISSION_HPP_ */

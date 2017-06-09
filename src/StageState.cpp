@@ -16,11 +16,12 @@
 
 #include <iostream>
 
-StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial) :
+StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
 	tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	SetPlayer(600, 400, CAMERA_TYPE1, limits);
+	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
+	else SetPlayer(600, 400, CAMERA_TYPE1, limits);
 	if(inicial){
 		//std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -135,7 +136,8 @@ void StageState::Update(float dt){
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest());
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest(),
+						MissionManager::player->box.x, MissionManager::player->box.y);
 		//std::cout << "DOOR4" << std::endl;
 	}
 }

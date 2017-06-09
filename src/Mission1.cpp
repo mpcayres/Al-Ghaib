@@ -8,6 +8,9 @@
 
 Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialState = "StageState";
+	initialX = 600; initialY = 400;
+	MissionManager::missionManager->SetPos(initialX, initialY, initialState);
+
 	trancada = false;
 	begin = true;
 

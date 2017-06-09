@@ -9,9 +9,10 @@
 
 #include <iostream>
 
-HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial) {
+HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) {
 	limits = Rect(-1500,-15000,13500,53000);//tileMap.FindLimits();
-	SetPlayer(450, 400, CAMERA_TYPE2, limits);
+	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
+	else SetPlayer(450, 400, CAMERA_TYPE2, limits);
 	if(inicial){
 		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -94,7 +95,8 @@ void HallState::Update(float dt){
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "HallState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest());
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest(),
+						MissionManager::player->box.x, MissionManager::player->box.y);
 		//std::cout << "DOOR4" << std::endl;
 	}
 }

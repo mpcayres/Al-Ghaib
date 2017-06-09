@@ -1,7 +1,10 @@
 #include "Mission2.hpp"
+#include "MissionManager.hpp"
 
 Mission2::Mission2() {
 	initialState = "HallState";
+	initialX = 450; initialY = 400;
+	MissionManager::missionManager->SetPos(initialX, initialY, initialState);
 }
 
 Mission2::~Mission2() {

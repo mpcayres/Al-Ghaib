@@ -1,7 +1,8 @@
 #include "Mission.hpp"
 
 Mission::Mission() {
-	popRequested = false;
+	popRequested = quitRequested = false;
+	initialX = initialY = -1;
 }
 
 Mission::~Mission() {
@@ -10,6 +11,14 @@ Mission::~Mission() {
 
 std::string Mission::GetInitialState(){
 	return initialState;
+}
+
+int Mission::GetInitialX(){
+	return initialX;
+}
+
+int Mission::GetInitialY(){
+	return initialY;
 }
 
 std::vector<std::unique_ptr<GameObject>> Mission::GetObjectStage(){

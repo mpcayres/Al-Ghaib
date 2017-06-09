@@ -18,6 +18,7 @@ MissionManager::MissionManager() {
 	mission = nullptr;
 	initStage = initHall = true;
 	missionManager = this;
+	xStage = yStage = xHall = yHall = -1;
 }
 
 MissionManager::~MissionManager() {
@@ -43,7 +44,7 @@ void MissionManager::SetState(std::string dest){
 	if(dest == "StageState"){
 		std::cout << "SS.1" << std::endl;
 		std::cout << "SIZE: " << objectStage.size() << std::endl;
-		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage));
+		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xStage, yStage));
 		initStage = false;
 		stage = "StageState";
 		//std::cout << "ESSE AQUI OH: " << stage << std::endl;
@@ -51,7 +52,7 @@ void MissionManager::SetState(std::string dest){
 	} else if(dest == "HallState"){
 		std::cout << "HS.1" << std::endl;
 		std::cout << "SIZE: " << objectStage.size() << std::endl;
-		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall));
+		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xHall, yHall));
 		initHall = false;
 		stage = "HallState";
 		//std::cout << "ESSE AQUI OH 2: " << stage << std::endl;
@@ -60,7 +61,8 @@ void MissionManager::SetState(std::string dest){
 }
 
 //quando for chamar pelos estados para mudar de State, usar esse
-void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest){
+void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest, int x, int y){
+	SetPos(x, y, orig);
 	//std::cout << "1" << std::endl;
 	SetObject(std::move(objNew), orig);
 	//std::cout << "2" << std::endl;
@@ -100,14 +102,16 @@ Mission *MissionManager::GetMission(){
 }
 
 //em caso de vitoria, especificado em cada missao
-void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::unique_ptr<std::string>> oldInventory){
+void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::string> oldInventory){
 	bool firstPlay = true;
 	numMission = num;
+	xStage = yStage = xHall = yHall = -1;
 	if(player != nullptr){
 		firstPlay = false;
 		SaveMission();
 	}
-	player = new Player(0, 0, oldInHand, std::move(oldInventory));
+	player = new Player(0, 0, oldInHand, oldInventory);
+	oldInventory.clear();
 	SetMission();
 	SetState(mission->GetInitialState());
 	if(firstPlay){
@@ -133,7 +137,7 @@ void MissionManager::LoadMission(int num){
 		int numLoadMission, oldInHand;
 		load >> numLoadMission;
 		load >> oldInHand;
-		std::vector<std::unique_ptr<std::string>> inventory;
+		std::vector<std::string> inventory;
 		while(!load.eof()){
 			std::string obj;
 			load >> obj;
@@ -141,7 +145,8 @@ void MissionManager::LoadMission(int num){
 				inventory.emplace_back(obj);
 			}
 		}
-		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, std::move(inventory));
+		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, inventory);
+		inventory.clear();
 		load.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
@@ -169,4 +174,12 @@ void MissionManager::SaveMission(){
 
 bool MissionManager::GetStage(std::string type){
 	return (type == stage);
+}
+
+void MissionManager::SetPos(int x, int y, std::string local){
+	if(local == "StageState"){
+		xStage = x; yStage = y;
+	} else if(local == "HallState"){
+		xHall = x; yHall = y;
+	}
 }
