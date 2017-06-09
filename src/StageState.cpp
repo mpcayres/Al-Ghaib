@@ -90,11 +90,13 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(A_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
-		std::vector<std::unique_ptr<InventoryObject>> inventory = MissionManager::player->GetInventory();
+		std::vector<InventoryObject*> inventory = MissionManager::player->GetInventory();
 		std::vector<std::unique_ptr<std::string>> oldInventory;
 		for(unsigned int i = 0; i < inventory.size(); i++){
-			oldInventory.emplace_back(inventory[i]->GetObject());
+			std::string aux = std::move(inventory[i]->GetObject());
+			oldInventory.emplace_back(aux);
 		}
+		inventory.clear();
 		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
 				ChangeMission(2, MissionManager::player->GetInHandIndex(), std::move(oldInventory));

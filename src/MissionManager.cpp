@@ -100,14 +100,14 @@ Mission *MissionManager::GetMission(){
 }
 
 //em caso de vitoria, especificado em cada missao
-void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::unique_ptr<std::string>> oldInventory){
+void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::string> oldInventory){
 	bool firstPlay = true;
 	numMission = num;
 	if(player != nullptr){
 		firstPlay = false;
 		SaveMission();
 	}
-	player = new Player(0, 0, oldInHand, std::move(oldInventory));
+	player = new Player(0, 0, oldInHand, oldInventory);
 	SetMission();
 	SetState(mission->GetInitialState());
 	if(firstPlay){
@@ -129,7 +129,7 @@ void MissionManager::LoadMission(){
 		int numLoadMission, oldInHand;
 		save >> numLoadMission;
 		save >> oldInHand;
-		std::vector<std::unique_ptr<std::string>> inventory;
+		std::vector<std::string> inventory;
 		while(!save.eof()){
 			std::string obj;
 			save >> obj;
@@ -137,7 +137,7 @@ void MissionManager::LoadMission(){
 				inventory.emplace_back(obj);
 			}
 		}
-		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, std::move(inventory));
+		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, inventory);
 		save.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
@@ -148,7 +148,7 @@ void MissionManager::SaveMission(){
 	if(save.is_open()){
 		save << numMission << std::endl;
 		save << player->GetInHandIndex() << std::endl;
-		std::vector<std::unique_ptr<InventoryObject>> inventory = player->GetInventory();
+		std::vector<InventoryObject*> inventory = player->GetInventory();
 		for(unsigned int i = 0; i < inventory.size(); i++){
 			save << inventory[i]->GetObject() << std::endl;
 		}
