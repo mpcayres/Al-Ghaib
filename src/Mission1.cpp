@@ -21,7 +21,7 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 1", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 
-	falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE E´ FRIA E PERIGOSA", auxcolor, 0, 0);
+	falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 	ultimoTempo = 3;
 	/*intro = Music("audio/menu-intro.wav");
@@ -73,7 +73,7 @@ void  Mission1::Update(float dt){
 	}
 
 	if(MissionManager::GetStage("StageState")){
-		std::cout << "StageState" << std::endl;
+		//std::cout << "StageState" << std::endl;
 		if(flagTimer == true && time.Get() > 3){
 			tx.SetText(" ");
 			//time.Restart();
@@ -96,11 +96,11 @@ void  Mission1::Update(float dt){
 	}
 
 	if(MissionManager::GetStage("HallState")){
-			std::cout << "HallState" << std::endl;
-			time.Restart();
-			//ultimoTempo = 0;
+		//std::cout << "HallState" << std::endl;
+		time.Restart();
+		//ultimoTempo = 0;
 
-			MessageDoor(dt);
+		MessageDoor(dt);
 	}
 
 }

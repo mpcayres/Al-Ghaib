@@ -95,11 +95,11 @@ void Text::RemakeTexture(){
 	if(texture != nullptr) texture = nullptr;
 
 	if(style == SOLID){
-		aux = TTF_RenderText_Solid(font.get(),text.c_str(), color);
+		aux = TTF_RenderUTF8_Solid(font.get(),text.c_str(), color);
 	} else if(style == SHADED){
-		aux = TTF_RenderText_Shaded(font.get(),text.c_str(), color, fundo);
+		aux = TTF_RenderUTF8_Shaded(font.get(),text.c_str(), color, fundo);
 	} else{
-		aux = TTF_RenderText_Blended(font.get(),text.c_str(), color);
+		aux = TTF_RenderUTF8_Blended(font.get(),text.c_str(), color);
 	}
 
 	box.w = aux->w;
