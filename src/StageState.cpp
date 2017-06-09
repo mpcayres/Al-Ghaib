@@ -91,7 +91,7 @@ void StageState::Update(float dt){
 		popRequested = true;
 		Camera::Unfollow();
 		std::vector<InventoryObject*> inventory = MissionManager::player->GetInventory();
-		std::vector<std::unique_ptr<std::string>> oldInventory;
+		std::vector<std::string> oldInventory;
 		for(unsigned int i = 0; i < inventory.size(); i++){
 			std::string aux = std::move(inventory[i]->GetObject());
 			oldInventory.emplace_back(aux);
@@ -99,7 +99,7 @@ void StageState::Update(float dt){
 		inventory.clear();
 		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
-				ChangeMission(2, MissionManager::player->GetInHandIndex(), std::move(oldInventory));
+				ChangeMission(2, MissionManager::player->GetInHandIndex(), oldInventory);
 	}
 	quitRequested = instance.QuitRequested();
 
