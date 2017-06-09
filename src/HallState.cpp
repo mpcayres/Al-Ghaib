@@ -3,7 +3,6 @@
 #include "Camera.hpp"
 #include "Collision.hpp"
 #include "Walls.hpp"
-#include "PickUpObject.hpp"
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
 #include "MovingObject.hpp"
@@ -120,7 +119,6 @@ void HallState::SetInitialObjectArray(){
 	Walls *Wall1 = new Walls(270, 282, 130, 125);
 	Walls *Wall2 = new Walls(725, 282, 130, 125);
 	Walls *Wall3 = new Walls(1175, 282, 130, 125);
-	PickUpObject* PO = new PickUpObject(500, 400, "KeyObject", "img/minionbullet1.png");
 	SceneDoor* Door = new SceneDoor(500, 100, "img/doorclosed.png", "img/dooropened.png", "StageState");
 
 	MovingObject* Table = new MovingObject(500, 200, "img/box.png");
@@ -130,7 +128,6 @@ void HallState::SetInitialObjectArray(){
 	objectArray.emplace_back(Wall1);
 	objectArray.emplace_back(Wall2);
 	objectArray.emplace_back(Wall3);
-	objectArray.emplace_back(PO);
 	objectArray.emplace_back(Door);
 	objectArray.emplace_back(Table);
 }

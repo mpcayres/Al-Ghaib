@@ -15,7 +15,7 @@
 
 class Player : public GameObject{
 public:
-	Player(float x, float y, std::vector<std::string> oldInventory = std::vector<std::string>());
+	Player(float x, float y, int oldInHand = -1, std::vector<std::string> oldInventory = std::vector<std::string>());
 	~Player();
 
 	void Update(float dt);
@@ -27,12 +27,14 @@ public:
 	bool Is(std::string type);
 	float GetRuido();
 	bool GetShowingInventory();
-	void AddInventory(std::string obj/*, std::string objSp*/);
+
 	void RenderInventory();
 	void RenderInHand();
 	void RenderNoise();
 
 	InventoryObject* GetInHand();
+	void AddInventory(std::string obj/*, std::string objSp*/);
+	std::vector<InventoryObject*> GetInventory();
 	void DeleteInventory();
 	void SetMovementLimits(Rect limits);
 	void ChangeHiddenState();

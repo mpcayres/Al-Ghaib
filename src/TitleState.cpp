@@ -1,6 +1,7 @@
 #include "TitleState.hpp"
 #include "Game.hpp"
 #include "InputManager.hpp"
+#include "MissionManager.hpp"
 
 Music TitleState::intro, TitleState::music;
 bool TitleState::stopMusic;
@@ -53,7 +54,7 @@ void TitleState::Update(float dt){
 				break;
 			case MENU_CONTINUE:
 				Pause();
-				Game::GetInstance().GetMissionManager().ChangeMission(2);
+				MissionManager::missionManager->LoadMission();
 				//em uma missao salva
 				break;
 			case MENU_OPTIONS:

@@ -11,7 +11,7 @@
 #define DESACELERA			1
 
 
-Player::Player(float x, float y, std::vector<std::string> oldInventory) :
+Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
 		spKinder("img/kinder.png", 20, 0.06, 4),
 		spKinderRun("img/kinder-run.png", 15, 0.1, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
@@ -39,7 +39,12 @@ Player::Player(float x, float y, std::vector<std::string> oldInventory) :
 	speed.y = speed.x = 0;
 	running = false;
 
-	inHandIndex = -1; //dependendo do save pode ser diferente
+	for(unsigned int i = 0; i < oldInventory.size(); i++){
+		AddInventory(oldInventory[i]);
+	}
+	oldInventory.clear();
+
+	inHandIndex = oldInHand; //dependendo do save pode ser diferente
 	showingInventory = false;
 	inventoryIndex = inHandIndex;
 
@@ -52,7 +57,9 @@ Player::Player(float x, float y, std::vector<std::string> oldInventory) :
 	door = false;
 }
 
-Player::~Player(){ }
+Player::~Player(){
+	inventory.clear();
+}
 
 
 /* Update - Movimentacao */
@@ -270,14 +277,14 @@ void Player::RenderInventory(){
 			scaleX = float(widthMinorSquare)/float(inventory[i]->GetWidth());
 			inventory[i]->SetScaleX(scaleX);
 			posXCenter = posX;
-		}else{
+		} else{
 			posXCenter = posX + (widthMinorSquare - inventory[i]->GetWidth())/2;
 		}
 		if(inventory[i]->GetHeight() > heightMinorSquare){
 			scaleY = float(heightMinorSquare)/float(inventory[i]->GetHeight());
 			inventory[i]->SetScaleY(scaleY);
 			posYCenter = posY;
-		}else{
+		} else{
 			posYCenter = posY + (heightMinorSquare - inventory[i]->GetHeight())/2;
 		}
 
@@ -308,14 +315,14 @@ void Player::RenderInHand(){
 			scaleX = float(widthMinorSquare)/float(inventory[inHandIndex]->GetWidth());
 			inventory[inHandIndex]->SetScaleX(scaleX);
 			posXCenter = posX;
-		}else{
+		} else{
 			posXCenter = posX + (widthMinorSquare - inventory[inHandIndex]->GetWidth())/2;
 		}
 		if(inventory[inHandIndex]->GetHeight()> heightMinorSquare){
 			scaleY = float(heightMinorSquare)/float(inventory[inHandIndex]->GetHeight());
 			inventory[inHandIndex]->SetScaleY(scaleY);
 			posYCenter = posY;
-		}else{
+		} else{
 			posYCenter = posY + (heightMinorSquare - inventory[inHandIndex]->GetHeight())/2;
 		}
 		inventory[inHandIndex]->Render(posXCenter, posYCenter);
@@ -335,30 +342,29 @@ void Player::RenderNoise(){
 
 }
 
+InventoryObject* Player::GetInHand(){
+	if(inHandIndex >= 0) return inventory[inHandIndex];
+	else return nullptr;
+}
+
 void Player::AddInventory(std::string obj/*, std::string objSp*/){
 	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
 	// Coloquei a string da imagem comentada caso seja necessario
 	if(inHandIndex < 0) inHandIndex = 0;
-	if(obj == "KeyObject"){
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
+	if(obj == "InventoryKey"){
 		inventory.emplace_back(new InventoryKey(/*objSp*/));
 	}
 }
 
-InventoryObject* Player::GetInHand(){
-	if(inHandIndex >= 0) return inventory[inHandIndex];
-	else return nullptr;
+std::vector<InventoryObject*> Player::GetInventory(){
+	return inventory;
 }
 
 void Player::DeleteInventory(){
 	if(inventory.size() == 1){
 		inventory.erase(inventory.begin() + inHandIndex);
 		inHandIndex = -1;
-	}else{
+	} else{
 		inventory.erase(inventory.begin() + inHandIndex);
 		inHandIndex = 0 ;
 	}

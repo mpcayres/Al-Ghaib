@@ -30,7 +30,7 @@ bool PickUpObject::IsDead(){
 void PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			//dead = true;  // botar dead em condições diferentes. se não estiver selecionado ou mostrando no inventario
+			//dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
 			dead = true;
 			MissionManager::player->AddInventory(obj/*, objSp*/);
 		}

@@ -23,6 +23,10 @@ bool InventoryKey::IsObject(std::string type){
 	return (type == "InventoryKey");
 }
 
+std::string InventoryKey::GetObject(){
+	return "InventoryKey";
+}
+
 int InventoryKey::GetWidth(){ return sp.GetScaledWidth();}
 
 int InventoryKey::GetHeight(){ return sp.GetScaledHeight(); }

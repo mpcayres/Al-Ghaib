@@ -1,4 +1,3 @@
-#include "PickUpObject.hpp"
 #include "StageState.hpp"
 #include "InputManager.hpp"
 #include "Resources.hpp"
@@ -88,6 +87,13 @@ void StageState::Update(float dt){
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState", "HallState");
 	}
+	if(instance.KeyPress(A_KEY)){
+		popRequested = true;
+		Camera::Unfollow();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeMission(2);
+	}
 	quitRequested = instance.QuitRequested();
 
 	Camera::Update(dt);
@@ -146,7 +152,6 @@ void StageState::SetInitialObjectArray(){
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	//Enemy* E = new Enemy(1100, 500);
 	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png", "HallState");
-	PickUpObject* PO = new PickUpObject(700, 300, "KeyObject", "img/minionbullet1.png");
 	SceneWindow* Window = new SceneWindow(500, 200, "img/closedwindow.png", "img/openwindow.png");
 
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
@@ -155,7 +160,6 @@ void StageState::SetInitialObjectArray(){
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall);
 	//objectArray.emplace_back(E);
-	objectArray.emplace_back(PO);
 	objectArray.emplace_back(Window);
 	objectArray.emplace_back(Door);
 	objectArray.emplace_back(Table);

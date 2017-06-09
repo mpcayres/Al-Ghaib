@@ -1,4 +1,5 @@
 #include "Mission1.hpp"
+#include "PickUpObject.hpp"
 #include "SceneWindow.hpp"
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
@@ -44,11 +45,15 @@ void Mission1::SetObjectStage(){
 	objectStage.emplace_back(Window);
 	StealthObject* Stealth = new StealthObject(700, 500, "img/closedwindow.png");
 	objectStage.emplace_back(Stealth);
+	PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
+	objectStage.emplace_back(PO);
 }
 
 void Mission1::SetObjectHall(){
 	SceneWindow* Window = new SceneWindow(350, 70, "img/closedwindow.png", "img/openwindow.png");
 	objectHall.emplace_back(Window);
+	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
+	objectHall.emplace_back(PO);
 }
 
 void  Mission1::Update(float dt){
@@ -72,7 +77,7 @@ void  Mission1::Update(float dt){
 		begin = false;
 	}
 
-	if(MissionManager::GetStage("StageState")){
+	if(MissionManager::missionManager->GetStage("StageState")){
 		//std::cout << "StageState" << std::endl;
 		if(flagTimer == true && time.Get() > 3){
 			tx.SetText(" ");
@@ -93,9 +98,7 @@ void  Mission1::Update(float dt){
 		}
 
 		MessageDoor(dt);
-	}
-
-	if(MissionManager::GetStage("HallState")){
+	} else if(MissionManager::missionManager->GetStage("HallState")){
 		//std::cout << "HallState" << std::endl;
 		time.Restart();
 		//ultimoTempo = 0;

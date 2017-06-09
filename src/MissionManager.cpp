@@ -1,5 +1,6 @@
 #include "MissionManager.hpp"
 #include "Game.hpp"
+#include "InventoryObject.hpp"
 #include "StageState.hpp"
 #include "HallState.hpp"
 #include "Mission1.hpp"
@@ -7,8 +8,8 @@
 
 #include <iostream>
 
-Player* MissionManager::player;
-std::string MissionManager::stage;
+Player* MissionManager::player = nullptr;
+MissionManager* MissionManager::missionManager = nullptr;
 
 //Colocar nos objetos todas as condicoes deles, inclusive se estao abertos ou fechados
 
@@ -16,6 +17,7 @@ MissionManager::MissionManager() {
 	numMission = 0;
 	mission = nullptr;
 	initStage = initHall = true;
+	missionManager = this;
 }
 
 MissionManager::~MissionManager() {
@@ -23,6 +25,7 @@ MissionManager::~MissionManager() {
 	objectHall.clear();
 	if(mission != nullptr) delete mission;
 	player = nullptr;
+	missionManager = nullptr;
 }
 
 void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig){
@@ -91,15 +94,18 @@ void MissionManager::SetMission(){
 	objectHall = std::move(mission->GetObjectHall());
 	//std::cout << "INI_MIS2: " << objectStage.size() << " " << objectHall.size() << std::endl;
 }
+
 Mission *MissionManager::GetMission(){
 	return mission;
 }
+
 //em caso de vitoria, especificado em cada missao
-void MissionManager::ChangeMission(int num){
-	player = new Player(0,0); //passar as informacoes do save
+void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::string> oldInventory){
+	player = new Player(0, 0, oldInHand, oldInventory);
 	numMission = num;
 	SetMission();
 	SetState(mission->GetInitialState());
+	SaveMission();
 }
 
 //Ver para liberar memoria dos dados e do player quando vai para o Menu
@@ -110,7 +116,40 @@ void MissionManager::DeleteStates(){
 	std::cout << "Player NULL" << std::endl;
 }
 
+void MissionManager::LoadMission(){
+	save.open("saves/save.txt", std::fstream::in);
+	if(save.is_open()){
+		int numLoadMission, oldInHand;
+		save >> numLoadMission;
+		save >> oldInHand;
+		std::vector<std::string> inventory;
+		while(!save.eof()){
+			std::string obj;
+			getline(save, obj);
+			std::cout << obj << std::endl;
+			inventory.emplace_back(obj);
+		}
+		std::cout <<"SIEEEEE: " << inventory.size() << std::endl;
+		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, inventory);
+		save.close();
+	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
+}
+
+//Salva a missao ao comeca-la, guardando seu estado inicial
+void MissionManager::SaveMission(){
+	save.open("saves/save.txt", std::fstream::out);
+	if(save.is_open()){
+		save << numMission << std::endl;
+		save << player->GetInHand() << std::endl;
+		std::vector<InventoryObject*> inventory = player->GetInventory();
+		for(unsigned int i = 0; i < inventory.size(); i++){
+			save << inventory[i]->GetObject() << std::endl;
+		}
+		inventory.clear();
+		save.close();
+	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
+}
+
 bool MissionManager::GetStage(std::string type){
 	return (type == stage);
-
 }

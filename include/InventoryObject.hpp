@@ -17,6 +17,7 @@ public:
 	virtual void Render(int x, int y) = 0;
 	virtual bool Action(GameObject* other) = 0;
 	virtual bool IsObject(std::string type) = 0;
+	virtual std::string GetObject() = 0;
 	virtual int GetWidth() = 0;
 	virtual int GetHeight() = 0;
 	virtual void SetScaleX(float scale) = 0;
