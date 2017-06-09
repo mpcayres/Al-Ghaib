@@ -11,7 +11,7 @@
 #define DESACELERA			1
 
 
-Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
+Player::Player(float x, float y, int oldInHand, std::vector<std::unique_ptr<std::string>> oldInventory) :
 		spKinder("img/kinder.png", 20, 0.06, 4),
 		spKinderRun("img/kinder-run.png", 15, 0.1, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
@@ -40,9 +40,9 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	running = false;
 
 	for(unsigned int i = 0; i < oldInventory.size(); i++){
-		AddInventory(oldInventory[i]);
+		std::string aux = std::move(oldInventory[i]);
+		AddInventory(aux);
 	}
-	oldInventory.clear();
 
 	inHandIndex = oldInHand; //dependendo do save pode ser diferente
 	showingInventory = false;
@@ -342,6 +342,10 @@ void Player::RenderNoise(){
 
 }
 
+int Player::GetInHandIndex(){
+	return inHandIndex;
+}
+
 InventoryObject* Player::GetInHand(){
 	if(inHandIndex >= 0) return inventory[inHandIndex];
 	else return nullptr;
@@ -356,8 +360,8 @@ void Player::AddInventory(std::string obj/*, std::string objSp*/){
 	}
 }
 
-std::vector<InventoryObject*> Player::GetInventory(){
-	return inventory;
+std::vector<std::unique_ptr<InventoryObject>> Player::GetInventory(){
+	return std::move(inventory);
 }
 
 void Player::DeleteInventory(){

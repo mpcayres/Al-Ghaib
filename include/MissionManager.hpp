@@ -22,7 +22,7 @@ public:
 	void SetState(std::string dest);
 	void ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest);
 	void SetMission();
-	void ChangeMission(int num, int oldInHand = -1, std::vector<std::string> oldInventory = std::vector<std::string>());
+	void ChangeMission(int num, int oldInHand = -1, std::vector<std::unique_ptr<std::string>> oldInventory = std::vector<std::unique_ptr<std::string>>());
 	void DeleteStates();
 	void LoadMission();
 	void SaveMission();

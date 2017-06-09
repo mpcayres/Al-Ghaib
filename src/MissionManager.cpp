@@ -100,12 +100,19 @@ Mission *MissionManager::GetMission(){
 }
 
 //em caso de vitoria, especificado em cada missao
-void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::string> oldInventory){
-	player = new Player(0, 0, oldInHand, oldInventory);
+void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::unique_ptr<std::string>> oldInventory){
+	bool firstPlay = true;
 	numMission = num;
+	if(player != nullptr){
+		firstPlay = false;
+		SaveMission();
+	}
+	player = new Player(0, 0, oldInHand, std::move(oldInventory));
 	SetMission();
 	SetState(mission->GetInitialState());
-	SaveMission();
+	if(firstPlay){
+		SaveMission();
+	}
 }
 
 //Ver para liberar memoria dos dados e do player quando vai para o Menu
@@ -122,15 +129,15 @@ void MissionManager::LoadMission(){
 		int numLoadMission, oldInHand;
 		save >> numLoadMission;
 		save >> oldInHand;
-		std::vector<std::string> inventory;
+		std::vector<std::unique_ptr<std::string>> inventory;
 		while(!save.eof()){
 			std::string obj;
-			getline(save, obj);
-			std::cout << obj << std::endl;
-			inventory.emplace_back(obj);
+			save >> obj;
+			if(!obj.empty()){
+				inventory.emplace_back(obj);
+			}
 		}
-		std::cout <<"SIEEEEE: " << inventory.size() << std::endl;
-		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, inventory);
+		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, std::move(inventory));
 		save.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
@@ -140,8 +147,8 @@ void MissionManager::SaveMission(){
 	save.open("saves/save.txt", std::fstream::out);
 	if(save.is_open()){
 		save << numMission << std::endl;
-		save << player->GetInHand() << std::endl;
-		std::vector<InventoryObject*> inventory = player->GetInventory();
+		save << player->GetInHandIndex() << std::endl;
+		std::vector<std::unique_ptr<InventoryObject>> inventory = player->GetInventory();
 		for(unsigned int i = 0; i < inventory.size(); i++){
 			save << inventory[i]->GetObject() << std::endl;
 		}

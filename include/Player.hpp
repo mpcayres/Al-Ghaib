@@ -15,7 +15,7 @@
 
 class Player : public GameObject{
 public:
-	Player(float x, float y, int oldInHand = -1, std::vector<std::string> oldInventory = std::vector<std::string>());
+	Player(float x, float y, int oldInHand = -1, std::vector<std::unique_ptr<std::string>> oldInventory = std::vector<std::unique_ptr<std::string>>());
 	~Player();
 
 	void Update(float dt);
@@ -33,8 +33,9 @@ public:
 	void RenderNoise();
 
 	InventoryObject* GetInHand();
+	int GetInHandIndex();
 	void AddInventory(std::string obj/*, std::string objSp*/);
-	std::vector<InventoryObject*> GetInventory();
+	std::vector<std::unique_ptr<InventoryObject>> GetInventory();
 	void DeleteInventory();
 	void SetMovementLimits(Rect limits);
 	void ChangeHiddenState();
@@ -61,7 +62,7 @@ private:
 
 	int inHandIndex, inventoryIndex;
 	bool showingInventory;
-	std::vector<InventoryObject*> inventory; //ver se coloca unique_ptr
+	std::vector<std::unique_ptr<InventoryObject>> inventory;
 
 	InvBox direcao;
 	InputManager InputInstance;
