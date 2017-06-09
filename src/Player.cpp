@@ -68,7 +68,7 @@ void Player::Update(float dt){
 	InputInstance = InputManager::GetInstance();
 
 	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
-	if(!showingInventory && !hidden){
+	if(!showingInventory && !hidden && !Camera::GetMoving()){
 		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){

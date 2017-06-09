@@ -15,6 +15,7 @@ public:
 	static void Unfollow();
 	static void Update(float dt);
 	static void Move(int xDest, int yDest, int tempo);
+	static bool GetMoving();
 
 	static Vec2 pos;
 	static Vec2 speed;

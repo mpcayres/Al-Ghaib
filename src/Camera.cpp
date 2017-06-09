@@ -78,3 +78,7 @@ void Camera::Update(float dt){
 
 	}
 }
+
+bool Camera::GetMoving(){
+	return isMoving;
+}
