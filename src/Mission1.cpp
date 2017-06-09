@@ -7,7 +7,7 @@
 
 Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialState = "StageState";
-	//door = false;
+	trancada = false;
 
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 102;
@@ -86,7 +86,7 @@ void  Mission1::Update(float dt){
 		falas.SetText(" ");
 		ultimoTempo = 7;
 	}
-	if(MissionManager::player->GetDoor() && trancada == false){
+	/*if(MissionManager::player->GetDoor() && trancada == false){
 		falas.SetText("ESTA´ TRANCADA");
 		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		trancada = true;
@@ -108,10 +108,36 @@ void  Mission1::Update(float dt){
 		while(time.Get() < ultimoTempo){
 			time.Update(dt);
 		}
-	}
+	}*/
+	MessageDoor(dt);
 
 }
+void Mission1::MessageDoor(float dt){
+	if(MissionManager::player->GetDoor() && trancada == false){
+				falas.SetText("ESTÁ TRANCADA");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				trancada = true;
+				MissionManager::player->SetDoor(false);
+				cooldown.Restart();
+				time.Restart();
+				while(time.Get()< ultimoTempo){
+					time.Update(dt);
+				}
+			}
 
+
+			if(cooldown.Get() > 2 && trancada == true){
+				//cooldown.Restart();
+				falas.SetText(" ");
+				trancada = false;
+				cooldown.Restart();
+				time.Restart();
+				while(time.Get()< ultimoTempo){
+					time.Update(dt);
+				}
+			}
+
+}
 void  Mission1::Render(){
 	//printf("teste2 \n");
 	if(time.Get() < 3 ){

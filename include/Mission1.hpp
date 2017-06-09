@@ -36,6 +36,7 @@ public:
 
 	void Update(float dt);
 	void Render();
+	void MessageDoor(float dt);
 	bool tried;
 protected:
 	void SetObjectStage();
@@ -48,6 +49,7 @@ protected:
 	Sprite blackSquare;
 	float ultimoTempo;
 	bool flagTimer;
+	bool trancada;
 };
 
 #endif /* SRC_MISSION1_HPP_ */
