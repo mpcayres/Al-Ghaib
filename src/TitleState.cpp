@@ -59,6 +59,8 @@ void TitleState::Update(float dt){
 				break;
 			case MENU_OPTIONS:
 				//push na tela de opcoes
+				Pause();
+				MissionManager::missionManager->LoadMission(2);
 				break;
 			case MENU_EXIT:
 				Pause();

@@ -55,6 +55,14 @@ void MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("CollidableObject")){
 		box.x = previousPos.x;
 		box.y = previousPos.y;
+		if(MissionManager::player->box.x < box.x + box.w ||
+				MissionManager::player->box.x + MissionManager::player->box.w > box.x){
+			MissionManager::player->box.x = MissionManager::player->previousPos.x;
+		}
+		if(MissionManager::player->box.y < box.y + box.h ||
+				MissionManager::player->box.y + MissionManager::player->box.h > box.y){
+			MissionManager::player->box.y = MissionManager::player->previousPos.y;
+		}
 	}
 
 	if (other.Is("Enemy")){

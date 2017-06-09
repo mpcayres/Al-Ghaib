@@ -22,9 +22,9 @@ public:
 	void SetState(std::string dest);
 	void ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest);
 	void SetMission();
-	void ChangeMission(int num, int oldInHand = -1, std::vector<std::string> oldInventory = std::vector<std::string>());
+	void ChangeMission(int num, int oldInHand = -1, std::vector<std::unique_ptr<std::string>> oldInventory = std::vector<std::unique_ptr<std::string>>());
 	void DeleteStates();
-	void LoadMission();
+	void LoadMission(int num = 0);
 	void SaveMission();
 	Mission *GetMission();
 	bool GetStage(std::string type);
@@ -38,7 +38,6 @@ private:
 	std::string stage;
 	int numMission;
 	bool initStage, initHall;
-	std::fstream save;
 };
 
 #endif /* SRC_MISSIONMANAGER_HPP_ */

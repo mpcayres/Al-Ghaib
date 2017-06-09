@@ -100,14 +100,14 @@ Mission *MissionManager::GetMission(){
 }
 
 //em caso de vitoria, especificado em cada missao
-void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::string> oldInventory){
+void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::unique_ptr<std::string>> oldInventory){
 	bool firstPlay = true;
 	numMission = num;
 	if(player != nullptr){
 		firstPlay = false;
 		SaveMission();
 	}
-	player = new Player(0, 0, oldInHand, oldInventory);
+	player = new Player(0, 0, oldInHand, std::move(oldInventory));
 	SetMission();
 	SetState(mission->GetInitialState());
 	if(firstPlay){
@@ -123,37 +123,47 @@ void MissionManager::DeleteStates(){
 	std::cout << "Player NULL" << std::endl;
 }
 
-void MissionManager::LoadMission(){
-	save.open("saves/save.txt", std::fstream::in);
-	if(save.is_open()){
+void MissionManager::LoadMission(int num){
+	std::fstream load;
+	std::string name = "saves/save";
+	if(num != 0) name.append(std::to_string(num));
+	name.append(".txt");
+	load.open(name, std::fstream::in);
+	if(load.is_open()){
 		int numLoadMission, oldInHand;
-		save >> numLoadMission;
-		save >> oldInHand;
-		std::vector<std::string> inventory;
-		while(!save.eof()){
+		load >> numLoadMission;
+		load >> oldInHand;
+		std::vector<std::unique_ptr<std::string>> inventory;
+		while(!load.eof()){
 			std::string obj;
-			save >> obj;
+			load >> obj;
 			if(!obj.empty()){
 				inventory.emplace_back(obj);
 			}
 		}
-		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, inventory);
-		save.close();
+		Game::GetInstance().GetMissionManager().ChangeMission(numLoadMission, oldInHand, std::move(inventory));
+		load.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
 
 //Salva a missao ao comeca-la, guardando seu estado inicial
 void MissionManager::SaveMission(){
+	std::fstream save, saveMission;
 	save.open("saves/save.txt", std::fstream::out);
-	if(save.is_open()){
+	saveMission.open("saves/save" + std::to_string(numMission) + ".txt", std::fstream::out);
+	if(save.is_open() && saveMission.is_open()){
 		save << numMission << std::endl;
+		saveMission << numMission << std::endl;
 		save << player->GetInHandIndex() << std::endl;
+		saveMission << player->GetInHandIndex() << std::endl;
 		std::vector<InventoryObject*> inventory = player->GetInventory();
 		for(unsigned int i = 0; i < inventory.size(); i++){
 			save << inventory[i]->GetObject() << std::endl;
+			saveMission << inventory[i]->GetObject() << std::endl;
 		}
 		inventory.clear();
 		save.close();
+		saveMission.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
 

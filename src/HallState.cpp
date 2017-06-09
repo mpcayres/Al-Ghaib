@@ -121,7 +121,7 @@ void HallState::SetInitialObjectArray(){
 	Walls *Wall3 = new Walls(1175, 282, 130, 125);
 	SceneDoor* Door = new SceneDoor(500, 100, "img/doorclosed.png", "img/dooropened.png", "StageState");
 
-	MovingObject* Table = new MovingObject(500, 200, "img/box.png");
+	MovingObject* Table = new MovingObject(1000, 400, "img/box.png");
 	Table->SetMovementLimits(limits);
 
 	objectArray.emplace_back(EB);
