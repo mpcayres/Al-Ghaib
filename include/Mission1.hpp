@@ -40,7 +40,6 @@ public:
 protected:
 	void SetObjectStage();
 	void SetObjectHall();
-	bool EnterPressed();
 
 	Text tx;
 	Text falas;

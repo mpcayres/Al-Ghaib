@@ -52,22 +52,9 @@ void MovingObject::NotifyCollision(GameObject& other){
 		}
 	}
 
-	if(other.Is("SceneObject") || other.Is("SceneWindow") ||
-			other.Is("SceneDoor") || other.Is("MovingObject") ||
-			other.Is("StealthObject")/* || other.Is("Walls")*/){
+	if(other.Is("CollidableObject")){
 		box.x = previousPos.x;
 		box.y = previousPos.y;
-	}
-
-	if(other.Is("Walls")){
-		if(box.x < other.box.x + other.box.w ||
-				box.x + box.w > other.box.x){
-					box.x = previousPos.x;
-		}
-		if(box.y < other.box.y + other.box.h ||
-				box.y + box.h > other.box.y){
-				box.y = previousPos.y;
-		}
 	}
 
 	if (other.Is("Enemy")){
@@ -89,6 +76,6 @@ void MovingObject::SetMovementLimits(Rect limits){
 }
 
 bool MovingObject::Is(std::string type){
-	return (type == "MovingObject");
+	return (type == "MovingObject" || type == "CollidableObject");
 }
 

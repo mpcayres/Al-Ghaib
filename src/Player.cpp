@@ -11,7 +11,7 @@
 #define DESACELERA			1
 
 
-Player::Player(float x, float y) :
+Player::Player(float x, float y, std::vector<std::string> oldInventory) :
 		spKinder("img/kinder.png", 20, 0.06, 4),
 		spKinderRun("img/kinder-run.png", 15, 0.1, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
@@ -37,7 +37,6 @@ Player::Player(float x, float y) :
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
-	//player = this;
 	running = false;
 
 	inHandIndex = -1; //dependendo do save pode ser diferente
@@ -53,12 +52,10 @@ Player::Player(float x, float y) :
 	door = false;
 }
 
-Player::~Player(){
-	//player = nullptr;
-}
+Player::~Player(){ }
 
 
-/* Update - Movimenta��o */
+/* Update - Movimentacao */
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
@@ -207,7 +204,6 @@ void Player::Update(float dt){
 
 }
 
-
 void Player::SetMovementLimits(Rect limits){
 	this->limits.x = limits.x;
 	this->limits.y = limits.y;
@@ -259,7 +255,7 @@ void Player::RenderInventory(){
 
 	posXCaixa = Game::GetInstance().GetWidth()/2 - (spInventory.GetScaledWidth()/2);
 	posYCaixa = Game::GetInstance().GetHeight()/2 - (spInventory.GetScaledHeight()/2);
-	spInventory.Render(posXCaixa,posYCaixa, 0);
+	spInventory.Render(posXCaixa, posYCaixa, 0);
 
 	posX = posXCaixa + bordaX;
 	posY = posYCaixa + bordaY + 40;
@@ -270,14 +266,14 @@ void Player::RenderInventory(){
 		else spInventorybox.Render(posX, posY, 0);
 
 
-		if(inventory[i]->GetWidth()> widthMinorSquare){
+		if(inventory[i]->GetWidth() > widthMinorSquare){
 			scaleX = float(widthMinorSquare)/float(inventory[i]->GetWidth());
 			inventory[i]->SetScaleX(scaleX);
 			posXCenter = posX;
 		}else{
 			posXCenter = posX + (widthMinorSquare - inventory[i]->GetWidth())/2;
 		}
-		if(inventory[i]->GetHeight()> heightMinorSquare){
+		if(inventory[i]->GetHeight() > heightMinorSquare){
 			scaleY = float(heightMinorSquare)/float(inventory[i]->GetHeight());
 			inventory[i]->SetScaleY(scaleY);
 			posYCenter = posY;
@@ -374,7 +370,7 @@ void Player::ChangeHiddenState(){
 }
 
 
-/* FUN��ES GERAIS */
+/* FUNCOES GERAIS */
 
 void Player::NotifyCollision(GameObject& other){
 	/*if(other.Is("Enemy")){
@@ -409,4 +405,3 @@ bool Player::GetDoor(){
 void Player::SetDoor(bool value){
 	door = value;
 }
-

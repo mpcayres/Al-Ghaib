@@ -16,7 +16,7 @@ void SceneDoor::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == true){
 				MissionManager::player->SetDoor(true);
-				printf("entrei");
+				//printf("entrei\n");
 
 		}
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
@@ -53,7 +53,7 @@ void SceneDoor::NotifyCollision(GameObject& other){
 }
 
 bool SceneDoor::Is(std::string type){
-	return (type == "SceneDoor");
+	return (type == "SceneDoor" || type == "CollidableObject");
 }
 
 bool SceneDoor::ReceiveAction(InventoryObject* other){

@@ -3,6 +3,7 @@
 #include "StageState.hpp"
 #include "HallState.hpp"
 #include "Mission1.hpp"
+#include "Mission2.hpp"
 
 #include <iostream>
 
@@ -65,11 +66,15 @@ void MissionManager::SetMission(){
 	switch(numMission){
 		case 1:
 			mission = new Mission1();
-			Game::GetInstance().storedMission = mission;
+			break;
+		case 2:
+			mission = new Mission2();
 			break;
 		default:
 			break;
 	}
+
+	Game::GetInstance().storedMission = mission;
 
 	//SWAP efetivamente libera a memoria ao inves de clear, pq nao necessariamente estarao vazios
 	//objectStage.clear(); objectHall.clear();

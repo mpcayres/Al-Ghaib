@@ -11,10 +11,11 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
 class Player : public GameObject{
 public:
-	Player(float x, float y);
+	Player(float x, float y, std::vector<std::string> oldInventory = std::vector<std::string>());
 	~Player();
 
 	void Update(float dt);
@@ -58,7 +59,7 @@ private:
 
 	int inHandIndex, inventoryIndex;
 	bool showingInventory;
-	std::vector<InventoryObject*> inventory;
+	std::vector<InventoryObject*> inventory; //ver se coloca unique_ptr
 
 	InvBox direcao;
 	InputManager InputInstance;

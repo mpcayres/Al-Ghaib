@@ -20,7 +20,7 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 1", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 
-	falas =  Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
+	falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE E´ FRIA E PERIGOSA", auxcolor, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 	ultimoTempo = 3;
 	/*intro = Music("audio/menu-intro.wav");
@@ -59,14 +59,16 @@ void  Mission1::Update(float dt){
 	}
 	//quitRequested = instance.QuitRequested();
 
-	//printf("teste \n");
-
+	if(instance.KeyPress(ENTER_KEY)){
+		std::cout << "ENTER PRESSED" << std::endl;
+		if(time.Get() < 3 ){
+			time.Set(3);
+		}
+	}
 
 	time.Update(dt);
-	//cooldown.Update(dt);
-
-
 	cooldown.Update(dt);
+
 	if(flagTimer == true && time.Get() > 3){
 		tx.SetText(" ");
 		//time.Restart();
@@ -81,21 +83,20 @@ void  Mission1::Update(float dt){
 	}
 
 	if( time.Get() > 7 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-			falas.SetText(" ");
-			ultimoTempo = 7;
+		falas.SetText(" ");
+		ultimoTempo = 7;
 	}
 	if(MissionManager::player->GetDoor() && trancada == false){
-		falas.SetText("ESTÁ TRANCADA");
+		falas.SetText("ESTA´ TRANCADA");
 		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		trancada = true;
 		MissionManager::player->SetDoor(false);
 		cooldown.Restart();
 		time.Restart();
-		while(time.Get()< ultimoTempo){
+		while(time.Get() < ultimoTempo){
 			time.Update(dt);
 		}
 	}
-
 
 	if(cooldown.Get() > 2 && trancada == true){
 		//cooldown.Restart();
@@ -103,33 +104,22 @@ void  Mission1::Update(float dt){
 		trancada = false;
 		cooldown.Restart();
 		time.Restart();
-		while(time.Get()< ultimoTempo){
+		//time.Set(ultimoTempo); -> perguntar Grid
+		while(time.Get() < ultimoTempo){
 			time.Update(dt);
 		}
 	}
 
-
-}
-
-
-bool Mission1::EnterPressed(){
-	if(InputManager::GetInstance().KeyPress(ENTER_KEY) ){
-		printf("enter");
-		return true;
-	}
-	return false;
 }
 
 void  Mission1::Render(){
 	//printf("teste2 \n");
 	if(time.Get() < 3 ){
-			blackSquare.Render(0, 0, 0);
+		blackSquare.Render(0, 0, 0);
+		tx.Render(0,0);
 	}
 
-	tx.Render(0,0);
-
-
-	if (time.Get()>4){
+	if(time.Get() > 4){
 		falas.Render(0,0);
 	}
 

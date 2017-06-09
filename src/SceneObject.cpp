@@ -43,7 +43,7 @@ void SceneObject::NotifyCollision(GameObject& other){
 		}
 	}
 
-	if (other.Is("MovingObject") || other.Is("Enemy")){
+	if (other.Is("Enemy")){
 		if(other.box.y + other.box.h - OFFSET_PISO < box.y + box.h)
 							/*&& (MissionManager::player->GetDirecao() == Player::LESTE ||
 								MissionManager::player->GetDirecao() == Player::OESTE))*/{
@@ -65,5 +65,5 @@ void SceneObject::NotifyCollision(GameObject& other){
 }
 
 bool SceneObject::Is(std::string type){
-	return (type == "SceneObject");
+	return (type == "SceneObject" || type == "CollidableObject");
 }

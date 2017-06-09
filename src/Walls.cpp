@@ -40,7 +40,6 @@ void Walls::NotifyCollision(GameObject& other){
 		}
 	}
 
-
 	if (other.Is("Enemy")){
 		if(other.box.x < box.x + box.w ||
 				other.box.x + other.box.w > box.x){
@@ -51,30 +50,10 @@ void Walls::NotifyCollision(GameObject& other){
 		}
 	}
 
-	if (other.Is("MovingObject")){
-		if(other.box.y + other.box.h < box.y + box.h)
-							/*&& (MissionManager::player->GetDirecao() == Player::LESTE ||
-								MissionManager::player->GetDirecao() == Player::OESTE))*/{
-
-				if((other.box.x < box.x + box.w &&
-						other.box.x + other.box.w > box.x + box.w )
-						|| (box.InsideX(other.box) &&
-						other.box.CenterX() >= box.CenterX())){
-									other.box.x = box.x + box.w + 1;
-				} else if((other.box.x + other.box.w > box.x &&
-						other.box.x < box.x)
-						|| (box.InsideX(MissionManager::player->box) &&
-						other.box.CenterX() < box.CenterX())){
-								other.box.x = box.x - other.box.w - 1;
-				}
-
-		}
-
-	}
 }
 
 bool Walls::Is(std::string type){
-	return (type == "Wall");
+	return (type == "Wall" || type == "CollidableObject");
 }
 
 bool Walls::IsDead(){

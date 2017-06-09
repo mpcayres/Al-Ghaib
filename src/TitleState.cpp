@@ -53,7 +53,7 @@ void TitleState::Update(float dt){
 				break;
 			case MENU_CONTINUE:
 				Pause();
-				Game::GetInstance().GetMissionManager().ChangeMission(1);
+				Game::GetInstance().GetMissionManager().ChangeMission(2);
 				//em uma missao salva
 				break;
 			case MENU_OPTIONS:

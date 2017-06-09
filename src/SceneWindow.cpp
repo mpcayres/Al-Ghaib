@@ -47,5 +47,5 @@ void SceneWindow::NotifyCollision(GameObject& other){
 }
 
 bool SceneWindow::Is(std::string type){
-	return (type == "SceneWindow");
+	return (type == "SceneWindow" || type == "CollidableObject");
 }

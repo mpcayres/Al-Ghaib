@@ -76,21 +76,21 @@ void Enemy::Shoot(){
 }
 
 void Enemy::NotifyCollision(GameObject& other){
-	if(other.Is("SceneObject")){
+	if(other.Is("CollidableObject")){
 
-			if(seen && MissionManager::player != nullptr){
-				//if(MissionManager::player != nullptr){
-				Vec2 aux;
-				destination.x = MissionManager::player->box.x;
-				destination.y = MissionManager::player->box.y;
-				//seen = true;
+		if(seen && MissionManager::player != nullptr){
+			//if(MissionManager::player != nullptr){
+			Vec2 aux;
+			destination.x = MissionManager::player->box.x;
+			destination.y = MissionManager::player->box.y;
+			//seen = true;
 
-				aux.x = box.x; aux.y = box.y;
-				speed = (destination.Sub(aux)).Normalize();
-				speed.x = speed.x*SPEED_CONTROL;
-				speed.y = speed.y*SPEED_CONTROL;
-					//}
-			}
+			aux.x = box.x; aux.y = box.y;
+			speed = (destination.Sub(aux)).Normalize();
+			speed.x = speed.x*SPEED_CONTROL;
+			speed.y = speed.y*SPEED_CONTROL;
+				//}
+		}
 	}
 	if(other.Is("Player")){
 		seen = false;

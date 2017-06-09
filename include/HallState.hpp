@@ -3,6 +3,7 @@
 
 #include "State.hpp"
 #include "Sprite.hpp"
+#include "Geometry.hpp"
 
 class HallState : public State {
 public:
@@ -22,6 +23,7 @@ public:
 private:
 	Sprite background;
 	Sprite bg;
+	Rect limits;
 };
 
 #endif /* SRC_HALLSTATE_HPP_ */

@@ -7,6 +7,7 @@ public:
 	void Update(float dt);
 	void Restart();
 	float Get();
+	void Set(float t);
 
 private:
 	float time;
