@@ -29,12 +29,21 @@ void MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().IsKeyDown(Z_KEY)){
 			previousPos = Vec2(box.x, box.y);
+			bool bloqMov = false;
+			Rect boxAux = box;
+			boxAux.x += MissionManager::player->GetSpeed().x; boxAux.y += MissionManager::player->GetSpeed().y;
+			for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
+				bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
+				if(bloqMov == true) break;
+			}
 
-			if(box.x + MissionManager::player->GetSpeed().x < limits.w - box.w && box.x + MissionManager::player->GetSpeed().x > limits.x){
+			if(boxAux.x < MissionManager::player->limits.w - box.w &&
+					boxAux.x > MissionManager::player->limits.x && !bloqMov){
 				box.x += MissionManager::player->GetSpeed().x;
 				if((MissionManager::player->box).Intersect(box)) box.x -= MissionManager::player->GetSpeed().x;
 			}
-			if(box.y + MissionManager::player->GetSpeed().y < limits.h - box.h && box.y + MissionManager::player->GetSpeed().y > limits.y){
+			if(boxAux.y < MissionManager::player->limits.h - box.h &&
+					boxAux.y > MissionManager::player->limits.y && !bloqMov){
 				box.y += MissionManager::player->GetSpeed().y;
 				if((MissionManager::player->box).Intersect(box)) box.y -= MissionManager::player->GetSpeed().y;
 			}
@@ -74,13 +83,6 @@ void MovingObject::NotifyCollision(GameObject& other){
 			other.box.x = box.x - other.box.w - 1;
 		}
 	}
-}
-
-void MovingObject::SetMovementLimits(Rect limits){
-	this->limits.x = limits.x;
-	this->limits.y = limits.y;
-	this->limits.w = limits.w;
-	this->limits.h = limits.h;
 }
 
 bool MovingObject::Is(std::string type){

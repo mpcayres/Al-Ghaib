@@ -162,9 +162,7 @@ void StageState::SetInitialObjectArray(){
 	//Enemy* E = new Enemy(1100, 500);
 	SceneDoor* Door = new SceneDoor(800, 200, "img/doorclosed.png", "img/dooropened.png", "HallState");
 	SceneWindow* Window = new SceneWindow(500, 200, "img/closedwindow.png", "img/openwindow.png");
-
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
-	Table->SetMovementLimits(limits);
 
 	objectArray.emplace_back(EB);
 	//objectArray.emplace_back(Wall);

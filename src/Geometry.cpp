@@ -141,10 +141,20 @@ bool Rect::InsideY(Rect v2){
 }
 
 bool Rect::Intersect(Rect v2){
-	if((v2.x+ v2.w >= x && v2.x+ v2.w <= x+w)||
+	if((v2.x + v2.w >= x && v2.x + v2.w <= x+w)||
 			(v2.x >= x && v2.x <= x+w)){
-		if(v2.y + v2.h >= y && v2.y+ v2.h <= y+h) return true;
+		if(v2.y + v2.h >= y && v2.y + v2.h <= y+h) return true;
 		if(v2.y >= y && v2.y <= y+h) return true;
+	}
+	return false;
+}
+
+bool Rect::Collide(Rect v2){
+	if(((x + w > v2.x && x < v2.x) ||
+			(x < v2.x + v2.w && x + w > v2.x)) &&
+				((y + h > v2.y && y < v2.y) ||
+						(y < v2.y + v2.h && y + h > v2.y))){
+		return true;
 	}
 	return false;
 }

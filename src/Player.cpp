@@ -153,12 +153,19 @@ void Player::Update(float dt){
 		}
 
 		//printf("%f\n", ruido);
+		bool bloqMov = false;
+		Rect boxAux = box;
+		boxAux.x += speed.x; boxAux.y += speed.y;
+		for(unsigned int i = 0; i < wallLimits.size(); i++){
+			bloqMov = boxAux.Collide(wallLimits[i]);
+			if(bloqMov == true) break;
+		}
 
-		if(box.x + speed.x < limits.w - box.w && box.x + speed.x > limits.x){
+		if(boxAux.x < limits.w - box.w && boxAux.x > limits.x && !bloqMov){
 			previousPos.x = box.x;
 			box.x += speed.x;
 		}
-		if(box.y + speed.y < limits.h - box.h && box.y + speed.y > limits.y){
+		if(boxAux.y < limits.h - box.h && boxAux.y > limits.y && !bloqMov){
 			previousPos.y = box.y;
 			box.y += speed.y;
 		}
@@ -215,10 +222,15 @@ void Player::Update(float dt){
 }
 
 void Player::SetMovementLimits(Rect limits){
-	this->limits.x = limits.x;
-	this->limits.y = limits.y;
-	this->limits.w = limits.w;
-	this->limits.h = limits.h;
+	this->limits = limits;
+}
+
+void Player::AddWallLimits(Rect limits){
+	wallLimits.emplace_back(limits);
+}
+
+void Player::ResetWallLimits(){
+	wallLimits.clear();
 }
 
 int Player::GetDirecao(){
@@ -242,7 +254,6 @@ void Player::Running(InputManager InputInstance){
 		running = false;
 	}
 }
-
 
 float Player::GetRuido(){
 	return ruido;

@@ -13,6 +13,9 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	limits = Rect(-1500,-15000,13500,53000);//tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
 	else SetPlayer(450, 400, CAMERA_TYPE2, limits);
+	MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
+	MissionManager::player->AddWallLimits(Rect(725, 282, 130, 125));
+	MissionManager::player->AddWallLimits(Rect(1175, 282, 130, 125));
 	if(inicial){
 		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -118,18 +121,16 @@ void HallState::Render(){
 void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 
-	Walls *Wall1 = new Walls(270, 282, 130, 125);
-	Walls *Wall2 = new Walls(725, 282, 130, 125);
-	Walls *Wall3 = new Walls(1175, 282, 130, 125);
+	//Walls *Wall1 = new Walls(270, 282, 130, 125);
+	//Walls *Wall2 = new Walls(725, 282, 130, 125);
+	//Walls *Wall3 = new Walls(1175, 282, 130, 125);
 	SceneDoor* Door = new SceneDoor(500, 100, "img/doorclosed.png", "img/dooropened.png", "StageState");
-
 	MovingObject* Table = new MovingObject(1000, 400, "img/box.png");
-	Table->SetMovementLimits(limits);
 
 	objectArray.emplace_back(EB);
-	objectArray.emplace_back(Wall1);
-	objectArray.emplace_back(Wall2);
-	objectArray.emplace_back(Wall3);
+	//objectArray.emplace_back(Wall1);
+	//objectArray.emplace_back(Wall2);
+	//objectArray.emplace_back(Wall3);
 	objectArray.emplace_back(Door);
 	objectArray.emplace_back(Table);
 }

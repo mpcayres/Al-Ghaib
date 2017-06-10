@@ -38,17 +38,20 @@ public:
 	std::vector<InventoryObject*> GetInventory();
 	void DeleteInventory();
 	void SetMovementLimits(Rect limits);
+	void AddWallLimits(Rect limits);
+	void ResetWallLimits();
 	void ChangeHiddenState();
 
 	int GetDirecao();
 	Vec2 GetSpeed();
-
+	bool GetDoor();
+	void SetDoor(bool value);
 
 	Vec2 previousPos;
 	enum InvBox{SUL, NORTE, LESTE, OESTE};
 
-	bool GetDoor();
-	void SetDoor(bool value);
+	Rect limits;
+	std::vector<Rect> wallLimits;
 
 private:
 	Timer timeRuido, timeCooldown;
@@ -72,8 +75,6 @@ private:
 
 	float ruido;
 	bool hidden;
-
-	Rect limits;
 };
 
 #endif /* INCLUDE_Player_HPP_ */

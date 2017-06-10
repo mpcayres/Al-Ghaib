@@ -41,6 +41,7 @@ void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, 
 
 void MissionManager::SetState(std::string dest){
 	//inicial serve para indicar se e a 1a vez que o State esta sendo construido
+	player->ResetWallLimits();
 	if(dest == "StageState"){
 		std::cout << "SS.1" << std::endl;
 		std::cout << "SIZE: " << objectStage.size() << std::endl;

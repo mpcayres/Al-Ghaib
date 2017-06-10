@@ -49,11 +49,23 @@ void Enemy::Update(float dt){
 		seen = true;
 	}
 
-	if(box.y + speed.y < 1280 - box.h && box.y + speed.y > 0){
-		box.y += speed.y;
+	bool bloqMov = false;
+	Rect boxAux = box;
+	boxAux.x += speed.x; boxAux.y += speed.y;
+	for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
+		bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
+		if(bloqMov == true) break;
 	}
-	if(box.x + speed.x < 1408 - box.w && box.x + speed.x > 0){
+
+	if(boxAux.x < MissionManager::player->limits.w - box.w &&
+			boxAux.x > MissionManager::player->limits.x && !bloqMov){
+		previousPos.x = box.x;
 		box.x += speed.x;
+	}
+	if(boxAux.y < MissionManager::player->limits.h - box.h &&
+			boxAux.y > MissionManager::player->limits.y && !bloqMov){
+		previousPos.y = box.y;
+		box.y += speed.y;
 	}
 
 	if(seen == true) Pursuit();
