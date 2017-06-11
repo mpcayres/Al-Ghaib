@@ -7,16 +7,20 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 8
+#define MODULO_SPEED 5
 #define AUMENTO_VALUE 2
 
 Enemy* Enemy::enemy;
 bool Enemy::show = false;
+bool Enemy::arrived = false;
 
 Enemy::Enemy(float x, float y): sp("img/m2.png"){
 
-	sp.SetScaleX(0.3);
-	sp.SetScaleY(0.3);
+	sp.SetScaleX(0.2);
+	sp.SetScaleY(0.2);
+
+	//destinationPath.x = x;
+	//destinationPath.y = y;
 
 	show = false;
 
@@ -73,6 +77,10 @@ void Enemy::Update(float dt){
 		}
 
 		if(seen == true) Pursuit();
+		if(seen == false) {
+			//printf("amigo estou aqui!");
+			DefinedPath();
+		}
 	}
 }
 
@@ -115,7 +123,82 @@ void Enemy::NotifyCollision(GameObject& other){
 	}
 
 }
+void Enemy::SetDestinationPath(Vec2 path){
+	destinationPath.emplace_back(path);
+}
 
+void Enemy::DefinedPath(){
+	Vec2 aux;
+	aux.x = box.x; aux.y = box.y;
+	printf("\n\n %d", aux.Distance(destinationPath.front())<=10);
+		if(/*this->box.x == destinationPath.front().x && this->box.y == destinationPath.front().y */ aux.Distance(destinationPath.front())<=10 ){
+			arrived = true;
+			destinationPath.pop_back();
+		}
+		else
+			arrived = false;
+		if(MissionManager::player != nullptr){
+			/*destination.x = MissionManager::player->box.x;
+			destination.y = MissionManager::player->box.y;*/
+			//seen = true;
+
+			//aux.x = box.x; aux.y = box.y;
+			speed = (destinationPath.front().Sub(aux)).Normalize();
+			speed.x = speed.x*SPEED_CONTROL;
+			speed.y = speed.y*SPEED_CONTROL;
+		}
+
+		if (speed.x < 0 && speed.y < 0){
+			if(box.x + speed.x -  VALUE <= destinationPath.front().x  &&
+				speed.y + box.y -  VALUE <= destinationPath.front().y){
+				box.x = destinationPath.front().x - box.w/2;
+				box.y = destinationPath.front().y - box.h/2;
+
+				//seen = false;
+
+			} else{
+				box.x += speed.x;
+				box.y += speed.y;
+			}
+		} else if (speed.x > 0 && speed.y < 0){
+			if(box.x +speed.x +  VALUE >= destinationPath.front().x &&
+					speed.y + box.y -  VALUE <= destinationPath.front().y){
+				box.x = destinationPath.front().x;
+				box.y = destinationPath.front().y;
+
+				//seen = false;
+
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
+		} else if (speed.x < 0 && speed.y > 0){
+			if(box.x +speed.x -  VALUE <= destinationPath.front().x &&
+					speed.y + box.y +  VALUE >= destinationPath.front().y){
+				box.x = destinationPath.front().x;
+				box.y = destinationPath.front().y;
+
+				//seen = false;
+
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
+		} else if (speed.x > 0 && speed.y > 0){
+			if(box.x +speed.x + VALUE >= destinationPath.front().x &&
+					speed.y + box.y + VALUE >= destinationPath.front().y){
+				box.x = destinationPath.front().x;
+				box.y = destinationPath.front().y;
+
+				//seen = false;
+			} else{
+				box.x += speed.x;
+				box.y += speed.y;
+			}
+		}
+
+
+}
 void Enemy::Pursuit(){
 	Vec2 aux;
 

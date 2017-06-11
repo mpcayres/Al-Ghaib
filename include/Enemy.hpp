@@ -22,11 +22,15 @@ public:
 	void Shoot();
 	bool Is(std::string type);
 	void Pursuit();
+	void DefinedPath();
+	void SetDestinationPath(Vec2 path);
 
 	static Enemy * enemy;
 
 	Vec2 previousPos;
+
 	static bool show;
+	static bool arrived;
 private:
 	Timer time;
 	Sprite sp;
@@ -34,6 +38,8 @@ private:
 	int hp;
 	bool seen;
 	Vec2 destination;
+	//Vec2 destinationPath;
+	std::vector<Vec2> destinationPath;
 };
 
 #endif /* INCLUDE_Enemy_HPP_ */

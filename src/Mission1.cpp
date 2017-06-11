@@ -63,7 +63,7 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);
-	Enemy* E = new Enemy(500, 70);
+	Enemy* E = new Enemy(500, 80);
 	objectHall.emplace_back(E);
 }
 
@@ -128,6 +128,10 @@ void  Mission1::Update(float dt){
 		}
 		if(time.Get()>6 && trancada == false){
 			Enemy::show = true;
+			//if(Enemy::turn == 1)
+				Enemy::enemy->SetDestinationPath(Vec2(500, 110));
+				Enemy::enemy->SetDestinationPath(Vec2(900, 140));
+				Enemy::enemy->SetDestinationPath(Vec2(900, 110));
 		}
 
 		MessageDoor(dt);
