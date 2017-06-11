@@ -11,11 +11,14 @@
 #define AUMENTO_VALUE 2
 
 Enemy* Enemy::enemy;
+bool Enemy::show = false;
 
 Enemy::Enemy(float x, float y): sp("img/m2.png"){
 
 	sp.SetScaleX(0.3);
 	sp.SetScaleY(0.3);
+
+	show = false;
 
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
@@ -39,40 +42,43 @@ void Enemy::Update(float dt){
 	Vec2 aux, aux2;
 
 	float dist = 0;
-	dist = box.DistanceRect(MissionManager::player->box);
-	if(dist < 300){
-		seen = true;
-	}
-	float noise = ((100/dist))*MissionManager::player->GetRuido();
-	//printf("N: %f\n", noise);
-	if(noise >= 15){
-		seen = true;
-	}
+	if(show){
+		dist = box.DistanceRect(MissionManager::player->box);
+		if(dist < 300){
+			seen = true;
+		}
+		float noise = ((100/dist))*MissionManager::player->GetRuido();
+		//printf("N: %f\n", noise);
+		if(noise >= 15){
+			seen = true;
+		}
 
-	bool bloqMov = false;
-	Rect boxAux = box;
-	boxAux.x += speed.x; boxAux.y += speed.y;
-	for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
-		bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
-		if(bloqMov == true) break;
-	}
+		bool bloqMov = false;
+		Rect boxAux = box;
+		boxAux.x += speed.x; boxAux.y += speed.y;
+		for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
+			bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
+			if(bloqMov == true) break;
+		}
 
-	if(boxAux.x < MissionManager::player->limits.w - box.w &&
-			boxAux.x > MissionManager::player->limits.x && !bloqMov){
-		previousPos.x = box.x;
-		box.x += speed.x;
-	}
-	if(boxAux.y < MissionManager::player->limits.h - box.h &&
-			boxAux.y > MissionManager::player->limits.y && !bloqMov){
-		previousPos.y = box.y;
-		box.y += speed.y;
-	}
+		if(boxAux.x < MissionManager::player->limits.w - box.w &&
+				boxAux.x > MissionManager::player->limits.x && !bloqMov){
+			previousPos.x = box.x;
+			box.x += speed.x;
+		}
+		if(boxAux.y < MissionManager::player->limits.h - box.h &&
+				boxAux.y > MissionManager::player->limits.y && !bloqMov){
+			previousPos.y = box.y;
+			box.y += speed.y;
+		}
 
-	if(seen == true) Pursuit();
+		if(seen == true) Pursuit();
+	}
 }
 
 void Enemy::Render(){
-	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(show)
+		sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool Enemy::IsDead(){

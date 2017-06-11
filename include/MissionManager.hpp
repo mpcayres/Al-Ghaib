@@ -33,6 +33,11 @@ public:
 	static Player* player;
 	static MissionManager* missionManager;
 
+	static int CountStageState;
+	static int CountHallState;
+
+	static int changeState;
+
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
 	Mission *mission;

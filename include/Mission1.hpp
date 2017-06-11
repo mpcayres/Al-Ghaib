@@ -25,6 +25,7 @@
 #include "Timer.hpp"
 #include "Sprite.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 
 class Mission1 : public Mission {
 public:
@@ -38,6 +39,7 @@ public:
 	void Render();
 	void MessageDoor(float dt);
 	bool tried;
+
 protected:
 	void SetObjectStage();
 	void SetObjectHall();
@@ -51,6 +53,10 @@ protected:
 	bool flagTimer;
 	bool trancada;
 	bool begin;
+	int state;
+
+	//int StageState;
+	//int HallState;
 };
 
 #endif /* SRC_MISSION1_HPP_ */

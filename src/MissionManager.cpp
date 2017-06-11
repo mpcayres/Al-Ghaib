@@ -10,6 +10,9 @@
 
 Player* MissionManager::player = nullptr;
 MissionManager* MissionManager::missionManager = nullptr;
+int MissionManager::CountStageState = 0;
+int MissionManager::CountHallState = 0;
+int MissionManager::changeState = 0;
 
 //Colocar nos objetos todas as condicoes deles, inclusive se estao abertos ou fechados
 
@@ -19,6 +22,9 @@ MissionManager::MissionManager() {
 	initStage = initHall = true;
 	missionManager = this;
 	xStage = yStage = xHall = yHall = -1;
+	 /*CountStageState = 0;
+	CountHallState = 0;
+	changeState = false;*/
 }
 
 MissionManager::~MissionManager() {
@@ -48,6 +54,8 @@ void MissionManager::SetState(std::string dest){
 		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xStage, yStage));
 		initStage = false;
 		stage = "StageState";
+		CountStageState++;
+		changeState++;
 		//std::cout << "ESSE AQUI OH: " << stage << std::endl;
 		std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
@@ -58,6 +66,8 @@ void MissionManager::SetState(std::string dest){
 		stage = "HallState";
 		//std::cout << "ESSE AQUI OH 2: " << stage << std::endl;
 		std::cout << "HS.2" << std::endl;
+		CountHallState++;
+		changeState++;
 	}
 }
 

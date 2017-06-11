@@ -26,7 +26,7 @@ public:
 	static Enemy * enemy;
 
 	Vec2 previousPos;
-
+	static bool show;
 private:
 	Timer time;
 	Sprite sp;

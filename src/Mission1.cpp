@@ -11,6 +11,11 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialX = 600; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY, initialState);
 
+	MissionManager::CountHallState = 0;
+	MissionManager::CountStageState = 0;
+
+	//StageState = 0;
+	//HallState = 0;
 	trancada = false;
 	begin = true;
 
@@ -35,6 +40,7 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 
 	SetObjectStage();
 	SetObjectHall();
+	state = MissionManager::changeState;
 
 	//std::cout << "INIT_MIS1" << std::endl;
 }
@@ -57,6 +63,8 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);
+	Enemy* E = new Enemy(500, 70);
+	objectHall.emplace_back(E);
 }
 
 void  Mission1::Update(float dt){
@@ -80,7 +88,8 @@ void  Mission1::Update(float dt){
 		begin = false;
 	}
 
-	if(MissionManager::missionManager->GetStage("StageState")){
+	if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState <= 1){
+		//StageState++;
 		//std::cout << "StageState" << std::endl;
 		if(flagTimer == true && time.Get() > 3){
 			tx.SetText(" ");
@@ -101,11 +110,40 @@ void  Mission1::Update(float dt){
 		}
 
 		MessageDoor(dt);
-	} else if(MissionManager::missionManager->GetStage("HallState")){
+	} else if(MissionManager::missionManager->GetStage("HallState") && MissionManager::CountHallState <= 1){
+		//HallState++;
 		//std::cout << "HallState" << std::endl;
-		time.Restart();
-		//ultimoTempo = 0;
+		if(state != MissionManager::changeState){
+			state = MissionManager::changeState;
+			time.Restart();
+		}
+		if(trancada == false)
+			falas.SetText("CUIDADO");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			ultimoTempo = 0;
+		if(time.Get() > 3 && trancada == false){
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			ultimoTempo = 3;
+		}
+		if(time.Get()>6 && trancada == false){
+			Enemy::show = true;
+		}
 
+		MessageDoor(dt);
+	} else if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState > 1){
+		if(state != MissionManager::changeState){
+					state = MissionManager::changeState;
+					time.Restart();
+		}
+		if(trancada == false){
+			falas.SetText("CERTEZA QUE QUER PASSAR A NOITE SEM PROTEÇÃO?");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 3 && trancada == false){
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
 		MessageDoor(dt);
 	}
 
@@ -143,7 +181,10 @@ void  Mission1::Render(){
 		tx.Render(0,0);
 	}
 
-	if(time.Get() > 4){
+	if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState <= 1 && time.Get() > 4){
+		falas.Render(0,0);
+	}
+	else{
 		falas.Render(0,0);
 	}
 
