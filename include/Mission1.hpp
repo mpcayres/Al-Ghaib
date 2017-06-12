@@ -54,6 +54,7 @@ protected:
 	bool trancada;
 	bool begin;
 	int state;
+	int count;
 
 	//int StageState;
 	//int HallState;

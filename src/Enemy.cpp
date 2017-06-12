@@ -7,7 +7,7 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 5
+#define MODULO_SPEED 3
 #define AUMENTO_VALUE 2
 
 Enemy* Enemy::enemy;
@@ -48,7 +48,7 @@ void Enemy::Update(float dt){
 	float dist = 0;
 	if(show){
 		dist = box.DistanceRect(MissionManager::player->box);
-		if(dist < 300){
+		if(dist < 200){
 			seen = true;
 		}
 		float noise = ((100/dist))*MissionManager::player->GetRuido();
@@ -130,29 +130,33 @@ void Enemy::SetDestinationPath(Vec2 path){
 void Enemy::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
-	printf("\n\n %d", aux.Distance(destinationPath.front())<=10);
-		if(/*this->box.x == destinationPath.front().x && this->box.y == destinationPath.front().y */ aux.Distance(destinationPath.front())<=10 ){
+	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
+		if(/*this->box.x == destinationPath.back().x && this->box.y == destinationPath.back().y */ aux.Distance(destinationPath.back())<= 10 ){
+				//printf("POPANDO");
+
 			arrived = true;
 			destinationPath.pop_back();
 		}
 		else
 			arrived = false;
+		if(destinationPath.empty())
+			show = false;
 		if(MissionManager::player != nullptr){
 			/*destination.x = MissionManager::player->box.x;
 			destination.y = MissionManager::player->box.y;*/
 			//seen = true;
 
 			//aux.x = box.x; aux.y = box.y;
-			speed = (destinationPath.front().Sub(aux)).Normalize();
+			speed = (destinationPath.back().Sub(aux)).Normalize();
 			speed.x = speed.x*SPEED_CONTROL;
 			speed.y = speed.y*SPEED_CONTROL;
 		}
 
 		if (speed.x < 0 && speed.y < 0){
-			if(box.x + speed.x -  VALUE <= destinationPath.front().x  &&
-				speed.y + box.y -  VALUE <= destinationPath.front().y){
-				box.x = destinationPath.front().x - box.w/2;
-				box.y = destinationPath.front().y - box.h/2;
+			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
+				speed.y + box.y -  VALUE <= destinationPath.back().y){
+				box.x = destinationPath.back().x - box.w/2;
+				box.y = destinationPath.back().y - box.h/2;
 
 				//seen = false;
 
@@ -161,10 +165,10 @@ void Enemy::DefinedPath(){
 				box.y += speed.y;
 			}
 		} else if (speed.x > 0 && speed.y < 0){
-			if(box.x +speed.x +  VALUE >= destinationPath.front().x &&
-					speed.y + box.y -  VALUE <= destinationPath.front().y){
-				box.x = destinationPath.front().x;
-				box.y = destinationPath.front().y;
+			if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
+					speed.y + box.y -  VALUE <= destinationPath.back().y){
+				box.x = destinationPath.back().x;
+				box.y = destinationPath.back().y;
 
 				//seen = false;
 
@@ -173,10 +177,10 @@ void Enemy::DefinedPath(){
 					box.y += speed.y;
 				}
 		} else if (speed.x < 0 && speed.y > 0){
-			if(box.x +speed.x -  VALUE <= destinationPath.front().x &&
-					speed.y + box.y +  VALUE >= destinationPath.front().y){
-				box.x = destinationPath.front().x;
-				box.y = destinationPath.front().y;
+			if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
+					speed.y + box.y +  VALUE >= destinationPath.back().y){
+				box.x = destinationPath.back().x;
+				box.y = destinationPath.back().y;
 
 				//seen = false;
 
@@ -185,10 +189,10 @@ void Enemy::DefinedPath(){
 					box.y += speed.y;
 				}
 		} else if (speed.x > 0 && speed.y > 0){
-			if(box.x +speed.x + VALUE >= destinationPath.front().x &&
-					speed.y + box.y + VALUE >= destinationPath.front().y){
-				box.x = destinationPath.front().x;
-				box.y = destinationPath.front().y;
+			if(box.x +speed.x + VALUE >= destinationPath.back().x &&
+					speed.y + box.y + VALUE >= destinationPath.back().y){
+				box.x = destinationPath.back().x;
+				box.y = destinationPath.back().y;
 
 				//seen = false;
 			} else{
