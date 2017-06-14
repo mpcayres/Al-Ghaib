@@ -76,8 +76,8 @@ void  Mission1::Update(float dt){
 		popRequested = true;
 	}
 	//quitRequested = instance.QuitRequested();
-	if(instance.KeyPress(ENTER_KEY)){
-		std::cout << "ENTER PRESSED" << std::endl;
+	if(instance.KeyPress(SPACE_KEY)){
+		std::cout << "SPACE KEY PRESSED" << std::endl;
 		if(time.Get() < 3 ){
 			time.Set(3);
 			begin = false;
@@ -85,6 +85,7 @@ void  Mission1::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
+	std::cout << "time: " << time.Get() << std::endl;
 	if(time.Get() > 3 ){
 		begin = false;
 	}
@@ -120,11 +121,11 @@ void  Mission1::Update(float dt){
 			state = MissionManager::changeState;
 			time.Restart();
 		}
-		if(trancada == false)
+		if(trancada == false && cooldown.Get() > 2)
 			falas.SetText("CUIDADO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			ultimoTempo = 0;
-		if(time.Get() > 3 && trancada == false){
+		if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
 			falas.SetText(" ");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			ultimoTempo = 3;
@@ -143,11 +144,11 @@ void  Mission1::Update(float dt){
 				Enemy::enemy->SetDestinationPath(Vec2(500, 160)); //1º DESTINO
 			}
 			if(trancada == false)
-				if(time.Get() > 7 && trancada == false){
+				if(time.Get() > 7 && trancada == false && cooldown.Get() > 2){
 					falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = 7;
-				if(time.Get() > 8 && trancada == false){
+				if(time.Get() > 8 && trancada == false && cooldown.Get() > 2){
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = 8;
@@ -162,11 +163,11 @@ void  Mission1::Update(float dt){
 					state = MissionManager::changeState;
 					time.Restart();
 		}
-		if(trancada == false){
+		if(trancada == false && cooldown.Get() > 2){
 			falas.SetText("CERTEZA QUE QUER PASSAR A NOITE SEM PROTEÇÃO?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		}
-		if(time.Get() > 3 && trancada == false){
+		if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
 			falas.SetText(" ");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		}
@@ -203,7 +204,7 @@ void Mission1::MessageDoor(float dt){
 }
 void  Mission1::Render(){
 	//printf("teste2 \n");
-	if(/*time.Get() < 3*/ begin ){
+	if(time.Get() < 3 && begin ){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 	}
@@ -211,7 +212,8 @@ void  Mission1::Render(){
 	if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState <= 1 && time.Get() > 4){
 		falas.Render(0,0);
 	}
-	else{
+	if((MissionManager::missionManager->GetStage("StageState")&& MissionManager::CountStageState > 1)
+		||MissionManager::missionManager->GetStage("HallState")){
 		falas.Render(0,0);
 	}
 
