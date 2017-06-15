@@ -136,8 +136,7 @@ void StageState::Update(float dt){
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest(),
-						MissionManager::player->box.x, MissionManager::player->box.y);
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 500, 200, (int) Player::SUL);
 		//std::cout << "DOOR4" << std::endl;
 	}
 }

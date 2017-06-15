@@ -4,7 +4,7 @@
 Mission2::Mission2() {
 	initialState = "HallState";
 	initialX = 450; initialY = 400;
-	MissionManager::missionManager->SetPos(initialX, initialY, initialState);
+	MissionManager::missionManager->SetPos(initialX, initialY);
 }
 
 Mission2::~Mission2() {

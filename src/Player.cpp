@@ -245,6 +245,12 @@ void Player::SetPosition(int x, int y){
 	box.x = x; box.y = y;
 }
 
+void Player::SetDirecao(int dir){
+	direcao = (InvBox) dir;
+	spKinder.SetFrame(1, direcao);
+	spKinderRun.SetFrame(1, direcao);
+}
+
 void Player::Running(InputManager InputInstance){
 	if(InputInstance.IsKeyDown(LSHIFT_KEY)){
 		speed.x *= AUMENTO_VELOCIDADE;

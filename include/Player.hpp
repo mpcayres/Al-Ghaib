@@ -15,6 +15,8 @@
 
 class Player : public GameObject{
 public:
+	enum InvBox{SUL, NORTE, LESTE, OESTE};
+
 	Player(float x, float y, int oldInHand = -1, std::vector<std::string> oldInventory = std::vector<std::string>());
 	~Player();
 
@@ -23,6 +25,7 @@ public:
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
 	void SetPosition(int x, int y);
+	void SetDirecao(int dir);
 	void Running(InputManager InputInstance);
 	bool Is(std::string type);
 	float GetRuido();
@@ -48,8 +51,6 @@ public:
 	void SetDoor(bool value);
 
 	Vec2 previousPos;
-	enum InvBox{SUL, NORTE, LESTE, OESTE};
-
 	Rect limits;
 	std::vector<Rect> wallLimits;
 

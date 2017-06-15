@@ -10,9 +10,6 @@
 
 Player* MissionManager::player = nullptr;
 MissionManager* MissionManager::missionManager = nullptr;
-int MissionManager::CountStageState = 0;
-int MissionManager::CountHallState = 0;
-int MissionManager::changeState = 0;
 
 //Colocar nos objetos todas as condicoes deles, inclusive se estao abertos ou fechados
 
@@ -21,10 +18,11 @@ MissionManager::MissionManager() {
 	mission = nullptr;
 	initStage = initHall = true;
 	missionManager = this;
-	xStage = yStage = xHall = yHall = -1;
-	 /*CountStageState = 0;
-	CountHallState = 0;
-	changeState = false;*/
+	countStageState = 0;
+	countHallState = 0;
+	changeState = 0;
+	xDest = yDest = -1;
+	dirDest = -1;
 }
 
 MissionManager::~MissionManager() {
@@ -48,32 +46,34 @@ void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, 
 void MissionManager::SetState(std::string dest){
 	//inicial serve para indicar se e a 1a vez que o State esta sendo construido
 	player->ResetWallLimits();
+	if(dirDest != -1) player->SetDirecao(dirDest);
 	if(dest == "StageState"){
 		std::cout << "SS.1" << std::endl;
 		std::cout << "SIZE: " << objectStage.size() << std::endl;
-		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xStage, yStage));
+		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xDest, yDest));
 		initStage = false;
 		stage = "StageState";
-		CountStageState++;
+		countStageState++;
 		changeState++;
 		//std::cout << "ESSE AQUI OH: " << stage << std::endl;
 		std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
 		std::cout << "HS.1" << std::endl;
 		std::cout << "SIZE: " << objectStage.size() << std::endl;
-		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xHall, yHall));
+		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xDest, yDest));
 		initHall = false;
 		stage = "HallState";
 		//std::cout << "ESSE AQUI OH 2: " << stage << std::endl;
 		std::cout << "HS.2" << std::endl;
-		CountHallState++;
+		countHallState++;
 		changeState++;
 	}
 }
 
 //quando for chamar pelos estados para mudar de State, usar esse
-void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest, int x, int y){
-	SetPos(x, y, orig);
+void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest, int x, int y, int dir){
+	xDest = x; yDest = y; //setar o local do destino nas chamadas
+	dirDest = dir;
 	//std::cout << "1" << std::endl;
 	SetObject(std::move(objNew), orig);
 	//std::cout << "2" << std::endl;
@@ -116,7 +116,8 @@ Mission *MissionManager::GetMission(){
 void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::string> oldInventory){
 	bool firstPlay = true;
 	numMission = num;
-	xStage = yStage = xHall = yHall = -1;
+	xDest = yDest = -1;
+	dirDest = -1;
 	if(player != nullptr){
 		firstPlay = false;
 		SaveMission();
@@ -187,10 +188,6 @@ bool MissionManager::GetStage(std::string type){
 	return (type == stage);
 }
 
-void MissionManager::SetPos(int x, int y, std::string local){
-	if(local == "StageState"){
-		xStage = x; yStage = y;
-	} else if(local == "HallState"){
-		xHall = x; yHall = y;
-	}
+void MissionManager::SetPos(int x, int y){
+	xDest = x; yDest = y;
 }

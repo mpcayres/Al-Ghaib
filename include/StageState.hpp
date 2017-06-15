@@ -9,7 +9,6 @@
 #include "Timer.hpp"
 #include "StateData.hpp"
 
-
 class StageState : public State {
 public:
 	StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x = -1, int y = -1);

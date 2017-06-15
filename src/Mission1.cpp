@@ -9,10 +9,10 @@
 Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 	initialState = "StageState";
 	initialX = 600; initialY = 400;
-	MissionManager::missionManager->SetPos(initialX, initialY, initialState);
+	MissionManager::missionManager->SetPos(initialX, initialY);
 
-	MissionManager::CountHallState = 0;
-	MissionManager::CountStageState = 0;
+	MissionManager::missionManager->countHallState = 0;
+	MissionManager::missionManager->countStageState = 0;
 
 	//StageState = 0;
 	//HallState = 0;
@@ -41,7 +41,7 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 
 	SetObjectStage();
 	SetObjectHall();
-	state = MissionManager::changeState;
+	state = MissionManager::missionManager->changeState;
 
 	//std::cout << "INIT_MIS1" << std::endl;
 }
@@ -91,7 +91,8 @@ void  Mission1::Update(float dt){
 	}
 
 	/* COMEÇO DO JOGO. QUARTO DA CRIANÇA. PRIMEIRA VEZ ENTRANDO PARA LEGENDAS INICIAIS*/
-	if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState <= 1){
+	if(MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState <= 1){
 		//StageState++;
 		//std::cout << "StageState" << std::endl;
 		if(flagTimer == true && time.Get() > 3){
@@ -114,11 +115,12 @@ void  Mission1::Update(float dt){
 
 		MessageDoor(dt);
 		//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	} else if(MissionManager::missionManager->GetStage("HallState") && MissionManager::CountHallState <= 1){
+	} else if(MissionManager::missionManager->GetStage("HallState") &&
+			MissionManager::missionManager->countHallState <= 1){
 		//HallState++;
 		//std::cout << "HallState" << std::endl;
-		if(state != MissionManager::changeState){
-			state = MissionManager::changeState;
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
 			time.Restart();
 		}
 		if(trancada == false && cooldown.Get() > 2)
@@ -158,9 +160,10 @@ void  Mission1::Update(float dt){
 
 		MessageDoor(dt);
 		//NO CASO DE JOGADOR VOLTAR PARA QUARTO DA CRIANÇA
-	} else if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState > 1){
-		if(state != MissionManager::changeState){
-					state = MissionManager::changeState;
+	} else if(MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState > 1){
+		if(state != MissionManager::missionManager->changeState){
+					state = MissionManager::missionManager->changeState;
 					time.Restart();
 		}
 		if(trancada == false && cooldown.Get() > 2){
@@ -209,10 +212,12 @@ void  Mission1::Render(){
 		tx.Render(0,0);
 	}
 
-	if(MissionManager::missionManager->GetStage("StageState") && MissionManager::CountStageState <= 1 && time.Get() > 4){
+	if(MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4){
 		falas.Render(0,0);
 	}
-	if((MissionManager::missionManager->GetStage("StageState")&& MissionManager::CountStageState > 1)
+	if((MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState > 1)
 		||MissionManager::missionManager->GetStage("HallState")){
 		falas.Render(0,0);
 	}

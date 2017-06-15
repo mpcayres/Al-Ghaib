@@ -98,8 +98,7 @@ void HallState::Update(float dt){
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "HallState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest(),
-						MissionManager::player->box.x, MissionManager::player->box.y);
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
 		//std::cout << "DOOR4" << std::endl;
 	}
 }

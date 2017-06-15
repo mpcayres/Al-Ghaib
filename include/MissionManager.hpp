@@ -20,7 +20,7 @@ public:
 
 	void SetObject(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig);
 	void SetState(std::string dest);
-	void ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest, int x = -1, int y = -1);
+	void ChangeState(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig, std::string dest, int x = -1, int y = -1, int dir = -1);
 	void SetMission();
 	void ChangeMission(int num, int oldInHand = -1, std::vector<std::string> oldInventory = std::vector<std::string>());
 	void DeleteStates();
@@ -28,15 +28,14 @@ public:
 	void SaveMission();
 	Mission *GetMission();
 	bool GetStage(std::string type);
-	void SetPos(int x, int y, std::string local);
+	void SetPos(int x, int y);
 
 	static Player* player;
 	static MissionManager* missionManager;
 
-	static int CountStageState;
-	static int CountHallState;
-
-	static int changeState;
+	int countStageState;
+	int countHallState;
+	int changeState;
 
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
@@ -44,7 +43,8 @@ private:
 	std::string stage;
 	int numMission;
 	bool initStage, initHall;
-	int xStage, yStage, xHall, yHall;
+	int xDest, yDest;
+	int dirDest;
 };
 
 #endif /* SRC_MISSIONMANAGER_HPP_ */
