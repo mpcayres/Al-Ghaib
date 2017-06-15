@@ -24,22 +24,12 @@ public:
 	void Render();
 	bool IsDead();
 	void NotifyCollision(GameObject& other);
+	bool Is(std::string type);
+
 	void SetPosition(int x, int y);
 	void SetDirecao(int dir);
 	void Running(InputManager InputInstance);
-	bool Is(std::string type);
-	float GetRuido();
-	bool GetShowingInventory();
 
-	void RenderInventory();
-	void RenderInHand();
-	void RenderNoise();
-
-	InventoryObject* GetInHand();
-	int GetInHandIndex();
-	void AddInventory(std::string obj/*, std::string objSp*/);
-	std::vector<InventoryObject*> GetInventory();
-	void DeleteInventory();
 	void SetMovementLimits(Rect limits);
 	void AddWallLimits(Rect limits);
 	void ResetWallLimits();
@@ -47,8 +37,23 @@ public:
 
 	int GetDirecao();
 	Vec2 GetSpeed();
-	bool GetDoor();
 	void SetDoor(bool value);
+	bool GetDoor();
+
+	void AddRuido(float add);
+	float GetRuido();
+
+	void AddInventory(std::string obj);
+	std::vector<std::shared_ptr<InventoryObject>> GetInventory();
+	std::vector<std::string> GetStringInventory();
+	bool GetShowingInventory();
+	std::shared_ptr<InventoryObject> GetInHand();
+	int GetInHandIndex();
+	void DeleteInventory();
+
+	void RenderInventory();
+	void RenderInHand();
+	void RenderNoise();
 
 	Vec2 previousPos;
 	Rect limits;
@@ -56,7 +61,7 @@ public:
 
 private:
 	Timer timeRuido, timeCooldown;
-	Sprite spKinder, spKinderRun;
+	Sprite spKinder, spKinderRun, spAnimKinder;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 	Sprite spNoise;
 
@@ -66,16 +71,14 @@ private:
 
 	int inHandIndex, inventoryIndex;
 	bool showingInventory;
-	std::vector<InventoryObject*> inventory; //ver se coloca unique_ptr
+	std::vector<std::shared_ptr<InventoryObject>> inventory;
 
 	InvBox direcao;
 	InputManager InputInstance;
 	bool direcaoShift;
 
-	bool door;
-
+	bool door, hidden, animShowing;
 	float ruido;
-	bool hidden;
 };
 
 #endif /* INCLUDE_Player_HPP_ */

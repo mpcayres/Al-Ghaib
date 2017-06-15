@@ -111,7 +111,17 @@ void Game::Run(){
 			}
 			SDL_RenderPresent(renderer);
 
-			if(GetCurrentState().PopRequested()){
+			if(GetCurrentState().PopRequested() && storedState != nullptr){
+				std::cout << "1: " << typeid(GetCurrentState()).name() << std::endl;
+				GetCurrentState().Pause();
+				stateStack.pop();
+				Resources::ClearResources();
+				std::cout << "2/3: " << typeid(GetCurrentState()).name() << std::endl;
+				stateStack.push(std::unique_ptr<State>(storedState));
+				GetCurrentState().Resume();
+				storedState = nullptr;
+				std::cout << "4: " << typeid(GetCurrentState()).name() << std::endl;
+			} else if(GetCurrentState().PopRequested()){
 				std::cout << "1: " << typeid(GetCurrentState()).name() << std::endl;
 				GetCurrentState().Pause();
 				stateStack.pop();
@@ -119,8 +129,7 @@ void Game::Run(){
 				if(!stateStack.empty())
 					GetCurrentState().Resume();
 				std::cout << "2: " << typeid(GetCurrentState()).name() << std::endl;
-			}
-			if(storedState != nullptr){
+			} else if(storedState != nullptr){
 				std::cout << "3: " << typeid(GetCurrentState()).name() << std::endl;
 				if(!stateStack.empty())
 					GetCurrentState().Pause();

@@ -29,8 +29,8 @@ MissionManager::~MissionManager() {
 	objectStage.clear();
 	objectHall.clear();
 	if(mission != nullptr) delete mission;
-	player = nullptr;
-	missionManager = nullptr;
+	delete player;
+	delete missionManager;
 }
 
 void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, std::string orig){
@@ -55,7 +55,6 @@ void MissionManager::SetState(std::string dest){
 		stage = "StageState";
 		countStageState++;
 		changeState++;
-		//std::cout << "ESSE AQUI OH: " << stage << std::endl;
 		std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
 		std::cout << "HS.1" << std::endl;
@@ -63,7 +62,6 @@ void MissionManager::SetState(std::string dest){
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xDest, yDest));
 		initHall = false;
 		stage = "HallState";
-		//std::cout << "ESSE AQUI OH 2: " << stage << std::endl;
 		std::cout << "HS.2" << std::endl;
 		countHallState++;
 		changeState++;
@@ -83,7 +81,7 @@ void MissionManager::ChangeState(std::vector<std::unique_ptr<GameObject>> objNew
 
 void MissionManager::SetMission(){
 	//Mission e um abstract para as Mission1,2,3...
-	//if(mission != nullptr) delete mission;
+	if(mission != nullptr) free(mission);
 	switch(numMission){
 		case 1:
 			mission = new Mission1();
@@ -133,9 +131,10 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 
 //Ver para liberar memoria dos dados e do player quando vai para o Menu
 void MissionManager::DeleteStates(){
-	//delete player;
-	//std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
-	//std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
+	free(player);
+	player = nullptr;
+	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
+	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::cout << "Player NULL" << std::endl;
 }
 
@@ -172,13 +171,11 @@ void MissionManager::SaveMission(){
 		save << numMission << std::endl;
 		saveMission << numMission << std::endl;
 		save << player->GetInHandIndex() << std::endl;
-		saveMission << player->GetInHandIndex() << std::endl;
-		std::vector<InventoryObject*> inventory = player->GetInventory();
+		saveMission << player->GetInHandIndex() << std::endl;std::vector<std::shared_ptr<InventoryObject>> inventory = player->GetInventory();
 		for(unsigned int i = 0; i < inventory.size(); i++){
 			save << inventory[i]->GetObject() << std::endl;
 			saveMission << inventory[i]->GetObject() << std::endl;
 		}
-		inventory.clear();
 		save.close();
 		saveMission.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;

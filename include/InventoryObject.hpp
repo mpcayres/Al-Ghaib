@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 #include "Geometry.hpp"
 #include "Sprite.hpp"
 #include "GameObject.hpp"

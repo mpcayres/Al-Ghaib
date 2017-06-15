@@ -64,8 +64,8 @@ bool EmptyBox::IsDead(){
 }
 
 void EmptyBox::NotifyCollision(GameObject& other){
-	if(other.Is("SceneDoor")){
-		if(InputManager::GetInstance().KeyPress(X_KEY) && inHand != nullptr){
+	if(other.Is("SceneDoor") && inHand != nullptr){
+		if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryKey")){
 			if(inHand->Action(&other) == true)
 				MissionManager::player->DeleteInventory();
 		}

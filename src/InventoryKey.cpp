@@ -34,4 +34,3 @@ int InventoryKey::GetHeight(){ return sp.GetScaledHeight(); }
 void InventoryKey::SetScaleX(float scale) { sp.SetScaleX(scale);}
 
 void InventoryKey::SetScaleY(float scale) { sp.SetScaleY(scale);}
-

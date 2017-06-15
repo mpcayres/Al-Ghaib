@@ -5,6 +5,7 @@
 #include "Animation.hpp"
 #include "Sound.hpp"
 #include "InventoryKey.hpp"
+#include "InventoryClown.hpp"
 
 #define MODULO_SPEED		5
 #define AUMENTO_VELOCIDADE	2
@@ -13,9 +14,11 @@
 
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
-		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4) {
+		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
+		spAnimKinder("img/sprite-kinder-run.png", 15, 0.4, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
+	spAnimKinder.SetScaleX(2.5); spAnimKinder.SetScaleY(2.5);
 
 	spNoise = Sprite("img/sprite-energia.png", 9, 1 ,1);
 	spNoise.SetScaleX(0.5); spNoise.SetScaleY(0.5);
@@ -53,7 +56,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 
 	ruido = 0;
 	hidden = false;
-
+	animShowing = false;
 	door = false;
 }
 
@@ -61,14 +64,35 @@ Player::~Player(){
 	inventory.clear();
 }
 
+/* FUNCOES GERAIS */
 
-/* Update - Movimentacao */
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
 
-	//PODE COLOCAR A CONDICAO DE MUDAR A DIRECAO SO QUANDO ESTIVER MOVENDO A CAIXA
 	if(!showingInventory && !hidden && !Camera::GetMoving()){
+		std::shared_ptr<InventoryObject> inHand = GetInHand();
+		if(inHand != nullptr){
+			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
+				animShowing = true;
+				timeCooldown.Restart();
+				if(inHand->Action(nullptr) == true){
+					MissionManager::player->DeleteInventory();
+					AddInventory("InventoryKey");
+				}
+			}
+			if(animShowing){
+				spAnimKinder.Update(dt);
+				timeCooldown.Update(dt);
+				if(timeCooldown.Get() > 0.5){
+					animShowing = false;
+					timeCooldown.Restart();
+				}
+			}
+		}
+	}
+
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing){
 		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
@@ -141,8 +165,7 @@ void Player::Update(float dt){
 
 			multiplicador = 0;
 		}
-		ruido += 0.2 * multiplicador;
-		if (ruido > 84) ruido = 84; // impedir bug na mostra
+		AddRuido(0.2 * multiplicador);
 
 		if(multiplicador == 0 && ruido > 0){
 			timeRuido.Update(dt);
@@ -221,25 +244,35 @@ void Player::Update(float dt){
 
 }
 
-void Player::SetMovementLimits(Rect limits){
-	this->limits = limits;
+void Player::NotifyCollision(GameObject& other){
+	/*if(other.Is("Enemy")){
+		//hp = 0;
+		//Camera::Unfollow();
+		//printf("CAUGHT YOU!");
+	}*/
 }
 
-void Player::AddWallLimits(Rect limits){
-	wallLimits.emplace_back(limits);
+void Player::Render(){
+	if(!hidden && !animShowing){
+		if(running){
+			spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		} else{
+			spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		}
+	} else if(animShowing){
+		spAnimKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	}
 }
 
-void Player::ResetWallLimits(){
-	wallLimits.clear();
+bool Player::IsDead(){
+	return (hp <= 0);
 }
 
-int Player::GetDirecao(){
-	return direcao;
+bool Player::Is(std::string type){
+	return (type == "Player");
 }
 
-Vec2 Player::GetSpeed(){
-	return speed;
-}
+/* FUNCOES ESPECIFICAS */
 
 void Player::SetPosition(int x, int y){
 	box.x = x; box.y = y;
@@ -261,12 +294,93 @@ void Player::Running(InputManager InputInstance){
 	}
 }
 
+void Player::SetMovementLimits(Rect limits){
+	this->limits = limits;
+}
+
+void Player::AddWallLimits(Rect limits){
+	wallLimits.emplace_back(limits);
+}
+
+void Player::ResetWallLimits(){
+	wallLimits.clear();
+}
+
+void Player::ChangeHiddenState(){
+	hidden = !hidden;
+	timeCooldown.Restart();
+}
+
+int Player::GetDirecao(){
+	return direcao;
+}
+
+Vec2 Player::GetSpeed(){
+	return speed;
+}
+
+void Player::SetDoor(bool value){
+	door = value;
+}
+
+bool Player::GetDoor(){
+	return door;
+}
+
+void Player::AddRuido(float add){
+	ruido += add;
+	if (ruido > 96) ruido = 96; // impedir bug na mostra -> quando for 10 sera 108
+}
+
 float Player::GetRuido(){
 	return ruido;
 }
 
+void Player::AddInventory(std::string obj){
+	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
+	// Coloquei a string da imagem comentada caso seja necessario
+	if(inHandIndex < 0) inHandIndex = 0;
+	if(obj == "InventoryKey"){
+		inventory.emplace_back(new InventoryKey());
+	} else if(obj == "InventoryClown"){
+		inventory.emplace_back(new InventoryClown());
+	}
+}
+
+std::vector<std::shared_ptr<InventoryObject>> Player::GetInventory(){
+	return inventory;
+}
+
+std::vector<std::string> Player::GetStringInventory(){
+	std::vector<std::string> oldInventory;
+	for(unsigned int i = 0; i < inventory.size(); i++){
+		std::string aux = std::move(inventory[i]->GetObject());
+		oldInventory.emplace_back(aux);
+	}
+	return oldInventory;
+}
+
 bool Player::GetShowingInventory(){
 	return showingInventory;
+}
+
+std::shared_ptr<InventoryObject> Player::GetInHand(){
+	if(inHandIndex >= 0) return inventory[inHandIndex];
+	else return nullptr;
+}
+
+int Player::GetInHandIndex(){
+	return inHandIndex;
+}
+
+void Player::DeleteInventory(){
+	if(inventory.size() == 1){
+		inventory.erase(inventory.begin() + inHandIndex);
+		inHandIndex = -1;
+	} else{
+		inventory.erase(inventory.begin() + inHandIndex);
+		inHandIndex = 0 ;
+	}
 }
 
 void Player::RenderInventory(){
@@ -359,78 +473,4 @@ void Player::RenderNoise(){
 	spNoise.SetFrame(aux);
 	spNoise.Render(posX, posY, 0);
 
-}
-
-int Player::GetInHandIndex(){
-	return inHandIndex;
-}
-
-InventoryObject* Player::GetInHand(){
-	if(inHandIndex >= 0) return inventory[inHandIndex];
-	else return nullptr;
-}
-
-void Player::AddInventory(std::string obj/*, std::string objSp*/){
-	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
-	// Coloquei a string da imagem comentada caso seja necessario
-	if(inHandIndex < 0) inHandIndex = 0;
-	if(obj == "InventoryKey"){
-		inventory.emplace_back(new InventoryKey(/*objSp*/));
-	}
-}
-
-std::vector<InventoryObject*> Player::GetInventory(){
-	return inventory;
-}
-
-void Player::DeleteInventory(){
-	if(inventory.size() == 1){
-		inventory.erase(inventory.begin() + inHandIndex);
-		inHandIndex = -1;
-	} else{
-		inventory.erase(inventory.begin() + inHandIndex);
-		inHandIndex = 0 ;
-	}
-}
-
-void Player::ChangeHiddenState(){
-	hidden = !hidden;
-	timeCooldown.Restart();
-}
-
-
-/* FUNCOES GERAIS */
-
-void Player::NotifyCollision(GameObject& other){
-	/*if(other.Is("Enemy")){
-		//hp = 0;
-		//Camera::Unfollow();
-		//printf("CAUGHT YOU!");
-	}*/
-}
-
-bool Player::Is(std::string type){
-	return (type == "Player");
-}
-
-void Player::Render(){
-	if(!hidden){
-		if(running){
-			spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-		} else{
-			spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-		}
-	}
-}
-
-bool Player::IsDead(){
-	return (hp <= 0);
-}
-
-bool Player::GetDoor(){
-	return door;
-}
-
-void Player::SetDoor(bool value){
-	door = value;
 }

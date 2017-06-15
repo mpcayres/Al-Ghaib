@@ -2,6 +2,7 @@
 #define EMPTYBOX_HPP_
 
 #include <string>
+#include <memory>
 
 #include "Player.hpp"
 #include "Geometry.hpp"
@@ -23,7 +24,7 @@ public:
 	void setX(int x);
 	void setY(int y);
 private:
-	InventoryObject* inHand;
+	std::shared_ptr<InventoryObject> inHand;
 
 };
 

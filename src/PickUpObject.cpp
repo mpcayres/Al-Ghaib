@@ -3,8 +3,7 @@
 #include "InputManager.hpp"
 #include "Player.hpp"
 
-PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img) :
-	obj(obj)/*, objSp(img)*/, sp(img){
+PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img) : obj(obj), sp(img){
 	dead = false;
 	selected = false;
 	rotation = 0;
@@ -26,13 +25,12 @@ bool PickUpObject::IsDead(){
 	return dead;
 }
 
-// Talvez colocar pra pegar quando estiver pr�ximo
+// Talvez colocar pra pegar quando estiver proximo
 void PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			//dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
-			dead = true;
-			MissionManager::player->AddInventory(obj/*, objSp*/);
+			dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
+			MissionManager::player->AddInventory(obj);
 		}
 	}
 }
