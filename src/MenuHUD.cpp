@@ -8,14 +8,14 @@ MenuHUD::MenuHUD(float x, float y) /*: sp("img/fundoMenu.png")*/ {
 	//box.w = sp.GetWidth();
 	selected = false;
 	optSelected = 0;
-	buttons.emplace_back(Sprite("img/new-game.png"));
-	buttons.emplace_back(Sprite("img/load-game.png"));
-	buttons.emplace_back(Sprite("img/option.png"));
-	buttons.emplace_back(Sprite("img/sair.png"));
-	buttonsSelected.emplace_back(Sprite("img/new-game-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/load-game-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/option-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/sair-select.png"));
+	buttons.emplace_back(Sprite("img/button-new-game.png"));
+	buttons.emplace_back(Sprite("img/button-load-game.png"));
+	buttons.emplace_back(Sprite("img/button-option.png"));
+	buttons.emplace_back(Sprite("img/button-sair.png"));
+	buttonsSelected.emplace_back(Sprite("img/button-new-game-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/button-load-game-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/button-option-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/button-sair-select.png"));
 }
 
 MenuHUD::~MenuHUD() { }
@@ -30,7 +30,7 @@ void MenuHUD::Update(float dt){
 		optSelected += 1;
 		if(optSelected == (int) buttons.size()) optSelected = 0;
 	}
-	if(instance.KeyPress(ENTER_KEY) || instance.KeyPress(SPACE_KEY)){
+	if(instance.KeyPress(ENTER_KEY)/* || instance.KeyPress(SPACE_KEY)*/){
 		selected = true;
 	}
 }

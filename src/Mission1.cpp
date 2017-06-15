@@ -51,16 +51,16 @@ Mission1::~Mission1() {
 }
 
 void Mission1::SetObjectStage(){
-	SceneWindow* Window = new SceneWindow(350, 200, "img/closedwindow.png", "img/openwindow.png");
+	SceneWindow* Window = new SceneWindow(350, 200,"img/scene-window-closed.png", "img/scene-window-opened.png");
 	objectStage.emplace_back(Window);
-	StealthObject* Stealth = new StealthObject(700, 500, "img/closedwindow.png");
+	StealthObject* Stealth = new StealthObject(700, 500, "img/scene-window-closed.png");
 	objectStage.emplace_back(Stealth);
 	PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
 	objectStage.emplace_back(PO);
 }
 
 void Mission1::SetObjectHall(){
-	SceneWindow* Window = new SceneWindow(350, 70, "img/closedwindow.png", "img/openwindow.png");
+	SceneWindow* Window = new SceneWindow(350, 70, "img/scene-window-closed.png", "img/scene-window-opened.png");
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);
@@ -85,7 +85,7 @@ void  Mission1::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
-	std::cout << "time: " << time.Get() << std::endl;
+	//std::cout << "time: " << time.Get() << std::endl;
 	if(time.Get() > 3 ){
 		begin = false;
 	}

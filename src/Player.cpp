@@ -12,20 +12,20 @@
 
 
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
-		spKinder("img/kinder.png", 20, 0.06, 4),
-		spKinderRun("img/kinder-run.png", 15, 0.1, 4) {
+		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
+		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 
-	spNoise = Sprite("img/sprite-energia.png", 8 , 1 ,1);
-	spNoise.SetScaleX(0.6); spNoise.SetScaleY(0.6);
+	spNoise = Sprite("img/sprite-energia.png", 9, 1 ,1);
+	spNoise.SetScaleX(0.5); spNoise.SetScaleY(0.5);
 
 	spInventory = Sprite("img/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
 	spInventorybox = Sprite("img/box.png", 1, 1, 1);
-	spInventorybox.SetScaleX(1.5); spInventorybox.SetScaleY(1.5);
+	spInventorybox.SetScaleX(1.2); spInventorybox.SetScaleY(1.2);
 	spInventoryboxSelected = Sprite("img/box-select.png", 1, 1, 1);
-	spInventoryboxSelected.SetScaleX(1.5); spInventoryboxSelected.SetScaleY(1.5);
+	spInventoryboxSelected.SetScaleX(1.2); spInventoryboxSelected.SetScaleY(1.2);
 
 	box.x = x; box.y = y;
 	box.w = spKinder.GetScaledWidth();
@@ -344,10 +344,9 @@ void Player::RenderInHand(){
 }
 
 void Player::RenderNoise(){
-	int posX, posY;
+	int posX, posY, aux;
 	int offset = 10;
-	int aux;
-	posX = SCREEN_SIZE_W - 17*offset;
+	posX = SCREEN_SIZE_W - 18*offset;
 	posY = offset;
 
 	aux = (ruido/12) + 1;
