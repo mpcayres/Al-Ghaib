@@ -3,7 +3,7 @@
 #include "Mission.hpp"
 #include "Player.hpp"
 
-SceneDoor::SceneDoor(float x, float y, std::string img, std::string img2, std::string dest) :
+SceneDoor::SceneDoor(float x, float y, std::string dest, std::string img, std::string img2) :
 	SceneObject(x, y, img, img2), dest(dest) {
 
 	lock = true;

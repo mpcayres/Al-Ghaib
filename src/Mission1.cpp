@@ -51,7 +51,7 @@ Mission1::~Mission1() {
 }
 
 void Mission1::SetObjectStage(){
-	SceneWindow* Window = new SceneWindow(350, 200,"img/scene-window-closed.png", "img/scene-window-opened.png");
+	SceneWindow* Window = new SceneWindow(350, 200);
 	objectStage.emplace_back(Window);
 	StealthObject* Stealth = new StealthObject(700, 500, "img/scene-window-closed.png");
 	objectStage.emplace_back(Stealth);
@@ -60,7 +60,7 @@ void Mission1::SetObjectStage(){
 }
 
 void Mission1::SetObjectHall(){
-	SceneWindow* Window = new SceneWindow(350, 70, "img/scene-window-closed.png", "img/scene-window-opened.png");
+	SceneWindow* Window = new SceneWindow(350, 70);
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);

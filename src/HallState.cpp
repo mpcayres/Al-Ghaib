@@ -123,9 +123,8 @@ void HallState::SetInitialObjectArray(){
 	//Walls *Wall1 = new Walls(270, 282, 130, 125);
 	//Walls *Wall2 = new Walls(725, 282, 130, 125);
 	//Walls *Wall3 = new Walls(1175, 282, 130, 125);
-	SceneDoor* Door = new SceneDoor(500, 100, "img/scene-door-closed.png", "img/scene-door-opened.png", "StageState");
-
-	SceneDoor* Door2 = new SceneDoor(900, 100, "img/scene-door-closed.png", "img/scene-door-opened.png", "StageState");
+	SceneDoor* Door = new SceneDoor(500, 100, "StageState");
+	SceneDoor* Door2 = new SceneDoor(900, 100, "StageState");
 	MovingObject* Table = new MovingObject(1000, 400, "img/box.png");
 
 	objectArray.emplace_back(EB);

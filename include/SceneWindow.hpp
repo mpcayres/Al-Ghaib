@@ -5,7 +5,7 @@
 
 class SceneWindow : public SceneObject {
 public:
-	SceneWindow(float x, float y, std::string img, std::string img2);
+	SceneWindow(float x, float y, std::string img = "img/scene-window-closed.png", std::string img2 = "img/scene-window-opened.png");
 
 	void NotifyCollision(GameObject& other);
 	bool Is(std::string type);

@@ -159,8 +159,8 @@ void StageState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	//Enemy* E = new Enemy(1100, 500);
-	SceneDoor* Door = new SceneDoor(800, 200, "img/scene-door-closed.png", "img/scene-door-opened.png", "HallState");
-	SceneWindow* Window = new SceneWindow(500, 200, "img/scene-window-closed.png", "img/scene-window-opened.png");
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
+	SceneWindow* Window = new SceneWindow(500, 200);
 	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
 
 	objectArray.emplace_back(EB);
