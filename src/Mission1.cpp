@@ -68,6 +68,8 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(PO);
 	Enemy* E = new Enemy(500, 130);
 	objectHall.emplace_back(E);
+	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/obj_bear_1.png");
+	objectHall.emplace_back(Bear);
 }
 
 void  Mission1::Update(float dt){

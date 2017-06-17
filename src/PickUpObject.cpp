@@ -2,6 +2,7 @@
 #include "Camera.hpp"
 #include "InputManager.hpp"
 #include "Player.hpp"
+#include <iostream>
 
 PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img) : obj(obj), sp(img){
 	dead = false;
@@ -30,6 +31,8 @@ void PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
+			std::cout <<"ate aqui ok 1.5 " << std::endl;
+
 			MissionManager::player->AddInventory(obj);
 		}
 	}

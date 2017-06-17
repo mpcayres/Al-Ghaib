@@ -6,6 +6,8 @@
 #include "Sound.hpp"
 #include "InventoryKey.hpp"
 #include "InventoryClown.hpp"
+#include "InventoryBear.hpp"
+#include <iostream>
 
 #define MODULO_SPEED		5
 #define AUMENTO_VELOCIDADE	2
@@ -69,10 +71,11 @@ Player::~Player(){
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
-
+	std::cout <<"ate aqui ok 2 " << std::endl;
 	if(!showingInventory && !hidden && !Camera::GetMoving()){
 		std::shared_ptr<InventoryObject> inHand = GetInHand();
 		if(inHand != nullptr){
+			std::cout <<"ate aqui ok 3 " << std::endl;
 			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
 				animShowing = true;
 				timeCooldown.Restart();
@@ -344,6 +347,8 @@ void Player::AddInventory(std::string obj){
 		inventory.emplace_back(new InventoryKey());
 	} else if(obj == "InventoryClown"){
 		inventory.emplace_back(new InventoryClown());
+	}else if(obj == "InventoryBear"){
+		inventory.emplace_back(new InventoryBear());
 	}
 }
 
