@@ -173,6 +173,7 @@ void Player::Update(float dt){
 			if (timeRuido.Get() > 0.3){
 				timeRuido.Restart();
 				ruido -= (ruido*0.2);
+				std::cout << ruido << std::endl;
 			}
 		}
 

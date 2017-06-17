@@ -6,7 +6,8 @@
 
 class SceneDoor : public SceneObject {
 public:
-	SceneDoor(float x, float y, std::string dest, std::string img = "img/scene-door-closed.png", std::string img2 = "img/scene-door-opened.png");
+	SceneDoor(float x, float y, std::string dest,bool locked = true,
+			std::string img = "img/scene-door-closed.png", std::string img2 = "img/scene-door-opened.png");
 
 	void NotifyCollision(GameObject& other);
 	bool Is(std::string type);

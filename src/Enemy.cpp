@@ -17,8 +17,8 @@ bool Enemy::arrived = false;
 
 Enemy::Enemy(float x, float y): sp("img/mom_sprite.png", 8, 0.06, 4){
 
-	sp.SetScaleX(1.2);
-	sp.SetScaleY(1.2);
+	sp.SetScaleX(2);
+	sp.SetScaleY(2);
 
 	//destinationPath.x = x;
 	//destinationPath.y = y;
@@ -54,7 +54,7 @@ void Enemy::Update(float dt){
 		}
 		float noise = ((100/dist))*MissionManager::player->GetRuido();
 		//printf("N: %f\n", noise);
-		if(noise >= 15){
+		if(noise >= 15 || MissionManager::player->GetRuido()>70){
 			seen = true;
 		}
 
@@ -83,7 +83,6 @@ void Enemy::Update(float dt){
 		if(speed.x != 0 || speed.y != 0){
 					sp.Update(dt, direcao, direcaoShift);
 		} else{
-			direcao = LESTE;
 			if(sp.GetCurrentFrame() > 1 && sp.GetCurrentFrame() < 8){
 			if(direcao == NORTE) speed.y = -DESACELERA;
 			if(direcao == SUL) speed.y = DESACELERA;
@@ -169,6 +168,26 @@ void Enemy::DefinedPath(){
 			speed.y = speed.y*SPEED_CONTROL;
 		}
 
+		if(destinationPath.back().x - box.x > destinationPath.back().y- box.y){
+			if(destinationPath.back().x > box.x){
+				std::cout << " lESTE " << std::endl;
+				direcao = LESTE;
+			}else if(destinationPath.back().x < box.x){
+				std::cout << " OESTE " << std::endl;
+				direcao = OESTE;
+			}
+		}
+		else{
+			if(destinationPath.back().y > box.y){
+				std::cout << " SUL " << std::endl;
+				direcao = SUL;
+			}else if(destinationPath.back().y < box.y){
+				std::cout << " NORTE " << std::endl;
+				direcao = NORTE;
+			}
+		}
+
+
 		if (speed.x < 0 && speed.y < 0){
 			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
 				speed.y + box.y -  VALUE <= destinationPath.back().y){
@@ -233,6 +252,25 @@ void Enemy::Pursuit(){
 		speed.x = speed.x*SPEED_CONTROL;
 		speed.y = speed.y*SPEED_CONTROL;
 	}
+	if(destination.x- box.x > destination.y- box.y){
+		if(destination.x > box.x){
+			std::cout << " lESTE " << std::endl;
+					direcao = LESTE;
+		}else if(destination.x < box.x){
+			std::cout << " OESTE " << std::endl;
+			direcao = OESTE;
+		}
+	}
+	else{
+		if(destination.y > box.y){
+			std::cout << " SUL " << std::endl;
+			direcao = SUL;
+		}else if(destination.y < box.y){
+			std::cout << " NORTE " << std::endl;
+			direcao = NORTE;
+		}
+	}
+
 
 	if (speed.x < 0 && speed.y < 0){
 		if(box.x + speed.x -  VALUE <= destination.x &&

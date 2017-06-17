@@ -7,13 +7,14 @@
 #include "Geometry.hpp"
 #include "Player.hpp"
 #include "EmptyBox.hpp"
+#include <iostream>
 #define  VALUE 3
 #define SPEED_CONTROL 3
 #define ENEMY_COOLDOWN 3
 
 class Enemy : public GameObject{
 public:
-	enum InvBox{SUL, NORTE, LESTE, OESTE};
+	enum InvBox{LESTE, OESTE, SUL, NORTE};
 	Enemy(float x, float y);
 	~Enemy();
 

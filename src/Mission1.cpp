@@ -66,7 +66,7 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);
-	Enemy* E = new Enemy(500, 130);
+	Enemy* E = new Enemy(500, 100);
 	objectHall.emplace_back(E);
 	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/obj_bear_1.png");
 	objectHall.emplace_back(Bear);
@@ -137,17 +137,17 @@ void  Mission1::Update(float dt){
 			ultimoTempo = 3;
 		}
 		//MÃE APARECENDO NO CORREDOR
-		if(time.Get()>6 && trancada == false){
+		if((time.Get()>6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false){
 			Enemy::show = true;
 			//if(Enemy::turn == 1)
 			count ++;
 			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 			if(count == 1){
 				//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-				Enemy::enemy->SetDestinationPath(Vec2(900, 160)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(900, 200)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 200)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 160)); //1º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(900, 100)); //4º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(900, 140)); //3º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(500, 100)); //1º DESTINO
 			}
 			if(trancada == false)
 				if(time.Get() > 7 && trancada == false && cooldown.Get() > 2){
