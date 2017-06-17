@@ -6,12 +6,14 @@
 #include "Timer.hpp"
 #include "Geometry.hpp"
 #include "Player.hpp"
+#include "EmptyBox.hpp"
 #define  VALUE 3
 #define SPEED_CONTROL 3
 #define ENEMY_COOLDOWN 3
 
 class Enemy : public GameObject{
 public:
+	enum InvBox{SUL, NORTE, LESTE, OESTE};
 	Enemy(float x, float y);
 	~Enemy();
 
@@ -24,6 +26,7 @@ public:
 	void Pursuit();
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
+	void SetDirecao(int dir);
 
 	static Enemy * enemy;
 
@@ -40,6 +43,10 @@ private:
 	Vec2 destination;
 	//Vec2 destinationPath;
 	std::vector<Vec2> destinationPath;
+
+	InvBox direcao;
+
+	bool direcaoShift;
 };
 
 #endif /* INCLUDE_Enemy_HPP_ */

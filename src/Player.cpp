@@ -71,11 +71,9 @@ Player::~Player(){
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
-	std::cout <<"ate aqui ok 2 " << std::endl;
 	if(!showingInventory && !hidden && !Camera::GetMoving()){
 		std::shared_ptr<InventoryObject> inHand = GetInHand();
 		if(inHand != nullptr){
-			std::cout <<"ate aqui ok 3 " << std::endl;
 			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
 				animShowing = true;
 				timeCooldown.Restart();

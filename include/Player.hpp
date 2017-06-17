@@ -75,6 +75,7 @@ private:
 
 	InvBox direcao;
 	InputManager InputInstance;
+
 	bool direcaoShift;
 
 	bool door, hidden, animShowing;

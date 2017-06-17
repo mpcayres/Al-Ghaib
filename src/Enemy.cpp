@@ -9,15 +9,16 @@
 
 #define MODULO_SPEED 3
 #define AUMENTO_VALUE 2
+#define DESACELERA 1
 
 Enemy* Enemy::enemy;
 bool Enemy::show = false;
 bool Enemy::arrived = false;
 
-Enemy::Enemy(float x, float y): sp("img/m2.png"){
+Enemy::Enemy(float x, float y): sp("img/mom_sprite.png", 8, 0.06, 4){
 
-	sp.SetScaleX(0.2);
-	sp.SetScaleY(0.2);
+	sp.SetScaleX(1.2);
+	sp.SetScaleY(1.2);
 
 	//destinationPath.x = x;
 	//destinationPath.y = y;
@@ -75,13 +76,29 @@ void Enemy::Update(float dt){
 			previousPos.y = box.y;
 			box.y += speed.y;
 		}
-
+		direcao = LESTE;
 		if(seen == true) Pursuit();
-		if(seen == false) {
-			//printf("amigo estou aqui!");
-			DefinedPath();
+		if(seen == false)DefinedPath();
+
+		if(speed.x != 0 || speed.y != 0){
+					sp.Update(dt, direcao, direcaoShift);
+		} else{
+			direcao = LESTE;
+			if(sp.GetCurrentFrame() > 1 && sp.GetCurrentFrame() < 8){
+			if(direcao == NORTE) speed.y = -DESACELERA;
+			if(direcao == SUL) speed.y = DESACELERA;
+			if(direcao == LESTE) speed.x = DESACELERA;
+			if(direcao == OESTE) speed.x = -DESACELERA;
+
+			sp.Update(dt, direcao, direcaoShift);
+			}
 		}
 	}
+}
+
+void Enemy::SetDirecao(int dir){
+	direcao = (InvBox) dir;
+	sp.SetFrame(1, direcao);
 }
 
 void Enemy::Render(){
