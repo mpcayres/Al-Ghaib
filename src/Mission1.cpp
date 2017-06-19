@@ -59,6 +59,8 @@ void Mission1::SetObjectStage(){
 	objectStage.emplace_back(PO);
 	PickUpObject* Clown = new PickUpObject(400, 400, "InventoryClown", "img/key.png");
 	objectStage.emplace_back(Clown);
+	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
+	objectStage.emplace_back(Box);
 }
 
 void Mission1::SetObjectHall(){

@@ -7,6 +7,7 @@
 #include "MissionManager.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
+#include <iostream>
 
 Walls::Walls(float x, float y, float w, float h){
 	rotation = 0;
@@ -40,7 +41,7 @@ void Walls::NotifyCollision(GameObject& other){
 		}
 	}
 
-	if (other.Is("Enemy")){
+	/*if (other.Is("Enemy")){
 		if(other.box.x < box.x + box.w ||
 				other.box.x + other.box.w > box.x){
 			other.box.x = box.x + box.w + 1;
@@ -48,6 +49,17 @@ void Walls::NotifyCollision(GameObject& other){
 				other.box.y + other.box.h > box.y){
 			other.box.x = box.x - other.box.w - 1;
 		}
+	}*/
+
+	if (other.Is("Enemy")){
+		std::cout << "BATEU" <<std::endl;
+			if(other.box.x < box.x + box.w ||
+					other.box.x + other.box.w > box.x){
+				other.box.x =  other.previousPos.x;
+			} else if(other.box.y < box.y + box.h ||
+					other.box.y + other.box.h > box.y){
+				other.box.y =  other.previousPos.y;
+			}
 	}
 
 }
