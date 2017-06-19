@@ -53,6 +53,7 @@ protected:
 
 
 	Text tx;
+	Text creepy;
 	Text falas;
 	Timer cooldown;
 	Timer time;

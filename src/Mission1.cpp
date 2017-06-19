@@ -28,8 +28,10 @@ Mission1::Mission1() : Mission()/*: blackSquare("img/blacksquare.png")*/ {
 	//flagTimer = true; //stopMusic = false;
 	//time = Timer();
 	//cooldown = Timer();
-	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 1", auxcolor, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 1", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"Cobri vossos utensílios e amarrai vossos cantis...\"", auxcolor, 0, 0);
+	creepy.SetPos(0, Game::GetInstance().GetHeight()-40, true, false);
 
 	falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -103,6 +105,7 @@ void  Mission1::Update(float dt){
 		//std::cout << "StageState" << std::endl;
 		if(flagTimer == true && time.Get() > 3){
 			tx.SetText(" ");
+			creepy.SetText(" ");
 			//time.Restart();
 			flagTimer = false;
 		}
@@ -216,6 +219,7 @@ void  Mission1::Render(){
 	if(time.Get() < 3 && begin ){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
+		creepy.Render(0,0);
 	}
 
 	if(MissionManager::missionManager->GetStage("StageState") &&

@@ -15,7 +15,7 @@
 
 class Enemy : public GameObject{
 public:
-	enum InvBox{LESTE, OESTE, SUL, NORTE};
+	//enum InvBox{LESTE, OESTE, SUL, NORTE};
 	Enemy(float x, float y);
 	~Enemy();
 
@@ -29,9 +29,10 @@ public:
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
 	void SetDirecao(int dir);
+	//int GetDirecao();
 
 	static Enemy * enemy;
-
+	InvBox direcao;
 	//Vec2 previousPos;
 
 	static bool show;
@@ -46,7 +47,7 @@ private:
 	//Vec2 destinationPath;
 	std::vector<Vec2> destinationPath;
 
-	InvBox direcao;
+
 
 	bool direcaoShift;
 };

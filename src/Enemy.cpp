@@ -363,3 +363,7 @@ void Enemy::Pursuit(){
 bool Enemy::Is(std::string type){
 	return (type == "Enemy");
 }
+/*
+int Enemy::GetDirecao(){
+	return direcao;
+}*/

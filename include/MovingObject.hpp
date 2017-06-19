@@ -6,6 +6,8 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 
+#define OFFSET_MOVI 30
+
 class MovingObject : public GameObject {
 public:
 	MovingObject(float x, float y, std::string img);

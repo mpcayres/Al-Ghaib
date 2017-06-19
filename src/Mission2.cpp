@@ -16,8 +16,10 @@ Mission2::Mission2() : Mission() {
 	auxcolor.b = 0;
 
 
-	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 2", auxcolor, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"fechai as portas e mantende vossas crianças por perto à noite...\"", auxcolor, 0, 0);
+	creepy.SetPos(0, Game::GetInstance().GetHeight()-40, true, false);
 
 	//falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
 	//falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -73,6 +75,7 @@ void Mission2::Update(float dt){
 			//std::cout << "StageState" << std::endl;
 			if(flagTimer == true && time.Get() > 3){
 				tx.SetText(" ");
+				creepy.SetText(" ");
 			}
 			if(flagTimer == true && time.Get() > 4){
 
@@ -104,7 +107,11 @@ void Mission2::Update(float dt){
 }
 
 void Mission2::Render(){
-
+	if(time.Get() < 3 && begin ){
+			blackSquare.Render(0, 0, 0);
+			tx.Render(0,0);
+			creepy.Render(0,0);
+		}
 }
 
 void Mission2::SetObjectStage(){

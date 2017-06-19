@@ -47,18 +47,52 @@ void MovingObject::NotifyCollision(GameObject& other){
 				box.y += MissionManager::player->GetSpeed().y;
 				if((MissionManager::player->box).Intersect(box)) box.y -= MissionManager::player->GetSpeed().y;
 			}
-		}
+
 	}
 
 	if(other.Is("Player")){
-		if(MissionManager::player->box.x < box.x + box.w ||
+		/*if(MissionManager::player->box.x < box.x + box.w ||
 				MissionManager::player->box.x + MissionManager::player->box.w > box.x){
 			MissionManager::player->box.x = MissionManager::player->previousPos.x;
 		}
 		if(MissionManager::player->box.y < box.y + box.h ||
 				MissionManager::player->box.y + MissionManager::player->box.h > box.y){
 			MissionManager::player->box.y = MissionManager::player->previousPos.y;
-		}
+		}*/
+		box.x += box.w - sp.GetWidth();
+		box.y += box.w - sp.GetHeight();
+		box.w = sp.GetWidth();
+
+		box.h = sp.GetHeight();
+
+						//Nesse caso nao precisa no eixo y
+						if((MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_MOVI < box.y + box.h)
+							/*&& (MissionManager::player->GetDirecao() == Player::LESTE ||
+								MissionManager::player->GetDirecao() == Player::OESTE)*/){
+
+							if((MissionManager::player->box.x < box.x + box.w &&
+									MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
+									|| (box.InsideX(MissionManager::player->box) &&
+											MissionManager::player->box.CenterX() >= box.CenterX())){
+								if(MissionManager::player->GetDirecao() == Player::SUL || MissionManager::player->GetDirecao() == Player::NORTE ){
+									MissionManager::player->box.x = MissionManager::player->previousPos.x;
+									MissionManager::player->box.y = MissionManager::player->previousPos.y;
+								}
+								else
+									MissionManager::player->box.x = box.x + box.w + 1;
+							} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
+									MissionManager::player->box.x < box.x)
+									|| (box.InsideX(MissionManager::player->box) &&
+											MissionManager::player->box.CenterX() < box.CenterX())){
+								if(MissionManager::player->GetDirecao() == Player::SUL || MissionManager::player->GetDirecao() == Player::NORTE ){
+									MissionManager::player->box.x = MissionManager::player->previousPos.x;
+									MissionManager::player->box.y = MissionManager::player->previousPos.y;
+								}
+								else
+								MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
+							}
+
+						}
 	}
 
 	if(other.Is("CollidableObject")){
@@ -82,6 +116,42 @@ void MovingObject::NotifyCollision(GameObject& other){
 				other.box.y + other.box.h > box.y){
 			other.box.x = box.x - other.box.w - 1;
 		}
+
+
+		/*
+		box.x += box.w - sp.GetWidth();
+		box.y += box.w - sp.GetHeight();
+		box.w = sp.GetWidth();
+		box.h = sp.GetHeight();
+
+		if((other.box.y + other.box.h - OFFSET_MOVI < box.y + box.h)){
+				if((other.box.x < box.x + box.w &&other.box.x + other.box.w > box.x + box.w )
+					|| (box.InsideX(other.box) && other.box.CenterX() >= box.CenterX())){
+
+					if(other.direcao == 3|| other.direcao == 4 ){
+						other.box.x = other.previousPos.x;
+						other.box.y = other.previousPos.y;
+					}
+					else
+						other.box.x = box.x + box.w + 1;
+				} else if((other.box.x + other.box.w > box.x && other.box.x < box.x)
+					|| (box.InsideX(other.box) && other.box.CenterX() < box.CenterX())){
+
+					if(other.direcao == 3 || other.direcao == 4 ){
+						other.box.x = other.previousPos.x;
+						other.box.y = other.previousPos.y;
+					}
+					else
+						other.box.x = box.x - other.box.w - 1;
+				}
+
+		}*/
+	}
+
+
+
+
+
 	}
 }
 
