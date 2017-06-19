@@ -37,6 +37,7 @@ public:
 	int countStageState;
 	int countHallState;
 	int changeState;
+	bool movingBox;
 
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;

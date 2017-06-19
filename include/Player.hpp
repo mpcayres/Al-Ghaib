@@ -61,7 +61,7 @@ public:
 
 private:
 	Timer timeRuido, timeCooldown;
-	Sprite spKinder, spKinderRun, spAnimKinder;
+	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 	Sprite spNoise;
 

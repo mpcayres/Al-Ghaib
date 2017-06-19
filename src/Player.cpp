@@ -13,14 +13,17 @@
 #define AUMENTO_VELOCIDADE	2
 #define DESACELERA			1
 
+int contPush = 0;
 
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
 		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
-		spAnimKinder("img/sprite-kinder-run.png", 15, 0.4, 4) {
+		spAnimKinder("img/sprite-kinder-run.png", 15, 0.4, 4),
+		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 2) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 	spAnimKinder.SetScaleX(2.5); spAnimKinder.SetScaleY(2.5);
+	spKinderPush.SetScaleX(2.5); spKinderPush.SetScaleY(2.5);
 
 	spNoise = Sprite("img/sprite-energia.png", 9, 1 ,1);
 	spNoise.SetScaleX(0.5); spNoise.SetScaleY(0.5);
@@ -97,7 +100,7 @@ void Player::Update(float dt){
 		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == NORTE || direcao == SUL)){
+			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == SUL) direcaoShift = true;
 			} else{
 				direcao = NORTE;
@@ -109,7 +112,7 @@ void Player::Update(float dt){
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == NORTE || direcao == SUL)){
+			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == NORTE) direcaoShift = true;
 			} else{
 				direcao = SUL;
@@ -120,7 +123,7 @@ void Player::Update(float dt){
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == LESTE || direcao == OESTE)){
+			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == OESTE) direcaoShift = true;
 			} else{
 				direcao = LESTE;
@@ -131,7 +134,7 @@ void Player::Update(float dt){
 			Running(InputInstance);
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
-			if(InputInstance.IsKeyDown(Z_KEY) && (direcao == LESTE || direcao == OESTE)){
+			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == LESTE) direcaoShift = true;
 			} else{
 				direcao = OESTE;
@@ -150,8 +153,9 @@ void Player::Update(float dt){
 		if(speed.x != 0 || speed.y != 0){
 			spKinder.Update(dt, direcao, direcaoShift);
 			spKinderRun.Update(dt, direcao, direcaoShift);
+			spKinderPush.Update(dt, direcao - 2, direcaoShift);
 
-			if(running == true) multiplicador = 10;
+			if(running) multiplicador = 10;
 			else multiplicador = 1;
 		} else{
 			if((spKinder.GetCurrentFrame() > 1 && spKinder.GetCurrentFrame() < 12) ||
@@ -244,6 +248,9 @@ void Player::Update(float dt){
 		}
 	}
 
+	//Ajustar quando puxa apos empurrar
+	MissionManager::missionManager->movingBox = false;
+
 }
 
 void Player::NotifyCollision(GameObject& other){
@@ -256,7 +263,9 @@ void Player::NotifyCollision(GameObject& other){
 
 void Player::Render(){
 	if(!hidden && !animShowing){
-		if(running){
+		if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
+			spKinderPush.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		} else if(running){
 			spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		} else{
 			spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);

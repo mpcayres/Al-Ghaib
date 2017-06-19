@@ -23,6 +23,7 @@ MissionManager::MissionManager() {
 	changeState = 0;
 	xDest = yDest = -1;
 	dirDest = -1;
+	movingBox = false;
 }
 
 MissionManager::~MissionManager() {
