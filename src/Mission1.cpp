@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Mission1::Mission1(): blackSquare("img/blacksquare.png") {
+Mission1::Mission1() : Mission()/*: blackSquare("img/blacksquare.png")*/ {
 	initialState = "StageState";
 	initialX = 600; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -16,18 +16,18 @@ Mission1::Mission1(): blackSquare("img/blacksquare.png") {
 
 	//StageState = 0;
 	//HallState = 0;
-	trancada = false;
-	begin = true;
-	count = 0;
+	//trancada = false;
+	//begin = true;
+	//count = 0;
 
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 102;
 	auxcolor.g = 0;
 	auxcolor.b = 0;
 
-	flagTimer = true; //stopMusic = false;
-	time = Timer();
-	cooldown = Timer();
+	//flagTimer = true; //stopMusic = false;
+	//time = Timer();
+	//cooldown = Timer();
 	tx = Text("font/uwch.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 1", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 
@@ -183,7 +183,7 @@ void  Mission1::Update(float dt){
 
 }
 //MENSAGEM DE PORTA TRANCADA
-void Mission1::MessageDoor(float dt){
+/*void Mission1::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
 				falas.SetText("ESTÁ TRANCADA");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -208,7 +208,7 @@ void Mission1::MessageDoor(float dt){
 				}
 			}
 
-}
+}*/
 void  Mission1::Render(){
 	//printf("teste2 \n");
 	if(time.Get() < 3 && begin ){

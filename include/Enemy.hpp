@@ -32,7 +32,7 @@ public:
 
 	static Enemy * enemy;
 
-	Vec2 previousPos;
+	//Vec2 previousPos;
 
 	static bool show;
 	static bool arrived;

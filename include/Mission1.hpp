@@ -37,14 +37,14 @@ public:
 
 	void Update(float dt);
 	void Render();
-	void MessageDoor(float dt);
-	bool tried;
+	/*void MessageDoor(float dt);
+	bool tried;*/
 
 protected:
 	void SetObjectStage();
 	void SetObjectHall();
 
-	Text tx;
+	/*Text tx;
 	Text falas;
 	Timer cooldown;
 	Timer time;
@@ -54,7 +54,7 @@ protected:
 	bool trancada;
 	bool begin;
 	int state;
-	int count;
+	int count;*/
 
 	//int StageState;
 	//int HallState;

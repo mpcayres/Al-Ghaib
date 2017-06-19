@@ -55,7 +55,7 @@ public:
 	void RenderInHand();
 	void RenderNoise();
 
-	Vec2 previousPos;
+	//Vec2 previousPos;
 	Rect limits;
 	std::vector<Rect> wallLimits;
 

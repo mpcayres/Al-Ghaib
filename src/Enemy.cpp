@@ -171,23 +171,23 @@ void Enemy::DefinedPath(){
 		}
 
 		//if(arrived){
-			std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << (unsigned) (destinationPath.back().y - box.y) << std::endl;
+			//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
 			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
 				if(destinationPath.back().x < box.x){
-					std::cout << " OESTE " << std::endl;
+					//std::cout << " OESTE " << std::endl;
 					direcao = OESTE;
 				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
-					std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
+					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
 					direcao = LESTE;
 				}
 			}
 			else{
 					if(destinationPath.back().y < box.y){
-					std::cout << " NORTE " << std::endl;
+					//std::cout << " NORTE " << std::endl;
 					direcao = NORTE;
 				}
 				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
-					std::cout << " SUL " << std::endl;
+					//std::cout << " SUL " << std::endl;
 					direcao = SUL;
 				}
 			}
@@ -196,47 +196,63 @@ void Enemy::DefinedPath(){
 		if (speed.x < 0 && speed.y < 0){
 			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
 				speed.y + box.y -  VALUE <= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x = destinationPath.back().x - box.w/2;
 				box.y = destinationPath.back().y - box.h/2;
 
 				//seen = false;
 
 			} else{
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x += speed.x;
 				box.y += speed.y;
 			}
 		} else if (speed.x > 0 && speed.y < 0){
 			if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
 					speed.y + box.y -  VALUE <= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
 
 				//seen = false;
 
 				}else{
+					previousPos.x = box.x;
+					previousPos.y = box.y;
 					box.x += speed.x;
 					box.y += speed.y;
 				}
 		} else if (speed.x < 0 && speed.y > 0){
 			if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
 					speed.y + box.y +  VALUE >= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
 
 				//seen = false;
 
 				}else{
+					previousPos.x = box.x;
+					previousPos.y = box.y;
 					box.x += speed.x;
 					box.y += speed.y;
 				}
 		} else if (speed.x > 0 && speed.y > 0){
 			if(box.x +speed.x + VALUE >= destinationPath.back().x &&
 					speed.y + box.y + VALUE >= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
 
 				//seen = false;
 			} else{
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x += speed.x;
 				box.y += speed.y;
 			}
@@ -257,21 +273,21 @@ void Enemy::Pursuit(){
 		speed.x = speed.x*SPEED_CONTROL;
 		speed.y = speed.y*SPEED_CONTROL;
 	}
-	if((unsigned) destination.x- box.x > (unsigned) destination.y- box.y){
+	if((unsigned) (destination.x- box.x) > (unsigned) (destination.y- box.y)){
 		if(destination.x > box.x){
-			std::cout << " lESTE " << std::endl;
+			//std::cout << " lESTE " << std::endl;
 					direcao = LESTE;
 		}else if(destination.x < box.CenterX() || destination.x < box.x){
-			std::cout << " OESTE " << std::endl;
+			//std::cout << " OESTE " << std::endl;
 			direcao = OESTE;
 		}
 	}
 	else{
 		if(destination.y > box.y){
-			std::cout << " SUL " << std::endl;
+			//std::cout << " SUL " << std::endl;
 			direcao = SUL;
 		}else if(destination.y < box.CenterY()  || destination.y < box.y){
-			std::cout << " NORTE " << std::endl;
+			//std::cout << " NORTE " << std::endl;
 			direcao = NORTE;
 		}
 	}
@@ -280,47 +296,63 @@ void Enemy::Pursuit(){
 	if (speed.x < 0 && speed.y < 0){
 		if(box.x + speed.x -  VALUE <= destination.x &&
 			speed.y + box.y -  VALUE <= destination.y){
+			previousPos.x = box.x;
+			previousPos.y = box.y;
 			box.x = destination.x - box.w/2;
 			box.y = destination.y - box.h/2;
 
 			//seen = false;
 
 		} else{
+			previousPos.x = box.x;
+			previousPos.y = box.y;
 			box.x += speed.x;
 			box.y += speed.y;
 		}
 	} else if (speed.x > 0 && speed.y < 0){
 		if(box.x +speed.x +  VALUE >= destination.x &&
 				speed.y + box.y -  VALUE <= destination.y){
+			previousPos.x = box.x;
+			previousPos.y = box.y;
 			box.x = destination.x;
 			box.y = destination.y;
 
 			//seen = false;
 
 			}else{
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x += speed.x;
 				box.y += speed.y;
 			}
 	} else if (speed.x < 0 && speed.y > 0){
 		if(box.x +speed.x -  VALUE <= destination.x &&
 				speed.y + box.y +  VALUE >= destination.y){
+			previousPos.x = box.x;
+			previousPos.y = box.y;
 			box.x = destination.x;
 			box.y = destination.y;
 
 			//seen = false;
 
 			}else{
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x += speed.x;
 				box.y += speed.y;
 			}
 	} else if (speed.x > 0 && speed.y > 0){
 		if(box.x +speed.x + VALUE >= destination.x &&
 				speed.y + box.y + VALUE >= destination.y){
+			previousPos.x = box.x;
+			previousPos.y = box.y;
 			box.x = destination.x;
 			box.y = destination.y;
 
 			//seen = false;
 		} else{
+			previousPos.x = box.x;
+			previousPos.y = box.y;
 			box.x += speed.x;
 			box.y += speed.y;
 		}

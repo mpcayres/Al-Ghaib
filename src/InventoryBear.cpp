@@ -17,6 +17,7 @@ bool InventoryBear::Action(GameObject* other){
 		return (((SceneDoor*)other)->ReceiveAction(this));
 	}
 	return false;*/
+	return false;
 }
 
 bool InventoryBear::IsObject(std::string type){

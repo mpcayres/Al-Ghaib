@@ -18,7 +18,7 @@ public:
 
 	float rotation;
 	Rect box;
-
+	Vec2 previousPos;
 
 };
 

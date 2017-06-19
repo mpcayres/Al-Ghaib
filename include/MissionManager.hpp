@@ -10,6 +10,7 @@
 #include <fstream>
 
 class Player;
+class Mission;
 
 class MissionManager {
 public:

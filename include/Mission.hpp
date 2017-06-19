@@ -5,6 +5,11 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "Text.hpp"
+#include "Timer.hpp"
+#include "Sprite.hpp"
+#include "InputManager.hpp"
+#include "MissionManager.hpp"
 
 class Mission {
 public:
@@ -31,6 +36,9 @@ public:
 	//bool GetDoor();
 	//void SetDoor(bool value);
 
+	void MessageDoor(float dt);
+	bool tried;
+
 
 protected:
 	bool popRequested, quitRequested;
@@ -42,6 +50,19 @@ protected:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
 	std::string initialState;
 	int initialX, initialY;
+
+
+	Text tx;
+	Text falas;
+	Timer cooldown;
+	Timer time;
+	Sprite blackSquare;
+	float ultimoTempo;
+	bool flagTimer;
+	bool trancada;
+	bool begin;
+	int state;
+	int count;
 };
 
 #endif /* SRC_MISSION_HPP_ */

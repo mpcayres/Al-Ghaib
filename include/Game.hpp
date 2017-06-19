@@ -30,6 +30,7 @@
 #define SCREEN_SIZE_H 600
 
 class MissionManager;
+class Mission;
 
 class Game{
 public:
