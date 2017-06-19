@@ -11,6 +11,7 @@
 #define  VALUE 3
 #define SPEED_CONTROL 3
 #define ENEMY_COOLDOWN 3
+#define MOV_OFFSET 1
 
 class Enemy : public GameObject{
 public:

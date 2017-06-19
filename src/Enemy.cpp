@@ -33,6 +33,8 @@ Enemy::Enemy(float x, float y): sp("img/mom_sprite.png", 8, 0.06, 4){
 
 	time = Timer();
 
+	direcao = SUL;
+
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
@@ -147,7 +149,7 @@ void Enemy::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
 	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
-		if(/*this->box.x == destinationPath.back().x && this->box.y == destinationPath.back().y */ aux.Distance(destinationPath.back())<= 10 ){
+		if(/*this->box.x == destinationPath.back().x && this->box.y == destinationPath.back().y */ aux.Distance(destinationPath.back())<= 5 ){
 				//printf("POPANDO");
 
 			arrived = true;
@@ -168,25 +170,28 @@ void Enemy::DefinedPath(){
 			speed.y = speed.y*SPEED_CONTROL;
 		}
 
-		if(destinationPath.back().x - box.x > destinationPath.back().y- box.y){
-			if(destinationPath.back().x > box.x){
-				std::cout << " lESTE " << std::endl;
-				direcao = LESTE;
-			}else if(destinationPath.back().x < box.x){
-				std::cout << " OESTE " << std::endl;
-				direcao = OESTE;
+		//if(arrived){
+			std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << (unsigned) (destinationPath.back().y - box.y) << std::endl;
+			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
+				if(destinationPath.back().x < box.x){
+					std::cout << " OESTE " << std::endl;
+					direcao = OESTE;
+				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
+					std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
+					direcao = LESTE;
+				}
 			}
-		}
-		else{
-			if(destinationPath.back().y > box.y){
-				std::cout << " SUL " << std::endl;
-				direcao = SUL;
-			}else if(destinationPath.back().y < box.y){
-				std::cout << " NORTE " << std::endl;
-				direcao = NORTE;
+			else{
+					if(destinationPath.back().y < box.y){
+					std::cout << " NORTE " << std::endl;
+					direcao = NORTE;
+				}
+				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
+					std::cout << " SUL " << std::endl;
+					direcao = SUL;
+				}
 			}
-		}
-
+		//}
 
 		if (speed.x < 0 && speed.y < 0){
 			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
@@ -252,11 +257,11 @@ void Enemy::Pursuit(){
 		speed.x = speed.x*SPEED_CONTROL;
 		speed.y = speed.y*SPEED_CONTROL;
 	}
-	if(destination.x- box.x > destination.y- box.y){
+	if((unsigned) destination.x- box.x > (unsigned) destination.y- box.y){
 		if(destination.x > box.x){
 			std::cout << " lESTE " << std::endl;
 					direcao = LESTE;
-		}else if(destination.x < box.x){
+		}else if(destination.x < box.CenterX() || destination.x < box.x){
 			std::cout << " OESTE " << std::endl;
 			direcao = OESTE;
 		}
@@ -265,7 +270,7 @@ void Enemy::Pursuit(){
 		if(destination.y > box.y){
 			std::cout << " SUL " << std::endl;
 			direcao = SUL;
-		}else if(destination.y < box.y){
+		}else if(destination.y < box.CenterY()  || destination.y < box.y){
 			std::cout << " NORTE " << std::endl;
 			direcao = NORTE;
 		}
