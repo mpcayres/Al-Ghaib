@@ -4,6 +4,9 @@
 #include "State.hpp"
 #include "Sprite.hpp"
 #include "Geometry.hpp"
+#include "TileSet.hpp"
+#include "TileMap.hpp"
+
 
 class HallState : public State {
 public:
@@ -24,6 +27,8 @@ private:
 	Sprite background;
 	Sprite bg;
 	Rect limits;
+	TileSet tileSet;
+	TileMap tileMap;
 };
 
 #endif /* SRC_HALLSTATE_HPP_ */

@@ -9,13 +9,15 @@
 
 #include <iostream>
 
-HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) {
-	limits = Rect(-1500,-15000,13500,53000);//tileMap.FindLimits();
+HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
+	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMapHall.txt", &tileSet) {
+
+	limits = tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
 	else SetPlayer(450, 400, CAMERA_TYPE2, limits);
-	MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
-	MissionManager::player->AddWallLimits(Rect(725, 282, 130, 125));
-	MissionManager::player->AddWallLimits(Rect(1175, 282, 130, 125));
+	//MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
+	//MissionManager::player->AddWallLimits(Rect(725, 282, 130, 125));
+	//MissionManager::player->AddWallLimits(Rect(1175, 282, 130, 125));
 	if(inicial){
 		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -105,7 +107,8 @@ void HallState::Update(float dt){
 
 void HallState::Render(){
 	background.Render(0,0,0);
-	bg.Render(0 - Camera::pos.x, Camera::pos.y,0);
+	bg.Render(0 - Camera::pos.x, Camera::pos.y+33,0);
+	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
 	//bg.Render(0,0,0);
 	RenderArray();
 
@@ -123,9 +126,9 @@ void HallState::SetInitialObjectArray(){
 	//Walls *Wall1 = new Walls(270, 282, 130, 125);
 	//Walls *Wall2 = new Walls(725, 282, 130, 125);
 	//Walls *Wall3 = new Walls(1175, 282, 130, 125);
-	SceneDoor* DoorToKidRoom = new SceneDoor(300, 320, "StageState", false);
-	SceneDoor* DoorToMomRoom = new SceneDoor(900, 70, "StageState");
-	SceneDoor* DoorToLivingroom = new SceneDoor(500, 70, "StageState");
+	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
+	SceneDoor* DoorToMomRoom = new SceneDoor(900, 103, "StageState");
+	SceneDoor* DoorToLivingroom = new SceneDoor(500, 103, "StageState");
 	MovingObject* Table = new MovingObject(1000, 400, "img/box.png");
 
 	objectArray.emplace_back(EB);

@@ -17,7 +17,7 @@
 #include <iostream>
 
 StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	tileSet(64, 64, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
+	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
