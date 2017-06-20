@@ -27,21 +27,37 @@ void MovingObject::Render(){
 
 bool MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
-		//Se ficar aqui, so de chegar perto, ja entra na animacao de empurrar
-		//MissionManager::missionManager->movingBox = true;
-		if(InputManager::GetInstance().IsKeyDown(Z_KEY)){
+		if(InputManager::GetInstance().IsKeyDown(LCTRL_KEY) && InputManager::GetInstance().KeyPress(Z_KEY)){
+			//colocar animacao para subir na cadeira
+			if(!MissionManager::player->GetAboveObject()){
+				MissionManager::player->box.x = box.x + box.w/2 - MissionManager::player->box.w/2;
+				MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 10;
+				MissionManager::player->ChangeAboveObject();
+				return true;
+			} else{
+				MissionManager::player->box.x = MissionManager::player->previousPos.x;
+				MissionManager::player->box.y = MissionManager::player->previousPos.y;
+				MissionManager::player->ChangeAboveObject();
+				return false;
+			}
+		} else if(InputManager::GetInstance().IsKeyDown(Z_KEY) && !MissionManager::player->GetAboveObject()){
 			MissionManager::missionManager->movingBox = true;
 			previousPos = Vec2(box.x, box.y);
 			bool bloqMov = false;
-			Rect boxAux = box;
+			Rect boxAux = box, boxAuxPlayer = MissionManager::player->box;
 			boxAux.x += MissionManager::player->GetSpeed().x; boxAux.y += MissionManager::player->GetSpeed().y;
+			boxAuxPlayer.x += MissionManager::player->GetSpeed().x; boxAuxPlayer.y += MissionManager::player->GetSpeed().y;
 			for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
 				bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
 				if(bloqMov == true) break;
+				bloqMov = boxAuxPlayer.Collide(MissionManager::player->wallLimits[i]);
+				if(bloqMov == true) break;
 			}
 
-			if(boxAux.x < MissionManager::player->limits.w - box.w &&
-					boxAux.x > MissionManager::player->limits.x && !bloqMov){
+			if(boxAux.x < MissionManager::player->limits.w - boxAux.w &&
+					boxAuxPlayer.x < MissionManager::player->limits.w - boxAuxPlayer.w &&
+					boxAux.x > MissionManager::player->limits.x &&
+					boxAuxPlayer.x > MissionManager::player->limits.x && !bloqMov){
 				if((MissionManager::player->box).Intersect(box) &&
 						(MissionManager::player->GetDirecao() == NORTE || MissionManager::player->GetDirecao() == SUL)){
 					MissionManager::missionManager->movingBox = false;
@@ -49,8 +65,10 @@ bool MovingObject::NotifyCollision(GameObject& other){
 					box.x += MissionManager::player->GetSpeed().x;
 				}
 			}
-			if(boxAux.y < MissionManager::player->limits.h - box.h &&
-					boxAux.y > MissionManager::player->limits.y && !bloqMov){
+			if(boxAux.y < MissionManager::player->limits.h - boxAux.h &&
+					boxAuxPlayer.y < MissionManager::player->limits.h - boxAuxPlayer.h &&
+					boxAux.y > MissionManager::player->limits.y &&
+					boxAuxPlayer.y > MissionManager::player->limits.y && !bloqMov){
 				if((MissionManager::player->box).Intersect(box) &&
 						(MissionManager::player->GetDirecao() == NORTE || MissionManager::player->GetDirecao() == SUL)){
 					MissionManager::missionManager->movingBox = false;

@@ -11,7 +11,7 @@
 
 class PickUpObject : public GameObject {
 public:
-	PickUpObject(float x, float y, std::string obj, std::string img);
+	PickUpObject(float x, float y, std::string obj, std::string img, bool bloq = false, float scaleX = 1, float scaleY = 1);
 
 	void Update(float dt);
 	void Render();
@@ -21,10 +21,8 @@ public:
 
 private:
 	std::string obj;
-	//std::string objSp;
 	Sprite sp;
-	bool dead;
-	bool selected; //provavelmente vai mudar quando tiver o inventario
+	bool dead, bloqPick;
 };
 
 #endif /* SRC_STORAGEOBJECT_H_ */

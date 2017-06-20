@@ -1,5 +1,6 @@
 #include "Mission1.hpp"
 #include "PickUpObject.hpp"
+#include "SceneObject.hpp"
 #include "SceneWindow.hpp"
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
@@ -50,32 +51,35 @@ Mission1::~Mission1() {
 
 }
 
+//!!!!!!!!! Colocar MovingObject por ultimo em todos os casos
 void Mission1::SetObjectStage(){
-	MovingObject* Vaso = new MovingObject(500, 400, "img/scene-vaso.png");
-	objectStage.emplace_back(Vaso);
-	MovingObject* Cadeira = new MovingObject(400, 500, "img/scene-cadeira.png");
-	objectStage.emplace_back(Cadeira);
 	SceneWindow* Window = new SceneWindow(350, 200);
 	objectStage.emplace_back(Window);
 	StealthObject* Stealth = new StealthObject(700, 500, "img/scene-escrivaninha-fechado.png");
 	objectStage.emplace_back(Stealth);
 	PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
 	objectStage.emplace_back(PO);
-	PickUpObject* Clown = new PickUpObject(400, 400, "InventoryClown", "img/key.png");
+	SceneObject* Armario =  new SceneObject(350, 400, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	objectStage.emplace_back(Armario);
+	PickUpObject* Clown = new PickUpObject(380, 430, "InventoryClown", "img/key.png", true, 0.5, 0.5);
 	objectStage.emplace_back(Clown);
+	MovingObject* Vaso = new MovingObject(500, 400, "img/scene-vaso.png");
+	objectStage.emplace_back(Vaso);
+	MovingObject* Cadeira = new MovingObject(400, 500, "img/scene-cadeira.png");
+	objectStage.emplace_back(Cadeira);
 }
 
 void Mission1::SetObjectHall(){
-	MovingObject* Table = new MovingObject(1000, 400, "img/scene-vaso.png");
-	objectHall.emplace_back(Table);
 	SceneWindow* Window = new SceneWindow(350, 70);
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);
 	Enemy* E = new Enemy(500, 110);
 	objectHall.emplace_back(E);
-	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/object-bear.png");
+	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/object-bear.png", 1.5, 1.5);
 	objectHall.emplace_back(Bear);
+	MovingObject* Table = new MovingObject(1000, 400, "img/scene-vaso.png");
+	objectHall.emplace_back(Table);
 }
 
 void Mission1::SetObjectRoom(){

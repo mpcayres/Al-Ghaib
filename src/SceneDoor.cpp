@@ -27,7 +27,6 @@ bool SceneDoor::NotifyCollision(GameObject& other){
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 
-				//Nesse caso nao precisa no eixo y
 				if((MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h)
 					&& (MissionManager::player->GetDirecao() == Player::LESTE ||
 						MissionManager::player->GetDirecao() == Player::OESTE)){

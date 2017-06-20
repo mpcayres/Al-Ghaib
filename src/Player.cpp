@@ -60,6 +60,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	hidden = false;
 	animShowing = false;
 	door = false;
+	aboveObject = false;
 }
 
 Player::~Player(){
@@ -71,7 +72,7 @@ Player::~Player(){
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
-	if(!showingInventory && !hidden && !Camera::GetMoving()){
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject){
 		std::shared_ptr<InventoryObject> inHand = GetInHand();
 		if(inHand != nullptr){
 			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
@@ -147,26 +148,32 @@ void Player::Update(float dt){
 			running = false;
 		}
 
-		if(speed.x != 0 || speed.y != 0){
-			spKinder.Update(dt, direcao, direcaoShift);
-			spKinderRun.Update(dt, direcao, direcaoShift);
-			spKinderPush.Update(dt, direcao - 2, direcaoShift);
-
-			if(running) multiplicador = 10;
-			else multiplicador = 1;
-		} else{
-			if((spKinder.GetCurrentFrame() > 1 && spKinder.GetCurrentFrame() < 12) ||
-					(spKinder.GetCurrentFrame() > 12 && spKinder.GetCurrentFrame() <= 20)){
-				if(direcao == NORTE) speed.y = -DESACELERA;
-				if(direcao == SUL) speed.y = DESACELERA;
-				if(direcao == LESTE) speed.x = DESACELERA;
-				if(direcao == OESTE) speed.x = -DESACELERA;
-
+		if(!aboveObject){
+			if(speed.x != 0 || speed.y != 0){
 				spKinder.Update(dt, direcao, direcaoShift);
-			}
+				spKinderRun.Update(dt, direcao, direcaoShift);
+				spKinderPush.Update(dt, direcao - 2, direcaoShift);
 
-			multiplicador = 0;
+				if(running) multiplicador = 10;
+				else multiplicador = 1;
+			} else{
+				if((spKinder.GetCurrentFrame() > 1 && spKinder.GetCurrentFrame() < 12) ||
+						(spKinder.GetCurrentFrame() > 12 && spKinder.GetCurrentFrame() <= 20)){
+					if(direcao == NORTE) speed.y = -DESACELERA;
+					if(direcao == SUL) speed.y = DESACELERA;
+					if(direcao == LESTE) speed.x = DESACELERA;
+					if(direcao == OESTE) speed.x = -DESACELERA;
+
+					spKinder.Update(dt, direcao, direcaoShift);
+				}
+
+				multiplicador = 0;
+			}
+		} else {
+			spKinder.Update(0, direcao, direcaoShift);
+			multiplicador = 0.5;
 		}
+
 		AddRuido(0.2 * multiplicador);
 
 		if(multiplicador == 0 && ruido > 0){
@@ -178,23 +185,26 @@ void Player::Update(float dt){
 			}
 		}
 
-		//printf("%f\n", ruido);
-		bool bloqMov = false;
-		Rect boxAux = box;
-		boxAux.x += speed.x; boxAux.y += speed.y;
-		for(unsigned int i = 0; i < wallLimits.size(); i++){
-			bloqMov = boxAux.Collide(wallLimits[i]);
-			if(bloqMov == true) break;
+		if(!aboveObject){
+			//printf("%f\n", ruido);
+			bool bloqMov = false;
+			Rect boxAux = box;
+			boxAux.x += speed.x; boxAux.y += speed.y;
+			for(unsigned int i = 0; i < wallLimits.size(); i++){
+				bloqMov = boxAux.Collide(wallLimits[i]);
+				if(bloqMov == true) break;
+			}
+
+			if(boxAux.x < limits.w - box.w && boxAux.x > limits.x && !bloqMov){
+				previousPos.x = box.x;
+				box.x += speed.x;
+			}
+			if(boxAux.y < limits.h - box.h && boxAux.y > limits.y && !bloqMov){
+				previousPos.y = box.y;
+				box.y += speed.y;
+			}
 		}
 
-		if(boxAux.x < limits.w - box.w && boxAux.x > limits.x && !bloqMov){
-			previousPos.x = box.x;
-			box.x += speed.x;
-		}
-		if(boxAux.y < limits.h - box.h && boxAux.y > limits.y && !bloqMov){
-			previousPos.y = box.y;
-			box.y += speed.y;
-		}
 		if(InputInstance.KeyPress(I_KEY)){
 			showingInventory = true;
 			inventoryIndex = inHandIndex;
@@ -303,7 +313,7 @@ bool Player::CollidingPlayer(Rect boxCol, int offset){
 		MissionManager::player->box.y = MissionManager::player->previousPos.y;
 	}*/
 	bool invert = false;
-	if(box.y + box.h - offset < boxCol.y + boxCol.h){
+	if(!aboveObject && (box.y + box.h - offset < boxCol.y + boxCol.h)){
 
 		if(box.y + offset < boxCol.y){
 			//std::cout << "HIDDING" << std::endl;
@@ -315,7 +325,7 @@ bool Player::CollidingPlayer(Rect boxCol, int offset){
 				box.x = previousPos.x;
 				box.y = previousPos.y;
 			} else{
-				box.x = boxCol.x + boxCol.w + 1;
+				box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
 			}
 		} else if((box.x + box.w > boxCol.x && box.x < boxCol.x) ||
 					(boxCol.InsideX(box) && box.CenterX() < boxCol.CenterX())){
@@ -324,7 +334,7 @@ bool Player::CollidingPlayer(Rect boxCol, int offset){
 				box.x = previousPos.x;
 				box.y = previousPos.y;
 			} else{
-				box.x = boxCol.x - box.w - 1;
+				box.x =  previousPos.x;//boxCol.x - box.w - 1;
 			}
 		}
 
@@ -358,6 +368,14 @@ void Player::ResetWallLimits(){
 void Player::ChangeHiddenState(){
 	hidden = !hidden;
 	timeCooldown.Restart();
+}
+
+void Player::ChangeAboveObject(){
+	aboveObject = !aboveObject;
+}
+
+bool Player::GetAboveObject(){
+	return aboveObject;
 }
 
 int Player::GetDirecao(){

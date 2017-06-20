@@ -15,7 +15,7 @@
 
 class SceneObject : public GameObject {
 public:
-	SceneObject(float x, float y, std::string img, std::string img2);
+	SceneObject(float x, float y, std::string img, std::string img2, float rot = 0, float scaleX = 1, float scaleY = 1);
 
 	void Update(float dt);
 	void Render();

@@ -35,7 +35,9 @@ public:
 	void AddWallLimits(Rect limits);
 	void ResetWallLimits();
 	void ChangeHiddenState();
+	void ChangeAboveObject();
 
+	bool GetAboveObject();
 	int GetDirecao();
 	Vec2 GetSpeed();
 	void SetDoor(bool value);
@@ -78,8 +80,7 @@ private:
 	InputManager InputInstance;
 
 	bool direcaoShift;
-
-	bool door, hidden, animShowing;
+	bool door, hidden, animShowing, aboveObject;
 	float ruido;
 };
 

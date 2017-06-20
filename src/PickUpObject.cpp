@@ -4,9 +4,11 @@
 #include "Player.hpp"
 #include <iostream>
 
-PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img) : obj(obj), sp(img){
+PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img, bool bloq, float scaleX, float scaleY) :
+	obj(obj), sp(img){
+	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	dead = false;
-	selected = false;
+	bloqPick = bloq;
 	rotation = 0;
 	box.x = x  - sp.GetWidth()/2;
 	box.y = y  - sp.GetHeight()/2;
@@ -30,10 +32,11 @@ bool PickUpObject::IsDead(){
 bool PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
-			std::cout <<"ate aqui ok 1.5 " << std::endl;
-
-			MissionManager::player->AddInventory(obj);
+			if(!bloqPick || (bloqPick && MissionManager::player->GetAboveObject())){
+				dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
+				//std::cout <<"ate aqui ok 1.5 " << std::endl;
+				MissionManager::player->AddInventory(obj);
+			}
 		}
 	}
 	return false;
