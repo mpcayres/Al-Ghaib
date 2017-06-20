@@ -27,9 +27,9 @@ bool SceneObject::IsEstado(){
 	return estado;
 }
 
-void SceneObject::NotifyCollision(GameObject& other){
+bool SceneObject::NotifyCollision(GameObject& other){
 	if(other.Is("Player")){
-		if((MissionManager::player->box.CenterX() < box.x || MissionManager::player->box.CenterX() > box.x )
+		/*if((MissionManager::player->box.CenterX() < box.x || MissionManager::player->box.CenterX() > box.x )
 				&&(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h)) {
 
 			MissionManager::player->box.x = MissionManager::player->previousPos.x;
@@ -37,9 +37,10 @@ void SceneObject::NotifyCollision(GameObject& other){
 		}
 
 		if(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h ||
-				MissionManager::player->box.y/* + MissionManager::player->box.h*/ > box.y + box.h){
+				MissionManager::player->box.y > box.y + box.h){
 			MissionManager::player->box.y = MissionManager::player->previousPos.y;
-		}
+		}*/
+		return MissionManager::player->CollidingPlayer(box, OFFSET_PISO);
 	}
 
 	if (other.Is("Enemy")){
@@ -110,6 +111,7 @@ void SceneObject::NotifyCollision(GameObject& other){
 		}
 	}
 
+	return false;
 }
 
 bool SceneObject::Is(std::string type){

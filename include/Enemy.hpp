@@ -22,7 +22,7 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDead();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	void Shoot();
 	bool Is(std::string type);
 	void Pursuit();

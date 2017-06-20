@@ -28,7 +28,7 @@ void Walls::Render(){
 	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
 }
 
-void Walls::NotifyCollision(GameObject& other){
+bool Walls::NotifyCollision(GameObject& other){
 
 	if(other.Is("Player")){
 		if(MissionManager::player->box.x < box.x + box.w ||
@@ -61,6 +61,8 @@ void Walls::NotifyCollision(GameObject& other){
 				other.box.y =  other.previousPos.y;
 			}
 	}
+
+	return false;
 
 }
 

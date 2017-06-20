@@ -1,6 +1,5 @@
 #include "Player.hpp"
 #include "Camera.hpp"
-#include "Bullet.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
@@ -12,8 +11,6 @@
 #define MODULO_SPEED		5
 #define AUMENTO_VELOCIDADE	2
 #define DESACELERA			1
-
-int contPush = 0;
 
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
@@ -253,12 +250,13 @@ void Player::Update(float dt){
 
 }
 
-void Player::NotifyCollision(GameObject& other){
+bool Player::NotifyCollision(GameObject& other){
 	/*if(other.Is("Enemy")){
 		//hp = 0;
 		//Camera::Unfollow();
 		//printf("CAUGHT YOU!");
 	}*/
+	return false;
 }
 
 void Player::Render(){
@@ -293,6 +291,46 @@ void Player::SetDirecao(int dir){
 	direcao = (InvBox) dir;
 	spKinder.SetFrame(1, direcao);
 	spKinderRun.SetFrame(1, direcao);
+}
+
+bool Player::CollidingPlayer(Rect boxCol, int offset){
+	/*if(MissionManager::player->box.x < box.x + box.w ||
+			MissionManager::player->box.x + MissionManager::player->box.w > box.x){
+		MissionManager::player->box.x = MissionManager::player->previousPos.x;
+	}
+	if(MissionManager::player->box.y < box.y + box.h ||
+			MissionManager::player->box.y + MissionManager::player->box.h > box.y){
+		MissionManager::player->box.y = MissionManager::player->previousPos.y;
+	}*/
+	bool invert = false;
+	if(box.y + box.h - offset < boxCol.y + boxCol.h){
+
+		if(box.y + offset < boxCol.y){
+			//std::cout << "HIDDING" << std::endl;
+			invert = true;
+		} else if((box.x < boxCol.x + boxCol.w && box.x + box.w > boxCol.x + boxCol.w) ||
+				(boxCol.InsideX(box) && box.CenterX() >= boxCol.CenterX())){
+			if(GetDirecao() == Player::SUL || GetDirecao() == Player::NORTE){
+				if(GetDirecao() == Player::SUL) invert = true;
+				box.x = previousPos.x;
+				box.y = previousPos.y;
+			} else{
+				box.x = boxCol.x + boxCol.w + 1;
+			}
+		} else if((box.x + box.w > boxCol.x && box.x < boxCol.x) ||
+					(boxCol.InsideX(box) && box.CenterX() < boxCol.CenterX())){
+			if(GetDirecao() == Player::SUL || GetDirecao() == Player::NORTE){
+				if(GetDirecao() == Player::SUL) invert = true;
+				box.x = previousPos.x;
+				box.y = previousPos.y;
+			} else{
+				box.x = boxCol.x - box.w - 1;
+			}
+		}
+
+	}
+
+	return invert;
 }
 
 void Player::Running(InputManager InputInstance){

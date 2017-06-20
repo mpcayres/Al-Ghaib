@@ -1,7 +1,6 @@
 #include "Bear.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
-#include "Bullet.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
@@ -34,6 +33,7 @@ Bear::Bear(float x, float y): sp("img/obj_r_bear.png"){
 	time = Timer();
 
 	direcao = SUL;
+	direcaoShift = false;
 
 	hp = 30;
 	rotation = 0;
@@ -109,7 +109,7 @@ void Bear::Shoot(){
 	//aux = aux.Rotate(cannonAngle);
 }
 
-void Bear::NotifyCollision(GameObject& other){
+bool Bear::NotifyCollision(GameObject& other){
 	if(other.Is("CollidableObject")){
 
 		if( MissionManager::player != nullptr){
@@ -127,8 +127,9 @@ void Bear::NotifyCollision(GameObject& other){
 		}
 	}
 
-
+	return false;
 }
+
 void Bear::SetDestinationPath(Vec2 path){
 	destinationPath.emplace_back(path);
 }

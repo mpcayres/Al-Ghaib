@@ -27,7 +27,9 @@ bool Animation::IsDead(){
 	return (oneTimeOnly && endTimer.Get()>= timeLimit);
 }
 
-void Animation::NotifyCollision(GameObject& other){}
+bool Animation::NotifyCollision(GameObject& other){
+	return false;
+}
 
 bool Animation::Is(std::string type){
 	return(type == "Animation");

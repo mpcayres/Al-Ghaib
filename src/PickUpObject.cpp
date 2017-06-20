@@ -27,7 +27,7 @@ bool PickUpObject::IsDead(){
 }
 
 // Talvez colocar pra pegar quando estiver proximo
-void PickUpObject::NotifyCollision(GameObject& other){
+bool PickUpObject::NotifyCollision(GameObject& other){
 	if(!dead && other.Is("Player")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
@@ -36,6 +36,7 @@ void PickUpObject::NotifyCollision(GameObject& other){
 			MissionManager::player->AddInventory(obj);
 		}
 	}
+	return false;
 }
 
 bool PickUpObject::Is(std::string type){

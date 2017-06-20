@@ -1,7 +1,6 @@
 #include "Enemy.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
-#include "Bullet.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "Sound.hpp"
@@ -120,7 +119,7 @@ void Enemy::Shoot(){
 	//aux = aux.Rotate(cannonAngle);
 }
 
-void Enemy::NotifyCollision(GameObject& other){
+bool Enemy::NotifyCollision(GameObject& other){
 	if(other.Is("CollidableObject")){
 
 		if(seen && MissionManager::player != nullptr){
@@ -141,7 +140,9 @@ void Enemy::NotifyCollision(GameObject& other){
 		seen = false;
 	}
 
+	return false;
 }
+
 void Enemy::SetDestinationPath(Vec2 path){
 	destinationPath.emplace_back(path);
 }

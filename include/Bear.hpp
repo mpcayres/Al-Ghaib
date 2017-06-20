@@ -8,12 +8,12 @@
 #include "Player.hpp"
 #include "EmptyBox.hpp"
 #include <iostream>
-#define  VALUE 3
+#define VALUE 3
 #define SPEED_CONTROL 3
 #define Bear_COOLDOWN 3
 #define MOV_OFFSET 1
 
-class Bear : public GameObject{
+class Bear : public GameObject {
 public:
 	enum InvBox{LESTE, OESTE, SUL, NORTE};
 	Bear(float x, float y);
@@ -22,7 +22,7 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDead();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	void Shoot();
 	bool Is(std::string type);
 	//void Pursuit();

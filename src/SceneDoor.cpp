@@ -10,7 +10,7 @@ SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::strin
 	changeState = false;
 }
 
-void SceneDoor::NotifyCollision(GameObject& other){
+bool SceneDoor::NotifyCollision(GameObject& other){
 	if(!other.Is("EmptyBox")){
 		SceneObject::NotifyCollision(other);
 	} else{
@@ -48,6 +48,8 @@ void SceneDoor::NotifyCollision(GameObject& other){
 			}
 		}
 	}
+
+	return false;
 }
 
 bool SceneDoor::Is(std::string type){

@@ -10,7 +10,7 @@
 #include <iostream>
 
 HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMapHall.txt", &tileSet) {
+	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMapHall.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
@@ -30,8 +30,6 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	}
 	objectArray.emplace_back(MissionManager::player);
 
-	quitRequested = false;
-	popRequested = false;
 	LoadAssets();
 	//std::cout << "HSC2" << std::endl;
 }
@@ -72,6 +70,7 @@ void HallState::Update(float dt){
 	UpdateArray(dt);
 
 	int changeIndex = -1;
+	posInvert = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if(objectArray[i].get()->Is("SceneDoor")){
 			//std::cout << "DOOR" << std::endl;
@@ -83,8 +82,12 @@ void HallState::Update(float dt){
 			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
 				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
 
-				objectArray[i].get()->NotifyCollision(*objectArray[j].get());
-				objectArray[j].get()->NotifyCollision(*objectArray[i].get());
+				if(objectArray[i].get()->NotifyCollision(*objectArray[j].get())){
+					if(i > posInvert) posInvert = i;
+				}
+				if(objectArray[j].get()->NotifyCollision(*objectArray[i].get())){
+					if(j > posInvert) posInvert = j;;
+				}
 
 			}
 		}
@@ -129,6 +132,4 @@ void HallState::SetInitialObjectArray(){
 	objectArray.emplace_back(DoorToMomRoom);
 	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 103, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
-	MovingObject* Table = new MovingObject(1000, 400, "img/scene-vaso.png");
-	objectArray.emplace_back(Table);
 }

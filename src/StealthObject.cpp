@@ -10,7 +10,6 @@ StealthObject::StealthObject(float x, float y, std::string img) : sp(img){
 	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
-	previousPos = Vec2(x,y);
 }
 
 bool StealthObject::IsDead(){
@@ -25,7 +24,7 @@ void StealthObject::Render(){
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
-void StealthObject::NotifyCollision(GameObject& other){
+bool StealthObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			//pode mostrar uma animacao aqui
@@ -34,19 +33,7 @@ void StealthObject::NotifyCollision(GameObject& other){
 	}
 
 	if(other.Is("Player")){
-		if(MissionManager::player->box.x < box.x + box.w ||
-				MissionManager::player->box.x + MissionManager::player->box.w > box.x){
-			MissionManager::player->box.x = MissionManager::player->previousPos.x;
-		}
-		if(MissionManager::player->box.y < box.y + box.h ||
-				MissionManager::player->box.y + MissionManager::player->box.h > box.y){
-			MissionManager::player->box.y = MissionManager::player->previousPos.y;
-		}
-	}
-
-	if(other.Is("CollidableObject")){
-		box.x = previousPos.x;
-		box.y = previousPos.y;
+		return MissionManager::player->CollidingPlayer(box, OFFSET_MOVI);
 	}
 
 	if (other.Is("Enemy")){
@@ -58,6 +45,8 @@ void StealthObject::NotifyCollision(GameObject& other){
 			other.box.x = box.x - other.box.w - 1;
 		}
 	}
+
+	return false;
 }
 
 void StealthObject::SetMovementLimits(Rect limits){

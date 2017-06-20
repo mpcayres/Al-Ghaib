@@ -16,7 +16,7 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDead();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 
 private:

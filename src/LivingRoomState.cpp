@@ -72,6 +72,7 @@ void LivingRoomState::Update(float dt){
 	UpdateArray(dt);
 
 	int changeIndex = -1;
+	posInvert = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if(objectArray[i].get()->Is("SceneDoor")){
 			//std::cout << "DOOR" << std::endl;
@@ -83,8 +84,12 @@ void LivingRoomState::Update(float dt){
 			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
 				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
 
-				objectArray[i].get()->NotifyCollision(*objectArray[j].get());
-				objectArray[j].get()->NotifyCollision(*objectArray[i].get());
+				if(objectArray[i].get()->NotifyCollision(*objectArray[j].get())){
+					if(i > posInvert) posInvert = i;
+				}
+				if(objectArray[j].get()->NotifyCollision(*objectArray[i].get())){
+					if(j > posInvert) posInvert = j;;
+				}
 
 			}
 		}

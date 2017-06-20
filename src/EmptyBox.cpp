@@ -63,13 +63,14 @@ bool EmptyBox::IsDead(){
 	return false;
 }
 
-void EmptyBox::NotifyCollision(GameObject& other){
+bool EmptyBox::NotifyCollision(GameObject& other){
 	if(other.Is("SceneDoor") && inHand != nullptr){
 		if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryKey")){
 			if(inHand->Action(&other) == true)
 				MissionManager::player->DeleteInventory();
 		}
 	}
+	return false;
 }
 
 bool EmptyBox::Is(std::string type){

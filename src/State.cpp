@@ -5,6 +5,7 @@
 State::State(){
 	quitRequested = false;
 	popRequested = false;
+	posInvert = -1;
 }
 
 State::~State(){
@@ -25,8 +26,17 @@ void State::UpdateArray(float dt){
 }
 
 void State::RenderArray(){
-	for(unsigned int i = 0; i < objectArray.size(); i++) {
-		objectArray[i].get()->Render();
+	if(posInvert != -1){
+		for(unsigned int i = 0; i < objectArray.size()-1; i++) {
+			if((int) i == posInvert){
+				objectArray[objectArray.size()-1].get()->Render();
+			}
+			objectArray[i].get()->Render();
+		}
+	} else{
+		for(unsigned int i = 0; i < objectArray.size(); i++) {
+			objectArray[i].get()->Render();
+		}
 	}
 }
 

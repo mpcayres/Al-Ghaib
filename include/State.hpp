@@ -31,6 +31,7 @@ protected:
 
 	bool quitRequested;
 	bool popRequested;
+	int posInvert;
 
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 };

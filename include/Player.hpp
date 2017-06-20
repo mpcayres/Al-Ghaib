@@ -23,11 +23,12 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDead();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 
 	void SetPosition(int x, int y);
 	void SetDirecao(int dir);
+	bool CollidingPlayer(Rect box, int offset);
 	void Running(InputManager InputInstance);
 
 	void SetMovementLimits(Rect limits);

@@ -10,7 +10,7 @@ public:
 	Walls(float x, float y, float w, float h);
 	~Walls();
 	void Render();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 	bool IsDead();
 	void Update(float dt);

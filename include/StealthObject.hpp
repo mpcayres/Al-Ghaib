@@ -4,6 +4,8 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 
+#define OFFSET_MOVI 30
+
 class StealthObject :public GameObject {
 public:
 	StealthObject(float x, float y, std::string img);
@@ -11,10 +13,9 @@ public:
 	void Update(float dt);
 	void Render();
 	bool IsDead();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 	void SetMovementLimits(Rect limits);
-	Vec2 previousPos;
 
 private:
 	Sprite sp;

@@ -18,7 +18,7 @@
 #include <iostream>
 
 StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
+	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
@@ -36,8 +36,6 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	objectArray.emplace_back(MissionManager::player);
 
 	music = Music("audio/stageState.ogg");
-	quitRequested = false;
-	popRequested = false;
 	time = Timer();
 	flagMorte = false;
 	LoadAssets();
@@ -103,6 +101,7 @@ void StageState::Update(float dt){
 	UpdateArray(dt);
 
 	int changeIndex = -1;
+	posInvert = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if(objectArray[i].get()->Is("SceneDoor")){
 			//std::cout << "DOOR" << std::endl;
@@ -114,8 +113,12 @@ void StageState::Update(float dt){
 			if(Collision::IsColliding(objectArray[i].get()->box, objectArray[j].get()->box,
 				objectArray[i].get()->rotation*PI/180, objectArray[j].get()->rotation*PI/180)){
 
-				objectArray[i].get()->NotifyCollision(*objectArray[j].get());
-				objectArray[j].get()->NotifyCollision(*objectArray[i].get());
+				if(objectArray[i].get()->NotifyCollision(*objectArray[j].get())){
+					if(posInvert == -1 || i < posInvert) posInvert = i;
+				}
+				if(objectArray[j].get()->NotifyCollision(*objectArray[i].get())){
+					if(posInvert == -1 || j < posInvert) posInvert = j;;
+				}
 
 			}
 		}
@@ -140,7 +143,6 @@ void StageState::Render(){
 	bg.Render(0,0,0);
 	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
 	RenderArray();
-	//tileMap.Render(Camera::pos.x, Camera::pos.y);
 
 	if(MissionManager::player->GetShowingInventory()){
 		MissionManager::player->RenderInventory();
@@ -159,8 +161,6 @@ void StageState::SetInitialObjectArray(){
 	objectArray.emplace_back(Door);
 	SceneWindow* Window = new SceneWindow(500, 200);
 	objectArray.emplace_back(Window);
-	MovingObject* Table = new MovingObject(500, 400, "img/scene-vaso.png");
-	objectArray.emplace_back(Table);
 	SceneObject* Abajur =  new SceneObject(1000, 400, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
 }

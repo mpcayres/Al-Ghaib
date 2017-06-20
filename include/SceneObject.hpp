@@ -21,7 +21,7 @@ public:
 	void Render();
 	bool IsEstado();
 	bool IsDead();
-	void NotifyCollision(GameObject& other);
+	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 
 protected:
