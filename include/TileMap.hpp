@@ -20,13 +20,16 @@ public:
 	int GetHeight();
 	int GetDepth();
 	Rect FindLimits();
+	std::vector<Rect> GetInnerLimits();
 
 private:
 	std::vector<int> tileMatrix;
+	std::vector<Rect> limitsVector;
 	TileSet* tileSet;
 	int mapWidth;
 	int mapHeight;
 	int mapDepth;
+	int mapInsideSquares;
 };
 
 #endif /* INCLUDE_TILEMAP_HPP_ */

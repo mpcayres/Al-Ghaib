@@ -15,9 +15,11 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	limits = tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
 	else SetPlayer(450, 400, CAMERA_TYPE2, limits);
-	//MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
-	//MissionManager::player->AddWallLimits(Rect(725, 282, 130, 125));
-	//MissionManager::player->AddWallLimits(Rect(1175, 282, 130, 125));
+	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
+	for(unsigned i = 0; i < auxLimits.size(); i++){
+		MissionManager::player->AddWallLimits(auxLimits[i]);
+	}
+
 	if(inicial){
 		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -133,3 +135,5 @@ void HallState::SetInitialObjectArray(){
 	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 103, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
 }
+
+

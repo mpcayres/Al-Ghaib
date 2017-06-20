@@ -3,8 +3,8 @@
 #include "TileMap.hpp"
 
 TileMap::TileMap(std::string file, TileSet* tileSet){
-	Load(file);
 	this->tileSet = tileSet;
+	Load(file);
 }
 
 void TileMap::Load(std::string file){
@@ -14,8 +14,17 @@ void TileMap::Load(std::string file){
 		exit(1);
 	}
 
-	fscanf(fp, "%d,%d,%d,", &mapWidth, &mapHeight, &mapDepth);
+	fscanf(fp, "%d,%d,%d,%d,", &mapWidth, &mapHeight, &mapDepth, &mapInsideSquares);
+
 	int num;
+	int x,y,c,a;
+	int wiAux = tileSet->GetTileWidth();
+	int heAux = tileSet->GetTileHeight();
+	for(int i = 0; i < mapInsideSquares; i++){
+		fscanf(fp, "%d,%d,%d,%d,", &x,&y,&c,&a);
+		limitsVector.push_back(Rect((x * wiAux), (y*heAux), (c*wiAux), (a*heAux)));
+	}
+
 	while(!feof(fp)){
 		fscanf(fp, " %d,", &num);
 		tileMatrix.push_back(num - 1);
@@ -99,3 +108,6 @@ Rect TileMap::FindLimits(){
 	return aux;
 }
 
+std::vector<Rect> TileMap::GetInnerLimits(){
+	return limitsVector;
+}
