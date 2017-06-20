@@ -81,7 +81,7 @@ Rect TileMap::FindLimits(){
 	int first = -1, last;
 
 	for(i = 0; i< (mapHeight*mapWidth)-1 ; i++){
-		if(tileMatrix[i] >= 0){
+		if(tileMatrix[i] == 0){
 			if(first == -1) first = i;
 			last = i;
 		}

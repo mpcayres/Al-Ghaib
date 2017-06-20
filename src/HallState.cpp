@@ -10,7 +10,7 @@
 #include <iostream>
 
 HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMapHall.txt", &tileSet) {
+	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHall.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
@@ -112,7 +112,7 @@ void HallState::Update(float dt){
 
 void HallState::Render(){
 	background.Render(0,0,0);
-	bg.Render(0 - Camera::pos.x, Camera::pos.y+33,0);
+	//bg.Render(0 - Camera::pos.x, Camera::pos.y+33,0);
 	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
 	//bg.Render(0,0,0);
 	RenderArray();
@@ -130,9 +130,9 @@ void HallState::SetInitialObjectArray(){
 	objectArray.emplace_back(EB);
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
 	objectArray.emplace_back(DoorToKidRoom);
-	SceneDoor* DoorToMomRoom = new SceneDoor(900, 103, "StageState");
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState");
 	objectArray.emplace_back(DoorToMomRoom);
-	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 103, "LivingRoomState");
+	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
 }
 
