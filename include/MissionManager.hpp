@@ -34,17 +34,15 @@ public:
 	static Player* player;
 	static MissionManager* missionManager;
 
-	int countStageState;
-	int countHallState;
-	int changeState;
+	int countStageState, countHallState, countLivingRoomState, changeState;
 	bool movingBox;
 
 private:
-	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
+	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom;
 	Mission *mission;
 	std::string stage;
 	int numMission;
-	bool initStage, initHall;
+	bool initStage, initHall, initLivingRoom;
 	int xDest, yDest;
 	int dirDest;
 };

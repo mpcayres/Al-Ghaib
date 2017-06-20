@@ -1,9 +1,7 @@
 #include "InventoryBear.hpp"
 
-InventoryBear::InventoryBear(/*std::string file*/){
-	//Acho melhor n�o passar como string pq a� s� est� atrelado a pr�pria classe, n�o depende de outra ter essa info
-	std::cout <<"ate aqui ok 1 " << std::endl;
-	sp = Sprite( "img/obj_bear_1.png");
+InventoryBear::InventoryBear(){
+	sp = Sprite( "img/object-bear.png");
 }
 
 InventoryBear::~InventoryBear(){ }

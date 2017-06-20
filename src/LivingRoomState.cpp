@@ -1,4 +1,4 @@
-#include "HallState.hpp"
+#include "LivingRoomState.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
 #include "Collision.hpp"
@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
+LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
 	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMapHall.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
@@ -36,22 +36,22 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	//std::cout << "HSC2" << std::endl;
 }
 
-HallState::~HallState() {
+LivingRoomState::~LivingRoomState() {
 	objectArray.clear();
 }
 
-void HallState::Pause(){
+void LivingRoomState::Pause(){
 }
 
-void HallState::Resume(){
+void LivingRoomState::Resume(){
 }
 
-void HallState::LoadAssets(){
+void LivingRoomState::LoadAssets(){
 	background.Open("img/ocean.jpg");
 	bg.Open("img/corredor.png");
 }
 
-void HallState::Update(float dt){
+void LivingRoomState::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
 
 	if(instance.KeyPress(ESCAPE_KEY)){
@@ -64,7 +64,7 @@ void HallState::Update(float dt){
 		Camera::Unfollow();
 		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "HallState", "StageState");
+				ChangeState(std::move(objectArray), "LivingRoomState", "StageState");
 	}
 	quitRequested = instance.QuitRequested();
 
@@ -99,13 +99,13 @@ void HallState::Update(float dt){
 		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "HallState",
+				ChangeState(std::move(objectArray), "LivingRoomState",
 						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
 		//std::cout << "DOOR4" << std::endl;
 	}
 }
 
-void HallState::Render(){
+void LivingRoomState::Render(){
 	background.Render(0,0,0);
 	bg.Render(0 - Camera::pos.x, Camera::pos.y+33,0);
 	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
@@ -120,15 +120,7 @@ void HallState::Render(){
 	}
 }
 
-void HallState::SetInitialObjectArray(){
+void LivingRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
-	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
-	objectArray.emplace_back(DoorToKidRoom);
-	SceneDoor* DoorToMomRoom = new SceneDoor(900, 103, "StageState");
-	objectArray.emplace_back(DoorToMomRoom);
-	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 103, "LivingRoomState");
-	objectArray.emplace_back(DoorToLivingRoom);
-	MovingObject* Table = new MovingObject(1000, 400, "img/scene-vaso.png");
-	objectArray.emplace_back(Table);
 }

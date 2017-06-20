@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Mission1::Mission1() : Mission()/*: blackSquare("img/blacksquare.png")*/ {
+Mission1::Mission1() : Mission() {
 	initialState = "StageState";
 	initialX = 600; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -35,7 +35,6 @@ Mission1::Mission1() : Mission()/*: blackSquare("img/blacksquare.png")*/ {
 
 	falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-	ultimoTempo = 3;
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -43,7 +42,6 @@ Mission1::Mission1() : Mission()/*: blackSquare("img/blacksquare.png")*/ {
 
 	SetObjectStage();
 	SetObjectHall();
-	state = MissionManager::missionManager->changeState;
 
 	//std::cout << "INIT_MIS1" << std::endl;
 }
@@ -55,13 +53,13 @@ Mission1::~Mission1() {
 void Mission1::SetObjectStage(){
 	SceneWindow* Window = new SceneWindow(350, 200);
 	objectStage.emplace_back(Window);
-	StealthObject* Stealth = new StealthObject(700, 500, "img/scene-window-closed.png");
+	StealthObject* Stealth = new StealthObject(700, 500, "img/scene-escrivaninha-fechado.png");
 	objectStage.emplace_back(Stealth);
 	PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
 	objectStage.emplace_back(PO);
 	PickUpObject* Clown = new PickUpObject(400, 400, "InventoryClown", "img/key.png");
 	objectStage.emplace_back(Clown);
-	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
+	MovingObject* Box = new MovingObject(400, 500, "img/scene-cadeira.png");
 	objectStage.emplace_back(Box);
 }
 
@@ -70,10 +68,14 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(Window);
 	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(PO);
-	Enemy* E = new Enemy(500, 100);
+	Enemy* E = new Enemy(500, 110);
 	objectHall.emplace_back(E);
-	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/obj_bear_1.png");
+	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/object-bear.png");
 	objectHall.emplace_back(Bear);
+}
+
+void Mission1::SetObjectRoom(){
+
 }
 
 void  Mission1::Update(float dt){
@@ -152,7 +154,7 @@ void  Mission1::Update(float dt){
 				Enemy::enemy->SetDestinationPath(Vec2(900, 100)); //4º DESTINO
 				Enemy::enemy->SetDestinationPath(Vec2(900, 140)); //3º DESTINO
 				Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 100)); //1º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 			}
 			if(trancada == false)
 				if(time.Get() > 7 && trancada == false && cooldown.Get() > 2){

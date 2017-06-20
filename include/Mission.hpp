@@ -23,6 +23,7 @@ public:
 	int GetInitialY();
 	std::vector<std::unique_ptr<GameObject>> GetObjectStage();
 	std::vector<std::unique_ptr<GameObject>> GetObjectHall();
+	std::vector<std::unique_ptr<GameObject>> GetObjectLivingRoom();
 
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
@@ -37,20 +38,17 @@ public:
 	//void SetDoor(bool value);
 
 	void MessageDoor(float dt);
-	bool tried;
-
 
 protected:
 	bool popRequested, quitRequested;
-	//bool door;
 
 	virtual void SetObjectStage() = 0;
 	virtual void SetObjectHall() = 0;
+	virtual void SetObjectRoom() = 0;
 
-	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall;
+	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom;
 	std::string initialState;
 	int initialX, initialY;
-
 
 	Text tx;
 	Text creepy;

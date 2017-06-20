@@ -15,7 +15,7 @@ Enemy* Enemy::enemy;
 bool Enemy::show = false;
 bool Enemy::arrived = false;
 
-Enemy::Enemy(float x, float y): sp("img/mom_sprite.png", 8, 0.06, 4){
+Enemy::Enemy(float x, float y): sp("img/sprite-mom.png", 8, 0.06, 4){
 
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);
@@ -39,6 +39,7 @@ Enemy::Enemy(float x, float y): sp("img/mom_sprite.png", 8, 0.06, 4){
 	rotation = 0;
 	speed.y = speed.x = 0;
 	enemy = this;
+	direcaoShift = false;
 }
 
 Enemy::~Enemy(){

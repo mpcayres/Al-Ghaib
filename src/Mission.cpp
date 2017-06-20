@@ -1,6 +1,6 @@
 #include "Mission.hpp"
 
-Mission::Mission():blackSquare("img/blacksquare.png")  {
+Mission::Mission() : blackSquare("img/blacksquare.png")  {
 	popRequested = quitRequested = false;
 	initialX = initialY = -1;
 
@@ -11,6 +11,9 @@ Mission::Mission():blackSquare("img/blacksquare.png")  {
 	flagTimer = true; //stopMusic = false;
 	time = Timer();
 	cooldown = Timer();
+
+	ultimoTempo = 3;
+	state = MissionManager::missionManager->changeState;
 }
 
 Mission::~Mission() {
@@ -37,6 +40,9 @@ std::vector<std::unique_ptr<GameObject>> Mission::GetObjectHall(){
 	return std::move(objectHall);
 }
 
+std::vector<std::unique_ptr<GameObject>> Mission::GetObjectLivingRoom(){
+	return std::move(objectLivingRoom);
+}
 
 bool Mission::PopRequested(){
 	return popRequested;
@@ -56,7 +62,7 @@ void Mission::SetDoor(bool value){
 
 void Mission::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
-				falas.SetText("ESTÁ TRANCADA");
+				falas.SetText("ESTÃ� TRANCADA");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				trancada = true;
 				MissionManager::player->SetDoor(false);

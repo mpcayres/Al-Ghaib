@@ -43,6 +43,7 @@ public:
 protected:
 	void SetObjectStage();
 	void SetObjectHall();
+	void SetObjectRoom();
 
 	/*Text tx;
 	Text falas;

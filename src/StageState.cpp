@@ -7,6 +7,7 @@
 #include "Music.hpp"
 #include "EndState.hpp"
 #include "Enemy.hpp"
+#include "SceneObject.hpp"
 #include "SceneWindow.hpp"
 #include "SceneDoor.hpp"
 #include "MovingObject.hpp"
@@ -151,16 +152,15 @@ void StageState::Render(){
 
 void StageState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
-	//Walls *Wall = new Walls(700, 400, 100,100);
-	//Enemy* E = new Enemy(1100, 500);
-	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
-	SceneWindow* Window = new SceneWindow(500, 200);
-	MovingObject* Table = new MovingObject(500, 400, "img/box.png");
-
 	objectArray.emplace_back(EB);
+	//Walls *Wall = new Walls(700, 400, 100,100);
 	//objectArray.emplace_back(Wall);
-	//objectArray.emplace_back(E);
-	objectArray.emplace_back(Window);
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectArray.emplace_back(Door);
+	SceneWindow* Window = new SceneWindow(500, 200);
+	objectArray.emplace_back(Window);
+	MovingObject* Table = new MovingObject(500, 400, "img/scene-vaso.png");
 	objectArray.emplace_back(Table);
+	SceneObject* Abajur =  new SceneObject(1000, 400, "img/scene-abajur.png", "img/scene-abajur.png");
+	objectArray.emplace_back(Abajur);
 }

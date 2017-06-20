@@ -18,10 +18,10 @@ Mission2::Mission2() : Mission() {
 
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"fechai as portas e mantende vossas crianças por perto à noite...\"", auxcolor, 0, 0);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"fechai as portas e mantende vossas crianÃ§as por perto Ã  noite...\"", auxcolor, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-40, true, false);
 
-	//falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
+	//falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE Ã‰ FRIA E PERIGOSA", auxcolor, 0, 0);
 	//falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 	//ultimoTempo = 3;
 		/*intro = Music("audio/menu-intro.wav");
@@ -31,7 +31,6 @@ Mission2::Mission2() : Mission() {
 
 	SetObjectStage();
 	SetObjectHall();
-	state = MissionManager::missionManager->changeState;
 }
 
 Mission2::~Mission2() {
@@ -88,13 +87,13 @@ void Mission2::Update(float dt){
 			if( time.Get() > 6.5 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 5.5*/){
 				falas.SetText("U: ME... AJUDA...");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-				ultimoTempo = 6.5; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
+				ultimoTempo = 6.5; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃƒO AFETAM A HISTORIA
 
 				//flagTimer = true;
 			}
 
 			if( time.Get() > 8 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÃ‡O DENTRO QUE DÃ� ERRO
 				ultimoTempo = 7;
 			}
 			if(trancada == true)
@@ -117,12 +116,13 @@ void Mission2::Render(){
 void Mission2::SetObjectStage(){
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
-
 }
 
 void Mission2::SetObjectHall(){
-
 	SceneWindow* Window = new SceneWindow(350, 70);
 	objectHall.emplace_back(Window);
+}
+
+void Mission2::SetObjectRoom(){
 
 }

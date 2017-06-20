@@ -8,16 +8,14 @@ SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::strin
 
 	lock = locked;
 	changeState = false;
-	//tried = false;
 }
 
 void SceneDoor::NotifyCollision(GameObject& other){
-	SceneObject::NotifyCollision(other);
-	if(other.Is("EmptyBox")){
+	if(!other.Is("EmptyBox")){
+		SceneObject::NotifyCollision(other);
+	} else{
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == true){
 				MissionManager::player->SetDoor(true);
-				//printf("entrei\n");
-
 		}
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
 			if(estado){
@@ -65,9 +63,7 @@ bool SceneDoor::ReceiveAction(InventoryObject* other){
 	}
 	return false;
 }
-/*bool SceneDoor::Tried(){
-	return tried;
-}*/
+
 bool SceneDoor::GetChangeState(){
 	return changeState;
 }

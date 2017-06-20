@@ -39,6 +39,7 @@ public:
 private:
 	void SetObjectStage();
 	void SetObjectHall();
+	void SetObjectRoom();
 };
 
 #endif /* SRC_MISSION2_HPP_ */
