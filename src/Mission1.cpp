@@ -56,7 +56,7 @@ void Mission1::SetObjectStage(){
 	SceneWindow* Window = new SceneWindow(350, 200);
 	objectStage.emplace_back(Window);
 
-	StealthObject* Escrivaninha = new StealthObject(700, 600, "img/scene-escrivaninha-fechado.png");
+	StealthObject* Escrivaninha = new StealthObject(700, 400, "img/scene-escrivaninha-fechado.png");
 	objectStage.emplace_back(Escrivaninha);
 
 	PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
@@ -68,10 +68,10 @@ void Mission1::SetObjectStage(){
 	PickUpObject* Clown = new PickUpObject(430, 280, "InventoryClown", "img/key.png", true, 0.5, 0.5);
 	objectStage.emplace_back(Clown);
 
-	MovingObject* Vaso = new MovingObject(900, 200,  "img/scene-vaso.png");
+	MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
 	objectStage.emplace_back(Vaso);
 
-	MovingObject* Cadeira = new MovingObject(730, 500, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
