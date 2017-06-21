@@ -2,10 +2,10 @@
 #include "Camera.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
-#include "Sound.hpp"
 #include "InventoryKey.hpp"
 #include "InventoryClown.hpp"
 #include "InventoryBear.hpp"
+#include "Sound.hpp"
 #include <iostream>
 
 #define MODULO_SPEED		5
@@ -38,6 +38,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	previousPos = Vec2(x,y);
 	timeRuido = Timer();
 	timeCooldown = Timer();
+	timeSound = Timer();
 
 	hp = 30;
 	rotation = 0;
@@ -155,8 +156,10 @@ void Player::Update(float dt){
 				spKinderRun.Update(dt, direcao, direcaoShift);
 				spKinderPush.Update(dt, direcao - 2, direcaoShift);
 
-				if(running) multiplicador = 10;
+				if(running) multiplicador = 6;
 				else multiplicador = 1;
+
+				if(MissionManager::missionManager->movingBox) multiplicador += 2;
 			} else{
 				if((spKinder.GetCurrentFrame() > 1 && spKinder.GetCurrentFrame() < 12) ||
 						(spKinder.GetCurrentFrame() > 12 && spKinder.GetCurrentFrame() <= 20)){
@@ -251,9 +254,29 @@ void Player::Update(float dt){
 		}
 
 		timeCooldown.Update(dt);
-		if(timeCooldown.Get() > 1.5){
+		if(timeCooldown.Get() > 3){
 			ChangeHiddenState();
 		}
+	}
+
+	if(MissionManager::missionManager->movingBox){
+		if(timeSound.Get() == 0){
+			Sound s = Sound("audio/arrastando.wav");
+			s.Play(0);
+			timeSound.Update(dt);
+		} else if(timeSound.Get() > 2){
+			timeSound.Restart();
+		} else timeSound.Update(dt);
+	}
+
+	if(hidden){
+		if(timeSound.Get() == 0){
+			Sound s = Sound("audio/one-beat.wav");
+			s.Play(0);
+			timeSound.Update(dt);
+		} else if(timeSound.Get() > 1){
+			timeSound.Restart();
+		} else timeSound.Update(dt);
 	}
 
 	//Ajustar quando puxa apos empurrar

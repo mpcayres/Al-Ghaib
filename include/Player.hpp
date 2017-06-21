@@ -7,7 +7,7 @@
 #include "Game.hpp"
 #include "Timer.hpp"
 #include "InputManager.hpp"
-//#include "Timer.hpp"
+#include "Timer.hpp"
 
 #include <vector>
 #include <memory>
@@ -64,7 +64,7 @@ public:
 	std::vector<Rect> wallLimits;
 
 private:
-	Timer timeRuido, timeCooldown;
+	Timer timeRuido, timeCooldown, timeSound;
 	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 	Sprite spNoise;

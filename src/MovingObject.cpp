@@ -31,7 +31,7 @@ bool MovingObject::NotifyCollision(GameObject& other){
 			//colocar animacao para subir na cadeira
 			if(!MissionManager::player->GetAboveObject()){
 				MissionManager::player->box.x = box.x + box.w/2 - MissionManager::player->box.w/2;
-				MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 10;
+				MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
 				MissionManager::player->ChangeAboveObject();
 				return true;
 			} else{
