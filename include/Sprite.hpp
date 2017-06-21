@@ -18,7 +18,7 @@
 class Sprite{
 public:
 	Sprite();
-	Sprite(std::string file, int frameCount = 1, float frameTime = 1, int tamCount = 1);
+	Sprite(std::string file, int frameCount = 1, float frameTime = 1, int tamCount = 1, bool blend = false);
 	~Sprite();
 
 	void SetScaleX(float scale);
@@ -29,7 +29,7 @@ public:
 	void SetFrameCount(int frameCount);
 	void SetFrameTime(float frameTime);
 
-	void Open(std::string file, int frameCount = 1, float frameTime = 1, int tamCount = 1);
+	void Open(std::string file, int frameCount = 1, float frameTime = 1, int tamCount = 1, bool blend = false);
 	void SetClip(int x, int y, int w, int h);
 	void Render(int x, int y, float angle);
 	int GetWidth();
@@ -38,6 +38,7 @@ public:
 	int GetScaledHeight();
 	int GetCurrentFrame();
 	bool IsOpen();
+	void ChangeAlpha(int alpha);
 
 private:
 	std::shared_ptr<SDL_Texture> texture;

@@ -1,6 +1,9 @@
 #ifndef SRC_MISSION_HPP_
 #define SRC_MISSION_HPP_
 
+#define OPAQUE SDL_ALPHA_OPAQUE
+#define TRANSPARENT SDL_ALPHA_TRANSPARENT
+
 #include "GameObject.hpp"
 #include <vector>
 #include <memory>
@@ -39,6 +42,8 @@ public:
 	//void SetDoor(bool value);
 
 	void MessageDoor(float dt);
+	void UpdateVariable(float dt, float speed, bool turnOpaque = false);
+	void PiscaPisca(float dt, int max, float time);
 
 protected:
 	bool popRequested, quitRequested;
@@ -56,6 +61,7 @@ protected:
 	Text falas;
 	Timer cooldown;
 	Timer time;
+	Timer timerPisca;
 	Sprite blackSquare;
 	float ultimoTempo;
 	bool flagTimer;
@@ -64,6 +70,13 @@ protected:
 	int state;
 	int count;
 	bool doorSound;
+
+	Sprite spFade;
+	int alpha;
+	float alphaAux;
+	bool bloqBlack;
+	int contPisca;
+	bool fadeIn;
 };
 
 #endif /* SRC_MISSION_HPP_ */

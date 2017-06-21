@@ -55,16 +55,18 @@ void Mission2::Update(float dt){
 	//quitRequested = instance.QuitRequested();
 	if(instance.KeyPress(SPACE_KEY)){
 		std::cout << "SPACE KEY PRESSED" << std::endl;
-		if(time.Get() < 3 ){
+		if(time.Get() < 3){
 			time.Set(3);
 			begin = false;
+			fadeIn = false;
 		}
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
 	//std::cout << "time: " << time.Get() << std::endl;
-	if(time.Get() > 3 ){
+	if(time.Get() > 6){
 		begin = false;
+		fadeIn = false;
 	}
 
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
@@ -103,14 +105,24 @@ void Mission2::Update(float dt){
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}
 
+	if(time.Get() >= 3 && begin && fadeIn){
+		UpdateVariable(dt, 80);
+	}
+
+	if(time.Get() >= 6){
+		PiscaPisca(dt, 10, 0.3);
+	}
+
 }
 
 void Mission2::Render(){
-	if(time.Get() < 3 && begin ){
-			blackSquare.Render(0, 0, 0);
-			tx.Render(0,0);
-			creepy.Render(0,0);
-		}
+	if(time.Get() < 3 && begin){
+		blackSquare.Render(0, 0, 0);
+		tx.Render(0,0);
+		creepy.Render(0,0);
+	} else if((time.Get() >= 3 && begin && fadeIn) || (time.Get() >= 6 && !bloqBlack)){
+		spFade.Render(0,0,0);
+	}
 }
 
 void Mission2::SetObjectStage(){

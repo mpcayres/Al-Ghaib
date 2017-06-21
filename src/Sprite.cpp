@@ -12,22 +12,23 @@ Sprite::Sprite(){
 	timeElapsed = 0; currentFrame = 1;
 }
 
-Sprite::Sprite(std::string file, int frameCount, float frameTime, int tamCount){
+Sprite::Sprite(std::string file, int frameCount, float frameTime, int tamCount, bool blend){
 	scaleX = 1; scaleY = 1;
 	texture = nullptr;
 	timeElapsed = 0; currentFrame = 1;
-	Open(file, frameCount, frameTime, tamCount);
+	Open(file, frameCount, frameTime, tamCount, blend);
 }
 
 Sprite::~Sprite(){}
 
-void Sprite::Open(std::string file, int frameCount, float frameTime, int tamCount){
+void Sprite::Open(std::string file, int frameCount, float frameTime, int tamCount, bool blend){
 	this->frameCount = frameCount; this->frameTime = frameTime;
 	this->tamCount = tamCount;
 	texture = Resources::GetImage(file);
 
 	SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
 	SetClip(0, 0, GetWidth(), GetHeight());
+	if(blend) SDL_SetTextureBlendMode(texture.get(), SDL_BLENDMODE_BLEND);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h){
@@ -104,4 +105,8 @@ int Sprite::GetScaledHeight(){
 
 int Sprite::GetCurrentFrame(){
 	return currentFrame;
+}
+
+void Sprite::ChangeAlpha(int alpha){
+	SDL_SetTextureAlphaMod(texture.get(), alpha);
 }

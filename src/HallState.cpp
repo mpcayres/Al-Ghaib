@@ -130,13 +130,13 @@ void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneObject* Window = new SceneObject(350, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
+	SceneObject* Window = new SceneObject(700, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
 	objectArray.emplace_back(Window);
 
-	SceneObject* CriadoMudo = new SceneObject(250, 160, "img/scene-criado-fechado.png", "img/scene-criado-fechado.png");
+	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-fechado.png");
 	objectArray.emplace_back(CriadoMudo);
 
-	SceneObject* Book = new SceneObject(260, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);
+	SceneObject* Book = new SceneObject(110, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);
 	objectArray.emplace_back(Book);
 
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
@@ -160,7 +160,4 @@ void HallState::SetInitialObjectArray(){
 	SceneObject* Abajur = new SceneObject(1300, 300, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
 
-
 }
-
-

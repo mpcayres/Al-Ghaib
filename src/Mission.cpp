@@ -1,19 +1,27 @@
 #include "Mission.hpp"
 
-Mission::Mission() : blackSquare("img/blacksquare.png"), doorSound(false) {
+#include <iostream>
+
+Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare2.png", 1, 1, 1, true) {
 	popRequested = quitRequested = false;
 	initialX = initialY = -1;
 
+	doorSound = false;
 	trancada = false;
 	begin = true;
+	bloqBlack = false;
+	fadeIn = true;
 	count = 0;
 
 	flagTimer = true; //stopMusic = false;
 	time = Timer();
+	timerPisca = Timer();
 	cooldown = Timer();
+	contPisca = 0;
 
 	ultimoTempo = 3;
 	state = MissionManager::missionManager->changeState;
+	alpha = OPAQUE; alphaAux = OPAQUE;
 }
 
 Mission::~Mission() {
@@ -52,39 +60,76 @@ bool Mission::QuitRequested(){
 	return quitRequested;
 }
 
-/*bool Mission::GetDoor(){
-	return door;
-}
-
-void Mission::SetDoor(bool value){
-	door = value;
-}*/
-
 void Mission::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
-				falas.SetText("ESTÁ TRANCADA");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-				Sound portaDestrancando = Sound ("audio/destrancando.wav");
-				portaDestrancando.Play(0);
-				trancada = true;
-				MissionManager::player->SetDoor(false);
-				cooldown.Restart();
-				time.Restart();
-				while(time.Get()< ultimoTempo){
-					time.Update(dt);
-				}
+		falas.SetText("ESTÁ TRANCADA");
+		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		Sound portaDestrancando = Sound ("audio/destrancando.wav");
+		portaDestrancando.Play(0);
+		trancada = true;
+		MissionManager::player->SetDoor(false);
+		cooldown.Restart();
+		time.Restart();
+		while(time.Get()< ultimoTempo){
+			time.Update(dt);
+		}
+	}
+
+	if(cooldown.Get() > 2 && trancada == true){
+		//cooldown.Restart();
+		falas.SetText(" ");
+		trancada = false;
+		cooldown.Restart();
+		time.Restart();
+		while(time.Get()< ultimoTempo){
+			time.Update(dt);
+		}
+	}
+
+}
+
+void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
+    if (spFade.IsOpen()) {
+        spFade.ChangeAlpha(alpha);
+    }
+
+    std::cout << "Update " << alpha << std::endl;
+    if(turnOpaque){
+    	if (alpha < OPAQUE) {
+			alphaAux += dt * speed;
+			alpha = alphaAux;
+		} else{
+			alphaAux = (float) OPAQUE;
+			alpha = OPAQUE;
+			fadeIn = false;
+		}
+    } else{
+    	if (alpha > TRANSPARENT) {
+			alphaAux -= dt * speed;
+			alpha = alphaAux;
+		} else{
+			alphaAux = (float) TRANSPARENT;
+			alpha = TRANSPARENT;
+			fadeIn = false;
+		}
+    }
+}
+
+void Mission::PiscaPisca(float dt, int max, float time){
+	std::cout << "PISCA " << contPisca << " " << timerPisca.Get() << std::endl;
+	if(contPisca >= max){
+		bloqBlack = true;
+		timerPisca.Restart();
+	} else{
+		bloqBlack = false;
+		if(timerPisca.Get() >= time){
+			if (spFade.IsOpen()) {
+				if((contPisca % 2) == 0) spFade.ChangeAlpha(OPAQUE);
+				else spFade.ChangeAlpha(TRANSPARENT);
+				contPisca++;
 			}
-
-
-			if(cooldown.Get() > 2 && trancada == true){
-				//cooldown.Restart();
-				falas.SetText(" ");
-				trancada = false;
-				cooldown.Restart();
-				time.Restart();
-				while(time.Get()< ultimoTempo){
-					time.Update(dt);
-				}
-			}
-
+			timerPisca.Restart();
+		}
+		timerPisca.Update(dt);
+	}
 }
