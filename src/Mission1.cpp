@@ -178,6 +178,16 @@ void  Mission1::Update(float dt){
 			if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
 				Enemy::show = true;
 				if(MissionManager::player->lastPicked == "InventoryBear"){
+					if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
+						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+						ultimoTempo = 3;
+					}
+					if(time.Get() > 6 && trancada == false && cooldown.Get() > 2){
+						falas.SetText(" ");
+						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+						ultimoTempo = 6;
+					}
 							Enemy::enemy->SetDestinationPath(Vec2(80, 200));
 							Enemy::enemy->SetDestinationPath(Vec2(80, 130)); //4º DESTINO
 							Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
@@ -250,15 +260,27 @@ void  Mission1::Update(float dt){
 		}
 		if((MissionManager::missionManager->GetStage("HallState") &&
 				MissionManager::missionManager->countHallState > 1)){
-			falas.SetText(" ");
-			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
-							falas.SetText("BLABLA ");
-							falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
+			/*if(time.Get() < 3&& trancada == false && cooldown.Get() > 2){
+				falas.SetText(" ");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}*/
+			//if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+							//falas.SetText("BLABLA ");
+							//falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			//}
 			if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
 							Enemy::show = true;
 							if(MissionManager::player->lastPicked == "InventoryBear"){
+								if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+										falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
+										falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+										ultimoTempo = 3;
+								}
+								if(time.Get() > 6 && trancada == false && cooldown.Get() > 2){
+									falas.SetText(" ");
+									falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+									ultimoTempo = 6;
+								}
 										Enemy::enemy->SetDestinationPath(Vec2(80, 200));
 										Enemy::enemy->SetDestinationPath(Vec2(80, 130)); //4º DESTINO
 										Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
