@@ -76,7 +76,7 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(PO);
 	Enemy* E = new Enemy(500, 110);
 	objectHall.emplace_back(E);
-	PickUpObject* Bear = new PickUpObject(100, 200, "InventoryBear", "img/object-bear.png", 1.5, 1.5);
+	PickUpObject* Bear = new PickUpObject(100, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	objectHall.emplace_back(Bear);
 	MovingObject* Table = new MovingObject(1000, 400, "img/scene-vaso.png");
 	objectHall.emplace_back(Table);
@@ -152,7 +152,18 @@ void  Mission1::Update(float dt){
 			ultimoTempo = 3;
 		}
 		//MÃE APARECENDO NO CORREDOR
-		if((time.Get()>6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false){
+		if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
+			Enemy::show = true;
+			if(MissionManager::player->lastPicked == "InventoryBear"){
+						Enemy::enemy->SetDestinationPath(Vec2(80, 200));
+						Enemy::enemy->SetDestinationPath(Vec2(80, 130)); //4º DESTINO
+						Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
+						Enemy::enemy->SetDestinationPath(Vec2(400, 110)); //2º DESTINO
+						Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+					}
+		}
+		if(((time.Get()>6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false)
+				&& Enemy::show == false){
 			Enemy::show = true;
 			//if(Enemy::turn == 1)
 			count ++;

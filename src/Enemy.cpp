@@ -69,12 +69,12 @@ void Enemy::Update(float dt){
 		}
 
 		if(boxAux.x < MissionManager::player->limits.w - box.w &&
-				boxAux.x > MissionManager::player->limits.x && !bloqMov){
+				boxAux.x > MissionManager::player->limits.x - sp.GetWidth() *2&& !bloqMov){
 			previousPos.x = box.x;
 			box.x += speed.x;
 		}
 		if(boxAux.y < MissionManager::player->limits.h - box.h &&
-				boxAux.y > MissionManager::player->limits.y && !bloqMov){
+				boxAux.y > MissionManager::player->limits.y - sp.GetHeight() *2&& !bloqMov){
 			previousPos.y = box.y;
 			box.y += speed.y;
 		}

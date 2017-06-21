@@ -60,6 +60,7 @@ public:
 
 	//Vec2 previousPos;
 	Rect limits;
+	std::string lastPicked;
 	std::vector<Rect> wallLimits;
 
 private:

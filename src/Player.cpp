@@ -61,6 +61,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	animShowing = false;
 	door = false;
 	aboveObject = false;
+	lastPicked = "";
 }
 
 Player::~Player(){
@@ -406,6 +407,8 @@ float Player::GetRuido(){
 void Player::AddInventory(std::string obj){
 	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
 	// Coloquei a string da imagem comentada caso seja necessario
+
+	lastPicked = obj;
 	if(inHandIndex < 0) inHandIndex = 0;
 	if(obj == "InventoryKey"){
 		inventory.emplace_back(new InventoryKey());
