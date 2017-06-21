@@ -9,7 +9,7 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file){
 }
 
 void TileSet::Render(unsigned index,float x, float y){
-	if (index < (unsigned)(rows*columns)-1){
+	if (index <= (unsigned)(rows*columns)-1){
 		int valoresClipx, valoresClipy;
 		if(index >= (unsigned) columns){
 			int auxLinhas = index/columns;
