@@ -111,7 +111,7 @@ void Mission2::Update(float dt){
 	}
 
 	if(time.Get() >= 6){
-		PiscaPisca(dt, 10, 0.3);
+		PiscaPisca(dt, 6, 0.6);
 	}
 
 }

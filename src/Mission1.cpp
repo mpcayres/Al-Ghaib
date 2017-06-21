@@ -301,7 +301,7 @@ void  Mission1::Update(float dt){
 		UpdateVariable(dt, 80);
 	}
 	if(MissionManager::player->lastPicked == "InventoryBear"){
-		PiscaPisca(dt, 20, 0.6);
+		PiscaPisca(dt, 20, 0.4);
 	}
 
 }

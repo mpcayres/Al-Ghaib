@@ -98,7 +98,7 @@ Rect TileMap::FindLimits(){
 		lastY = (last/mapWidth)* tileSet->GetTileHeight();
 	}else lastY = 0;
 
-	lastX += 2*tileSet->GetTileWidth();
+	lastX += tileSet->GetTileWidth();
 	lastY += tileSet->GetTileHeight();
 
 	aux.x = firstX;

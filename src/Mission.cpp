@@ -93,7 +93,7 @@ void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
         spFade.ChangeAlpha(alpha);
     }
 
-    std::cout << "Update " << alpha << std::endl;
+    //std::cout << "Update " << alpha << std::endl;
     if(turnOpaque){
     	if (alpha < OPAQUE) {
 			alphaAux += dt * speed;
