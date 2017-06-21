@@ -62,6 +62,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	animShowing = false;
 	door = false;
 	aboveObject = false;
+	blocked = false;
 	lastPicked = "";
 }
 
@@ -74,7 +75,7 @@ Player::~Player(){
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
-	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject){
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject && !blocked){
 		std::shared_ptr<InventoryObject> inHand = GetInHand();
 		if(inHand != nullptr){
 			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
@@ -96,7 +97,7 @@ void Player::Update(float dt){
 		}
 	}
 
-	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing){
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked){
 		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
@@ -325,6 +326,10 @@ void Player::SetDirecao(int dir){
 	direcao = (InvBox) dir;
 	spKinder.SetFrame(1, direcao);
 	spKinderRun.SetFrame(1, direcao);
+}
+
+void Player::SetBlocked(bool b){
+	blocked = b;
 }
 
 bool Player::CollidingPlayer(Rect boxCol, int offset){

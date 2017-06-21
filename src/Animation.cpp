@@ -2,8 +2,9 @@
 #include "Camera.hpp"
 
 Animation::Animation(float x, float y, float rotation, std::string sprite,
-		int frameCount, float frameTime, bool ends){
+		int frameCount, float frameTime, bool ends, float scaleX, float scaleY){
 	sp = Sprite(sprite, frameCount, frameTime);
+	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	box.x = x;
 	box.y = y;
 	box.w = sp.GetWidth();
@@ -20,7 +21,7 @@ void Animation::Update(float dt){
 }
 
 void Animation::Render(){
-	sp.Render(box.CenterX() - Camera::pos.x, box.CenterY() - Camera::pos.y, rotation);
+	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool Animation::IsDead(){

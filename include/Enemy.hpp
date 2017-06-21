@@ -29,7 +29,7 @@ public:
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
 	void SetDirecao(int dir);
-	//int GetDirecao();
+	static void SetDead();
 
 	static Enemy * enemy;
 	InvBox direcao;
@@ -37,17 +37,16 @@ public:
 
 	static bool show;
 	static bool arrived;
+	static bool collidingPlayer;
+	static bool dead;
 private:
 	Timer time;
 	Sprite sp;
 	Vec2 speed;
-	int hp;
 	bool seen;
 	Vec2 destination;
 	//Vec2 destinationPath;
 	std::vector<Vec2> destinationPath;
-
-
 
 	bool direcaoShift;
 };

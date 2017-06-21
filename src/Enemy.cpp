@@ -11,8 +11,10 @@
 #define DESACELERA 1
 
 Enemy* Enemy::enemy;
-bool Enemy::show = false;
-bool Enemy::arrived = false;
+bool Enemy::show;
+bool Enemy::arrived;
+bool Enemy::collidingPlayer;
+bool Enemy::dead;
 
 Enemy::Enemy(float x, float y): sp("img/sprite-mom.png", 8, 0.06, 4){
 
@@ -22,19 +24,20 @@ Enemy::Enemy(float x, float y): sp("img/sprite-mom.png", 8, 0.06, 4){
 	//destinationPath.x = x;
 	//destinationPath.y = y;
 
-	show = false;
-
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();
 
+	show = false;
+	arrived = false;
+	collidingPlayer = false;
+	dead = false;
 	seen = false;
 
 	time = Timer();
 
 	direcao = SUL;
 
-	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
 	enemy = this;
@@ -95,6 +98,8 @@ void Enemy::Update(float dt){
 			}
 		}
 	}
+
+	collidingPlayer = false;
 }
 
 void Enemy::SetDirecao(int dir){
@@ -108,7 +113,7 @@ void Enemy::Render(){
 }
 
 bool Enemy::IsDead(){
-	return (hp <= 0);
+	return dead;
 }
 
 
@@ -138,6 +143,7 @@ bool Enemy::NotifyCollision(GameObject& other){
 	}
 	if(other.Is("Player")){
 		seen = false;
+		collidingPlayer = true;
 	}
 
 	return false;
@@ -178,7 +184,7 @@ void Enemy::DefinedPath(){
 				if(destinationPath.back().x < box.x){
 					//std::cout << " OESTE " << std::endl;
 					direcao = OESTE;
-				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
+				} else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
 					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
 					direcao = LESTE;
 				}
@@ -365,7 +371,7 @@ void Enemy::Pursuit(){
 bool Enemy::Is(std::string type){
 	return (type == "Enemy");
 }
-/*
-int Enemy::GetDirecao(){
-	return direcao;
-}*/
+
+void Enemy::SetDead(){
+	dead = true;
+}

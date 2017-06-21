@@ -64,3 +64,7 @@ void State::RemovePlayer(){
 		}
 	}
 }
+
+void State::SetPopRequested(){
+	popRequested = true;
+}

@@ -24,6 +24,7 @@ public:
 	virtual void Render() = 0;
 	void SetPlayer(int x, int y, int type, Rect limits);
 	void RemovePlayer();
+	void SetPopRequested();
 
 protected:
 	virtual void UpdateArray(float dt);

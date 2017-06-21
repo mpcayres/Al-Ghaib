@@ -8,7 +8,7 @@
 class Animation : public GameObject {
 public:
 	Animation(float x, float y, float rotation, std::string sprite, int frameCount,
-			float frameTime, bool ends);
+			float frameTime, bool ends, float scaleX = 1, float scaleY = 1);
 	void Update(float dt);
 	void Render();
 	bool IsDead();

@@ -62,7 +62,7 @@ protected:
 
 	//int StageState;
 	//int HallState;
-	bool played;
+	bool played, endMission;
 };
 
 

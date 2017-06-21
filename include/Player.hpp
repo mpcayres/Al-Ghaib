@@ -28,6 +28,7 @@ public:
 
 	void SetPosition(int x, int y);
 	void SetDirecao(int dir);
+	void SetBlocked(bool b);
 	bool CollidingPlayer(Rect box, int offset);
 	void Running(InputManager InputInstance);
 
@@ -81,7 +82,7 @@ private:
 	InputManager InputInstance;
 
 	bool direcaoShift;
-	bool door, hidden, animShowing, aboveObject;
+	bool door, hidden, animShowing, aboveObject, blocked;
 	float ruido;
 };
 
