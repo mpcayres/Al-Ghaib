@@ -159,8 +159,18 @@ void StageState::SetInitialObjectArray(){
 	//objectArray.emplace_back(Wall);
 	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectArray.emplace_back(Door);
+
+
 	SceneWindow* Window = new SceneWindow(500, 200);
 	objectArray.emplace_back(Window);
-	SceneObject* Abajur =  new SceneObject(1000, 400, "img/scene-abajur.png", "img/scene-abajur.png");
+
+	SceneObject* Cama =  new SceneObject(200, 250, "img/scene-cama.png", "img/scene-cama.png");
+	objectArray.emplace_back(Cama);
+
+	SceneObject* Abajur =  new SceneObject(800, 400, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
+
+	SceneObject* Bau = new SceneObject(1000, 250,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
+	objectArray.emplace_back(Bau);
+
 }
