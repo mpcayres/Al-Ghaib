@@ -10,11 +10,11 @@
 #include <iostream>
 
 LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMapHall.txt", &tileSet) {
+	tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
-	else SetPlayer(450, 400, CAMERA_TYPE2, limits);
+	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
+	else SetPlayer(600, 400, CAMERA_TYPE0, limits);
 	//MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
 	//MissionManager::player->AddWallLimits(Rect(725, 282, 130, 125));
 	//MissionManager::player->AddWallLimits(Rect(1175, 282, 130, 125));
@@ -47,8 +47,8 @@ void LivingRoomState::Resume(){
 }
 
 void LivingRoomState::LoadAssets(){
-	background.Open("img/ocean.jpg");
-	bg.Open("img/corredor.png");
+	bg.Open("img/background.png");
+	background.Open("img/background.png");
 }
 
 void LivingRoomState::Update(float dt){

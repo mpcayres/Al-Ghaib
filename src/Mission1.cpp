@@ -63,6 +63,9 @@ void Mission1::SetObjectStage(){
 	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	//objectStage.emplace_back(Armario);
 
+	SceneObject* Bau = new SceneObject(300, 500,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
+	objectStage.emplace_back(Bau);
+
 	PickUpObject* Clown = new PickUpObject(430, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);
 	objectStage.emplace_back(Clown);
 
@@ -106,8 +109,10 @@ void  Mission1::Update(float dt){
 		if(time.Get() < 3){
 			time.Set(3);
 			begin = false;
-			fadeIn = false;
 		}
+		fadeIn = false;
+		bloqBlack = true;
+		//alpha = TRANSPARENT;
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
@@ -309,8 +314,8 @@ void  Mission1::Render(){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
-	} else if((time.Get() >= 3 && begin && fadeIn) || (time.Get() >= 6 && !bloqBlack)){
-		spFade.Render(0,0,0);
+	} else if((time.Get() >= 3 && begin && fadeIn) || !bloqBlack){
+		spFade.Render(0, 0, 0);
 	}
 
 	if(MissionManager::missionManager->GetStage("StageState") &&
