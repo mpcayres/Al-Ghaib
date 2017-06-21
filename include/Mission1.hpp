@@ -45,6 +45,8 @@ protected:
 	void SetObjectHall();
 	void SetObjectRoom();
 
+	//static Music sounds;
+
 	/*Text tx;
 	Text falas;
 	Timer cooldown;

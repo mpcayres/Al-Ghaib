@@ -106,6 +106,8 @@ void Game::Run(){
 				if(!storedMission->PopRequested()){
 					storedMission->Update(dt);
 					storedMission->Render();
+					storedMission->Pause();
+					storedMission->Resume();
 				}
 				//printf("\n2");
 			}

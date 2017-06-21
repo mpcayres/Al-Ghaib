@@ -25,6 +25,8 @@
 #include "Sprite.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Music.hpp"
+#include "Sound.hpp"
 
 class Mission2 : public Mission {
 public:
@@ -40,6 +42,8 @@ private:
 	void SetObjectStage();
 	void SetObjectHall();
 	void SetObjectRoom();
+
+	static Music music;
 };
 
 #endif /* SRC_MISSION2_HPP_ */

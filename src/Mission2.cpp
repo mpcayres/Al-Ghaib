@@ -5,6 +5,8 @@
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
 
+ Music Mission2::music;
+
 Mission2::Mission2() : Mission() {
 	initialState = "StageState";
 	initialX = 450; initialY = 400;
@@ -18,8 +20,8 @@ Mission2::Mission2() : Mission() {
 
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"fechai as portas e mantende vossas crianÃ§as por perto Ã  noite...\"", auxcolor, 0, 0);
-	creepy.SetPos(0, Game::GetInstance().GetHeight()-40, true, false);
+	creepy = Text("font/uwch.ttf", 25, Text::TextStyle::BLENDED, "\"fechai as portas, mantende crianças por perto à  noite...\"", auxcolor, 0, 0);
+	creepy.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
 
 	//falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE Ã‰ FRIA E PERIGOSA", auxcolor, 0, 0);
 	//falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -29,6 +31,11 @@ Mission2::Mission2() : Mission() {
 		intro.Play(1);
 		Mix_HookMusicFinished(&TitleState::LinkMusic);*/
 
+	//Sound intro("audio/boom.wav");
+	//intro.Play(1);
+
+
+	//Mix_HookMusicFinished(&Mission2::LinkMusic);
 	SetObjectStage();
 	SetObjectHall();
 }
@@ -37,13 +44,6 @@ Mission2::~Mission2() {
 
 }
 
-void Mission2::Pause(){
-
-}
-
-void Mission2::Resume(){
-
-}
 
 void Mission2::Update(float dt){
 
@@ -125,4 +125,17 @@ void Mission2::SetObjectHall(){
 
 void Mission2::SetObjectRoom(){
 
+}
+
+void Mission2::Pause(){
+	//stopMusic = true;
+	//intro.Stop();
+	music.Stop();
+}
+
+void Mission2::Resume(){
+	//Game::GetInstance().GetMissionManager().DeleteStates();
+	//stopMusic = false;
+	//intro.Play(1);
+	music.Play(-1);
 }

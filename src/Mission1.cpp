@@ -34,8 +34,8 @@ Mission1::Mission1() : Mission() {
 	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"Cobri vossos utensílios e amarrai vossos cantis...\"", auxcolor, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-40, true, false);
 
-	falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
-	falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
+	falas.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -164,7 +164,7 @@ void  Mission1::Update(float dt){
 		}
 		if(((time.Get()>6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false)
 				&& Enemy::show == false){
-			Enemy::show = true;
+			Enemy::show = true; //BOTAR BARULHO DE PORTA ABRINDO
 			//if(Enemy::turn == 1)
 			count ++;
 			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
@@ -177,7 +177,7 @@ void  Mission1::Update(float dt){
 			}
 			if(trancada == false)
 				if(time.Get() > 7 && trancada == false && cooldown.Get() > 2){
-					falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
+					falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!"); // BOTAR BARULHO SUSSURO AQUI
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = 7;
 				if(time.Get() > 8 && trancada == false && cooldown.Get() > 2){
