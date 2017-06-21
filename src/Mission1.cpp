@@ -54,39 +54,42 @@ Mission1::~Mission1() {
 
 //!!!!!!!!! Colocar MovingObject por ultimo em todos os casos
 void Mission1::SetObjectStage(){
-	StealthObject* Escrivaninha = new StealthObject(700, 400, "img/scene-escrivaninha-fechado.png");
-	objectStage.emplace_back(Escrivaninha);
+	//StealthObject* Escrivaninha = new StealthObject(700, 400, "img/scene-escrivaninha-fechado.png");
+	//objectStage.emplace_back(Escrivaninha);
 
 	/*PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
 	objectStage.emplace_back(PO);*/
 
-	SceneObject* Armario =  new SceneObject(400, 250, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
-	objectStage.emplace_back(Armario);
+	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	//objectStage.emplace_back(Armario);
 
-	PickUpObject* Clown = new PickUpObject(430, 280, "InventoryClown", "img/key.png", true, 0.5, 0.5);
+	PickUpObject* Clown = new PickUpObject(430, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);
 	objectStage.emplace_back(Clown);
 
-	MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
-	objectStage.emplace_back(Vaso);
+	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
+	//objectStage.emplace_back(Vaso);
 
-	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(730, 320, "img/scene-cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission1::SetObjectHall(){
-	SceneWindow* Window = new SceneWindow(350, 70);
-	objectHall.emplace_back(Window);
-	PickUpObject* PO = new PickUpObject(500, 400, "InventoryKey", "img/minionbullet1.png");
-	objectHall.emplace_back(PO);
+	//SceneWindow* Window = new SceneWindow(350, 70);
+	//objectHall.emplace_back(Window);
+	PickUpObject* Key = new PickUpObject(1200, 400, "InventoryKey", "img/minionbullet1.png");
+	objectHall.emplace_back(Key);
 	Enemy* E = new Enemy(500, 110);
 	objectHall.emplace_back(E);
 	PickUpObject* Bear = new PickUpObject(100, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	objectHall.emplace_back(Bear);
-	MovingObject* Table = new MovingObject(1000, 400, "img/scene-vaso.png");
-	objectHall.emplace_back(Table);
+	MovingObject* Vase = new MovingObject(1200, 300, "img/scene-vaso.png");
+	objectHall.emplace_back(Vase);
 }
 
 void Mission1::SetObjectRoom(){
+
+	PickUpObject* Bear = new PickUpObject(500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	objectLivingRoom.emplace_back(Bear);
 
 }
 
@@ -180,6 +183,7 @@ void  Mission1::Update(float dt){
 							Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
 							Enemy::enemy->SetDestinationPath(Vec2(400, 110)); //2º DESTINO
 							Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+
 						}
 			}
 			if(time.Get()>4 && time.Get()<5 && played == false){
@@ -201,8 +205,8 @@ void  Mission1::Update(float dt){
 				//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 				if(count == 1){
 					//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-					Enemy::enemy->SetDestinationPath(Vec2(900, 100)); //4º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(900, 140)); //3º DESTINO
+					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+					Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
 					Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
 					Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 				}
@@ -229,6 +233,7 @@ void  Mission1::Update(float dt){
 			//NO CASO DE JOGADOR VOLTAR PARA QUARTO DA CRIANÇA
 		} else if(MissionManager::missionManager->GetStage("StageState") &&
 				MissionManager::missionManager->countStageState > 1){
+			//std::cout << MissionManager::missionManager->GetStage("StageState") << std::endl;
 			if(state != MissionManager::missionManager->changeState){
 						state = MissionManager::missionManager->changeState;
 						time.Restart();
@@ -242,6 +247,26 @@ void  Mission1::Update(float dt){
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 			MessageDoor(dt);
+		}
+		if((MissionManager::missionManager->GetStage("HallState") &&
+				MissionManager::missionManager->countHallState > 1)){
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+							falas.SetText("BLABLA ");
+							falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
+							Enemy::show = true;
+							if(MissionManager::player->lastPicked == "InventoryBear"){
+										Enemy::enemy->SetDestinationPath(Vec2(80, 200));
+										Enemy::enemy->SetDestinationPath(Vec2(80, 130)); //4º DESTINO
+										Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
+										Enemy::enemy->SetDestinationPath(Vec2(400, 110)); //2º DESTINO
+										Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+
+									}
+						}
 		}
 	}
 

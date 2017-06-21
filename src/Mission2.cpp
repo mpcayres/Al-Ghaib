@@ -116,6 +116,8 @@ void Mission2::Render(){
 void Mission2::SetObjectStage(){
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
+	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
+	objectStage.emplace_back(Cadeira);
 }
 
 void Mission2::SetObjectHall(){
