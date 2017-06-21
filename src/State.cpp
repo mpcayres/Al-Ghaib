@@ -27,12 +27,12 @@ void State::UpdateArray(float dt){
 
 void State::RenderArray(){
 	if(posInvert != -1){
-		for(unsigned int i = 0; i < objectArray.size()-1; i++) {
-			if((int) i == posInvert){
-				objectArray[objectArray.size()-1].get()->Render();
+		for(unsigned int i = 0; i < objectArray.size(); i++) {
+			if((int) i != posInvert){
+				objectArray[i].get()->Render();
 			}
-			objectArray[i].get()->Render();
 		}
+		objectArray[posInvert].get()->Render();
 	} else{
 		for(unsigned int i = 0; i < objectArray.size(); i++) {
 			objectArray[i].get()->Render();

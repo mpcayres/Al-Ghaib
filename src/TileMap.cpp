@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "TileMap.hpp"
+#include "MissionManager.hpp"
 
 TileMap::TileMap(std::string file, TileSet* tileSet){
 	this->tileSet = tileSet;
@@ -101,7 +102,7 @@ Rect TileMap::FindLimits(){
 	lastY += tileSet->GetTileHeight();
 
 	aux.x = firstX;
-	aux.y = firstY;
+	aux.y = firstY - MissionManager::player->box.h/2;//tileSet->GetTileHeight();
 	aux.w = lastX;
 	aux.h = lastY;
 
