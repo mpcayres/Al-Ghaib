@@ -80,15 +80,15 @@ void Mission1::SetObjectHall(){
 	objectHall.emplace_back(Key);
 	Enemy* E = new Enemy(500, 110);
 	objectHall.emplace_back(E);
-	PickUpObject* Bear = new PickUpObject(100, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	PickUpObject* Bear = new PickUpObject(1100, 350, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	objectHall.emplace_back(Bear);
-	MovingObject* Vase = new MovingObject(1200, 300, "img/scene-vaso.png");
+	MovingObject* Vase = new MovingObject(1500, 300, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 }
 
 void Mission1::SetObjectRoom(){
 
-	PickUpObject* Bear = new PickUpObject(500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	objectLivingRoom.emplace_back(Bear);
 
 }
@@ -165,11 +165,11 @@ void  Mission1::Update(float dt){
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
 			}
-			if(trancada == false && cooldown.Get() > 2)
+			if(trancada == false && cooldown.Get() > 2 && Enemy::show == false)
 				falas.SetText("CUIDADO");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				ultimoTempo = 0;
-			if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+			if(time.Get() > 3 && trancada == false && cooldown.Get() > 2 && Enemy::show == false){
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				ultimoTempo = 3;
@@ -178,21 +178,22 @@ void  Mission1::Update(float dt){
 			if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
 				Enemy::show = true;
 				if(MissionManager::player->lastPicked == "InventoryBear"){
-					if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+					if(time.Get() > 9 && trancada == false && cooldown.Get() > 2){
 						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = 3;
+						ultimoTempo = time.Get();
+						std::cout << ultimoTempo << std::endl;
 					}
-					if(time.Get() > 6 && trancada == false && cooldown.Get() > 2){
+					if(time.Get() > (ultimoTempo + 3) && trancada == false && cooldown.Get() > 2){
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = 6;
+						ultimoTempo = ultimoTempo + 3;
 					}
-							Enemy::enemy->SetDestinationPath(Vec2(80, 200));
-							Enemy::enemy->SetDestinationPath(Vec2(80, 130)); //4º DESTINO
-							Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
-							Enemy::enemy->SetDestinationPath(Vec2(400, 110)); //2º DESTINO
-							Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+							//Enemy::enemy->SetDestinationPath(Vec2(1500, 300));
+							//Enemy::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+							Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+							Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
+							Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
 
 						}
 			}
@@ -260,10 +261,10 @@ void  Mission1::Update(float dt){
 		}
 		if((MissionManager::missionManager->GetStage("HallState") &&
 				MissionManager::missionManager->countHallState > 1)){
-			/*if(time.Get() < 3&& trancada == false && cooldown.Get() > 2){
+			if(time.Get() < 3&& trancada == false && cooldown.Get() > 2){
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}*/
+			}
 			//if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
 							//falas.SetText("BLABLA ");
 							//falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -281,11 +282,11 @@ void  Mission1::Update(float dt){
 									falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 									ultimoTempo = 6;
 								}
-										Enemy::enemy->SetDestinationPath(Vec2(80, 200));
-										Enemy::enemy->SetDestinationPath(Vec2(80, 130)); //4º DESTINO
-										Enemy::enemy->SetDestinationPath(Vec2(100, 110)); //3º DESTINO
-										Enemy::enemy->SetDestinationPath(Vec2(400, 110)); //2º DESTINO
-										Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+								//Enemy::enemy->SetDestinationPath(Vec2(1500, 300));
+								//Enemy::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+									Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+									Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //2º DESTINO
+									Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
 
 									}
 						}

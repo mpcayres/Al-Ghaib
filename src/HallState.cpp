@@ -157,7 +157,7 @@ void HallState::SetInitialObjectArray(){
 	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario2);
 
-	SceneObject* Abajur = new SceneObject(1300, 300, "img/scene-abajur.png", "img/scene-abajur.png");
+	SceneObject* Abajur = new SceneObject(1300, 310, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
 
 
