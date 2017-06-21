@@ -116,7 +116,7 @@ void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
 }
 
 void Mission::PiscaPisca(float dt, int max, float time){
-	std::cout << "PISCA " << contPisca << " " << timerPisca.Get() << std::endl;
+	//std::cout << "PISCA " << contPisca << " " << timerPisca.Get() << std::endl;
 	if(contPisca >= max){
 		bloqBlack = true;
 		timerPisca.Restart();

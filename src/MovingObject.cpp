@@ -80,7 +80,7 @@ bool MovingObject::NotifyCollision(GameObject& other){
 	}
 
 	if(other.Is("Player")){
-		return MissionManager::player->CollidingPlayer(box, OFFSET_MOVI);
+		return MissionManager::player->CollidingPlayer(box, box.h/3);
 	}
 
 	if(other.Is("CollidableObject")){
@@ -105,7 +105,7 @@ bool MovingObject::NotifyCollision(GameObject& other){
 			other.box.x = box.x - other.box.w - 1;
 		}*/
 
-		if((other.box.y + other.box.h - OFFSET_MOVI < box.y + box.h)){
+		if((other.box.y + other.box.h - box.h/3 < box.y + box.h)){
 			if((other.box.x < box.x + box.w &&other.box.x + other.box.w > box.x + box.w )
 				|| (box.InsideX(other.box) && other.box.CenterX() >= box.CenterX())){
 

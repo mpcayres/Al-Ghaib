@@ -22,8 +22,8 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
-	else SetPlayer(600, 400, CAMERA_TYPE1, limits);
+	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
+	else SetPlayer(600, 400, CAMERA_TYPE0, limits);
 	if(inicial){
 		//std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -36,7 +36,7 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	}
 	objectArray.emplace_back(MissionManager::player);
 
-	music = Music("audio/stageState.ogg");
+	music = Music("audio/ambiente.wav");
 	time = Timer();
 	flagMorte = false;
 	LoadAssets();
@@ -52,7 +52,7 @@ void StageState::Pause(){
 }
 
 void StageState::Resume(){
-	//music.Play(-1);
+	music.Play(-1);
 }
 
 void StageState::LoadAssets(){
@@ -135,7 +135,7 @@ void StageState::Update(float dt){
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 500, 200, (int) Player::SUL);
+						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 400, 380, (int) Player::SUL);
 		//std::cout << "DOOR4" << std::endl;
 	}
 }
@@ -175,9 +175,6 @@ void StageState::SetInitialObjectArray(){
 
 	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
-
-	SceneObject* Bau = new SceneObject(300, 500,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
-	objectArray.emplace_back(Bau);
 
 	MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
 	objectArray.emplace_back(Vaso);

@@ -332,7 +332,7 @@ void Player::SetBlocked(bool b){
 	blocked = b;
 }
 
-bool Player::CollidingPlayer(Rect boxCol, int offset){
+bool Player::CollidingPlayer(Rect boxCol, float offset){
 	/*if(MissionManager::player->box.x < box.x + box.w ||
 			MissionManager::player->box.x + MissionManager::player->box.w > box.x){
 		MissionManager::player->box.x = MissionManager::player->previousPos.x;
@@ -341,6 +341,7 @@ bool Player::CollidingPlayer(Rect boxCol, int offset){
 			MissionManager::player->box.y + MissionManager::player->box.h > box.y){
 		MissionManager::player->box.y = MissionManager::player->previousPos.y;
 	}*/
+	std::cout << offset << std::endl;
 	bool invert = false;
 	if(!aboveObject && (box.y + box.h - offset < boxCol.y + boxCol.h)){
 
@@ -349,22 +350,14 @@ bool Player::CollidingPlayer(Rect boxCol, int offset){
 			invert = true;
 		} else if((box.x < boxCol.x + boxCol.w && box.x + box.w > boxCol.x + boxCol.w) ||
 				(boxCol.InsideX(box) && box.CenterX() >= boxCol.CenterX())){
-			if(GetDirecao() == Player::SUL || GetDirecao() == Player::NORTE){
-				if(GetDirecao() == Player::SUL) invert = true;
-				box.x = previousPos.x;
-				box.y = previousPos.y;
-			} else{
-				box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
-			}
+			if(GetDirecao() == Player::SUL) invert = true;
+			box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
+			box.y = previousPos.y;
 		} else if((box.x + box.w > boxCol.x && box.x < boxCol.x) ||
 					(boxCol.InsideX(box) && box.CenterX() < boxCol.CenterX())){
-			if(GetDirecao() == Player::SUL || GetDirecao() == Player::NORTE){
-				if(GetDirecao() == Player::SUL) invert = true;
-				box.x = previousPos.x;
-				box.y = previousPos.y;
-			} else{
-				box.x =  previousPos.x;//boxCol.x - box.w - 1;
-			}
+			if(GetDirecao() == Player::SUL) invert = true;
+			box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
+			box.y = previousPos.y;
 		}
 
 	}

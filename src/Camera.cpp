@@ -51,7 +51,7 @@ void Camera::Update(float dt){
 			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 			pos.y = 0;
 		}
-	}else if(isMoving){
+	} else if(isMoving){
 		if(!inWayBack && abs(dest.x - pos.x) < 2 && abs(dest.y - pos.y) < 2){
 			pos = dest;
 			inWay = false;
@@ -71,11 +71,14 @@ void Camera::Update(float dt){
 			pos = previousPos;
 			inWayBack = false;
 			isMoving = false;
-		}else if(inWayBack){
+		} else if(inWayBack){
 			pos.x += speed.x;
 			pos.y += speed.y;
 		}
 
+	} else{
+		pos.x = 80;
+		pos.y = 80;
 	}
 }
 

@@ -5,9 +5,9 @@
 #include "Geometry.hpp"
 #include "Timer.hpp"
 
+#define CAMERA_TYPE0 0
 #define CAMERA_TYPE1 1
 #define CAMERA_TYPE2 2
-
 
 class Camera {
 public:

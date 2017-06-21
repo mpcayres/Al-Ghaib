@@ -1,7 +1,7 @@
 #include "SceneObject.hpp"
 #include "MissionManager.hpp"
 
-SceneObject::SceneObject(float x, float y, std::string img, std::string img2, float rot, float scaleX, float scaleY) :
+SceneObject::SceneObject(float x, float y, std::string img, std::string img2, float rot, float scaleX, float scaleY, std::string create) :
 	sp(img) {
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	change1 = img;
@@ -11,6 +11,7 @@ SceneObject::SceneObject(float x, float y, std::string img, std::string img2, fl
 	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
+	objCreate = create;
 }
 
 bool SceneObject::IsDead(){
@@ -42,11 +43,11 @@ bool SceneObject::NotifyCollision(GameObject& other){
 				MissionManager::player->box.y > box.y + box.h){
 			MissionManager::player->box.y = MissionManager::player->previousPos.y;
 		}*/
-		return MissionManager::player->CollidingPlayer(box, OFFSET_PISO);
+		return MissionManager::player->CollidingPlayer(box, box.h/3);
 	}
 
 	if (other.Is("Enemy")){
-		if(other.box.y + other.box.h - OFFSET_PISO < box.y + box.h){
+		if(other.box.y + other.box.h - box.h/3 < box.y + box.h){
 
 			if((other.box.x < box.x + box.w &&
 					other.box.x + other.box.w > box.x + box.w )
@@ -65,6 +66,10 @@ bool SceneObject::NotifyCollision(GameObject& other){
 
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
+			if(objCreate != ""){
+				MissionManager::player->AddInventory(objCreate);
+				objCreate = "";
+			}
 			if(estado){
 				estado = false;
 				sp.Open(change1);
@@ -88,7 +93,7 @@ bool SceneObject::NotifyCollision(GameObject& other){
 					box.h = sp.GetHeight();
 				}
 
-				if(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h){
+				if(MissionManager::player->box.y + MissionManager::player->box.h - box.h/3 < box.y + box.h){
 
 					if((box.w != sp.GetWidth()) && (MissionManager::player->GetDirecao() == Player::LESTE ||
 						MissionManager::player->GetDirecao() == Player::OESTE)){

@@ -29,7 +29,7 @@ public:
 	void SetPosition(int x, int y);
 	void SetDirecao(int dir);
 	void SetBlocked(bool b);
-	bool CollidingPlayer(Rect box, int offset);
+	bool CollidingPlayer(Rect box, float offset);
 	void Running(InputManager InputInstance);
 
 	void SetMovementLimits(Rect limits);

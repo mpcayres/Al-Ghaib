@@ -11,11 +11,9 @@
 #include "Player.hpp"
 #include "MovingObject.hpp"
 
-#define  OFFSET_PISO 10
-
 class SceneObject : public GameObject {
 public:
-	SceneObject(float x, float y, std::string img, std::string img2, float rot = 0, float scaleX = 1, float scaleY = 1);
+	SceneObject(float x, float y, std::string img, std::string img2, float rot = 0, float scaleX = 1, float scaleY = 1, std::string create = "");
 
 	void Update(float dt);
 	void Render();
@@ -27,7 +25,7 @@ public:
 protected:
 	Sprite sp;
 	bool estado;
-	std::string change1, change2;
+	std::string change1, change2, objCreate;
 };
 
 #endif  /* SCENEOBJECT_H_ */

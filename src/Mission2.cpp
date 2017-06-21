@@ -58,8 +58,9 @@ void Mission2::Update(float dt){
 		if(time.Get() < 3){
 			time.Set(3);
 			begin = false;
-			fadeIn = false;
 		}
+		bloqBlack = true;
+		fadeIn = false;
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
@@ -120,12 +121,14 @@ void Mission2::Render(){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
-	} else if((time.Get() >= 3 && begin && fadeIn) || (time.Get() >= 6 && !bloqBlack)){
+	} else if((time.Get() >= 3 && begin && fadeIn) || !bloqBlack){
 		spFade.Render(0,0,0);
 	}
 }
 
 void Mission2::SetObjectStage(){
+	SceneObject* Bau = new SceneObject(300, 500,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
+	objectStage.emplace_back(Bau);
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
 	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");

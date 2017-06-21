@@ -49,8 +49,9 @@ bool State::PopRequested(){
 }
 
 void State::SetPlayer(int x, int y, int type, Rect limits){
+	Camera::Unfollow();
 	MissionManager::player->SetPosition(x, y);
-	Camera::Follow(MissionManager::player, type);
+	if(type != CAMERA_TYPE0) Camera::Follow(MissionManager::player, type);
 	MissionManager::player->SetMovementLimits(limits);
 }
 

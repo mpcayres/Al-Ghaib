@@ -4,8 +4,6 @@
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 
-#define OFFSET_MOVI 30
-
 class StealthObject :public GameObject {
 public:
 	StealthObject(float x, float y, std::string img);
