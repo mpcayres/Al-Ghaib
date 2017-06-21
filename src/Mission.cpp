@@ -1,6 +1,6 @@
 #include "Mission.hpp"
 
-Mission::Mission() : blackSquare("img/blacksquare.png")  {
+Mission::Mission() : blackSquare("img/blacksquare.png"), doorSound(false) {
 	popRequested = quitRequested = false;
 	initialX = initialY = -1;
 
@@ -62,8 +62,10 @@ void Mission::SetDoor(bool value){
 
 void Mission::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
-				falas.SetText("ESTÃ� TRANCADA");
+				falas.SetText("ESTÁ TRANCADA");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				Sound portaDestrancando = Sound ("audio/destrancando.wav");
+				portaDestrancando.Play(0);
 				trancada = true;
 				MissionManager::player->SetDoor(false);
 				cooldown.Restart();

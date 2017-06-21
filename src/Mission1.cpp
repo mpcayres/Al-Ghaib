@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-Mission1::Mission1() : Mission() {
+Mission1::Mission1() : Mission(), played(false) {
 	initialState = "StageState";
 	initialX = 600; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -162,9 +162,24 @@ void  Mission1::Update(float dt){
 						Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 					}
 		}
+		if(time.Get()>4 && time.Get()<5 && played == false){
+			Sound portaDestrancando = Sound ("audio/destrancando.wav");
+			portaDestrancando.Play(0);
+			played = true;
+		}
+		if(time.Get()>5 && time.Get()<6 && played == true){
+			Sound portaDestrancando = Sound ("audio/weird-door.wav");
+			portaDestrancando.Play(0);
+			played = false;
+		}
+		if(Enemy::show == false){
+			printf("false");
+		}
+		else
+			printf("true");
 		if(((time.Get()>6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false)
-				&& Enemy::show == false){
-			Enemy::show = true; //BOTAR BARULHO DE PORTA ABRINDO
+				/*&& Enemy::show == false*/){
+			Enemy::show = true;
 			//if(Enemy::turn == 1)
 			count ++;
 			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
@@ -175,10 +190,16 @@ void  Mission1::Update(float dt){
 				Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
 				Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 			}
+			std::cout << trancada << std::endl;
 			if(trancada == false)
 				if(time.Get() > 7 && trancada == false && cooldown.Get() > 2){
-					falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!"); // BOTAR BARULHO SUSSURO AQUI
+					falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					if(played == false){
+						Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
+						portaDestrancando.Play(0);
+						played = true;
+					}
 					ultimoTempo = 7;
 				if(time.Get() > 8 && trancada == false && cooldown.Get() > 2){
 					falas.SetText(" ");

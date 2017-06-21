@@ -10,6 +10,7 @@
 #include "Sprite.hpp"
 #include "InputManager.hpp"
 #include "MissionManager.hpp"
+#include "Sound.hpp"
 
 class Mission {
 public:
@@ -62,6 +63,7 @@ protected:
 	bool begin;
 	int state;
 	int count;
+	bool doorSound;
 };
 
 #endif /* SRC_MISSION_HPP_ */

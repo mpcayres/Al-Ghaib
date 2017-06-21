@@ -26,6 +26,7 @@
 #include "Sprite.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Sound.hpp"
 
 class Mission1 : public Mission {
 public:
@@ -45,7 +46,7 @@ protected:
 	void SetObjectHall();
 	void SetObjectRoom();
 
-	//static Music sounds;
+	//static Sound sounds;
 
 	/*Text tx;
 	Text falas;
@@ -61,6 +62,8 @@ protected:
 
 	//int StageState;
 	//int HallState;
+	bool played;
 };
+
 
 #endif /* SRC_MISSION1_HPP_ */
