@@ -5,6 +5,8 @@
 #include "MissionManager.hpp"
 #include "Geometry.hpp"
 
+#include <iostream>
+
 MovingObject::MovingObject(float x, float y, std::string img) : sp(img){
 	rotation = 0;
 	box.x = x; box.y = y;
@@ -42,40 +44,45 @@ bool MovingObject::NotifyCollision(GameObject& other){
 			}
 		} else if(InputManager::GetInstance().IsKeyDown(Z_KEY) && !MissionManager::player->GetAboveObject()){
 			MissionManager::missionManager->movingBox = true;
-			previousPos = Vec2(box.x, box.y);
-			bool bloqMov = false;
-			Rect boxAux = box, boxAuxPlayer = MissionManager::player->box;
-			boxAux.x += MissionManager::player->GetSpeed().x; boxAux.y += MissionManager::player->GetSpeed().y;
-			boxAuxPlayer.x += MissionManager::player->GetSpeed().x; boxAuxPlayer.y += MissionManager::player->GetSpeed().y;
-			for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
-				bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
-				if(bloqMov == true) break;
-				bloqMov = boxAuxPlayer.Collide(MissionManager::player->wallLimits[i]);
-				if(bloqMov == true) break;
-			}
+			//if(!MissionManager::player->box.Intersect(box)
+			//		|| MissionManager::player->GetDirecao() == NORTE || MissionManager::player->GetDirecao() == SUL){
+				previousPos = Vec2(box.x, box.y);
+				bool bloqMov = false;
+				Rect boxAux = box, boxAuxPlayer = MissionManager::player->box;
+				boxAux.x += MissionManager::player->GetSpeed().x; boxAux.y += MissionManager::player->GetSpeed().y;
+				boxAuxPlayer.x += MissionManager::player->GetSpeed().x; boxAuxPlayer.y += MissionManager::player->GetSpeed().y;
+				for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
+					bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
+					if(bloqMov == true) break;
+					bloqMov = boxAuxPlayer.Collide(MissionManager::player->wallLimits[i]);
+					if(bloqMov == true) break;
+				}
 
-			if(boxAux.x < MissionManager::player->limits.w - boxAux.w &&
-					boxAuxPlayer.x < MissionManager::player->limits.w - boxAuxPlayer.w &&
-					boxAux.x > MissionManager::player->limits.x &&
-					boxAuxPlayer.x > MissionManager::player->limits.x && !bloqMov){
-				if((MissionManager::player->box).Intersect(box) &&
-						(MissionManager::player->GetDirecao() == NORTE || MissionManager::player->GetDirecao() == SUL)){
-					MissionManager::missionManager->movingBox = false;
-				} else{
-					box.x += MissionManager::player->GetSpeed().x;
+				if(boxAux.x < MissionManager::player->limits.w - boxAux.w &&
+						boxAuxPlayer.x < MissionManager::player->limits.w - boxAuxPlayer.w &&
+						boxAux.x > MissionManager::player->limits.x &&
+						boxAuxPlayer.x > MissionManager::player->limits.x && !bloqMov){
+					/*if((MissionManager::player->box).Intersect(box) &&
+							(MissionManager::player->box.y < box.y + box.h - box.h/3 || MissionManager::player->box.y + MissionManager::player->box.h > box.y + box.h/3) &&
+							(MissionManager::player->GetDirecao() == Player::NORTE || MissionManager::player->GetDirecao() == Player::SUL)){
+						MissionManager::missionManager->movingBox = false;
+					} else{*/
+						box.x += MissionManager::player->GetSpeed().x;
+					//}
 				}
-			}
-			if(boxAux.y < MissionManager::player->limits.h - boxAux.h &&
-					boxAuxPlayer.y < MissionManager::player->limits.h - boxAuxPlayer.h &&
-					boxAux.y > MissionManager::player->limits.y &&
-					boxAuxPlayer.y > MissionManager::player->limits.y && !bloqMov){
-				if((MissionManager::player->box).Intersect(box) &&
-						(MissionManager::player->GetDirecao() == NORTE || MissionManager::player->GetDirecao() == SUL)){
-					MissionManager::missionManager->movingBox = false;
-				} else{
-					box.y += MissionManager::player->GetSpeed().y;
+				if(boxAux.y < MissionManager::player->limits.h - boxAux.h &&
+						boxAuxPlayer.y < MissionManager::player->limits.h - boxAuxPlayer.h &&
+						boxAux.y > MissionManager::player->limits.y &&
+						boxAuxPlayer.y > MissionManager::player->limits.y && !bloqMov){
+					/*if((MissionManager::player->box).Intersect(box) &&
+							(MissionManager::player->box.y < box.y + box.h - box.h/3) &&
+							(MissionManager::player->GetDirecao() == Player::NORTE || MissionManager::player->GetDirecao() == Player::SUL)){
+						MissionManager::missionManager->movingBox = false;
+					} else{*/
+						box.y += MissionManager::player->GetSpeed().y;
+					//}
 				}
-			}
+			//}
 		} else MissionManager::missionManager->movingBox = false;
 	}
 
