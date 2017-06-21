@@ -172,11 +172,7 @@ void  Mission1::Update(float dt){
 			portaDestrancando.Play(0);
 			played = false;
 		}
-		if(Enemy::show == false){
-			printf("false");
-		}
-		else
-			printf("true");
+
 		if(((time.Get()>6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false)
 				/*&& Enemy::show == false*/){
 			Enemy::show = true;
