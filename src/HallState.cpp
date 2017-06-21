@@ -6,6 +6,7 @@
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
 #include "MovingObject.hpp"
+#include "StealthObject.hpp"
 
 #include <iostream>
 
@@ -128,12 +129,38 @@ void HallState::Render(){
 void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
+
+	SceneObject* Window = new SceneObject(350, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
+	objectArray.emplace_back(Window);
+
+	SceneObject* CriadoMudo = new SceneObject(250, 160, "img/scene-criado-fechado.png", "img/scene-criado-fechado.png");
+	objectArray.emplace_back(CriadoMudo);
+
+	SceneObject* Book = new SceneObject(260, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);
+	objectArray.emplace_back(Book);
+
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
 	objectArray.emplace_back(DoorToKidRoom);
+
+	SceneObject* Table = new SceneObject(340, 303, "img/scene-mesa.png", "img/scene-mesa.png");
+	objectArray.emplace_back(Table);
+
+	StealthObject* Armario = new StealthObject(500, 305, "img/scene-armario-corredor-fechado.png");
+	objectArray.emplace_back(Armario);
+
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState");
 	objectArray.emplace_back(DoorToMomRoom);
+
 	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
+
+	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
+	objectArray.emplace_back(Armario2);
+
+	SceneObject* Abajur = new SceneObject(1300, 300, "img/scene-abajur.png", "img/scene-abajur.png");
+	objectArray.emplace_back(Abajur);
+
+
 }
 
 
