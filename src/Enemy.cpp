@@ -284,7 +284,7 @@ void Enemy::Pursuit(){
 	if((unsigned) (destination.x- box.x) > (unsigned) (destination.y- box.y)){
 		if(destination.x > box.x){
 			//std::cout << " lESTE " << std::endl;
-					direcao = LESTE;
+			direcao = LESTE;
 		}else if(destination.x < box.CenterX() || destination.x < box.x){
 			//std::cout << " OESTE " << std::endl;
 			direcao = OESTE;

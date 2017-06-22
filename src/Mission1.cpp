@@ -59,7 +59,7 @@ void Mission1::SetObjectStage(){
 	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	//objectStage.emplace_back(Armario);
 
-	SceneObject* Bau = new SceneObject(300, 480,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
+	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
 	objectStage.emplace_back(Bau);
 
 	PickUpObject* Clown = new PickUpObject(450, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);

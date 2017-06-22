@@ -449,7 +449,7 @@ void Player::AddInventory(std::string obj){
 		inventory.emplace_back(new InventoryKey());
 	} else if(obj == "InventoryClown"){
 		spPicked = Sprite("img/key.png");
-		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryClown());
 	} else if(obj == "InventoryBear"){

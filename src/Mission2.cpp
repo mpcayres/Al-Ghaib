@@ -125,7 +125,7 @@ void Mission2::Render(){
 }
 
 void Mission2::SetObjectStage(){
-	SceneObject* Bau = new SceneObject(300, 480,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
+	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
 	objectStage.emplace_back(Bau);
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
