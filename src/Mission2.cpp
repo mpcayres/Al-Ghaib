@@ -1,6 +1,5 @@
 #include "Mission2.hpp"
 #include "PickUpObject.hpp"
-#include "SceneWindow.hpp"
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
@@ -16,7 +15,6 @@ Mission2::Mission2() : Mission() {
 	auxcolor.r = 102;
 	auxcolor.g = 0;
 	auxcolor.b = 0;
-
 
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
@@ -127,7 +125,7 @@ void Mission2::Render(){
 }
 
 void Mission2::SetObjectStage(){
-	SceneObject* Bau = new SceneObject(300, 500,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
+	SceneObject* Bau = new SceneObject(300, 480,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
 	objectStage.emplace_back(Bau);
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
@@ -136,7 +134,7 @@ void Mission2::SetObjectStage(){
 }
 
 void Mission2::SetObjectHall(){
-	SceneWindow* Window = new SceneWindow(350, 70);
+	SceneObject* Window = new SceneObject(350, 70, "img/closedwindow.png", "img/openwindow.png");
 	objectHall.emplace_back(Window);
 }
 

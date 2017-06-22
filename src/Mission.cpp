@@ -22,6 +22,9 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 	ultimoTempo = 3;
 	state = MissionManager::missionManager->changeState;
 	alpha = OPAQUE; alphaAux = OPAQUE;
+
+	MissionManager::missionManager->countHallState = 0;
+	MissionManager::missionManager->countStageState = 0;
 }
 
 Mission::~Mission() {

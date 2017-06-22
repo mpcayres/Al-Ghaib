@@ -13,8 +13,16 @@ bool Camera::isMoving, Camera::inWay, Camera::inWayBack;
 Timer Camera::time;
 
 void Camera::Follow(GameObject* newFocus, int Ntype){
-	Camera::focus = newFocus;
-	Camera::type = Ntype;
+	focus = newFocus;
+	type = Ntype;
+	if(type == 2){
+		if(focus->box.CenterX() >= Game::GetInstance().GetCurrentState().GetStateLimits().w - OFFSET_TYPE2){
+			pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().w - Game::GetInstance().GetWidth()/2;
+		} else if(focus->box.CenterX() <= Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
+			pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2/2 - Game::GetInstance().GetWidth()/2;
+		}
+		pos.y = 0;
+	}
 	isMoving = false;
 }
 
@@ -48,8 +56,10 @@ void Camera::Update(float dt){
 			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 			pos.y = focus->box.CenterY() - Game::GetInstance().GetHeight()/2;
 		} else if(type == 2){
-			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
-			pos.y = 0;
+			if(focus->box.CenterX() < Game::GetInstance().GetCurrentState().GetStateLimits().w - OFFSET_TYPE2 &&
+					focus->box.CenterX() > Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
+				pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
+			}
 		}
 	} else if(isMoving){
 		if(!inWayBack && abs(dest.x - pos.x) < 2 && abs(dest.y - pos.y) < 2){

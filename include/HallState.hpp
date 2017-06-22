@@ -26,7 +26,6 @@ public:
 private:
 	Sprite background;
 	Sprite bg;
-	Rect limits;
 	TileSet tileSet;
 	TileMap tileMap;
 };

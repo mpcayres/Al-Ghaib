@@ -12,6 +12,7 @@ SceneObject::SceneObject(float x, float y, std::string img, std::string img2, fl
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
 	objCreate = create;
+	offset = box.h/3;
 }
 
 bool SceneObject::IsDead(){
@@ -43,11 +44,11 @@ bool SceneObject::NotifyCollision(GameObject& other){
 				MissionManager::player->box.y > box.y + box.h){
 			MissionManager::player->box.y = MissionManager::player->previousPos.y;
 		}*/
-		return MissionManager::player->CollidingPlayer(box, box.h/3);
+		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
 	if (other.Is("Enemy")){
-		if(other.box.y + other.box.h - box.h/3 < box.y + box.h){
+		if(other.box.y + other.box.h - offset < box.y + box.h){
 
 			if((other.box.x < box.x + box.w &&
 					other.box.x + other.box.w > box.x + box.w )
@@ -93,7 +94,7 @@ bool SceneObject::NotifyCollision(GameObject& other){
 					box.h = sp.GetHeight();
 				}
 
-				if(MissionManager::player->box.y + MissionManager::player->box.h - box.h/3 < box.y + box.h){
+				if(MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h){
 
 					if((box.w != sp.GetWidth()) && (MissionManager::player->GetDirecao() == Player::LESTE ||
 						MissionManager::player->GetDirecao() == Player::OESTE)){

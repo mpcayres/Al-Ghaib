@@ -25,11 +25,13 @@ public:
 	void SetPlayer(int x, int y, int type, Rect limits);
 	void RemovePlayer();
 	void SetPopRequested();
+	Rect GetStateLimits();
 
 protected:
 	virtual void UpdateArray(float dt);
 	virtual void RenderArray();
 
+	Rect limits;
 	bool quitRequested;
 	bool popRequested;
 	int posInvert;

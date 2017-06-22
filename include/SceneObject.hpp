@@ -26,6 +26,7 @@ protected:
 	Sprite sp;
 	bool estado;
 	std::string change1, change2, objCreate;
+	float offset;
 };
 
 #endif  /* SCENEOBJECT_H_ */

@@ -8,7 +8,6 @@
 #include "EndState.hpp"
 #include "Enemy.hpp"
 #include "SceneObject.hpp"
-#include "SceneWindow.hpp"
 #include "SceneDoor.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
@@ -164,13 +163,13 @@ void StageState::SetInitialObjectArray(){
 	StealthObject* Escrivaninha = new StealthObject(700, 420, "img/scene-escrivaninha-fechado.png");
 	objectArray.emplace_back(Escrivaninha);
 
-	SceneObject* Window = new SceneObject(500, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.8, 0.8);
+	SceneObject* Window = new SceneObject(500, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.7, 0.7);
 	objectArray.emplace_back(Window);
 
 	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "img/scene-cama.png");
 	objectArray.emplace_back(Cama);
 
-	SceneObject* Armario =  new SceneObject(400, 280, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	SceneObject* Armario =  new SceneObject(420, 280, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	objectArray.emplace_back(Armario);
 
 	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "img/scene-abajur.png");

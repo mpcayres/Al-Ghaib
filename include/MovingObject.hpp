@@ -19,6 +19,7 @@ public:
 
 private:
 	Sprite sp;
+	float offset;
 };
 
 #endif /* SRC_MOVINGOBJECT_H_ */

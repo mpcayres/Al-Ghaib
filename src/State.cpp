@@ -69,3 +69,7 @@ void State::RemovePlayer(){
 void State::SetPopRequested(){
 	popRequested = true;
 }
+
+Rect State::GetStateLimits(){
+	return limits;
+}

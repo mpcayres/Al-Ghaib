@@ -18,6 +18,7 @@ public:
 private:
 	Sprite sp;
 	Rect limits;
+	float offset;
 };
 
 #endif /* INCLUDE_STEALTHOBJECT_HPP_ */

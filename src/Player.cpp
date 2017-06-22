@@ -341,21 +341,26 @@ bool Player::CollidingPlayer(Rect boxCol, float offset){
 			MissionManager::player->box.y + MissionManager::player->box.h > box.y){
 		MissionManager::player->box.y = MissionManager::player->previousPos.y;
 	}*/
-	std::cout << offset << std::endl;
+	//std::cout << "OFFSET " << offset << std::endl;
 	bool invert = false;
-	if(!aboveObject && (box.y + box.h - offset < boxCol.y + boxCol.h)){
+	if(!aboveObject && (box.y + offset < boxCol.y + boxCol.h)){
 
-		if(box.y + offset < boxCol.y){
-			//std::cout << "HIDDING" << std::endl;
+		if(box.y + box.h - offset < boxCol.y){
+			//std::cout << "HIDDING " << std::endl;
 			invert = true;
 		} else if((box.x < boxCol.x + boxCol.w && box.x + box.w > boxCol.x + boxCol.w) ||
-				(boxCol.InsideX(box) && box.CenterX() >= boxCol.CenterX())){
+					(boxCol.InsideX(box) && box.CenterX() >= boxCol.CenterX())){
+			//if(boxCol.InsideX(box) && box.CenterX() >= boxCol.CenterX()) std::cout << "11" << std::endl;
+			//if(box.x < boxCol.x + boxCol.w && box.x + box.w > boxCol.x + boxCol.w) std::cout << "22" << std::endl;
 			if(GetDirecao() == Player::SUL) invert = true;
 			box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
 			box.y = previousPos.y;
 		} else if((box.x + box.w > boxCol.x && box.x < boxCol.x) ||
 					(boxCol.InsideX(box) && box.CenterX() < boxCol.CenterX())){
+			//if(boxCol.InsideX(box) && box.CenterX() < boxCol.CenterX()) std::cout << "33" << std::endl;
+			//if(box.x + box.w > boxCol.x && box.x < boxCol.x) std::cout << "44" << std::endl;
 			if(GetDirecao() == Player::SUL) invert = true;
+
 			box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
 			box.y = previousPos.y;
 		}

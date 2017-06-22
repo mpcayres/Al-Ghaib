@@ -27,7 +27,7 @@ bool SceneDoor::NotifyCollision(GameObject& other){
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 
-				if((MissionManager::player->box.y + MissionManager::player->box.h - box.h/3 < box.y + box.h)
+				if((MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h)
 					&& (MissionManager::player->GetDirecao() == Player::LESTE ||
 						MissionManager::player->GetDirecao() == Player::OESTE)){
 

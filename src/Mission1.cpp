@@ -1,7 +1,6 @@
 #include "Mission1.hpp"
 #include "PickUpObject.hpp"
 #include "SceneObject.hpp"
-#include "SceneWindow.hpp"
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "Animation.hpp"
@@ -12,9 +11,6 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	initialState = "StageState";
 	initialX = 600; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
-
-	MissionManager::missionManager->countHallState = 0;
-	MissionManager::missionManager->countStageState = 0;
 
 	//StageState = 0;
 	//HallState = 0;
@@ -63,10 +59,10 @@ void Mission1::SetObjectStage(){
 	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	//objectStage.emplace_back(Armario);
 
-	SceneObject* Bau = new SceneObject(300, 500,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
+	SceneObject* Bau = new SceneObject(300, 480,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
 	objectStage.emplace_back(Bau);
 
-	PickUpObject* Clown = new PickUpObject(430, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);
+	PickUpObject* Clown = new PickUpObject(450, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);
 	objectStage.emplace_back(Clown);
 
 	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");

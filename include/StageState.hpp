@@ -23,12 +23,10 @@ public:
 	void Render();
 
 	void SetInitialObjectArray();
-	Rect GetStateLimits();
 
 	StateData stateData;
 
 private:
-	Rect limits;
 	Sprite bg;
 	TileSet tileSet;
 	TileMap tileMap;

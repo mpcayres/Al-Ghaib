@@ -23,40 +23,40 @@ void EmptyBox::Update(float dt){
 		case Player::NORTE:		//NORTE
 			//box.x = rot.x + MissionManager::player->box.CenterX();
 			//box.y = rot.y + MissionManager::player->box.CenterY() - DISTANCIA;
-			box.x = MissionManager::player->box.x;
+			box.x = MissionManager::player->box.x + REDUCE_BOX;
 			box.y = MissionManager::player->box.y - DISTANCIA;
-			box.w = MissionManager::player->box.h;
+			box.w = MissionManager::player->box.h - 2*REDUCE_BOX;
 			box.h = DISTANCIA + MissionManager::player->box.w;
 			break;
 		case Player::SUL:		//SUL
 			//box.x = rot.x + MissionManager::player->box.CenterX();
 			//box.y = rot.y + MissionManager::player->box.CenterY();
-			box.x = MissionManager::player->box.x;
+			box.x = MissionManager::player->box.x + REDUCE_BOX;
 			box.y = MissionManager::player->box.y;
-			box.w = MissionManager::player->box.h;
+			box.w = MissionManager::player->box.h - 2*REDUCE_BOX;
 			box.h = DISTANCIA + MissionManager::player->box.w;
 			break;
 		case Player::LESTE:		//LESTE
 			box.x = MissionManager::player->box.x;
-			box.y = MissionManager::player->box.y;
+			box.y = MissionManager::player->box.y + REDUCE_BOX;
 			box.w = DISTANCIA + MissionManager::player->box.w;
-			box.h = MissionManager::player->box.h;
+			box.h = MissionManager::player->box.h - 2*REDUCE_BOX;
 			break;
 		case Player::OESTE:		//OESTE
 			box.x = MissionManager::player->box.x - DISTANCIA;
-			box.y = MissionManager::player->box.y;
+			box.y = MissionManager::player->box.y + REDUCE_BOX;
 			box.w = DISTANCIA + MissionManager::player->box.w;
-			box.h = MissionManager::player->box.h;
+			box.h = MissionManager::player->box.h - 2*REDUCE_BOX;
 			break;
 	}
 	inHand = MissionManager::player->GetInHand();
 }
 
 void EmptyBox::Render(){
-	/*SDL_Rect dst;
+	SDL_Rect dst;
 	dst.x = box.x - Camera::pos.x; dst.y = box.y - Camera::pos.y;
 	dst.h = box.h; dst.w = box.w;
-	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);*/
+	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
 }
 
 bool EmptyBox::IsDead(){

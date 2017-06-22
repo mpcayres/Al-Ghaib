@@ -8,6 +8,7 @@
 #define CAMERA_TYPE0 0
 #define CAMERA_TYPE1 1
 #define CAMERA_TYPE2 2
+#define OFFSET_TYPE2 400
 
 class Camera {
 public:

@@ -10,6 +10,7 @@ StealthObject::StealthObject(float x, float y, std::string img) : sp(img){
 	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
+	offset = box.h/3;
 }
 
 bool StealthObject::IsDead(){
@@ -33,7 +34,7 @@ bool StealthObject::NotifyCollision(GameObject& other){
 	}
 
 	if(other.Is("Player")){
-		return MissionManager::player->CollidingPlayer(box, box.h/3);
+		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
 	if (other.Is("Enemy")){
