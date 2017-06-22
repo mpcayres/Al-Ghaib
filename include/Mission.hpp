@@ -4,10 +4,28 @@
 #define OPAQUE SDL_ALPHA_OPAQUE
 #define TRANSPARENT SDL_ALPHA_TRANSPARENT
 
-#include "GameObject.hpp"
+#ifdef __APPLE__
+	#include <SDL2.h>
+	#include <SDL_image/SDL_image.h>
+	#include <SDL_mixer/SDL_mixer.h>
+	#include <SDL_ttf/SDL_ttf.h>
+#elif __linux__
+    #include <SDL2/SDL.h>
+	#include <SDL2/SDL_image.h>
+	#include <SDL2/SDL_mixer.h>
+	#include <SDL2/SDL_ttf.h>
+#elif _WIN32
+	#include "SDL.h"
+	#include "SDL_image.h"
+	#include "SDL_mixer.h"
+	#include "SDL_ttf.h"
+#endif
+
 #include <vector>
 #include <memory>
 #include <string>
+
+#include "GameObject.hpp"
 #include "Text.hpp"
 #include "Timer.hpp"
 #include "Sprite.hpp"
@@ -37,9 +55,6 @@ public:
 
 	bool PopRequested();
 	bool QuitRequested();
-
-	//bool GetDoor();
-	//void SetDoor(bool value);
 
 	void MessageDoor(float dt);
 	void UpdateVariable(float dt, float speed, bool turnOpaque = false);

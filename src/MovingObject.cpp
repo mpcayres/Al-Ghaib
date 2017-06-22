@@ -30,6 +30,7 @@ void MovingObject::Render(){
 
 bool MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
+		// PODEMOS DIMINUIR A REGIAO ANALISADA DO MOVING OBJECT PARA QUE NAO CONSIGA "PEGAR PELAS PONTAS"
 		if(InputManager::GetInstance().IsKeyDown(LCTRL_KEY) && InputManager::GetInstance().KeyPress(Z_KEY)){
 			//colocar animacao para subir na cadeira
 			if(!MissionManager::player->GetAboveObject()){
@@ -45,7 +46,9 @@ bool MovingObject::NotifyCollision(GameObject& other){
 			}
 		} else if(InputManager::GetInstance().IsKeyDown(Z_KEY) && !MissionManager::player->GetAboveObject()){
 			MissionManager::missionManager->movingBox = false;
-			if(MissionManager::player->box.Intersect(box) && (MissionManager::player->GetDirecao() == Player::LESTE ||
+			Rect aux = MissionManager::player->box;
+			aux.x += 1; aux.y += 1; aux.w -= 1; aux.h -= 1;
+			if(aux.Intersect(box) && (MissionManager::player->GetDirecao() == Player::LESTE ||
 					MissionManager::player->GetDirecao() == Player::OESTE)){
 				box.x = previousPos.x; box.y = previousPos.y;
 				//MissionManager::missionManager->movingBox = true;

@@ -35,7 +35,7 @@ public:
 	static MissionManager* missionManager;
 
 	int countStageState, countHallState, countLivingRoomState, changeState;
-	bool movingBox;
+	bool movingBox, randomStates;
 
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom;

@@ -26,6 +26,7 @@ public:
 	void RemovePlayer();
 	void SetPopRequested();
 	Rect GetStateLimits();
+	void RandomState();
 
 protected:
 	virtual void UpdateArray(float dt);

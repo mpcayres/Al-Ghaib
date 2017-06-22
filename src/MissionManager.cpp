@@ -12,8 +12,6 @@
 Player* MissionManager::player = nullptr;
 MissionManager* MissionManager::missionManager = nullptr;
 
-//Colocar nos objetos todas as condicoes deles, inclusive se estao abertos ou fechados
-
 MissionManager::MissionManager() {
 	numMission = 0;
 	mission = nullptr;
@@ -26,6 +24,7 @@ MissionManager::MissionManager() {
 	xDest = yDest = -1;
 	dirDest = -1;
 	movingBox = false;
+	randomStates = true; // COLOCAR PARA MISSOES ESPECIFICAS, NAO SEMPRE
 }
 
 MissionManager::~MissionManager() {

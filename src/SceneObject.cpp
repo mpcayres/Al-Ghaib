@@ -27,23 +27,8 @@ void SceneObject::Render(){
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
-bool SceneObject::IsEstado(){
-	return estado;
-}
-
 bool SceneObject::NotifyCollision(GameObject& other){
 	if(other.Is("Player")){
-		/*if((MissionManager::player->box.CenterX() < box.x || MissionManager::player->box.CenterX() > box.x )
-				&&(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h)) {
-
-			MissionManager::player->box.x = MissionManager::player->previousPos.x;
-
-		}
-
-		if(MissionManager::player->box.y + MissionManager::player->box.h - OFFSET_PISO < box.y + box.h ||
-				MissionManager::player->box.y > box.y + box.h){
-			MissionManager::player->box.y = MissionManager::player->previousPos.y;
-		}*/
 		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
@@ -71,67 +56,7 @@ bool SceneObject::NotifyCollision(GameObject& other){
 				MissionManager::player->AddInventory(objCreate);
 				objCreate = "";
 			}
-			if(estado){
-				estado = false;
-				sp.Open(change1);
-				if(box.w != sp.GetWidth()){
-					box.x = box.x + box.w/2 - sp.GetWidth()/2;
-					box.w = sp.GetWidth();
-				}
-				if(box.h != sp.GetHeight()){
-					box.y = box.y + box.h/2 - sp.GetHeight()/2;
-					box.h = sp.GetHeight();
-				}
-			} else{
-				estado = true;
-				sp.Open(change2);
-				if(box.w != sp.GetWidth()){
-					box.x = box.x + box.w/2 - sp.GetWidth()/2;
-					box.w = sp.GetWidth();
-				}
-				if(box.h != sp.GetHeight()){
-					box.y = box.y + box.h/2 - sp.GetHeight()/2;
-					box.h = sp.GetHeight();
-				}
-
-				if(MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h){
-
-					if((box.w != sp.GetWidth()) && (MissionManager::player->GetDirecao() == Player::LESTE ||
-						MissionManager::player->GetDirecao() == Player::OESTE)){
-
-						if((MissionManager::player->box.x < box.x + box.w &&
-								MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
-								|| (box.InsideX(MissionManager::player->box) &&
-										MissionManager::player->box.CenterX() >= box.CenterX())){
-							MissionManager::player->box.x = box.x + box.w + 1;
-						} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
-								MissionManager::player->box.x < box.x)
-								|| (box.InsideX(MissionManager::player->box) &&
-										MissionManager::player->box.CenterX() < box.CenterX())){
-							MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
-						}
-
-					}
-
-					if((box.h != sp.GetHeight()) && (MissionManager::player->GetDirecao() == Player::NORTE ||
-						MissionManager::player->GetDirecao() == Player::SUL)){
-
-						if((MissionManager::player->box.y < box.y + box.h &&
-								MissionManager::player->box.y + MissionManager::player->box.h > box.y + box.h )
-								|| (box.InsideY(MissionManager::player->box) &&
-										MissionManager::player->box.CenterY() >= box.CenterY())){
-							MissionManager::player->box.y = box.y + box.h + 1;
-						} else if((MissionManager::player->box.y + MissionManager::player->box.h > box.y &&
-								MissionManager::player->box.y < box.y)
-								|| (box.InsideY(MissionManager::player->box) &&
-										MissionManager::player->box.CenterY() < box.CenterY())){
-							MissionManager::player->box.y = box.y - MissionManager::player->box.h - 1;
-						}
-
-					}
-
-				}
-			}
+			ChangeState();
 		}
 	}
 
@@ -140,4 +65,76 @@ bool SceneObject::NotifyCollision(GameObject& other){
 
 bool SceneObject::Is(std::string type){
 	return (type == "SceneObject" || type == "CollidableObject");
+}
+
+bool SceneObject::GetCreateObject(){
+	return (objCreate != "");
+}
+
+bool SceneObject::GetState(){
+	return estado;
+}
+
+void SceneObject::ChangeState(){
+	if(estado){
+		estado = false;
+		sp.Open(change1);
+		if(box.w != sp.GetWidth()){
+			box.x = box.x + box.w/2 - sp.GetWidth()/2;
+			box.w = sp.GetWidth();
+		}
+		if(box.h != sp.GetHeight()){
+			box.y = box.y + box.h/2 - sp.GetHeight()/2;
+			box.h = sp.GetHeight();
+		}
+	} else{
+		estado = true;
+		sp.Open(change2);
+		if(box.w != sp.GetWidth()){
+			box.x = box.x + box.w/2 - sp.GetWidth()/2;
+			box.w = sp.GetWidth();
+		}
+		if(box.h != sp.GetHeight()){
+			box.y = box.y + box.h/2 - sp.GetHeight()/2;
+			box.h = sp.GetHeight();
+		}
+
+		if(MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h){
+
+			if((box.w != sp.GetWidth()) && (MissionManager::player->GetDirecao() == Player::LESTE ||
+				MissionManager::player->GetDirecao() == Player::OESTE)){
+
+				if((MissionManager::player->box.x < box.x + box.w &&
+						MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
+						|| (box.InsideX(MissionManager::player->box) &&
+								MissionManager::player->box.CenterX() >= box.CenterX())){
+					MissionManager::player->box.x = box.x + box.w + 1;
+				} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
+						MissionManager::player->box.x < box.x)
+						|| (box.InsideX(MissionManager::player->box) &&
+								MissionManager::player->box.CenterX() < box.CenterX())){
+					MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
+				}
+
+			}
+
+			if((box.h != sp.GetHeight()) && (MissionManager::player->GetDirecao() == Player::NORTE ||
+				MissionManager::player->GetDirecao() == Player::SUL)){
+
+				if((MissionManager::player->box.y < box.y + box.h &&
+						MissionManager::player->box.y + MissionManager::player->box.h > box.y + box.h )
+						|| (box.InsideY(MissionManager::player->box) &&
+								MissionManager::player->box.CenterY() >= box.CenterY())){
+					MissionManager::player->box.y = box.y + box.h + 1;
+				} else if((MissionManager::player->box.y + MissionManager::player->box.h > box.y &&
+						MissionManager::player->box.y < box.y)
+						|| (box.InsideY(MissionManager::player->box) &&
+								MissionManager::player->box.CenterY() < box.CenterY())){
+					MissionManager::player->box.y = box.y - MissionManager::player->box.h - 1;
+				}
+
+			}
+
+		}
+	}
 }

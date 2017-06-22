@@ -33,6 +33,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	}
 	objectArray.emplace_back(MissionManager::player);
 
+	RandomState();
 	LoadAssets();
 	//std::cout << "HSC2" << std::endl;
 }

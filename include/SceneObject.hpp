@@ -17,10 +17,12 @@ public:
 
 	void Update(float dt);
 	void Render();
-	bool IsEstado();
 	bool IsDead();
 	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
+	bool GetCreateObject();
+	bool GetState();
+	void ChangeState();
 
 protected:
 	Sprite sp;

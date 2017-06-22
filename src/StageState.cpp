@@ -35,6 +35,8 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	}
 	objectArray.emplace_back(MissionManager::player);
 
+	RandomState();
+
 	music = Music("audio/ambiente.wav");
 	time = Timer();
 	flagMorte = false;
