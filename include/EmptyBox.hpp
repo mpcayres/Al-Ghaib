@@ -11,7 +11,7 @@
 
 #define DISTANCIA	15
 #define OFFSET		5
-#define REDUCE_BOX	2
+#define REDUCE_BOX	15 //min 2
 
 class EmptyBox : public GameObject {
 public:

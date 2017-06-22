@@ -39,6 +39,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	timeRuido = Timer();
 	timeCooldown = Timer();
 	timeSound = Timer();
+	timePicked = Timer();
 
 	hp = 30;
 	rotation = 0;
@@ -52,6 +53,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 
 	inHandIndex = oldInHand; //dependendo do save pode ser diferente
 	showingInventory = false;
+	showPicked = false;
 	inventoryIndex = inHandIndex;
 
 	direcao = LESTE;
@@ -280,8 +282,11 @@ void Player::Update(float dt){
 		} else timeSound.Update(dt);
 	}
 
-	//Ajustar quando puxa apos empurrar
 	MissionManager::missionManager->movingBox = false;
+	if(showPicked){
+		timePicked.Update(dt);
+		if(timePicked.Get() > 2) showPicked = false;
+	}
 
 }
 
@@ -353,7 +358,8 @@ bool Player::CollidingPlayer(Rect boxCol, float offset){
 			//if(boxCol.InsideX(box) && box.CenterX() >= boxCol.CenterX()) std::cout << "11" << std::endl;
 			//if(box.x < boxCol.x + boxCol.w && box.x + box.w > boxCol.x + boxCol.w) std::cout << "22" << std::endl;
 			if(GetDirecao() == Player::SUL) invert = true;
-			box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
+
+			box.x = previousPos.x;
 			box.y = previousPos.y;
 		} else if((box.x + box.w > boxCol.x && box.x < boxCol.x) ||
 					(boxCol.InsideX(box) && box.CenterX() < boxCol.CenterX())){
@@ -361,7 +367,7 @@ bool Player::CollidingPlayer(Rect boxCol, float offset){
 			//if(box.x + box.w > boxCol.x && box.x < boxCol.x) std::cout << "44" << std::endl;
 			if(GetDirecao() == Player::SUL) invert = true;
 
-			box.x = previousPos.x;//boxCol.x + boxCol.w + 1; -> dava problema em borda
+			box.x = previousPos.x;
 			box.y = previousPos.y;
 		}
 
@@ -437,10 +443,19 @@ void Player::AddInventory(std::string obj){
 	lastPicked = obj;
 	if(inHandIndex < 0) inHandIndex = 0;
 	if(obj == "InventoryKey"){
+		spPicked = Sprite("img/minionbullet1.png");
+		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
+		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryKey());
 	} else if(obj == "InventoryClown"){
+		spPicked = Sprite("img/key.png");
+		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
+		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryClown());
-	}else if(obj == "InventoryBear"){
+	} else if(obj == "InventoryBear"){
+		/*spPicked = Sprite("img/object-bear.png");
+		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
+		timePicked.Restart(); showPicked = true;*/
 		inventory.emplace_back(new InventoryBear());
 	}
 }
@@ -559,6 +574,11 @@ void Player::RenderInHand(){
 		}
 		inventory[inHandIndex]->Render(posXCenter, posYCenter);
 	}
+
+	if(spPicked.IsOpen() && showPicked){
+		spPicked.Render(Game::GetInstance().GetWidth()/2 - spPicked.GetScaledWidth()/2,
+				Game::GetInstance().GetHeight()/2 - spPicked.GetScaledHeight()/2, 0);
+	}
 }
 
 void Player::RenderNoise(){
@@ -570,5 +590,4 @@ void Player::RenderNoise(){
 	aux = (ruido/12) + 1;
 	spNoise.SetFrame(aux);
 	spNoise.Render(posX, posY, 0);
-
 }

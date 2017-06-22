@@ -48,7 +48,9 @@ bool MovingObject::NotifyCollision(GameObject& other){
 			if(MissionManager::player->box.Intersect(box) && (MissionManager::player->GetDirecao() == Player::LESTE ||
 					MissionManager::player->GetDirecao() == Player::OESTE)){
 				box.x = previousPos.x; box.y = previousPos.y;
+				std::cout << "INTERSECT" << std::endl;
 			} else{
+				if(MissionManager::player->box.Intersect(box)) std::cout << "INTERSECT 2" << std::endl;
 				previousPos = Vec2(box.x, box.y);
 				bool bloqMov = false;
 				Rect boxAux = box, boxAuxPlayer = MissionManager::player->box;
@@ -57,6 +59,7 @@ bool MovingObject::NotifyCollision(GameObject& other){
 				for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
 					bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
 					if(bloqMov == true) break;
+					// talvez nao precise mais desta
 					bloqMov = boxAuxPlayer.Collide(MissionManager::player->wallLimits[i]);
 					if(bloqMov == true) break;
 				}
@@ -67,7 +70,7 @@ bool MovingObject::NotifyCollision(GameObject& other){
 						boxAuxPlayer.x > MissionManager::player->limits.x && !bloqMov){
 					if(MissionManager::player->GetDirecao() == Player::LESTE || MissionManager::player->GetDirecao() == Player::OESTE){
 						box.x += MissionManager::player->GetSpeed().x;
-					}
+					} //else MissionManager::missionManager->movingBox = false;
 				}
 				if(boxAux.y < MissionManager::player->limits.h - boxAux.h &&
 						boxAuxPlayer.y < MissionManager::player->limits.h - boxAuxPlayer.h &&
@@ -75,7 +78,7 @@ bool MovingObject::NotifyCollision(GameObject& other){
 						boxAuxPlayer.y > MissionManager::player->limits.y && !bloqMov){
 					if(MissionManager::player->GetDirecao() == Player::NORTE || MissionManager::player->GetDirecao() == Player::SUL){
 						box.y += MissionManager::player->GetSpeed().y;
-					}
+					} //else MissionManager::missionManager->movingBox = false;
 				}
 			}
 		} else MissionManager::missionManager->movingBox = false;

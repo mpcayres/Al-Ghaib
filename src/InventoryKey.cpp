@@ -1,8 +1,7 @@
 #include "InventoryKey.hpp"
 #include "SceneDoor.hpp"
 
-InventoryKey::InventoryKey(/*std::string file*/){
-	//Acho melhor não passar como string pq aí só está atrelado a própria classe, não depende de outra ter essa info
+InventoryKey::InventoryKey(){
 	sp = Sprite("img/minionbullet1.png");
 }
 

@@ -65,17 +65,17 @@ public:
 	std::vector<Rect> wallLimits;
 
 private:
-	Timer timeRuido, timeCooldown, timeSound;
+	Timer timeRuido, timeCooldown, timeSound, timePicked;
 	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
-	Sprite spNoise;
+	Sprite spNoise, spPicked;
 
 	Vec2 speed;
 	int hp;
 	bool running;
 
 	int inHandIndex, inventoryIndex;
-	bool showingInventory;
+	bool showingInventory, showPicked;
 	std::vector<std::shared_ptr<InventoryObject>> inventory;
 
 	InvBox direcao;

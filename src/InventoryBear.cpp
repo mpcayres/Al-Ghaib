@@ -1,7 +1,7 @@
 #include "InventoryBear.hpp"
 
 InventoryBear::InventoryBear(){
-	sp = Sprite( "img/object-bear.png");
+	sp = Sprite("img/object-bear.png");
 }
 
 InventoryBear::~InventoryBear(){ }
