@@ -48,49 +48,9 @@ Mission1::~Mission1() {
 
 }
 
-//!!!!!!!!! Colocar MovingObject por ultimo em todos os casos
-void Mission1::SetObjectStage(){
-	//StealthObject* Escrivaninha = new StealthObject(700, 400, "img/scene-escrivaninha-fechado.png");
-	//objectStage.emplace_back(Escrivaninha);
+void  Mission1::Pause(){ }
 
-	/*PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
-	objectStage.emplace_back(PO);*/
-
-	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
-	//objectStage.emplace_back(Armario);
-
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
-	objectStage.emplace_back(Bau);
-
-	PickUpObject* Clown = new PickUpObject(450, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);
-	objectStage.emplace_back(Clown);
-
-	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
-	//objectStage.emplace_back(Vaso);
-
-	MovingObject* Cadeira = new MovingObject(730, 320, "img/scene-cadeira.png");
-	objectStage.emplace_back(Cadeira);
-}
-
-void Mission1::SetObjectHall(){
-	//SceneWindow* Window = new SceneWindow(350, 70);
-	//objectHall.emplace_back(Window);
-	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/minionbullet1.png");
-	objectHall.emplace_back(Key);
-	Enemy* E = new Enemy(500, 110);
-	objectHall.emplace_back(E);
-	PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
-	objectHall.emplace_back(Bear);
-	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
-	objectHall.emplace_back(Vase);
-}
-
-void Mission1::SetObjectRoom(){
-
-	PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
-	objectLivingRoom.emplace_back(Bear);
-
-}
+void  Mission1::Resume(){ }
 
 void  Mission1::Update(float dt){
 
@@ -126,7 +86,7 @@ void  Mission1::Update(float dt){
 
 	if(MissionManager::player->lastPicked == "InventoryBear" && Enemy::collidingPlayer){
 		Camera::Unfollow();
-		Camera::Follow(MissionManager::missionManager->player, CAMERA_TYPE1);
+		Camera::SetType(CAMERA_TYPE0);
 		Enemy::SetDead();
 		MissionManager::player->SetBlocked(true);
 		Game::GetInstance().GetCurrentState().AddObject(
@@ -187,6 +147,7 @@ void  Mission1::Update(float dt){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
+				Camera::Zoom(2, true);
 				if(time.Get() > 9 && trancada == false && cooldown.Get() > 2){
 					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -279,6 +240,7 @@ void  Mission1::Update(float dt){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
+				Camera::Zoom(2, true);
 				if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
 						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -303,14 +265,14 @@ void  Mission1::Update(float dt){
 		UpdateVariable(dt, 80);
 	}
 	if(MissionManager::player->lastPicked == "InventoryBear"){
-		PiscaPisca(dt, 20, 0.4);
+		//PiscaPisca(dt, 20, 0.4);
 	}
 
 }
 
 void  Mission1::Render(){
 	//printf("teste2 \n");
-	if(time.Get() < 3 && begin ){
+	if(time.Get() < 3 && begin){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
@@ -318,20 +280,57 @@ void  Mission1::Render(){
 		spFade.Render(0, 0, 0);
 	}
 
-	if(MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4){
-		falas.Render(0,0);
-	}
-	if((MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState > 1)
-		||MissionManager::missionManager->GetStage("HallState")){
+	if(((MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
+		((MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState > 1) ||
+			MissionManager::missionManager->GetStage("HallState"))) &&
+		!MissionManager::player->bloqHUD){
 		falas.Render(0,0);
 	}
 
 }
 
-void  Mission1::Pause(){
+//!!!!!!!!! Colocar MovingObject por ultimo em todos os casos
+void Mission1::SetObjectStage(){
+	//StealthObject* Escrivaninha = new StealthObject(700, 400, "img/scene-escrivaninha-fechado.png");
+	//objectStage.emplace_back(Escrivaninha);
+
+	/*PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
+	objectStage.emplace_back(PO);*/
+
+	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	//objectStage.emplace_back(Armario);
+
+	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
+	objectStage.emplace_back(Bau);
+
+	PickUpObject* Clown = new PickUpObject(450, 310, "InventoryClown", "img/key.png", true, 0.5, 0.5);
+	objectStage.emplace_back(Clown);
+
+	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
+	//objectStage.emplace_back(Vaso);
+
+	MovingObject* Cadeira = new MovingObject(730, 320, "img/scene-cadeira.png");
+	objectStage.emplace_back(Cadeira);
 }
 
-void  Mission1::Resume(){
+void Mission1::SetObjectHall(){
+	//SceneWindow* Window = new SceneWindow(350, 70);
+	//objectHall.emplace_back(Window);
+	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/minionbullet1.png");
+	objectHall.emplace_back(Key);
+	Enemy* E = new Enemy(500, 110);
+	objectHall.emplace_back(E);
+	PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	objectHall.emplace_back(Bear);
+	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
+	objectHall.emplace_back(Vase);
+}
+
+void Mission1::SetObjectRoom(){
+
+	PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	objectLivingRoom.emplace_back(Bear);
+
 }

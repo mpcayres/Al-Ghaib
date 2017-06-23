@@ -40,6 +40,18 @@ Mission2::~Mission2() {
 
 }
 
+void Mission2::Pause(){
+	//stopMusic = true;
+	//intro.Stop();
+	music.Stop();
+}
+
+void Mission2::Resume(){
+	//Game::GetInstance().GetMissionManager().DeleteStates();
+	//stopMusic = false;
+	//intro.Play(1);
+	music.Play(-1);
+}
 
 void Mission2::Update(float dt){
 
@@ -117,6 +129,15 @@ void Mission2::Render(){
 	} else if((time.Get() >= 3 && begin && fadeIn) || !bloqBlack){
 		spFade.Render(0,0,0);
 	}
+
+	if(((MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
+		((MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState > 1) ||
+			MissionManager::missionManager->GetStage("HallState"))) &&
+		!MissionManager::player->bloqHUD){
+		falas.Render(0,0);
+	}
 }
 
 void Mission2::SetObjectStage(){
@@ -135,17 +156,4 @@ void Mission2::SetObjectHall(){
 
 void Mission2::SetObjectRoom(){
 
-}
-
-void Mission2::Pause(){
-	//stopMusic = true;
-	//intro.Stop();
-	music.Stop();
-}
-
-void Mission2::Resume(){
-	//Game::GetInstance().GetMissionManager().DeleteStates();
-	//stopMusic = false;
-	//intro.Play(1);
-	music.Play(-1);
 }

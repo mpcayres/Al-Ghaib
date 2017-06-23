@@ -63,6 +63,7 @@ public:
 	Rect limits;
 	std::string lastPicked;
 	std::vector<Rect> wallLimits;
+	bool bloqHUD;
 
 private:
 	Timer timeRuido, timeCooldown, timeSound, timePicked;

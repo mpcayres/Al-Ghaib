@@ -21,8 +21,8 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
-	else SetPlayer(600, 400, CAMERA_TYPE0, limits);
+	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE3, limits);
+	else SetPlayer(600, 400, CAMERA_TYPE3, limits);
 	if(inicial){
 		//std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -66,22 +66,7 @@ void StageState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
-		//RemovePlayer(typeid(*MissionManager::player).name());
-		//MissionManager::DeletePlayer();
 	}
-	/*if(MissionManager::player == nullptr){
-		if(flagMorte == false){
-			time.Restart();
-			flagMorte = true;
-		}
-
-		if(time.Get() >= 1.5 && flagMorte == true){
-			popRequested = true;
-			Camera::Unfollow();
-			stateData.playerVictory = false;
-			//Game::GetInstance().Push(new EndState(stateData));
-		}
-	}*/
 	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();

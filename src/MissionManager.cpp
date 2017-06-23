@@ -1,4 +1,5 @@
 #include "MissionManager.hpp"
+#include "Camera.hpp"
 #include "Game.hpp"
 #include "InventoryObject.hpp"
 #include "StageState.hpp"
@@ -53,6 +54,8 @@ void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, 
 void MissionManager::SetState(std::string dest){
 	//inicial serve para indicar se e a 1a vez que o State esta sendo construido
 	player->ResetWallLimits();
+	factorZoom = 1;
+	Camera::UpdateZoom();
 	if(dirDest != -1) player->SetDirecao(dirDest);
 	if(dest == "StageState"){
 		std::cout << "SS.1" << std::endl;
@@ -152,6 +155,8 @@ void MissionManager::DeleteStates(){
 	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
+	factorZoom = 1;
+	Camera::UpdateZoom();
 	std::cout << "Player NULL" << std::endl;
 }
 
