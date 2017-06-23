@@ -14,7 +14,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHall.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	limits.y -=40;
+	limits.y -=50;
 	MissionManager::player->AddWallLimits(Rect(0, 0, 768, 180 ));
 	MissionManager::player->AddWallLimits(Rect(960, 0, 576, 180 ));
 

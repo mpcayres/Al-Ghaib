@@ -64,7 +64,10 @@ void Enemy::Update(float dt){
 		Rect boxAux = box;
 		boxAux.x += speed.x; boxAux.y += speed.y;
 		for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
-			bloqMov = boxAux.Collide(MissionManager::player->wallLimits[i]);
+			Rect aux;
+			aux = MissionManager::player->wallLimits[i];
+			aux.h -= sp.GetHeight()*2;
+			bloqMov = boxAux.Collide(aux);
 			if(bloqMov == true) break;
 		}
 
