@@ -21,6 +21,8 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
+	limits.y -= 50;
+	MissionManager::player->AddWallLimits(Rect(600, 192, 200, 80));
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE3, limits);
 	else SetPlayer(600, 400, CAMERA_TYPE3, limits);
 	if(inicial){
@@ -156,7 +158,7 @@ void StageState::SetInitialObjectArray(){
 	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "img/scene-cama.png");
 	objectArray.emplace_back(Cama);
 
-	SceneObject* Armario =  new SceneObject(420, 280, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	SceneObject* Armario =  new SceneObject(400, 240, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	objectArray.emplace_back(Armario);
 
 	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "img/scene-abajur.png");
