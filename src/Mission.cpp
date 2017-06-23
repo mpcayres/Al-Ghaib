@@ -78,7 +78,7 @@ void Mission::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
 		showBox = true;
 		falas.SetText("ESTÁ TRANCADA");
-		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 		Sound portaDestrancando = Sound ("audio/destrancando.wav");
 		portaDestrancando.Play(0);
 		trancada = true;

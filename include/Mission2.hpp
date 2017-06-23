@@ -8,6 +8,7 @@
 #include "Sprite.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Bear.hpp"
 #include "Music.hpp"
 #include "Sound.hpp"
 
@@ -27,6 +28,7 @@ private:
 	void SetObjectRoom();
 
 	static Music music;
+	bool parado;
 
 	bool played, endMission;
 };

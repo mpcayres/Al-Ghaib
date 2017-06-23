@@ -32,8 +32,8 @@ Bear::Bear(float x, float y): sp("img/obj_r_bear.png"){
 
 	time = Timer();
 
-	direcao = SUL;
-	direcaoShift = false;
+	////direcao = SUL;
+	////direcaoShift = false;
 
 	hp = 30;
 	rotation = 0;
@@ -72,25 +72,25 @@ void Bear::Update(float dt){
 		//if(seen == true) Pursuit();
 		DefinedPath();
 
-		if(speed.x != 0 || speed.y != 0){
-					sp.Update(dt, direcao, direcaoShift);
+		/*if(speed.x != 0 || speed.y != 0){
+					sp.Update(dt, ////direcao, ////direcaoShift);
 		} else{
 			if(sp.GetCurrentFrame() > 1 && sp.GetCurrentFrame() < 8){
-			if(direcao == NORTE) speed.y = -DESACELERA;
-			if(direcao == SUL) speed.y = DESACELERA;
-			if(direcao == LESTE) speed.x = DESACELERA;
-			if(direcao == OESTE) speed.x = -DESACELERA;
+			if(////direcao == NORTE) speed.y = -DESACELERA;
+			if(////direcao == SUL) speed.y = DESACELERA;
+			if(////direcao == LESTE) speed.x = DESACELERA;
+			if(////direcao == OESTE) speed.x = -DESACELERA;
 
-			sp.Update(dt, direcao, direcaoShift);
+			sp.Update(dt, ////direcao, ////direcaoShift);
 			}
-		}
+		}*/
 	}
 }
 
-void Bear::SetDirecao(int dir){
-	direcao = (InvBox) dir;
-	sp.SetFrame(1, direcao);
-}
+/*void Bear::Set////direcao(int dir){
+	////direcao = (InvBox) dir;
+	sp.SetFrame(1, ////direcao);
+}*/
 
 void Bear::Render(){
 	if(show)
@@ -146,8 +146,8 @@ void Bear::DefinedPath(){
 		}
 		else
 			arrived = false;
-		if(destinationPath.empty())
-			show = false;
+		//if(destinationPath.empty())
+			//show = false;
 		if(MissionManager::player != nullptr){
 			/*destination.x = MissionManager::player->box.x;
 			destination.y = MissionManager::player->box.y;*/
@@ -164,20 +164,20 @@ void Bear::DefinedPath(){
 			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
 				if(destinationPath.back().x < box.x){
 					//std::cout << " OESTE " << std::endl;
-					direcao = OESTE;
+					//////direcao = OESTE;
 				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
 					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
-					direcao = LESTE;
+					//////direcao = LESTE;
 				}
 			}
 			else{
 					if(destinationPath.back().y < box.y){
 					//std::cout << " NORTE " << std::endl;
-					direcao = NORTE;
+					//////direcao = NORTE;
 				}
 				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
 					//std::cout << " SUL " << std::endl;
-					direcao = SUL;
+					//////direcao = SUL;
 				}
 			}
 		//}
