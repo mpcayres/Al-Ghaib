@@ -77,34 +77,29 @@ int TileMap::GetWidth(){
 
 Rect TileMap::FindLimits(){
 	Rect aux;
-	int lastX, lastY, firstX, firstY;
+	int lastX = 0, lastY = 0 , firstX = 10000000, firstY = 10000000;
 	int i;
-	int first = -1, last;
+	int value;
 
 	for(i = 0; i< (mapHeight*mapWidth)-1 ; i++){
 		if(tileMatrix[i] == 0){
-			if(first == -1) first = i;
-			last = i;
+			value = (i%mapWidth) * tileSet->GetTileWidth();
+			if(value < firstX) firstX = value;
+			if(value > lastX) lastX = value;
+
+			if(i>mapWidth) value = (i/mapWidth)* tileSet->GetTileHeight();
+			else value = 0;
+			if(value < firstY) firstY = value;
+			if(value > lastY) lastY = value;
 		}
 	}
-
-	firstX = (first%mapWidth) * tileSet->GetTileWidth();
-	if(first > mapWidth){
-		firstY = (first/mapWidth)* tileSet->GetTileHeight();
-	}else firstY = 0;
-
-	lastX = (last%mapWidth) * tileSet->GetTileWidth();
-	if(last > mapWidth){
-		lastY = (last/mapWidth)* tileSet->GetTileHeight();
-	}else lastY = 0;
-
 	lastX += tileSet->GetTileWidth();
 	lastY += tileSet->GetTileHeight();
 
 	aux.x = firstX;
-	aux.y = firstY - MissionManager::player->box.h/2;//tileSet->GetTileHeight();
-	aux.w = lastX;
-	aux.h = lastY;
+	aux.y = firstY;//firstY - MissionManager::player->box.h/2;//tileSet->GetTileHeight();
+	aux.w = lastX; //lastX
+	aux.h = lastY; //lastY
 
 	return aux;
 }
