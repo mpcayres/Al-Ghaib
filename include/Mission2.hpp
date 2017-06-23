@@ -27,6 +27,8 @@ private:
 	void SetObjectRoom();
 
 	static Music music;
+
+	bool played, endMission;
 };
 
 #endif /* SRC_MISSION2_HPP_ */

@@ -32,6 +32,9 @@
 #include "InputManager.hpp"
 #include "MissionManager.hpp"
 #include "Sound.hpp"
+#include "Geometry.hpp"
+
+#define POSY_FALA 70
 
 class Mission {
 public:
@@ -92,6 +95,11 @@ protected:
 	bool bloqBlack;
 	int contPisca;
 	bool fadeIn;
+
+	Sprite falasBox;
+	bool showBox;
+	Rect falasBoxRect;
+
 };
 
 #endif /* SRC_MISSION_HPP_ */

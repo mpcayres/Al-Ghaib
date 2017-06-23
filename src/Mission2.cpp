@@ -11,18 +11,24 @@ Mission2::Mission2() : Mission() {
 	initialX = 450; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 
-	SDL_Color auxcolor = SDL_Color();
-	auxcolor.r = 102;
-	auxcolor.g = 0;
-	auxcolor.b = 0;
+	SDL_Color redwine = SDL_Color();
+		redwine.r = 102;
+		redwine.g = 0;
+		redwine.b = 0;
 
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", auxcolor, 0, 0);
+		SDL_Color white = SDL_Color();
+		white.r = 255;
+		white.g = 255;
+		white.b = 255;
+
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 25, Text::TextStyle::BLENDED, "\"fechai as portas, mantende crianças por perto à  noite...\"", auxcolor, 0, 0);
-	creepy.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"fechai as portas, mantende crianças por perto à  noite...\"", redwine, 0, 0);
+	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
 
-	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
-	falas.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
+	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , " ", white, 0, 0);
+	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+	showBox = false;
 	//ultimoTempo = 3;
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
@@ -78,34 +84,42 @@ void Mission2::Update(float dt){
 		fadeIn = false;
 	}
 
+	if(endMission && time.Get() > (12*0.25 + 0.5)){
+		MissionManager::player->SetBlocked(false);
+		Game::GetInstance().GetCurrentState().SetPopRequested();
+		Game::GetInstance().GetMissionManager().ChangeMission(2);
+	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 			if(flagTimer == true && time.Get() > 3){
 				tx.SetText(" ");
+				showBox = false;
 				creepy.SetText(" ");
 			}
-			if(flagTimer == true && time.Get() > 4){
+			if(flagTimer == true && time.Get() > 5){
 				falas.SetText("U: EI.... AQUI... ABRE PRA MIM.");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 4;
 				//time.Restart();
+				showBox = true;
 				flagTimer = false;
 			}
-			if( time.Get() > 6.5 && trancada == false && cooldown.Get() > 2){
+			if( time.Get() > 10 && trancada == false && cooldown.Get() > 2){
 				falas.SetText("U: ME... AJUDA...");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 6.5; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃƒO AFETAM A HISTORIA
-
+				showBox = true;
 				//flagTimer = true;
 			}
 
-			if( time.Get() > 8 && trancada == false && cooldown.Get() > 2){
+			if( time.Get() > 14 && trancada == false && cooldown.Get() > 2){
 				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÃ‡O DENTRO QUE DÃ� ERRO
 				ultimoTempo = 7;
+				showBox = false;
 			}
-			if(trancada == true)
-				std::cout << "porta destrancada" << std::endl;
+			if(MissionManager::player->GetDoor())
+				std::cout <<  trancada << std::endl;
 
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
@@ -136,7 +150,11 @@ void Mission2::Render(){
 			MissionManager::missionManager->countStageState > 1) ||
 			MissionManager::missionManager->GetStage("HallState"))) &&
 		!MissionManager::player->bloqHUD){
-		falas.Render(0,0);
+		if(showBox){
+					falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
+					//printf("renderizando");
+				}
+				falas.Render(0,0);
 	}
 }
 

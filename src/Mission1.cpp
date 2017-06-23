@@ -18,21 +18,26 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	//begin = true;
 	//count = 0;
 
-	SDL_Color auxcolor = SDL_Color();
-	auxcolor.r = 102;
-	auxcolor.g = 0;
-	auxcolor.b = 0;
+	SDL_Color redwine = SDL_Color();
+	redwine.r = 102;
+	redwine.g = 0;
+	redwine.b = 0;
+
+	SDL_Color white = SDL_Color();
+	white.r = 255;
+	white.g = 255;
+	white.b = 255;
 
 	//flagTimer = true; //stopMusic = false;
 	//time = Timer();
 	//cooldown = Timer();
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 1", auxcolor, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 1", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"Cobri vossos utensílios e amarrai vossos cantis...\"", auxcolor, 0, 0);
-	creepy.SetPos(0, Game::GetInstance().GetHeight()-40, true, false);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"Cobri vossos utensílios e amarrai vossos cantis...\"", redwine, 0, 0);
+	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
 
-	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
-	falas.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
+	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", white, 0, 0);
+	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -93,6 +98,12 @@ void  Mission1::Update(float dt){
 				new Animation(MissionManager::player->box.x + MissionManager::player->box.w + 5,
 						MissionManager::player->box.y - 10, 0,
 						"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
+		ultimoTempo = time.Get();
+		if(time.Get()>ultimoTempo + 4){
+			showBox = true;
+			falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+		}
 		time.Restart();
 		endMission = true;
 	} else{
@@ -102,23 +113,37 @@ void  Mission1::Update(float dt){
 				MissionManager::missionManager->countStageState <= 1){
 			//StageState++;
 			//std::cout << "StageState" << std::endl;
-			if(flagTimer == true && time.Get() > 3){
+			if(flagTimer == true && time.Get() > 5){
 				tx.SetText(" ");
 				creepy.SetText(" ");
-				//time.Restart();
+				showBox = true;
 				flagTimer = false;
 			}
-			if( time.Get() > 6.5 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 5.5*/){
+			if( time.Get() > 8 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 5.5*/){
+				showBox = true;
 				falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-				ultimoTempo = 6.5; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 8; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
 
 				//flagTimer = true;
 			}
 
-			if( time.Get() > 8 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+			if( time.Get() > 12 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
 				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				ultimoTempo = 8;
+				ultimoTempo = 9;
+				showBox = false;
+			}
+
+			if( time.Get() > 30 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText("TENTE DESMONTAR ALGO PARA ABRIR A PORTA"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 30;
+				showBox = true;
+			}
+			if( time.Get() > 34 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				ultimoTempo = 34;
+				showBox = false;
 			}
 
 			MessageDoor(dt);
@@ -131,12 +156,14 @@ void  Mission1::Update(float dt){
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
 			}
-			if(trancada == false && cooldown.Get() > 2 && Enemy::show == false)
+			if(trancada == false && cooldown.Get() > 4 && Enemy::show == false)
 				falas.SetText("CUIDADO");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				showBox = true;
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 0;
-			if(time.Get() > 3 && trancada == false && cooldown.Get() > 2  && Enemy::show == false){
+			if(time.Get() > 6 && trancada == false && cooldown.Get() > 3  && Enemy::show == false){
 				falas.SetText(" ");
+				showBox = false;
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				ultimoTempo = 3;
 			}
@@ -148,16 +175,18 @@ void  Mission1::Update(float dt){
 				Camera::Unfollow();
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
-				if(time.Get() > 9 && trancada == false && cooldown.Get() > 2){
-					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				//if(trancada == false && cooldown.Get() > 3){
+					showBox = true;
+					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = time.Get();
 					std::cout << ultimoTempo << std::endl;
-				}
-				if(time.Get() > (ultimoTempo + 3) && trancada == false && cooldown.Get() > 2){
+				//}
+				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
+					showBox = false;
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-					ultimoTempo = ultimoTempo + 3;
+					ultimoTempo = ultimoTempo + 5;
 				}
 				//Enemy::SetDestinationPath(Vec2(1500, 300));
 				//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
@@ -166,18 +195,18 @@ void  Mission1::Update(float dt){
 				Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
 				//}
 			}
-			if(time.Get() > 4 && time.Get() < 5 && played == false){
+			if(time.Get() > 5 && time.Get() < 6 && played == false){
 				Sound portaDestrancando = Sound ("audio/destrancando.wav");
 				portaDestrancando.Play(0);
 				played = true;
 			}
-			if(time.Get() > 5 && time.Get() < 6 && played == true){
+			if(time.Get() > 6 && time.Get() < 7 && played == true){
 				Sound portaDestrancando = Sound ("audio/weird-door.wav");
 				portaDestrancando.Play(0);
 				played = false;
 			}
 
-			if(((time.Get() > 6 && (time.Get() < 8 || MissionManager::player->GetRuido()>85 ))&& trancada == false)
+			if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
 					/*&& Enemy::show == false*/){
 				Enemy::show = true;
 				//if(Enemy::turn == 1)
@@ -191,21 +220,24 @@ void  Mission1::Update(float dt){
 					Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 				}
 				//std::cout << trancada << std::endl;
-				if(trancada == false)
-					if(time.Get() > 7 && trancada == false && cooldown.Get() > 2){
+				if(trancada == false){
+					if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
+						showBox = true;
 						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 						if(played == false){
 							Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
 							portaDestrancando.Play(0);
 							played = true;
 						}
-						ultimoTempo = 7;
-					if(time.Get() > 8 && trancada == false && cooldown.Get() > 2){
+						ultimoTempo = 8;
+					if(time.Get() > 11 && trancada == false && cooldown.Get() > 3){
+						showBox = false;
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = 8;
+						ultimoTempo = 12;
 					}
+				}
 				}
 			}
 
@@ -218,11 +250,13 @@ void  Mission1::Update(float dt){
 						state = MissionManager::missionManager->changeState;
 						time.Restart();
 			}
-			if(trancada == false && cooldown.Get() > 2){
+			if(trancada == false && cooldown.Get() > 3){
+				showBox = true;
 				falas.SetText("CERTEZA QUE QUER PASSAR A NOITE SEM PROTEÇÃO?");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			}
-			if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+			if(time.Get() > 7 && trancada == false && cooldown.Get() > 3){
+				showBox = false;
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
@@ -230,7 +264,8 @@ void  Mission1::Update(float dt){
 		}
 		if((MissionManager::missionManager->GetStage("HallState") &&
 				MissionManager::missionManager->countHallState > 1)){
-			if(time.Get() < 3&& trancada == false && cooldown.Get() > 2){
+			if(time.Get() < 4 && trancada == false && cooldown.Get() > 3){
+				showBox = false;
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
@@ -241,14 +276,16 @@ void  Mission1::Update(float dt){
 				Camera::Unfollow();
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
-				if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+				if(time.Get() > 4 && trancada == false && cooldown.Get() > 3){
+						showBox = true;
 						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 						ultimoTempo = 3;
 				}
-				if(time.Get() > 6 && trancada == false && cooldown.Get() > 2){
+				if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
+					showBox = false;
 					falas.SetText(" ");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 6;
 				}
 				//Enemy::SetDestinationPath(Vec2(1500, 300));
@@ -261,7 +298,7 @@ void  Mission1::Update(float dt){
 		}
 	}
 
-	if(time.Get() >= 3 && begin && fadeIn){
+	if(time.Get() >= 4 && begin && fadeIn){
 		UpdateVariable(dt, 80);
 	}
 	if(MissionManager::player->lastPicked == "InventoryBear"){
@@ -272,20 +309,29 @@ void  Mission1::Update(float dt){
 
 void  Mission1::Render(){
 	//printf("teste2 \n");
-	if(time.Get() < 3 && begin){
+	if(time.Get() < 4 && begin){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
-	} else if((time.Get() >= 3 && begin && fadeIn) || !bloqBlack){
+	} else if((time.Get() >= 4 && begin && fadeIn) || !bloqBlack){
 		spFade.Render(0, 0, 0);
 	}
 
 	if(((MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
+			MissionManager::missionManager->countStageState <= 1 && time.Get() > 5) ||
 		((MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
 			MissionManager::missionManager->GetStage("HallState"))) &&
 		!MissionManager::player->bloqHUD){
+
+		if(showBox){
+			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
+			//printf("renderizando");
+		}
+		falas.Render(0,0);
+	}
+	if(endMission == true){
+		falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
 		falas.Render(0,0);
 	}
 

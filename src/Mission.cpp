@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare2.png", 1, 1, 1, true) {
+Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare2.png", 1, 1, 1, true), falasBox("img/box-frases.png"), showBox(true) {
 	popRequested = quitRequested = false;
 	initialX = initialY = -1;
 
@@ -26,6 +26,16 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 	MissionManager::missionManager->countHallState = 0;
 	MissionManager::missionManager->countStageState = 0;
 	MissionManager::missionManager->countLivingRoomState = 0;
+
+	falasBox.SetScaleX(1.1);
+	falasBox.SetScaleY(0.4);
+
+	falasBoxRect.x = 25; falasBoxRect.y = 500;
+	falasBoxRect.w = falasBox.GetScaledWidth();
+	falasBoxRect.h = falasBox.GetScaledHeight();
+
+
+
 }
 
 Mission::~Mission() {
@@ -66,6 +76,7 @@ bool Mission::QuitRequested(){
 
 void Mission::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
+		showBox = true;
 		falas.SetText("ESTÁ TRANCADA");
 		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		Sound portaDestrancando = Sound ("audio/destrancando.wav");
@@ -79,7 +90,8 @@ void Mission::MessageDoor(float dt){
 		}
 	}
 
-	if(cooldown.Get() > 2 && trancada == true){
+	if(cooldown.Get() > 3 && trancada == true){
+		showBox = false;
 		//cooldown.Restart();
 		falas.SetText(" ");
 		trancada = false;
