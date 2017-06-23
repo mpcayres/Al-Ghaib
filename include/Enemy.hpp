@@ -35,10 +35,7 @@ public:
 	InvBox direcao;
 	//Vec2 previousPos;
 
-	static bool show;
-	static bool arrived;
-	static bool collidingPlayer;
-	static bool dead;
+	static bool show, arrived, collidingPlayer, dead;
 private:
 	Timer time;
 	Sprite sp;

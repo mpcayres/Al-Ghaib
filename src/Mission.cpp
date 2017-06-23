@@ -25,6 +25,7 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 
 	MissionManager::missionManager->countHallState = 0;
 	MissionManager::missionManager->countStageState = 0;
+	MissionManager::missionManager->countLivingRoomState = 0;
 }
 
 Mission::~Mission() {

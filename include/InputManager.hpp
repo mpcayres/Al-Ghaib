@@ -35,6 +35,7 @@
 #define D_KEY SDLK_d
 #define Z_KEY SDLK_z
 #define X_KEY SDLK_x
+#define C_KEY SDLK_c
 #define I_KEY SDLK_i
 #define G_KEY SDLK_g
 

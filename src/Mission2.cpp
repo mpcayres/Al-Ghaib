@@ -21,19 +21,17 @@ Mission2::Mission2() : Mission() {
 	creepy = Text("font/uwch.ttf", 25, Text::TextStyle::BLENDED, "\"fechai as portas, mantende crianças por perto à  noite...\"", auxcolor, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
 
-	//falas = Text("font/AA_typewriter.ttf", 30, Text::TextStyle::BLENDED , "A NOITE Ã‰ FRIA E PERIGOSA", auxcolor, 0, 0);
-	//falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", auxcolor, 0, 0);
+	falas.SetPos(0, Game::GetInstance().GetHeight()-30, true, false);
 	//ultimoTempo = 3;
-		/*intro = Music("audio/menu-intro.wav");
-		music = Music("audio/menu-loop.wav");
-		intro.Play(1);
-		Mix_HookMusicFinished(&TitleState::LinkMusic);*/
+	/*intro = Music("audio/menu-intro.wav");
+	music = Music("audio/menu-loop.wav");
+	intro.Play(1);
+	Mix_HookMusicFinished(&TitleState::LinkMusic);*/
 
 	//Sound intro("audio/boom.wav");
 	//intro.Play(1);
 
-
-	//Mix_HookMusicFinished(&Mission2::LinkMusic);
 	SetObjectStage();
 	SetObjectHall();
 }
@@ -71,21 +69,18 @@ void Mission2::Update(float dt){
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
-			//StageState++;
-			//std::cout << "StageState" << std::endl;
 			if(flagTimer == true && time.Get() > 3){
 				tx.SetText(" ");
 				creepy.SetText(" ");
 			}
 			if(flagTimer == true && time.Get() > 4){
-
 				falas.SetText("U: EI.... AQUI... ABRE PRA MIM.");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				ultimoTempo = 4;
 				//time.Restart();
 				flagTimer = false;
 			}
-			if( time.Get() > 6.5 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 5.5*/){
+			if( time.Get() > 6.5 && trancada == false && cooldown.Get() > 2){
 				falas.SetText("U: ME... AJUDA...");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				ultimoTempo = 6.5; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃƒO AFETAM A HISTORIA
@@ -93,7 +88,7 @@ void Mission2::Update(float dt){
 				//flagTimer = true;
 			}
 
-			if( time.Get() > 8 && trancada == false && cooldown.Get() > 2/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+			if( time.Get() > 8 && trancada == false && cooldown.Get() > 2){
 				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÃ‡O DENTRO QUE DÃ� ERRO
 				ultimoTempo = 7;
 			}

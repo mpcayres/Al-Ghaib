@@ -25,6 +25,7 @@ MissionManager::MissionManager() {
 	dirDest = -1;
 	movingBox = false;
 	randomStates = true; // COLOCAR PARA MISSOES ESPECIFICAS, NAO SEMPRE
+	factorZoom = 1.0;
 }
 
 MissionManager::~MissionManager() {

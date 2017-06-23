@@ -25,6 +25,7 @@ private:
 	static Timer time;
 	static GameObject* focus;
 	static int type, tempo;
+	static float origDist;
 	static bool isMoving, inWay, inWayBack;
 	static Vec2 dest,previousPos;
 };

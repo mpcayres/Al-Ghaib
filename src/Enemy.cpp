@@ -11,10 +11,7 @@
 #define DESACELERA 1
 
 Enemy* Enemy::enemy;
-bool Enemy::show;
-bool Enemy::arrived;
-bool Enemy::collidingPlayer;
-bool Enemy::dead;
+bool Enemy::show, Enemy::arrived, Enemy::collidingPlayer, Enemy::dead;
 
 Enemy::Enemy(float x, float y): sp("img/sprite-mom.png", 8, 0.06, 4){
 

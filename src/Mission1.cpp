@@ -125,6 +125,8 @@ void  Mission1::Update(float dt){
 	}
 
 	if(MissionManager::player->lastPicked == "InventoryBear" && Enemy::collidingPlayer){
+		Camera::Unfollow();
+		Camera::Follow(MissionManager::missionManager->player, CAMERA_TYPE1);
 		Enemy::SetDead();
 		MissionManager::player->SetBlocked(true);
 		Game::GetInstance().GetCurrentState().AddObject(
@@ -179,27 +181,29 @@ void  Mission1::Update(float dt){
 				ultimoTempo = 3;
 			}
 			//MÃE APARECENDO NO CORREDOR
-			if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
+			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
 				Enemy::show = true;
-				if(MissionManager::player->lastPicked == "InventoryBear"){
-					if(time.Get() > 9 && trancada == false && cooldown.Get() > 2){
-						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = time.Get();
-						std::cout << ultimoTempo << std::endl;
-					}
-					if(time.Get() > (ultimoTempo + 3) && trancada == false && cooldown.Get() > 2){
-						falas.SetText(" ");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = ultimoTempo + 3;
-					}
-					//Enemy::enemy->SetDestinationPath(Vec2(1500, 300));
-					//Enemy::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
-
+				//if(MissionManager::player->lastPicked == "InventoryBear"){
+				//MissionManager::player->SetBlocked(true);
+				Camera::Unfollow();
+				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
+				if(time.Get() > 9 && trancada == false && cooldown.Get() > 2){
+					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					ultimoTempo = time.Get();
+					std::cout << ultimoTempo << std::endl;
 				}
+				if(time.Get() > (ultimoTempo + 3) && trancada == false && cooldown.Get() > 2){
+					falas.SetText(" ");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					ultimoTempo = ultimoTempo + 3;
+				}
+				//Enemy::SetDestinationPath(Vec2(1500, 300));
+				//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
+				//}
 			}
 			if(time.Get() > 4 && time.Get() < 5 && played == false){
 				Sound portaDestrancando = Sound ("audio/destrancando.wav");
@@ -269,26 +273,28 @@ void  Mission1::Update(float dt){
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
-			if((MissionManager::player->lastPicked == "InventoryBear"  && trancada == false) && Enemy::show == false){
+			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
 				Enemy::show = true;
-				if(MissionManager::player->lastPicked == "InventoryBear"){
-					if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
-							falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
-							falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-							ultimoTempo = 3;
-					}
-					if(time.Get() > 6 && trancada == false && cooldown.Get() > 2){
-						falas.SetText(" ");
+				//if(MissionManager::player->lastPicked == "InventoryBear"){
+				//MissionManager::player->SetBlocked(true);
+				Camera::Unfollow();
+				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
+				if(time.Get() > 3 && trancada == false && cooldown.Get() > 2){
+						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = 6;
-					}
-					//Enemy::enemy->SetDestinationPath(Vec2(1500, 300));
-					//Enemy::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //2º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
-
+						ultimoTempo = 3;
 				}
+				if(time.Get() > 6 && trancada == false && cooldown.Get() > 2){
+					falas.SetText(" ");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					ultimoTempo = 6;
+				}
+				//Enemy::SetDestinationPath(Vec2(1500, 300));
+				//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //2º DESTINO
+				Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
+				//}
 			}
 		}
 	}

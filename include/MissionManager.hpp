@@ -35,6 +35,7 @@ public:
 	static MissionManager* missionManager;
 
 	int countStageState, countHallState, countLivingRoomState, changeState;
+	float factorZoom;
 	bool movingBox, randomStates;
 
 private:
