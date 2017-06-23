@@ -58,28 +58,30 @@ void MissionManager::SetState(std::string dest){
 	Camera::UpdateZoom();
 	if(dirDest != -1) player->SetDirecao(dirDest);
 	if(dest == "StageState"){
-		std::cout << "SS.1" << std::endl;
-		std::cout << "SIZE: " << objectStage.size() << std::endl;
+		//std::cout << "SS.1" << std::endl;
+		//std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xDest, yDest));
 		initStage = false;
 		stage = "StageState";
 		countStageState++;
 		changeState++;
-		std::cout << "SS.2" << std::endl;
+		//std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
-		std::cout << "HS.1" << std::endl;
-		std::cout << "SIZE: " << objectStage.size() << std::endl;
+		//std::cout << "HS.1" << std::endl;
+		//std::cout << "SIZE: " << objectHall.size() << std::endl;
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xDest, yDest));
 		initHall = false;
 		stage = "HallState";
-		std::cout << "HS.2" << std::endl;
+		//std::cout << "HS.2" << std::endl;
 		countHallState++;
 		changeState++;
 	} else if(dest == "LivingRoomState"){
+		//std::cout << "LRS.1" << std::endl;
+		//std::cout << "SIZE: " << objectLivingRoom.size() << std::endl;
 		Game::GetInstance().Push(new LivingRoomState(std::move(objectLivingRoom), initLivingRoom, xDest, yDest));
 		initHall = false;
 		stage = "LivingRoomState";
-		std::cout << "HS.2" << std::endl;
+		//std::cout << "LRS.2" << std::endl;
 		countLivingRoomState++;
 		changeState++;
 	}
@@ -150,7 +152,7 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 
 //Ver para liberar memoria dos dados e do player quando vai para o Menu
 void MissionManager::DeleteStates(){
-	free(player);
+	//free(player); -> no Ubuntu da ruim
 	player = nullptr;
 	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);

@@ -89,7 +89,7 @@ void State::RandomState(){
 			if(objectArray[i].get()->Is("SceneObject")){
 				if(!((SceneObject*) objectArray[i].get())->GetCreateObject()){
 					int dice_roll = distribution(generator);
-					std::cout << "DICE " << dice_roll << std::endl;
+					//std::cout << "DICE " << dice_roll << std::endl;
 					if(dice_roll <= 2){
 						((SceneObject*) objectArray[i].get())->ChangeState();
 					}

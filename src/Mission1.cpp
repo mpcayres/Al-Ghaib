@@ -73,7 +73,10 @@ void  Mission1::Update(float dt){
 		}
 		fadeIn = false;
 		bloqBlack = true;
-		//alpha = TRANSPARENT;
+		alpha = TRANSPARENT;
+		if (spFade.IsOpen()) {
+			spFade.ChangeAlpha(alpha);
+		}
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
