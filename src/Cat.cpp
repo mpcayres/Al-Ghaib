@@ -1,4 +1,4 @@
-#include "Bear.hpp"
+#include "Cat.hpp"
 #include "InputManager.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
@@ -10,15 +10,15 @@
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Bear* Bear::bear;
-bool Bear::show = false;
-bool Bear::seen = false;
-bool Bear::arrived = false;
+Cat* Cat::cat;
+bool Cat::show = false;
+bool Cat::seen = false;
+bool Cat::arrived = false;
 
-Bear::Bear(float x, float y): sp("img/obj_r_bear.png"){
+Cat::Cat(float x, float y): sp("img/object-novelo.png"){
 	//stop = false;
-	sp.SetScaleX(2);
-	sp.SetScaleY(2);
+	sp.SetScaleX(0.2);
+	sp.SetScaleY(0.2);
 
 	//destinationPath.x = x;
 	//destinationPath.y = y;
@@ -39,14 +39,14 @@ Bear::Bear(float x, float y): sp("img/obj_r_bear.png"){
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
-	bear = this;
+	cat = this;
 }
 
-Bear::~Bear(){
-	bear = nullptr;
+Cat::~Cat(){
+	cat = nullptr;
 }
 
-void Bear::Update(float dt){
+void Cat::Update(float dt){
 	Vec2 aux, aux2;
 
 	//float dist = 0;
@@ -88,29 +88,29 @@ void Bear::Update(float dt){
 	}
 }
 
-/*void Bear::Set////direcao(int dir){
+/*void Cat::Set////direcao(int dir){
 	////direcao = (InvBox) dir;
 	sp.SetFrame(1, ////direcao);
 }*/
 
-void Bear::Render(){
+void Cat::Render(){
 	if(show)
 		sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
-bool Bear::IsDead(){
+bool Cat::IsDead(){
 	return (hp <= 0);
 }
 
 
-void Bear::Shoot(){
+void Cat::Shoot(){
 	Vec2 aux;
 	aux.x = 70;
 	aux.y = 0;
 	//aux = aux.Rotate(cannonAngle);
 }
 
-bool Bear::NotifyCollision(GameObject& other){
+bool Cat::NotifyCollision(GameObject& other){
 	if(other.Is("CollidableObject")){
 
 		if( MissionManager::player != nullptr){
@@ -131,11 +131,11 @@ bool Bear::NotifyCollision(GameObject& other){
 	return false;
 }
 
-void Bear::SetDestinationPath(Vec2 path){
+void Cat::SetDestinationPath(Vec2 path){
 	destinationPath.emplace_back(path);
 }
 
-void Bear::DefinedPath(){
+void Cat::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
 	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
@@ -250,7 +250,7 @@ void Bear::DefinedPath(){
 
 
 }
-/*void Bear::Pursuit(){
+/*void Cat::Pursuit(){
 	Vec2 aux;
 
 	if(MissionManager::player != nullptr){
@@ -357,6 +357,6 @@ void Bear::DefinedPath(){
 		stop = true;
 	}
 }*/
-bool Bear::Is(std::string type){
-	return (type == "Bear");
+bool Cat::Is(std::string type){
+	return (type == "Cat");
 }

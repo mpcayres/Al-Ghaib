@@ -11,6 +11,7 @@
 #include "Bear.hpp"
 #include "Music.hpp"
 #include "Sound.hpp"
+#include "Cat.hpp"
 
 class Mission2 : public Mission {
 public:
@@ -28,7 +29,7 @@ private:
 	void SetObjectRoom();
 
 	static Music music;
-	bool parado;
+	bool paradoUrso, paradoGato;
 
 	bool played, endMission;
 };
