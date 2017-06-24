@@ -30,8 +30,8 @@ private:
 
 	static Music music;
 	bool paradoUrso, paradoGato;
-
 	bool played, endMission;
+	int meowcount, momcount;
 };
 
 #endif /* SRC_MISSION2_HPP_ */

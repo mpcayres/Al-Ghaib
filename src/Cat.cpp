@@ -17,8 +17,8 @@ bool Cat::arrived = false;
 
 Cat::Cat(float x, float y): sp("img/object-novelo.png"){
 	//stop = false;
-	sp.SetScaleX(0.2);
-	sp.SetScaleY(0.2);
+	sp.SetScaleX(0.5);
+	sp.SetScaleY(0.5);
 
 	//destinationPath.x = x;
 	//destinationPath.y = y;
@@ -127,6 +127,9 @@ bool Cat::NotifyCollision(GameObject& other){
 				//}
 		}
 	}
+	if(other.Is("Player")){
+		return MissionManager::player->CollidingPlayer(box, 0);
+	}
 
 	return false;
 }
@@ -138,12 +141,18 @@ void Cat::SetDestinationPath(Vec2 path){
 void Cat::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
+	//std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
+	if(aux.Distance(destinationPath.back())>2){
 	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
-		if(/*this->box.x == destinationPath.back().x && this->box.y == destinationPath.back().y */ aux.Distance(destinationPath.back())<= 5 ){
+		if(aux.Distance(destinationPath.back())<= 5 ){
 				//printf("POPANDO");
 
 			arrived = true;
+			box.x = destinationPath.back().x;
+			box.y = destinationPath.back().y;
 			destinationPath.pop_back();
+
+
 		}
 		else
 			arrived = false;
@@ -160,7 +169,7 @@ void Cat::DefinedPath(){
 			speed.y = speed.y*SPEED_CONTROL;
 		}
 
-		//if(arrived){
+		if(!arrived){
 			//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
 			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
 				if(destinationPath.back().x < box.x){
@@ -247,7 +256,8 @@ void Cat::DefinedPath(){
 				box.y += speed.y;
 			}
 		}
-
+		}
+	}
 
 }
 /*void Cat::Pursuit(){

@@ -183,7 +183,7 @@ void  Mission1::Update(float dt){
 					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = time.Get();
-					std::cout << ultimoTempo << std::endl;
+					//std::cout << ultimoTempo << std::endl;
 				//}
 				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
 					showBox = false;
