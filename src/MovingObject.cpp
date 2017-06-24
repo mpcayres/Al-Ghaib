@@ -34,11 +34,21 @@ bool MovingObject::NotifyCollision(GameObject& other){
 		if(InputManager::GetInstance().IsKeyDown(LCTRL_KEY) && InputManager::GetInstance().KeyPress(C_KEY)){
 			//colocar animacao para subir na cadeira
 			if(!MissionManager::player->GetAboveObject()){
-				MissionManager::player->box.x = box.x + box.w/2 - MissionManager::player->box.w/2;
-				MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
+
+				MissionManager::player->climbing = true;
+				if(MissionManager::player->box.x > box.x){
+					MissionManager::player->box.x = MissionManager::player->box.x - MissionManager::player->box.w/2 - 12;
+					MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
+				}else{
+					MissionManager::player->box.x = box.x - MissionManager::player->box.w/2 - 8;
+					MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
+				}
+
 				MissionManager::player->ChangeAboveObject();
+
 				return true;
 			} else{
+				//MissionManager::player->climbing = true;
 				MissionManager::player->box.x = MissionManager::player->previousPos.x;
 				MissionManager::player->box.y = MissionManager::player->previousPos.y;
 				MissionManager::player->ChangeAboveObject();

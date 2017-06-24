@@ -61,13 +61,14 @@ public:
 
 	//Vec2 previousPos;
 	Rect limits;
+	bool climbing;
 	std::string lastPicked;
 	std::vector<Rect> wallLimits;
 	bool bloqHUD;
 
 private:
 	Timer timeRuido, timeCooldown, timeSound, timePicked;
-	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush;
+	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush, spKinderClimbing;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 	Sprite spNoise, spPicked;
 

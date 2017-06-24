@@ -16,11 +16,13 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
 		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
 		spAnimKinder("img/sprite-kinder-run.png", 15, 0.4, 4),
-		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 2) {
+		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 2),
+		spKinderClimbing("img/kinder-cilmb-spritesheet-Big.png", 12, 0.13, 2){
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 	spAnimKinder.SetScaleX(2.5); spAnimKinder.SetScaleY(2.5);
 	spKinderPush.SetScaleX(2.5); spKinderPush.SetScaleY(2.5);
+	spKinderClimbing.SetScaleX(2.5); spKinderClimbing.SetScaleY(2.5);
 
 	spNoise = Sprite("img/sprite-energia.png", 9, 1 ,1);
 	spNoise.SetScaleX(0.5); spNoise.SetScaleY(0.5);
@@ -67,6 +69,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	blocked = false;
 	lastPicked = "";
 	bloqHUD = false;
+	climbing = false;
 }
 
 Player::~Player(){
@@ -78,7 +81,7 @@ Player::~Player(){
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
-	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject && !blocked){
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject && !blocked && !climbing){
 		std::shared_ptr<InventoryObject> inHand = GetInHand();
 		if(inHand != nullptr){
 			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
@@ -99,8 +102,29 @@ void Player::Update(float dt){
 			}
 		}
 	}
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && climbing){
+		if(direcao == LESTE)
+			spKinderClimbing.Update(dt,0, false);
+		else if(direcao == OESTE)
+			spKinderClimbing.Update(dt,1, false);
+		timeCooldown.Update(dt);
+		if(timeCooldown.Get() > 1.4){
+			if(direcao == LESTE){
+				box.x+=30;
+				spKinderClimbing.SetFrame(0, 0);
+			}
+			else {
+				box.x -= 10;
+				spKinderClimbing.SetFrame(0 , 1);
+			}
 
-	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked){
+			climbing = false;
+			timeCooldown.Restart();
+		}
+
+	}
+
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && !climbing){
 		direcaoShift = false;
 		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
 				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
@@ -304,14 +328,16 @@ bool Player::NotifyCollision(GameObject& other){
 
 void Player::Render(){
 	if(!hidden && !animShowing){
-		if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
+		if(climbing){
+			spKinderClimbing.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		} else if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 			spKinderPush.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		} else if(running){
 			spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		} else{
 			spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		}
-	} else if(animShowing){
+	} else if(animShowing && !climbing){
 		spAnimKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 	}
 }
