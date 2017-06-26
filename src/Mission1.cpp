@@ -93,12 +93,13 @@ void  Mission1::Update(float dt){
 	if(MissionManager::player->lastPicked == "InventoryBear" && Enemy::collidingPlayer){
 		Camera::Unfollow();
 		Camera::SetType(CAMERA_TYPE0);
+		float x = Enemy::enemy->box.x;
+		float y = Enemy::enemy->box.y;
 		Enemy::SetDead();
 		MissionManager::player->SetBlocked(true);
 		MissionManager::player->DeleteInventory();
 		Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(MissionManager::player->box.x + MissionManager::player->box.w + 5,
-						MissionManager::player->box.y - 10, 0,
+				new Animation(x, y, 0,
 						"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
 		ultimoTempo = time.Get();
 		if(time.Get()>ultimoTempo + 4){
