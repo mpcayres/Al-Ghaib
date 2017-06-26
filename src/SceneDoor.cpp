@@ -3,8 +3,8 @@
 #include "Mission.hpp"
 #include "Player.hpp"
 
-bool SceneDoor::passando = false;
-int SceneDoor::count = 0;
+int SceneDoor::ValorPassar =15;
+int SceneDoor::count = 200;
 
 SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::string img, std::string img2) :
 	SceneObject(x, y, img, img2), dest(dest) {
@@ -12,13 +12,16 @@ SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::strin
 	lock = locked;
 	changeState = false;
 	//count =0;
+	contador = 0;
 }
 
 bool SceneDoor::NotifyCollision(GameObject& other){
-	if((count == ABRE || count == FECHA) && other.Is("Enemy")){
-			if(count == ABRE)
+	if(other.Is("Bear") || other.Is("Enemy")){
+			count ++;
+			std::cout << "teste door" << count << std::endl;
+			if(count == 1)
 				sp.Open(change2);
-			else
+			if(count == ValorPassar)
 				sp.Open(change1);
 			box.x += box.w - sp.GetWidth();
 			box.w = sp.GetWidth();

@@ -111,7 +111,7 @@ void Bear::Shoot(){
 }
 
 bool Bear::NotifyCollision(GameObject& other){
-	if(other.Is("CollidableObject")){
+	if(other.Is("CollidableObject") || other.Is("Player")){
 
 		if( MissionManager::player != nullptr){
 			//if(MissionManager::player != nullptr){

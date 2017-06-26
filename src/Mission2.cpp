@@ -101,16 +101,18 @@ void Mission2::Update(float dt){
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
 				Bear::show = true;
+				SceneDoor::count = ABRE;
+				SceneDoor::ValorPassar = 3;
 				count ++;
 				//std::cout << "test 0 " << std::endl;
 				if(count == 1){
 					paradoUrso = true;
-					Bear::bear->SetDestinationPath(Vec2(810, 310)); //2º DESTINO
+					Bear::bear->SetDestinationPath(Vec2(810, 410)); //2º DESTINO
 					Bear::bear->SetDestinationPath(Vec2(810, 210)); //1º DESTINO
 					ultimoTempo = 12;
 				}
 				if(paradoUrso){
-					Bear::bear->SetDestinationPath(Vec2(810, 310));
+					Bear::bear->SetDestinationPath(Vec2(810, 410));
 				}
 				//std::cout << "test 1 " << std::endl;
 				if(time.Get() > 18 ){

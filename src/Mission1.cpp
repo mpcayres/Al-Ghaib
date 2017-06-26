@@ -185,6 +185,8 @@ void  Mission1::Update(float dt){
 			//MÃE APARECENDO NO CORREDOR
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
 				Enemy::show = true;
+				SceneDoor::count = ABRE;
+				SceneDoor::ValorPassar = 4;
 				//if(MissionManager::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
@@ -219,7 +221,7 @@ void  Mission1::Update(float dt){
 				Sound portaDestrancando = Sound ("audio/weird-door.wav");
 				portaDestrancando.Play(0);
 				played = false;
-				SceneDoor::count = ABRE;
+				//SceneDoor::count = ABRE;
 			}
 
 			if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
@@ -227,10 +229,13 @@ void  Mission1::Update(float dt){
 				Enemy::show = true;
 				//if(Enemy::turn == 1)
 				count ++;
-				SceneDoor::count = FECHA;
+				//SceneDoor::count = FECHA;
 				//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 				if(count == 1){
 					//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+
+					SceneDoor::count = ABRE;
+					SceneDoor::ValorPassar = 16;
 					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
 					Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
 					Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
@@ -240,6 +245,8 @@ void  Mission1::Update(float dt){
 				if(trancada == false){
 					if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
 						showBox = true;
+						SceneDoor::count = ABRE;
+						SceneDoor::ValorPassar = 26;
 						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 						if(played == false){
@@ -248,15 +255,15 @@ void  Mission1::Update(float dt){
 							played = true;
 						}
 						ultimoTempo = 8;
-					if(time.Get() > 11 && trancada == false && cooldown.Get() > 3){
+					if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
 						showBox = false;
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 						ultimoTempo = 12;
-						SceneDoor::count = ABRE;
+						//SceneDoor::count = ABRE;
 					}
-					if(Enemy::enemy->box.DistanceRect(Rect(970, 100, 1, 1)) < 10){
-						SceneDoor::count = FECHA;
+					if(Enemy::enemy->box.Inside(Rect(970, 100, 20, 20))){
+						//SceneDoor::count = FECHA;
 					}
 
 				}
