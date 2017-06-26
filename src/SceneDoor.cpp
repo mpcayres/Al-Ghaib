@@ -3,21 +3,52 @@
 #include "Mission.hpp"
 #include "Player.hpp"
 
+bool SceneDoor::passando = false;
+int SceneDoor::count = 0;
+
 SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::string img, std::string img2) :
 	SceneObject(x, y, img, img2), dest(dest) {
 
 	lock = locked;
 	changeState = false;
+	//count =0;
 }
 
 bool SceneDoor::NotifyCollision(GameObject& other){
+	if((count == ABRE || count == FECHA) && other.Is("Enemy")){
+			if(count == ABRE)
+				sp.Open(change2);
+			else
+				sp.Open(change1);
+			box.x += box.w - sp.GetWidth();
+			box.w = sp.GetWidth();
+			box.h = sp.GetHeight();
+			if((MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h)
+				&& (MissionManager::player->GetDirecao() == Player::LESTE ||
+				MissionManager::player->GetDirecao() == Player::OESTE)){
+
+				if((MissionManager::player->box.x < box.x + box.w &&
+					MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
+					|| (box.InsideX(MissionManager::player->box) &&
+					MissionManager::player->box.CenterX() >= box.CenterX())){
+						MissionManager::player->box.x = box.x + box.w + 1;
+				} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
+							MissionManager::player->box.x < box.x)
+							|| (box.InsideX(MissionManager::player->box) &&
+							MissionManager::player->box.CenterX() < box.CenterX())){
+								MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
+				}
+
+		}
+	}
+
 	if(!other.Is("EmptyBox")){
 		SceneObject::NotifyCollision(other);
 	} else{
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == true){
 				MissionManager::player->SetDoor(true);
 		}
-		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
+		if((InputManager::GetInstance().KeyPress(Z_KEY) && lock == false)){
 			if(estado){
 				changeState = true;
 			} else{

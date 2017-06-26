@@ -4,6 +4,9 @@
 #include "SceneObject.hpp"
 #include "Text.hpp"
 
+#define ABRE 1
+#define FECHA 2
+
 class SceneDoor : public SceneObject {
 public:
 	SceneDoor(float x, float y, std::string dest,bool locked = true,
@@ -16,6 +19,8 @@ public:
 	void SetChangeState(bool change);
 	std::string GetDest();
 	//bool Tried();
+	static bool passando;
+	static int count;
 
 private:
 	bool lock;

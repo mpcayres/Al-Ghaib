@@ -138,7 +138,7 @@ void  Mission1::Update(float dt){
 			}
 
 			if( time.Get() > 30 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText("TENTE DESMONTAR ALGO PARA ABRIR A PORTA"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				falas.SetText("TENTE DESMONTAR ALGO PARA ABRIR A PORTA");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 30;
 				showBox = true;
@@ -146,6 +146,18 @@ void  Mission1::Update(float dt){
 			if( time.Get() > 34 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
 				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
 				ultimoTempo = 34;
+				showBox = false;
+			}
+
+			if( time.Get() > 50 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText("TALVEZ ALGO QUE ESTEJA NO ALTO DE ALGUM LUGAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 50;
+				showBox = true;
+			}
+			if( time.Get() > 54 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				ultimoTempo = 54;
 				showBox = false;
 			}
 
@@ -207,6 +219,7 @@ void  Mission1::Update(float dt){
 				Sound portaDestrancando = Sound ("audio/weird-door.wav");
 				portaDestrancando.Play(0);
 				played = false;
+				SceneDoor::count = ABRE;
 			}
 
 			if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
@@ -214,6 +227,7 @@ void  Mission1::Update(float dt){
 				Enemy::show = true;
 				//if(Enemy::turn == 1)
 				count ++;
+				SceneDoor::count = FECHA;
 				//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 				if(count == 1){
 					//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
@@ -239,7 +253,12 @@ void  Mission1::Update(float dt){
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 						ultimoTempo = 12;
+						SceneDoor::count = ABRE;
 					}
+					if(Enemy::enemy->box.DistanceRect(Rect(970, 100, 1, 1)) < 10){
+						SceneDoor::count = FECHA;
+					}
+
 				}
 				}
 			}
