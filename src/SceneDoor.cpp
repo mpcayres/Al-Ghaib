@@ -7,7 +7,7 @@ int SceneDoor::ValorPassar =15;
 int SceneDoor::count = 200;
 
 SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::string img, std::string img2) :
-	SceneObject(x, y, img, img2), dest(dest) {
+	SceneObject(x, y, img, img2, 0, 1, 1, "", SAMEX), dest(dest) {
 
 	lock = locked;
 	changeState = false;
@@ -16,38 +16,27 @@ SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::strin
 }
 
 bool SceneDoor::NotifyCollision(GameObject& other){
-	if(other.Is("Bear") || other.Is("Enemy")){
-			count ++;
-			//std::cout << "teste door" << count << std::endl;
-			if(count == 1)
-				sp.Open(change2);
-			if(count == ValorPassar)
-				sp.Open(change1);
-			box.x += box.w - sp.GetWidth();
-			box.w = sp.GetWidth();
-			box.h = sp.GetHeight();
-			if((MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h)
-				&& (MissionManager::player->GetDirecao() == Player::LESTE ||
-				MissionManager::player->GetDirecao() == Player::OESTE)){
-
-				if((MissionManager::player->box.x < box.x + box.w &&
-					MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
-					|| (box.InsideX(MissionManager::player->box) &&
-					MissionManager::player->box.CenterX() >= box.CenterX())){
-						MissionManager::player->box.x = box.x + box.w + 1;
-				} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
-							MissionManager::player->box.x < box.x)
-							|| (box.InsideX(MissionManager::player->box) &&
-							MissionManager::player->box.CenterX() < box.CenterX())){
-								MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
-				}
-
-		}
+	if(!(other.Is("EmptyBox") || other.Is("Bear") || other.Is("Enemy"))){
+		SceneObject::NotifyCollision(other);
+		return false;
 	}
 
-	if(!other.Is("EmptyBox")){
-		SceneObject::NotifyCollision(other);
-	} else{
+	if(other.Is("Bear") || other.Is("Enemy")){
+		count ++;
+		//std::cout << "teste door" << count << std::endl;
+		if(count == 1)
+			sp.Open(change2);
+		if(count == ValorPassar)
+			sp.Open(change1);
+		int w = box.w;
+		box.x += box.w - sp.GetWidth();
+		box.w = sp.GetWidth();
+		box.h = sp.GetHeight();
+
+		MovePlayerColliding(w, box.h);
+	}
+
+	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == true){
 				MissionManager::player->SetDoor(true);
 		}
@@ -57,27 +46,12 @@ bool SceneDoor::NotifyCollision(GameObject& other){
 			} else{
 				estado = true;
 				sp.Open(change2);
+				int w = box.w;
 				box.x += box.w - sp.GetWidth();
 				box.w = sp.GetWidth();
 				box.h = sp.GetHeight();
 
-				if((MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h)
-					&& (MissionManager::player->GetDirecao() == Player::LESTE ||
-						MissionManager::player->GetDirecao() == Player::OESTE)){
-
-					if((MissionManager::player->box.x < box.x + box.w &&
-							MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
-							|| (box.InsideX(MissionManager::player->box) &&
-									MissionManager::player->box.CenterX() >= box.CenterX())){
-						MissionManager::player->box.x = box.x + box.w + 1;
-					} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
-							MissionManager::player->box.x < box.x)
-							|| (box.InsideX(MissionManager::player->box) &&
-									MissionManager::player->box.CenterX() < box.CenterX())){
-						MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
-					}
-
-				}
+				MovePlayerColliding(w, box.h);
 			}
 		}
 	}

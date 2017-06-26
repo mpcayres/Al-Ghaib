@@ -1,7 +1,8 @@
 #include "SceneObject.hpp"
 #include "MissionManager.hpp"
 
-SceneObject::SceneObject(float x, float y, std::string img, std::string img2, float rot, float scaleX, float scaleY, std::string create) :
+SceneObject::SceneObject(float x, float y, std::string img, std::string img2,
+		float rot, float scaleX, float scaleY, std::string create, int change) :
 	sp(img) {
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	change1 = img;
@@ -13,6 +14,7 @@ SceneObject::SceneObject(float x, float y, std::string img, std::string img2, fl
 	box.h = sp.GetHeight();
 	objCreate = create;
 	offset = box.h/3;
+	caseChange = (CaseChange) change;
 }
 
 bool SceneObject::IsDead(){
@@ -79,62 +81,102 @@ void SceneObject::ChangeState(){
 	if(estado){
 		estado = false;
 		sp.Open(change1);
-		if(box.w != sp.GetWidth()){
-			box.x = box.x + box.w/2 - sp.GetWidth()/2;
-			box.w = sp.GetWidth();
-		}
-		if(box.h != sp.GetHeight()){
-			box.y = box.y + box.h/2 - sp.GetHeight()/2;
-			box.h = sp.GetHeight();
+		switch(caseChange){
+			case SAMEY_UP:
+				box.w = sp.GetWidth();
+				if(box.h != sp.GetHeight()){
+					box.y += box.h - sp.GetHeight();
+					box.h = sp.GetHeight();
+				}
+				break;
+			case DEFAULT:
+				if(box.w != sp.GetWidth()){
+					box.x = box.x + box.w/2 - sp.GetWidth()/2;
+					box.w = sp.GetWidth();
+				}
+				if(box.h != sp.GetHeight()){
+					box.y = box.y + box.h/2 - sp.GetHeight()/2;
+					box.h = sp.GetHeight();
+				}
+				break;
+			default:
+				break;
 		}
 	} else{
 		estado = true;
 		sp.Open(change2);
-		if(box.w != sp.GetWidth()){
-			box.x = box.x + box.w/2 - sp.GetWidth()/2;
-			box.w = sp.GetWidth();
-		}
-		if(box.h != sp.GetHeight()){
-			box.y = box.y + box.h/2 - sp.GetHeight()/2;
-			box.h = sp.GetHeight();
-		}
-
-		if(MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y + box.h){
-
-			if((box.w != sp.GetWidth()) && (MissionManager::player->GetDirecao() == Player::LESTE ||
-				MissionManager::player->GetDirecao() == Player::OESTE)){
-
-				if((MissionManager::player->box.x < box.x + box.w &&
-						MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
-						|| (box.InsideX(MissionManager::player->box) &&
-								MissionManager::player->box.CenterX() >= box.CenterX())){
-					MissionManager::player->box.x = box.x + box.w + 1;
-				} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
-						MissionManager::player->box.x < box.x)
-						|| (box.InsideX(MissionManager::player->box) &&
-								MissionManager::player->box.CenterX() < box.CenterX())){
-					MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
+		int w = box.w; int h = box.h;
+		switch(caseChange){
+			case SAMEX:
+				if(box.w != sp.GetWidth()){
+					box.x += box.w - sp.GetWidth();
+					box.w = sp.GetWidth();
 				}
+				box.h = sp.GetHeight();
+				break;
+			case SAMEY_DOWN:
+			case SAMEY_UP:
+				box.w = sp.GetWidth();
+				if(box.h != sp.GetHeight()){
+					box.y += box.h - sp.GetHeight();
+					box.h = sp.GetHeight();
+				}
+				break;
+			case DEFAULT:
+				if(box.w != sp.GetWidth()){
+					box.x += box.w/2 - sp.GetWidth()/2;
+					box.w = sp.GetWidth();
+				}
+				if(box.h != sp.GetHeight()){
+					box.y += box.h/2 - sp.GetHeight()/2;
+					box.h = sp.GetHeight();
+				}
+				break;
+			default:
+				break;
+		}
 
+		MovePlayerColliding(w, h);
+	}
+}
+
+void SceneObject::MovePlayerColliding(float w, float h){
+	if(MissionManager::player->box.y + offset < box.y + box.h &&
+			!(MissionManager::player->box.y + MissionManager::player->box.h - offset < box.y)){
+
+		if((box.w != w) && (MissionManager::player->GetDirecao() == Player::LESTE ||
+			MissionManager::player->GetDirecao() == Player::OESTE)){
+
+			if((MissionManager::player->box.x < box.x + box.w &&
+					MissionManager::player->box.x + MissionManager::player->box.w > box.x + box.w )
+					|| (box.InsideX(MissionManager::player->box) &&
+							MissionManager::player->box.CenterX() >= box.CenterX())){
+				MissionManager::player->box.x = box.x + box.w + 1;
+			} else if((MissionManager::player->box.x + MissionManager::player->box.w > box.x &&
+					MissionManager::player->box.x < box.x)
+					|| (box.InsideX(MissionManager::player->box) &&
+							MissionManager::player->box.CenterX() < box.CenterX())){
+				MissionManager::player->box.x = box.x - MissionManager::player->box.w - 1;
 			}
 
-			if((box.h != sp.GetHeight()) && (MissionManager::player->GetDirecao() == Player::NORTE ||
-				MissionManager::player->GetDirecao() == Player::SUL)){
+		}
 
-				if((MissionManager::player->box.y < box.y + box.h &&
-						MissionManager::player->box.y + MissionManager::player->box.h > box.y + box.h )
-						|| (box.InsideY(MissionManager::player->box) &&
-								MissionManager::player->box.CenterY() >= box.CenterY())){
-					MissionManager::player->box.y = box.y + box.h + 1;
-				} else if((MissionManager::player->box.y + MissionManager::player->box.h > box.y &&
-						MissionManager::player->box.y < box.y)
-						|| (box.InsideY(MissionManager::player->box) &&
-								MissionManager::player->box.CenterY() < box.CenterY())){
-					MissionManager::player->box.y = box.y - MissionManager::player->box.h - 1;
-				}
+		if((box.h != h) && (MissionManager::player->GetDirecao() == Player::NORTE ||
+			MissionManager::player->GetDirecao() == Player::SUL)){
 
+			if((MissionManager::player->box.y < box.y + box.h &&
+					MissionManager::player->box.y + MissionManager::player->box.h > box.y + box.h )
+					|| (box.InsideY(MissionManager::player->box) &&
+							MissionManager::player->box.CenterY() >= box.CenterY())){
+				MissionManager::player->box.y = box.y + box.h + 1;
+			} else if((MissionManager::player->box.y + MissionManager::player->box.h > box.y &&
+					MissionManager::player->box.y < box.y)
+					|| (box.InsideY(MissionManager::player->box) &&
+							MissionManager::player->box.CenterY() < box.CenterY())){
+				MissionManager::player->box.y = box.y - MissionManager::player->box.h - 1;
 			}
 
 		}
+
 	}
 }

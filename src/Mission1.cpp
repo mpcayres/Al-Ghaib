@@ -49,9 +49,7 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	//std::cout << "INIT_MIS1" << std::endl;
 }
 
-Mission1::~Mission1() {
-
-}
+Mission1::~Mission1() { }
 
 void  Mission1::Pause(){ }
 
@@ -97,6 +95,7 @@ void  Mission1::Update(float dt){
 		Camera::SetType(CAMERA_TYPE0);
 		Enemy::SetDead();
 		MissionManager::player->SetBlocked(true);
+		MissionManager::player->DeleteInventory();
 		Game::GetInstance().GetCurrentState().AddObject(
 				new Animation(MissionManager::player->box.x + MissionManager::player->box.w + 5,
 						MissionManager::player->box.y - 10, 0,
@@ -377,7 +376,8 @@ void Mission1::SetObjectStage(){
 	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	//objectStage.emplace_back(Armario);
 
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png", 0, 1, 1, "InventoryKey");
+	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
 	PickUpObject* Clown = new PickUpObject(430, 270, "InventoryClown", "img/key.png", true, 0.5, 0.5);

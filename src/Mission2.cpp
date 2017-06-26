@@ -284,7 +284,8 @@ void Mission2::Render(){
 void Mission2::SetObjectStage(){
 	Bear* bear = new Bear(810, 210);
 	objectStage.emplace_back(bear);
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png", "img/scene-bau-fechado.png");
+	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);

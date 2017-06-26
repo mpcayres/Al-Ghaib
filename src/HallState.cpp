@@ -148,7 +148,7 @@ void HallState::SetInitialObjectArray(){
 	/*SceneObject* Window = new SceneObject(700, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
 	objectArray.emplace_back(Window);*/
 
-	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-fechado.png");
+	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png");
 	objectArray.emplace_back(CriadoMudo);
 
 	SceneObject* Book = new SceneObject(110, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);

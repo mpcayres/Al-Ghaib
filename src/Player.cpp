@@ -318,7 +318,6 @@ void Player::Update(float dt){
 }
 
 bool Player::NotifyCollision(GameObject& other){
-
 	return false;
 }
 
@@ -517,7 +516,7 @@ void Player::DeleteInventory(){
 		inHandIndex = -1;
 	} else{
 		inventory.erase(inventory.begin() + inHandIndex);
-		inHandIndex = 0 ;
+		inHandIndex = 0;
 	}
 }
 
