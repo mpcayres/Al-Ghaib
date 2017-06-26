@@ -89,6 +89,7 @@ void Mission2::Update(float dt){
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
+			MissionManager::player->SetBlocked(true);
 			if(flagTimer == true && time.Get() > 3){
 				tx.SetText(" ");
 				showBox = false;
@@ -101,18 +102,19 @@ void Mission2::Update(float dt){
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
 				Bear::show = true;
-				SceneDoor::count = ABRE;
-				SceneDoor::ValorPassar = 3;
 				count ++;
 				//std::cout << "test 0 " << std::endl;
 				if(count == 1){
+
+					SceneDoor::count = ABRE;
+					SceneDoor::ValorPassar = 24;
 					paradoUrso = true;
-					Bear::bear->SetDestinationPath(Vec2(810, 410)); //2º DESTINO
-					Bear::bear->SetDestinationPath(Vec2(810, 210)); //1º DESTINO
+					Bear::bear->SetDestinationPath(Vec2(810, 450)); //2º DESTINO
+					Bear::bear->SetDestinationPath(Vec2(810, 220)); //1º DESTINO
 					ultimoTempo = 12;
 				}
 				if(paradoUrso){
-					Bear::bear->SetDestinationPath(Vec2(810, 410));
+					Bear::bear->SetDestinationPath(Vec2(810, 450));
 				}
 				//std::cout << "test 1 " << std::endl;
 				if(time.Get() > 18 ){
@@ -140,13 +142,22 @@ void Mission2::Update(float dt){
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 22;
 					showBox = true;
+					MissionManager::player->SetBlocked(false);
 				}
-				if(time.Get() > 29){
+				if(time.Get() > 29 ){
+					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+					//sussurro.Play(0);
+					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 29;
+					showBox = true;
+				}
+				if(time.Get() > 33){
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 26;
+					ultimoTempo = 33;
 					showBox = false;
 					//parado = false;
 					Bear::seen = true;
@@ -210,6 +221,7 @@ void Mission2::Update(float dt){
 		}
 		if (MissionManager::player->GetRuido()>70 ){
 			Enemy::show = true;
+			SceneDoor::count = ABRE;
 			//if(Enemy::turn == 1)
 			momcount ++;
 			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP

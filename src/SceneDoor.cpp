@@ -18,7 +18,7 @@ SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::strin
 bool SceneDoor::NotifyCollision(GameObject& other){
 	if(other.Is("Bear") || other.Is("Enemy")){
 			count ++;
-			std::cout << "teste door" << count << std::endl;
+			//std::cout << "teste door" << count << std::endl;
 			if(count == 1)
 				sp.Open(change2);
 			if(count == ValorPassar)

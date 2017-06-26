@@ -111,7 +111,7 @@ void Bear::Shoot(){
 }
 
 bool Bear::NotifyCollision(GameObject& other){
-	if(other.Is("CollidableObject") || other.Is("Player")){
+	if(other.Is("CollidableObject")){
 
 		if( MissionManager::player != nullptr){
 			//if(MissionManager::player != nullptr){
@@ -126,6 +126,9 @@ bool Bear::NotifyCollision(GameObject& other){
 			speed.y = speed.y*SPEED_CONTROL;
 				//}
 		}
+	}
+	if(other.Is("Player")){
+		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
 	return false;

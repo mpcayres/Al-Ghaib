@@ -318,11 +318,7 @@ void Player::Update(float dt){
 }
 
 bool Player::NotifyCollision(GameObject& other){
-	/*if(other.Is("Enemy")){
-		//hp = 0;
-		//Camera::Unfollow();
-		//printf("CAUGHT YOU!");
-	}*/
+
 	return false;
 }
 

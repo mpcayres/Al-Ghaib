@@ -38,6 +38,7 @@ public:
 	static bool arrived;
 private:
 	Timer time;
+	float offset;
 	Sprite sp;
 	Vec2 speed;
 	int hp;
