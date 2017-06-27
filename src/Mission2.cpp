@@ -272,7 +272,7 @@ void Mission2::Render(){
 		((MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
 			MissionManager::missionManager->GetStage("HallState"))) &&
-		!MissionManager::player->bloqHUD){
+		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
 			//printf("renderizando");

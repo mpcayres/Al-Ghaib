@@ -68,7 +68,7 @@ void Camera::Update(float dt){
 		} else{
 			isZoomOut = false;
 			MissionManager::missionManager->factorZoom = 1;
-			MissionManager::player->bloqHUD = false;
+			MissionManager::player->SetBloqHUD(false);
 		}
 		UpdateZoom();
 	} else if(isMoving){
@@ -99,7 +99,7 @@ void Camera::Update(float dt){
 			pos = previousPos;
 			inWayBack = false;
 			isMoving = false;
-			MissionManager::player->bloqHUD = false;
+			MissionManager::player->SetBloqHUD(false);
 		} else if(inWayBack){
 			pos.x += speed.x;
 			pos.y += speed.y;
@@ -124,13 +124,13 @@ void Camera::Move(int xd, int yd, float tempoN){
 
 	printf("P %f D %f S %f\n", pos.x, dest.x, speed.x);
 	origDist = pos.Distance(dest);
-	MissionManager::player->bloqHUD = true;
+	MissionManager::player->SetBloqHUD(true);
 }
 
 void Camera::Zoom(float tempoN, bool in){
 	if(in) isZoomIn = true;
 	else isZoomOut = true;
-	MissionManager::player->bloqHUD = true;
+	MissionManager::player->SetBloqHUD(true);
 	tempo = tempoN;
 	time.Restart();
 }
