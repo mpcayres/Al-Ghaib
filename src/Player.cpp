@@ -16,7 +16,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
 		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
 		spAnimKinder("img/sprite-kinder-run.png", 15, 0.4, 4),
-		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 2),
+		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 4),
 		spKinderClimbing("img/kinder-cilmb-spritesheet-Big.png", 12, 0.13, 2){
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
@@ -182,7 +182,7 @@ void Player::Update(float dt){
 			if(speed.x != 0 || speed.y != 0){
 				spKinder.Update(dt, direcao, direcaoShift);
 				spKinderRun.Update(dt, direcao, direcaoShift);
-				spKinderPush.Update(dt, direcao - 2, direcaoShift);
+				spKinderPush.Update(dt, direcao, direcaoShift);
 
 				if(running) multiplicador = 6;
 				else multiplicador = 1;
@@ -325,7 +325,7 @@ void Player::Render(){
 	if(!hidden && !animShowing){
 		if(climbing){
 			spKinderClimbing.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-		} else if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
+		} else if(MissionManager::missionManager->movingBox){
 			spKinderPush.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		} else if(running){
 			spKinderRun.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
