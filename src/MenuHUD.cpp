@@ -40,10 +40,10 @@ void MenuHUD::Render(){
 	for(unsigned int i = 0; i < buttons.size(); i++){
 		if((int) i == optSelected){
 			buttonsSelected[i].Render(box.x + 10,
-					box.y + i*buttonsSelected[0].GetHeight() + 10, 0);
+					box.y + i*buttonsSelected[0].GetHeight() - 5, 0);
 		} else{
 			buttons[i].Render(box.x + 10,
-					box.y + i*buttons[0].GetHeight() + 10, 0);
+					box.y + i*buttons[0].GetHeight() - 5, 0);
 		}
 	}
 

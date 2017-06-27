@@ -6,7 +6,7 @@
 Music TitleState::intro, TitleState::music;
 bool TitleState::stopMusic;
 
-TitleState::TitleState() : menu(50, 50) {
+TitleState::TitleState() : menu(50, 150) {
 	SDL_Color auxcolor = SDL_Color();
 	auxcolor.r = 255;
 	auxcolor.g = 10;
@@ -14,8 +14,8 @@ TitleState::TitleState() : menu(50, 50) {
 
 	flagTimer = true; stopMusic = false;
 	time = Timer();
-	bg = Sprite("img/title.jpg");
-	bg.SetScaleX(1.7); bg.SetScaleY(1.5);
+	bg = Sprite("img/sprite-title.png", 6, 0.5);
+	bg.SetScaleX(2.8); bg.SetScaleY(2.8);
 	tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	intro = Music("audio/menu-intro.wav");
@@ -44,6 +44,7 @@ void TitleState::Update(float dt){
 		flagTimer = true;
 	}*/
 
+	bg.Update(dt);
 	menu.Update(dt);
 	if(menu.IsSelected()){
 		menu.SetSelected(false);
