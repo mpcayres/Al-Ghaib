@@ -52,7 +52,7 @@ void Camera::Update(float dt){
 			}
 		}
 	} else if(isZoomIn){
-		std::cout << "ZOOM" << std::endl;
+		//std::cout << "ZOOM" << std::endl;
 		time.Update(dt);
 		if(time.Get() < tempo){
 			MissionManager::missionManager->factorZoom = 1 + time.Get()*MAX_ZOOM/tempo;

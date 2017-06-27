@@ -238,7 +238,7 @@ void Player::Update(float dt){
 		}
 
 		if(!bloqHUD){
-			if(InputInstance.KeyPress(I_KEY)){
+			if(InputInstance.KeyPress(I_KEY) && !bloqInv){
 				showingInventory = true;
 				inventoryIndex = inHandIndex;
 			}
@@ -249,7 +249,7 @@ void Player::Update(float dt){
 
 	} else if(showingInventory){
 		/*MOVIMENTACAO DO INVENTARIO*/
-		if(InputInstance.KeyPress(I_KEY) && !bloqInv)
+		if(InputInstance.KeyPress(I_KEY))
 			showingInventory = false;
 		if(InputInstance.KeyPress(UP_ARROW_KEY) && inventoryIndex > 3){
 			// 3 porcausa da primeira linha de itens 0 1 2 3
