@@ -23,7 +23,7 @@ public:
 	bool Is(std::string type);
 	bool GetCreateObject();
 	bool GetState();
-	void ChangeState();
+	void ChangeImage();
 	void MovePlayerColliding(float w, float h);
 
 protected:

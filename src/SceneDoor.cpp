@@ -38,21 +38,18 @@ bool SceneDoor::NotifyCollision(GameObject& other){
 
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY) && lock == true){
-				MissionManager::player->SetDoor(true);
+			MissionManager::player->SetDoor(true);
 		}
-		if((InputManager::GetInstance().KeyPress(Z_KEY) && lock == false)){
-			if(estado){
-				changeState = true;
-			} else{
-				estado = true;
-				sp.Open(change2);
-				int w = box.w;
-				box.x += box.w - sp.GetWidth();
-				box.w = sp.GetWidth();
-				box.h = sp.GetHeight();
+		if(InputManager::GetInstance().IsKeyDown(LCTRL_KEY) && estado == true &&
+				InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
 
-				MovePlayerColliding(w, box.h);
-			}
+			changeState = true;
+
+		} else if(!InputManager::GetInstance().IsKeyDown(LCTRL_KEY) &&
+					InputManager::GetInstance().KeyPress(Z_KEY) && lock == false){
+
+			ChangeImage();
+
 		}
 	}
 

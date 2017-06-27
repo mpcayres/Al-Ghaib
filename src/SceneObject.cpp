@@ -58,7 +58,7 @@ bool SceneObject::NotifyCollision(GameObject& other){
 				MissionManager::player->AddInventory(objCreate);
 				objCreate = "";
 			}
-			ChangeState();
+			ChangeImage();
 		}
 	}
 
@@ -77,11 +77,18 @@ bool SceneObject::GetState(){
 	return estado;
 }
 
-void SceneObject::ChangeState(){
+void SceneObject::ChangeImage(){
 	if(estado){
 		estado = false;
 		sp.Open(change1);
 		switch(caseChange){
+			case SAMEX:
+				if(box.w != sp.GetWidth()){
+					box.x += box.w - sp.GetWidth();
+					box.w = sp.GetWidth();
+				}
+				box.h = sp.GetHeight();
+				break;
 			case SAMEY_UP:
 				box.w = sp.GetWidth();
 				if(box.h != sp.GetHeight()){
