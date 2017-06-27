@@ -91,7 +91,7 @@ void State::RandomState(){
 					int dice_roll = distribution(generator);
 					//std::cout << "DICE " << dice_roll << std::endl;
 					if(dice_roll <= 2){
-						((SceneObject*) objectArray[i].get())->ChangeState();
+						((SceneObject*) objectArray[i].get())->ChangeImage();
 					}
 				}
 			}

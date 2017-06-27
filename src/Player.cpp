@@ -43,7 +43,6 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	timeSound = Timer();
 	timePicked = Timer();
 
-	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
 	running = false;
@@ -69,6 +68,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	blocked = false;
 	lastPicked = "";
 	bloqHUD = false;
+	bloqInv = false;
 	climbing = false;
 }
 
@@ -249,7 +249,7 @@ void Player::Update(float dt){
 
 	} else if(showingInventory){
 		/*MOVIMENTACAO DO INVENTARIO*/
-		if(InputInstance.KeyPress(I_KEY))
+		if(InputInstance.KeyPress(I_KEY) && !bloqInv)
 			showingInventory = false;
 		if(InputInstance.KeyPress(UP_ARROW_KEY) && inventoryIndex > 3){
 			// 3 porcausa da primeira linha de itens 0 1 2 3
@@ -338,7 +338,7 @@ void Player::Render(){
 }
 
 bool Player::IsDead(){
-	return (hp <= 0);
+	return false;
 }
 
 bool Player::Is(std::string type){
@@ -449,6 +449,22 @@ void Player::SetDoor(bool value){
 
 bool Player::GetDoor(){
 	return door;
+}
+
+void Player::SetBloqHUD(bool value){
+	bloqHUD = value;
+}
+
+bool Player::GetBloqHUD(){
+	return bloqHUD;
+}
+
+void Player::SetBloqInv(bool value){
+	bloqInv = value;
+}
+
+bool Player::GetBloqInv(){
+	return bloqInv;
 }
 
 void Player::AddRuido(float add){

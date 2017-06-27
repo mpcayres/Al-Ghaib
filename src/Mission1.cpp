@@ -86,6 +86,7 @@ void  Mission1::Update(float dt){
 
 	if(endMission && time.Get() > (12*0.25 + 0.5)){
 		MissionManager::player->SetBlocked(false);
+		MissionManager::player->SetBloqInv(false);
 		Game::GetInstance().GetCurrentState().SetPopRequested();
 		Game::GetInstance().GetMissionManager().ChangeMission(2);
 	}
@@ -330,8 +331,9 @@ void  Mission1::Update(float dt){
 	if(time.Get() >= 4 && begin && fadeIn){
 		UpdateVariable(dt, 80);
 	}
-	if(MissionManager::player->lastPicked == "InventoryBear"){
+	if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
 		//PiscaPisca(dt, 20, 0.4);
+		MissionManager::player->SetBloqInv(true);
 	}
 
 }

@@ -43,6 +43,10 @@ public:
 	Vec2 GetSpeed();
 	void SetDoor(bool value);
 	bool GetDoor();
+	void SetBloqHUD(bool value);
+	bool GetBloqHUD();
+	void SetBloqInv(bool value);
+	bool GetBloqInv();
 
 	void AddRuido(float add);
 	float GetRuido();
@@ -64,7 +68,6 @@ public:
 	bool climbing;
 	std::string lastPicked;
 	std::vector<Rect> wallLimits;
-	bool bloqHUD;
 
 private:
 	Timer timeRuido, timeCooldown, timeSound, timePicked;
@@ -73,8 +76,7 @@ private:
 	Sprite spNoise, spPicked;
 
 	Vec2 speed;
-	int hp;
-	bool running;
+	bool running, direcaoShift;
 
 	int inHandIndex, inventoryIndex;
 	bool showingInventory, showPicked;
@@ -83,9 +85,9 @@ private:
 	InvBox direcao;
 	InputManager InputInstance;
 
-	bool direcaoShift;
-	bool door, hidden, animShowing, aboveObject, blocked;
 	float ruido;
+	bool door, hidden, animShowing, aboveObject;
+	bool blocked, bloqHUD, bloqInv;
 };
 
 #endif /* INCLUDE_Player_HPP_ */
