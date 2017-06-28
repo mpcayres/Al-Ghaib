@@ -72,8 +72,9 @@ void MissionManager::SetState(std::string dest){
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xDest, yDest));
 		initHall = false;
 		stage = "HallState";
-		//std::cout << "HS.2" << std::endl;
+		std::cout << "HS.2" << std::endl;
 		countHallState++;
+		std::cout << countHallState << std::endl;
 		changeState++;
 	} else if(dest == "LivingRoomState"){
 		//std::cout << "LRS.1" << std::endl;

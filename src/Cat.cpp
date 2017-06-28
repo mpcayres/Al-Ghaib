@@ -6,7 +6,7 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 3
+#define MODULO_SPEED 1
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
@@ -140,126 +140,125 @@ void Cat::SetDestinationPath(Vec2 path){
 
 void Cat::DefinedPath(){
 	Vec2 aux;
-	aux.x = box.x; aux.y = box.y;
-	//std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
-	if(aux.Distance(destinationPath.back())>2){
-	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
-		if(aux.Distance(destinationPath.back())<= 5 ){
-				//printf("POPANDO");
+			aux.x = box.x; aux.y = box.y;
+			std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
+			if(aux.Distance(destinationPath.back())>2){
+			//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
+				if(aux.Distance(destinationPath.back())<= 5 ){
+						//printf("POPANDO");
 
-			arrived = true;
-			box.x = destinationPath.back().x;
-			box.y = destinationPath.back().y;
-			destinationPath.pop_back();
+					arrived = true;
+					box.x = destinationPath.back().x;
+					box.y = destinationPath.back().y;
+					destinationPath.pop_back();
 
 
-		}
-		else
-			arrived = false;
-		//if(destinationPath.empty())
-			//show = false;
-		if(MissionManager::player != nullptr){
-			/*destination.x = MissionManager::player->box.x;
-			destination.y = MissionManager::player->box.y;*/
-			//seen = true;
+				}
+				else
+					arrived = false;
+				//if(destinationPath.empty())
+					//show = false;
+				if(MissionManager::player != nullptr){
+					/*destination.x = MissionManager::player->box.x;
+					destination.y = MissionManager::player->box.y;*/
+					//seen = true;
 
-			//aux.x = box.x; aux.y = box.y;
-			speed = (destinationPath.back().Sub(aux)).Normalize();
-			speed.x = speed.x*SPEED_CONTROL;
-			speed.y = speed.y*SPEED_CONTROL;
-		}
+					//aux.x = box.x; aux.y = box.y;
+					speed = (destinationPath.back().Sub(aux)).Normalize();
+					speed.x = speed.x*SPEED_CONTROL;
+					speed.y = speed.y*SPEED_CONTROL;
+				}
 
-		if(!arrived){
-			//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
-			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
-				if(destinationPath.back().x < box.x){
-					//std::cout << " OESTE " << std::endl;
-					//////direcao = OESTE;
-				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
-					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
-					//////direcao = LESTE;
+				if(!arrived){
+					//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
+					if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
+						if(destinationPath.back().x < box.x){
+							//std::cout << " OESTE " << std::endl;
+							//////direcao = OESTE;
+						}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
+							//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
+							//////direcao = LESTE;
+						}
+					}
+					else{
+							if(destinationPath.back().y < box.y){
+							//std::cout << " NORTE " << std::endl;
+							//////direcao = NORTE;
+						}
+						else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
+							//std::cout << " SUL " << std::endl;
+							//////direcao = SUL;
+						}
+					}
+				//}
+
+				if (speed.x < 0 && speed.y < 0){
+					if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
+						speed.y + box.y -  VALUE <= destinationPath.back().y){
+						previousPos.x = box.x;
+						previousPos.y = box.y;
+						box.x = destinationPath.back().x - box.w/2;
+						box.y = destinationPath.back().y - box.h/2;
+
+						//seen = false;
+
+					} else{
+						previousPos.x = box.x;
+						previousPos.y = box.y;
+						box.x += speed.x;
+						box.y += speed.y;
+					}
+				} else if (speed.x > 0 && speed.y < 0){
+					if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
+							speed.y + box.y -  VALUE <= destinationPath.back().y){
+						previousPos.x = box.x;
+						previousPos.y = box.y;
+						box.x = destinationPath.back().x;
+						box.y = destinationPath.back().y;
+
+						//seen = false;
+
+						}else{
+							previousPos.x = box.x;
+							previousPos.y = box.y;
+							box.x += speed.x;
+							box.y += speed.y;
+						}
+				} else if (speed.x < 0 && speed.y > 0){
+					if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
+							speed.y + box.y +  VALUE >= destinationPath.back().y){
+						previousPos.x = box.x;
+						previousPos.y = box.y;
+						box.x = destinationPath.back().x;
+						box.y = destinationPath.back().y;
+
+						//seen = false;
+
+						}else{
+							previousPos.x = box.x;
+							previousPos.y = box.y;
+							box.x += speed.x;
+							box.y += speed.y;
+						}
+				} else if (speed.x > 0 && speed.y > 0){
+					if(box.x +speed.x + VALUE >= destinationPath.back().x &&
+							speed.y + box.y + VALUE >= destinationPath.back().y){
+						previousPos.x = box.x;
+						previousPos.y = box.y;
+						box.x = destinationPath.back().x;
+						box.y = destinationPath.back().y;
+
+						//seen = false;
+					} else{
+						previousPos.x = box.x;
+						previousPos.y = box.y;
+						box.x += speed.x;
+						box.y += speed.y;
+					}
+				}
 				}
 			}
-			else{
-					if(destinationPath.back().y < box.y){
-					//std::cout << " NORTE " << std::endl;
-					//////direcao = NORTE;
-				}
-				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
-					//std::cout << " SUL " << std::endl;
-					//////direcao = SUL;
-				}
-			}
-		//}
-
-		if (speed.x < 0 && speed.y < 0){
-			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
-				speed.y + box.y -  VALUE <= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destinationPath.back().x - box.w/2;
-				box.y = destinationPath.back().y - box.h/2;
-
-				//seen = false;
-
-			} else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x += speed.x;
-				box.y += speed.y;
-			}
-		} else if (speed.x > 0 && speed.y < 0){
-			if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
-					speed.y + box.y -  VALUE <= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destinationPath.back().x;
-				box.y = destinationPath.back().y;
-
-				//seen = false;
-
-				}else{
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x += speed.x;
-					box.y += speed.y;
-				}
-		} else if (speed.x < 0 && speed.y > 0){
-			if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
-					speed.y + box.y +  VALUE >= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destinationPath.back().x;
-				box.y = destinationPath.back().y;
-
-				//seen = false;
-
-				}else{
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x += speed.x;
-					box.y += speed.y;
-				}
-		} else if (speed.x > 0 && speed.y > 0){
-			if(box.x +speed.x + VALUE >= destinationPath.back().x &&
-					speed.y + box.y + VALUE >= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destinationPath.back().x;
-				box.y = destinationPath.back().y;
-
-				//seen = false;
-			} else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x += speed.x;
-				box.y += speed.y;
-			}
-		}
-		}
 	}
-
-}
 /*void Cat::Pursuit(){
 	Vec2 aux;
 
