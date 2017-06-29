@@ -12,6 +12,8 @@ Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false) {
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	meowcount = 0;
 	momcount = 0;
+	countBear = 0;
+	countCat = 0;
 
 	SDL_Color redwine = SDL_Color();
 		redwine.r = 102;
@@ -102,9 +104,9 @@ void Mission2::Update(float dt){
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
 				Bear::show = true;
-				count ++;
+				countBear ++;
 				//std::cout << "test 0 " << std::endl;
-				if(count == 1){
+				if(countBear == 1){
 
 					SceneDoor::count = ABRE;
 					SceneDoor::ValorPassar = 24;
@@ -170,17 +172,34 @@ void Mission2::Update(float dt){
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 		//HallState++;
-		//std::cout << "HallState" << std::endl;
+		std::cout << MissionManager::missionManager->countHallState << std::endl;
+		std::cout << "HallState" << std::endl;
 		if(state != MissionManager::missionManager->changeState){
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
 		}
+
 		Cat::show = true;
-		//if(Enemy::turn == 1)
-		count ++;
+		countCat++;
+		//if(count == 1){
 		int dist = Cat::cat->box.DistanceRect(MissionManager::player->box);
-		if(count == 1 && dist > 250){
+		std::cout << "dist" << dist << std::endl;
+		/*if(dist < 250)
+			Cat::cat->SetDestinationPath(Vec2(980, 200));
+		if(dist >= 250){
+			std::cout << "maior que 250" << std::endl;
+			//Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(940, 200)); //3º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200));
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //2º DESTINO
+		}*/
+		//}
+		//if(Enemy::turn == 1)
+
+		std::cout << "coutCat" << countCat << std::endl;
+		if(countCat == 1 && dist > 250){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+			std::cout << "ka" << std::endl;
 			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(900, 200)); //3º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
@@ -190,18 +209,15 @@ void Mission2::Update(float dt){
 			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1º DESTINO
 			//paradoGato = true;
 		}
-		if((time.Get() == 2 || time.Get() > 16) && dist > 250){
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
+		/*if(dist > 250){
+			std::cout << "dist > 250" << std::endl;
+			Cat::cat->SetDestinationPath(Vec2(1100, 200)); //2º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(940, 200)); //1º DESTINO
 		}
-		if((time.Get() == 4 || time.Get() > 5) && dist > 250){
-			Cat::cat->SetDestinationPath(Vec2(980, 200)); //2º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //1º DESTINO*/
-		}
-		if(time.Get() > 10 && dist > 250){
+		if(dist < 250){
 			paradoGato = true;
-		}
-		if(paradoGato || dist < 250){
+		}*/
+		if( dist < 250){
 				Cat::cat->SetDestinationPath(Vec2(980, 200));
 		}
 		if(dist < 100){

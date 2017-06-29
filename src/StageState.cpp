@@ -119,7 +119,7 @@ void StageState::Update(float dt){
 		popRequested = true;
 		Camera::Unfollow();
 		RemovePlayer();
-		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
+		std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
 		//Nao sei pq aqui nao esta funcionando
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState",
@@ -152,7 +152,7 @@ void StageState::SetInitialObjectArray(){
 	SceneObject* Escrivaninha = new SceneObject(700, 420, "img/scene-escrivaninha-fechado.png", "img/scene-escrivaninha-aberto.png");
 	objectArray.emplace_back(Escrivaninha);
 
-	StealthObject* Mesa = new StealthObject(870, 400, "img/scene-mesa.png");
+	StealthObject* Mesa = new StealthObject(900, 400, "img/scene-mesa.png");
 	objectArray.emplace_back(Mesa);
 
 	SceneObject* Window = new SceneObject(500, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.7, 0.7);
