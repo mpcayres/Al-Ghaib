@@ -33,8 +33,25 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	//cooldown = Timer();
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 1", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"Cobri vossos utensílios e amarrai vossos cantis...\"", redwine, 0, 0);
-	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "  ", redwine, 0, 0);
+	creepy.SetPos(0, Game::GetInstance().GetHeight()-220, true, false);
+	creepy1 = Text("font/uwch.ttf", 28, Text::TextStyle::BLENDED, "\"Cobri vossos utensílios e amarrai vossos cantis", redwine, 0, 0);
+	creepy1.SetPos(0, Game::GetInstance().GetHeight()-230, true, false);
+
+	creepy2 = Text("font/uwch.ttf", 28, Text::TextStyle::BLENDED, "fechai as portas e mantende as crianças perto à noite.", redwine, 0, 0);
+	creepy2.SetPos(0, Game::GetInstance().GetHeight()-200, true, false);
+
+	creepy3 = Text("font/uwch.ttf", 28, Text::TextStyle::BLENDED, "Quando irdes dormir, apagai os candeeiros,", redwine, 0, 0);
+	creepy3.SetPos(0, Game::GetInstance().GetHeight()-170, true, false);
+
+	creepy4 = Text("font/uwch.ttf", 28, Text::TextStyle::BLENDED, "pois o maligno pode se apoderar da chama ", redwine, 0, 0);
+	creepy4.SetPos(0, Game::GetInstance().GetHeight()-140, true, false);
+
+	creepy5 = Text("font/uwch.ttf", 28, Text::TextStyle::BLENDED, " e atear fogo nos moradores da casa.\"", redwine, 0, 0);
+	creepy5.SetPos(0, Game::GetInstance().GetHeight()-110, true, false);
+
+	creepy6 = Text("font/uwch.ttf", 28, Text::TextStyle::BLENDED, "                 Hadith - Sahih Bukhari 4.533", redwine, 0, 0);
+	creepy6.SetPos(0, Game::GetInstance().GetHeight()-70, true, false);
 
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", white, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -120,6 +137,12 @@ void  Mission1::Update(float dt){
 			if(flagTimer == true && time.Get() > 5){
 				tx.SetText(" ");
 				creepy.SetText(" ");
+				creepy1.SetText(" ");
+				creepy2.SetText(" ");
+				creepy3.SetText(" ");
+				creepy4.SetText(" ");
+				creepy5.SetText(" ");
+				creepy6.SetText(" ");
 				showBox = true;
 				flagTimer = false;
 			}
@@ -344,6 +367,12 @@ void  Mission1::Render(){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
+		creepy1.Render(0,0);
+		creepy2.Render(0,0);
+		creepy3.Render(0,0);
+		creepy4.Render(0,0);
+		creepy5.Render(0,0);
+		creepy6.Render(0,0);
 	} else if((time.Get() >= 4 && begin && fadeIn) || !bloqBlack){
 		spFade.Render(0, 0, 0);
 	}

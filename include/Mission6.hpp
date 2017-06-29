@@ -1,5 +1,5 @@
-#ifndef SRC_MISSION2_HPP_
-#define SRC_MISSION2_HPP_
+#ifndef SRC_MISSION6_HPP_
+#define SRC_MISSION6_HPP_
 
 #include "Mission.hpp"
 #include "InputManager.hpp"
@@ -13,10 +13,10 @@
 #include "Sound.hpp"
 #include "Cat.hpp"
 
-class Mission2 : public Mission {
+class Mission6 : public Mission {
 public:
-	Mission2();
-	~Mission2();
+	Mission6();
+	~Mission6();
 
 	void Pause();
 	void Resume();
@@ -28,11 +28,10 @@ private:
 	void SetObjectHall();
 	void SetObjectRoom();
 
-	int ultimoCat;
 	static Music music;
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0;
 };
 
-#endif /* SRC_MISSION2_HPP_ */
+#endif /* SRC_MISSION6_HPP_ */

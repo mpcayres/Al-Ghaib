@@ -1,12 +1,12 @@
-#include "Mission2.hpp"
+#include "Mission3.hpp"
 #include "PickUpObject.hpp"
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
 
- Music Mission2::music;
+ Music Mission3::music;
 
-Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false) {
+Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
 	initialX = 450; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -25,9 +25,9 @@ Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false) {
 		white.g = 255;
 		white.b = 255;
 
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", redwine, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 3", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"...\"", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
 
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , " ", white, 0, 0);
@@ -46,15 +46,15 @@ Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false) {
 	SetObjectHall();
 }
 
-Mission2::~Mission2() {
+Mission3::~Mission3() {
 
 }
 
-void  Mission2::Pause(){ }
+void  Mission3::Pause(){ }
 
-void  Mission2::Resume(){ }
+void  Mission3::Resume(){ }
 
-void Mission2::Update(float dt){
+void Mission3::Update(float dt){
 
 	InputManager instance = InputManager::GetInstance();
 	bool trancada = false;
@@ -91,97 +91,18 @@ void Mission2::Update(float dt){
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
-			MissionManager::player->SetBlocked(true);
-			if(flagTimer == true && time.Get() > 3){
-				tx.SetText(" ");
-				showBox = false;
-				creepy.SetText(" ");
-				flagTimer = false;
-			}
-			if(time.Get() > 7 && time.Get() < 8 && trancada == false && cooldown.Get() > 3){
-				Sound portaDestrancando = Sound ("audio/weird-door.wav");
-				portaDestrancando.Play(0);
-			}
-			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
-				Bear::show = true;
-				countBear ++;
-				//std::cout << "test 0 " << std::endl;
-				if(countBear == 1){
 
-					SceneDoor::count = ABRE;
-					SceneDoor::ValorPassar = 24;
-					paradoUrso = true;
-					Bear::bear->SetDestinationPath(Vec2(810, 450)); //2º DESTINO
-					Bear::bear->SetDestinationPath(Vec2(810, 220)); //1º DESTINO
-					ultimoTempo = 12;
-				}
-				if(paradoUrso){
-					Bear::bear->SetDestinationPath(Vec2(810, 450));
-				}
-				//std::cout << "test 1 " << std::endl;
-				if(time.Get() > 18 ){
-					Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					sussurro.Play(0);
-					showBox = true;
-					falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 14;
-					showBox = true;
-				}
-				//std::cout << "test 2 " << std::endl;
-				if(time.Get() > 22 ){
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
-					falas.SetText("U: ACHA QUE CONSEGUE ME REPARAR?");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 18;
-					showBox = true;
-				}
-				if(time.Get() > 24 ){
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
-					falas.SetText("U: DEVE TER ALGO NO QUARTO DA VELHA PRA AJUDAR");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 22;
-					showBox = true;
-					MissionManager::player->SetBlocked(false);
-				}
-				if(time.Get() > 29 ){
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
-					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 29;
-					showBox = true;
-				}
-				if(time.Get() > 33){
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
-					falas.SetText(" ");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 33;
-					showBox = false;
-					//parado = false;
-					Bear::seen = true;
-
-				}
-			}
 
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 		//HallState++;
-
+		std::cout << MissionManager::missionManager->countHallState << std::endl;
+		std::cout << "HallState" << std::endl;
 		if(state != MissionManager::missionManager->changeState){
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
-		}
-		if(time.Get() < 2){
-			falas.SetText(" ");
-			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = 2;
-			showBox = false;
 		}
 
 		Cat::show = true;
@@ -201,37 +122,33 @@ void Mission2::Update(float dt){
 		//}
 		//if(Enemy::turn == 1)
 
-		std::cout << "time" << time.Get() << std::endl;
-		if(countCat == 1){
+		std::cout << "coutCat" << countCat << std::endl;
+		if(countCat == 1 && dist > 250){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-			Cat::cat->SetDestinationPath(Vec2(500, 300));
-			Cat::cat->SetDestinationPath(Vec2(500, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 450));
-			Cat::cat->SetDestinationPath(Vec2(900, 500));
-			Cat::cat->SetDestinationPath(Vec2(900, 300)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(800, 300)); //2º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(700, 300));
-			Cat::cat->SetDestinationPath(Vec2(800, 300)); //ULTIMO DESTINO
-			Cat::cat->SetDestinationPath(Vec2(500, 300));
-			Cat::cat->SetDestinationPath(Vec2(500, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 450));
-			Cat::cat->SetDestinationPath(Vec2(900, 500));
-			Cat::cat->SetDestinationPath(Vec2(900, 300)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(800, 300)); //2º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(700, 300)); //1º DESTINO
+			std::cout << "ka" << std::endl;
+			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //3º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1º DESTINO
 			//paradoGato = true;
 		}
-		if(time.Get()>10){
-			Cat::cat->SetDestinationPath(Vec2(800, 300));
+		/*if(dist > 250){
+			std::cout << "dist > 250" << std::endl;
+			Cat::cat->SetDestinationPath(Vec2(1100, 200)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(940, 200)); //1º DESTINO
 		}
-
-
-
-		if(((int)time.Get())%5){
+		if(dist < 250){
+			paradoGato = true;
+		}*/
+		if( dist < 250){
+				Cat::cat->SetDestinationPath(Vec2(980, 200));
+		}
+		if(dist < 100){
 			if(meowcount%2 && ((int)time.Get())%5){
-				//MissionManager::player->AddRuido(6);
+				MissionManager::player->AddRuido(6);
 				Sound meow1 = Sound ("audio/cat-meow-1.wav");
 				meow1.Play(0);
 			}
@@ -240,7 +157,10 @@ void Mission2::Update(float dt){
 			meowcount++;
 		}
 
-
+		if(time.Get() > 7 && time.Get() < 7.5 && trancada == false && cooldown.Get() > 3){
+			Sound portaDestrancando = Sound ("audio/meow-sample.wav");
+			portaDestrancando.Play(0);
+		}
 		if (MissionManager::player->GetRuido()>70 ){
 			Enemy::show = true;
 			SceneDoor::count = ABRE;
@@ -280,7 +200,7 @@ void Mission2::Update(float dt){
 
 }
 
-void Mission2::Render(){
+void Mission3::Render(){
 	if(time.Get() < 4 && begin){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
@@ -303,9 +223,8 @@ void Mission2::Render(){
 	}
 }
 
-void Mission2::SetObjectStage(){
-	Bear* bear = new Bear(810, 210);
-	objectStage.emplace_back(bear);
+void Mission3::SetObjectStage(){
+
 	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
@@ -315,9 +234,8 @@ void Mission2::SetObjectStage(){
 	objectStage.emplace_back(Cadeira);
 }
 
-void Mission2::SetObjectHall(){
-	//SceneWindow* Window = new SceneWindow(350, 70);
-	//objectHall.emplace_back(Window);
+void Mission3::SetObjectHall(){
+
 	Enemy* E = new Enemy(500, 110);
 	objectHall.emplace_back(E);
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
@@ -326,6 +244,6 @@ void Mission2::SetObjectHall(){
 	objectHall.emplace_back(gatinho);
 }
 
-void Mission2::SetObjectRoom(){
+void Mission3::SetObjectRoom(){
 
 }
