@@ -140,7 +140,7 @@ void Mission2::Update(float dt){
 				if(time.Get() > 24 ){
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
-					falas.SetText("U: DEVE TER ALGO NO QUARTO DA VELHA PRA AJUDAR");
+					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 22;
 					showBox = true;
@@ -149,17 +149,9 @@ void Mission2::Update(float dt){
 				if(time.Get() > 29 ){
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
-					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 29;
-					showBox = true;
-				}
-				if(time.Get() > 33){
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 33;
+					ultimoTempo = 29;
 					showBox = false;
 					//parado = false;
 					Bear::seen = true;
@@ -189,30 +181,19 @@ void Mission2::Update(float dt){
 		//if(count == 1){
 		int dist = Cat::cat->box.DistanceRect(MissionManager::player->box);
 		std::cout << "dist" << dist << std::endl;
-		/*if(dist < 250)
-			Cat::cat->SetDestinationPath(Vec2(980, 200));
-		if(dist >= 250){
-			std::cout << "maior que 250" << std::endl;
-			//Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(940, 200)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //2º DESTINO
-		}*/
-		//}
-		//if(Enemy::turn == 1)
 
 		std::cout << "time" << time.Get() << std::endl;
 		if(countCat == 1){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-			Cat::cat->SetDestinationPath(Vec2(500, 300));
+			Cat::cat->SetDestinationPath(Vec2(500, 300)); //ULTIMO DESTINO
 			Cat::cat->SetDestinationPath(Vec2(500, 200));
 			Cat::cat->SetDestinationPath(Vec2(900, 200));
 			Cat::cat->SetDestinationPath(Vec2(900, 450));
 			Cat::cat->SetDestinationPath(Vec2(900, 500));
-			Cat::cat->SetDestinationPath(Vec2(900, 300)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(800, 300)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 300));
+			Cat::cat->SetDestinationPath(Vec2(800, 300));
 			Cat::cat->SetDestinationPath(Vec2(700, 300));
-			Cat::cat->SetDestinationPath(Vec2(800, 300)); //ULTIMO DESTINO
+			Cat::cat->SetDestinationPath(Vec2(800, 300));
 			Cat::cat->SetDestinationPath(Vec2(500, 300));
 			Cat::cat->SetDestinationPath(Vec2(500, 200));
 			Cat::cat->SetDestinationPath(Vec2(900, 200));
@@ -223,7 +204,7 @@ void Mission2::Update(float dt){
 			Cat::cat->SetDestinationPath(Vec2(700, 300)); //1º DESTINO
 			//paradoGato = true;
 		}
-		if(time.Get()>10){
+		if(time.Get()>5){
 			Cat::cat->SetDestinationPath(Vec2(800, 300));
 		}
 
@@ -311,14 +292,20 @@ void Mission2::SetObjectStage(){
 	objectStage.emplace_back(Bau);
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
-	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(650, 300, "img/scene-cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission2::SetObjectHall(){
 	//SceneWindow* Window = new SceneWindow(350, 70);
 	//objectHall.emplace_back(Window);
-	Enemy* E = new Enemy(500, 110);
+	//* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+		//		"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+
+	SceneObject* Armario2 = new SceneObject(1400, 110, "img/scene-armario-corredor-fechado.png",
+			 "img/scene-armario-corredor-fechado.png", 0, 1, 1, "InventoryWool", SceneObject::SAMEY_UP);
+	objectHall.emplace_back(Armario2);
+	Enemy* E = new Enemy(500, 110, "img/sprite-mom-chador.png");
 	objectHall.emplace_back(E);
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);

@@ -16,7 +16,7 @@
 class Enemy : public GameObject{
 public:
 	//enum InvBox{LESTE, OESTE, SUL, NORTE};
-	Enemy(float x, float y);
+	Enemy(float x, float y, std::string file);
 	~Enemy();
 
 	void Update(float dt);

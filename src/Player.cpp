@@ -5,6 +5,9 @@
 #include "InventoryKey.hpp"
 #include "InventoryClown.hpp"
 #include "InventoryBear.hpp"
+#include "InventoryWool.hpp"
+#include "InventoryScissors.hpp"
+#include "InventoryNeedle.hpp"
 #include "Sound.hpp"
 #include <iostream>
 
@@ -483,7 +486,7 @@ void Player::AddInventory(std::string obj){
 	lastPicked = obj;
 	if(inHandIndex < 0) inHandIndex = 0;
 	if(obj == "InventoryKey"){
-		spPicked = Sprite("img/minionbullet1.png");
+		spPicked = Sprite("img/obj_key.png");
 		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryKey());
@@ -497,6 +500,21 @@ void Player::AddInventory(std::string obj){
 		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
 		timePicked.Restart(); showPicked = true;*/
 		inventory.emplace_back(new InventoryBear());
+	}else if(obj == "InventoryWool"){
+		spPicked = Sprite("img/obj_novelo.png");
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryWool());
+	}else if(obj == "InventoryNeedle"){
+		spPicked = Sprite("img/obj_needle.png");
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryNeedle());
+	}else if(obj == "InventoryScissors"){
+		spPicked = Sprite("img/obj_scissors.png");
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryScissors());
 	}
 }
 

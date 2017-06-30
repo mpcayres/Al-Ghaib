@@ -9,7 +9,7 @@
 
 Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	initialState = "StageState";
-	initialX = 600; initialY = 400;
+	initialX = 400; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 
 	//StageState = 0;
@@ -418,16 +418,18 @@ void Mission1::SetObjectStage(){
 	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
 	//objectStage.emplace_back(Vaso);
 
-	MovingObject* Cadeira = new MovingObject(730, 320, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(700, 320, "img/scene-cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission1::SetObjectHall(){
 	//SceneWindow* Window = new SceneWindow(350, 70);
 	//objectHall.emplace_back(Window);
+	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
+	objectHall.emplace_back(Armario2);
 	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/minionbullet1.png");
 	objectHall.emplace_back(Key);
-	Enemy* E = new Enemy(500, 110);
+	Enemy* E = new Enemy(500, 110, "img/sprite-mom.png");
 	objectHall.emplace_back(E);
 	PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	objectHall.emplace_back(Bear);

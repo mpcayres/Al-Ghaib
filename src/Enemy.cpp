@@ -13,7 +13,7 @@
 Enemy* Enemy::enemy;
 bool Enemy::show, Enemy::arrived, Enemy::collidingPlayer, Enemy::dead;
 
-Enemy::Enemy(float x, float y): sp("img/sprite-mom.png", 8, 0.06, 4){
+Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);

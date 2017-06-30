@@ -236,7 +236,7 @@ void Mission3::SetObjectStage(){
 
 void Mission3::SetObjectHall(){
 
-	Enemy* E = new Enemy(500, 110);
+	Enemy* E = new Enemy(500, 110,"img/sprite-mom-chador.png");
 	objectHall.emplace_back(E);
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
