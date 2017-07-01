@@ -2,7 +2,7 @@
 #include "SceneDoor.hpp"
 
 InventoryKey::InventoryKey(){
-	sp = Sprite("img/obj_key.png");
+	sp = Sprite("img/object-key.png");
 }
 
 InventoryKey::~InventoryKey(){ }

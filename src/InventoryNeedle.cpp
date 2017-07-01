@@ -2,7 +2,7 @@
 #include "SceneDoor.hpp"
 
 InventoryNeedle::InventoryNeedle(){
-	sp = Sprite("img/obj_novelo.png");
+	sp = Sprite("img/object-needle.png");
 }
 
 InventoryNeedle::~InventoryNeedle(){ }

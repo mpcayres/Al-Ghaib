@@ -136,13 +136,15 @@ void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
+	SceneObject* Table = new SceneObject(340, 303, "img/scene-mesa.png", "img/scene-mesa.png");
+	objectArray.emplace_back(Table);
+
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
 	objectArray.emplace_back(DoorToKidRoom);
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState");
 	objectArray.emplace_back(DoorToMomRoom);
-
-	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState");
+	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState", false, "img/scene-portal.png", "img/scene-portal.png");
 	objectArray.emplace_back(DoorToLivingRoom);
 
 	/*SceneObject* Window = new SceneObject(700, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
@@ -154,8 +156,7 @@ void HallState::SetInitialObjectArray(){
 	SceneObject* Book = new SceneObject(110, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);
 	objectArray.emplace_back(Book);
 
-	SceneObject* Table = new SceneObject(340, 303, "img/scene-mesa.png", "img/scene-mesa.png");
-	objectArray.emplace_back(Table);
+
 
 	SceneObject* Abajur = new SceneObject(1300, 310, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
