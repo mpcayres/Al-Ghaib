@@ -8,12 +8,14 @@
 
 Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
-	initialX = 450; initialY = 400;
+	initialX = 350; initialY = 300;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	meowcount = 0;
 	momcount = 0;
 	countBear = 0;
 	countCat = 0;
+
+	Player::drogado = true;
 
 	SDL_Color redwine = SDL_Color();
 		redwine.r = 102;

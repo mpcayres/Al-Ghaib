@@ -136,17 +136,14 @@ void Player::Update(float dt){
 
 		//SETA PARA CIMA//
 		if((InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)
-				&& !drogado) ||
-
-			(InputInstance.IsKeyDown(DOWN_ARROW_KEY) && !InputInstance.IsKeyDown(UP_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)
-				&& drogado)
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY))
 				){
 			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == SUL) direcaoShift = true;
 			} else{
 				direcao = NORTE;
+				if(drogado)
+					direcao = SUL;
 			}
 			speed.y = -MODULO_SPEED;
 			if(drogado)
@@ -157,19 +154,14 @@ void Player::Update(float dt){
 			Running(InputInstance);
 
 		//SETA PARA BAIXO //
-		} else if((!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !drogado)
-				||
-				(!InputInstance.IsKeyDown(DOWN_ARROW_KEY) && InputInstance.IsKeyDown(UP_ARROW_KEY) &&
-			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY) && drogado)
-
-
-
-		){
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == NORTE) direcaoShift = true;
 			} else{
 				direcao = SUL;
+				if(drogado)
+					direcao = NORTE;
 			}
 			speed.y = MODULO_SPEED;
 			if(drogado)
@@ -179,20 +171,15 @@ void Player::Update(float dt){
 			Running(InputInstance);
 
 			//SETA PARA DIREITA //
-		} else if((!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !drogado)
-				||
-				(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-							InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && drogado)
-
-
-
-
-		){
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)
+){
 			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == OESTE) direcaoShift = true;
 			} else{
 				direcao = LESTE;
+				if(drogado)
+					direcao = OESTE;
 			}
 			speed.x = MODULO_SPEED;
 			if(drogado)
@@ -202,15 +189,14 @@ void Player::Update(float dt){
 			Running(InputInstance);
 
 			//SETA PARA DIREITA//
-		} else if((!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !drogado)
-				||
-				(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(LEFT_ARROW_KEY) && InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && drogado) ){
+		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == LESTE) direcaoShift = true;
 			} else{
 				direcao = OESTE;
+				if(drogado)
+					direcao = LESTE;
 			}
 			speed.x = -MODULO_SPEED;
 			if(drogado)
@@ -227,6 +213,8 @@ void Player::Update(float dt){
 
 		if(!aboveObject){
 			if(speed.x != 0 || speed.y != 0){
+
+
 				spKinder.Update(dt, direcao, direcaoShift);
 				spKinderRun.Update(dt, direcao, direcaoShift);
 				spKinderPush.Update(dt, direcao, direcaoShift);
