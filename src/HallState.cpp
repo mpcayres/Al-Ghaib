@@ -12,20 +12,20 @@
 
 HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
 	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHall.txt", &tileSet) {
-
+	//std::cout << "TESTE 1" << std::endl;
 	limits = tileMap.FindLimits();
 	limits.y -=50;
 	MissionManager::player->AddWallLimits(Rect(0, 0, 768, 180 ));
 	MissionManager::player->AddWallLimits(Rect(960, 0, 576, 180 ));
 
-
+	//std::cout << "TESTE 2" << std::endl;
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
 	else SetPlayer(50, 400, CAMERA_TYPE2, limits);
 	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
 	for(unsigned i = 0; i < auxLimits.size(); i++){
 		MissionManager::player->AddWallLimits(auxLimits[i]);
 	}
-
+	//std::cout << "TESTE 3" << std::endl;
 	if(inicial){
 		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -40,7 +40,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 
 	RandomState();
 	LoadAssets();
-	//std::cout << "HSC2" << std::endl;
+	std::cout << "HSC2" << std::endl;
 }
 
 HallState::~HallState() {

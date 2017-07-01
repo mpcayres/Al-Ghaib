@@ -8,7 +8,7 @@
 
 Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
-	initialX = 450; initialY = 400;
+	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	meowcount = 0;
 	momcount = 0;
@@ -163,11 +163,15 @@ void Mission2::Update(float dt){
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
+
+		MissionManager::player->SetBlocked(false);
 		//HallState++;
 
 		if(state != MissionManager::missionManager->changeState){
-				state = MissionManager::missionManager->changeState;
-				time.Restart();
+						state = MissionManager::missionManager->changeState;
+						MissionManager::missionManager->player->box.x = 400;
+						MissionManager::missionManager->player->box.y = 400;
+						time.Restart();
 		}
 		if(time.Get() < 2){
 			falas.SetText(" ");
@@ -180,9 +184,9 @@ void Mission2::Update(float dt){
 		countCat++;
 		//if(count == 1){
 		int dist = Cat::cat->box.DistanceRect(MissionManager::player->box);
-		std::cout << "dist" << dist << std::endl;
+		//std::cout << "dist" << dist << std::endl;
 
-		std::cout << "time" << time.Get() << std::endl;
+		//std::cout << "time" << time.Get() << std::endl;
 		if(countCat == 1){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
 			Cat::cat->SetDestinationPath(Vec2(500, 300)); //ULTIMO DESTINO
@@ -220,9 +224,18 @@ void Mission2::Update(float dt){
 			//meow2.Play(0);
 			meowcount++;
 		}
+		if(MissionManager::player->lastPicked == "InventoryNeedle"){
+			contNeedle++;
+		}
+		if(MissionManager::player->lastPicked == "InventoryScissors"){
+			contScissors++;
+		}
+		if(MissionManager::player->lastPicked == "InventoryWool"){
+			contLine++;
+		}
 
 
-		if (MissionManager::player->GetRuido()>70 ){
+		if (MissionManager::player->GetRuido()>80 ){
 			Enemy::show = true;
 			SceneDoor::count = ABRE;
 			//if(Enemy::turn == 1)
@@ -250,6 +263,38 @@ void Mission2::Update(float dt){
 			ultimoTempo = ultimoTempo + 4;
 			showBox = false;
 		}
+	}else if(MissionManager::missionManager->GetStage("StageState") &&
+			MissionManager::missionManager->countStageState > 1){
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
+			time.Restart();
+		}
+		Bear::bear->box.x = 300;
+		Bear::bear->box.y = 380;
+		count++;
+		std::cout << count << std::endl;
+		if(count == 1){
+			MissionManager::missionManager->player->box.x = 800;
+			MissionManager::missionManager->player->box.y = 300;
+		}
+
+		//para cheat
+		//contNeedle = 5;
+		//contScissors = 5;
+		//contLine = 5;
+		if(contNeedle > 0 && contScissors > 0 && contLine>0)
+			Bear::bear->repair = true;
+		Bear::bear->SetDestinationPath(Vec2(300, 400));
+
+	}else if(MissionManager::missionManager->GetStage("HallState") &&
+					MissionManager::missionManager->countHallState > 1){
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
+			time.Restart();
+		}
+
+		Cat::cat->SetDestinationPath(Vec2(800, 200));
+
 	}
 	if(time.Get() >= 4 && begin && fadeIn){
 			UpdateVariable(dt, 80);
