@@ -27,6 +27,7 @@ void TileMap::Load(std::string file){
 		limitsVector.push_back(Rect((x * wiAux), (y*heAux), (c*wiAux), (a*heAux)));
 	}
 
+
 	for (int i = 0; i < mapHeight; i++) {
 	    std::vector<int> row;
 	    for (int j = 0; j < mapWidth; j++) {
@@ -39,7 +40,7 @@ void TileMap::Load(std::string file){
 	while(!feof(fp)){
 		fscanf(fp, " %d,", &num);
 		tileMatrix.push_back(num - 1);
-		if(num == 1) grid[m][n] = 1;
+		if(num == 1 && n < mapWidth && m < mapHeight) grid[m][n] = 1;
 		n++;
 		if(n == mapWidth){
 			n = 0;
