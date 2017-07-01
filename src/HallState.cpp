@@ -144,6 +144,7 @@ void HallState::SetInitialObjectArray(){
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState");
 	objectArray.emplace_back(DoorToMomRoom);
+
 	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState", false, "img/scene-portal.png", "img/scene-portal.png");
 	objectArray.emplace_back(DoorToLivingRoom);
 

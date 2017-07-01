@@ -6,7 +6,7 @@
 
  Music Mission2::music;
 
-Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false) {
+Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
 	initialState = "StageState";
 	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -87,11 +87,12 @@ void Mission2::Update(float dt){
 		MissionManager::player->SetBlocked(false);
 		MissionManager::player->SetBloqInv(false);
 		Game::GetInstance().GetCurrentState().SetPopRequested();
-		Game::GetInstance().GetMissionManager().ChangeMission(2);
+		Game::GetInstance().GetMissionManager().ChangeMission(3);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
+		Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			MissionManager::player->SetBlocked(true);
 			if(flagTimer == true && time.Get() > 3){
 				tx.SetText(" ");
@@ -121,7 +122,7 @@ void Mission2::Update(float dt){
 				}
 				//std::cout << "test 1 " << std::endl;
 				if(time.Get() > 18 ){
-					Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+
 					sussurro.Play(0);
 					showBox = true;
 					falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
@@ -150,6 +151,7 @@ void Mission2::Update(float dt){
 				if(time.Get() > 29 ){
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
+					sussurro.Stop();
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 29;
@@ -216,14 +218,16 @@ void Mission2::Update(float dt){
 
 
 		if(((int)time.Get())%5){
-			if(meowcount%2 && ((int)time.Get())%5){
+			Sound meow1 = Sound ("audio/cat-meow-1.wav");
+			if(meowcount%2 && ((int)time.Get())%100){
 				//MissionManager::player->AddRuido(6);
-				Sound meow1 = Sound ("audio/cat-meow-1.wav");
+
 				meow1.Play(0);
 			}
 			//Sound meow2 = Sound ("audio/cat-meow-2.wav");
 			//meow2.Play(0);
 			meowcount++;
+			meow1.Stop();
 		}
 		if(MissionManager::player->lastPicked == "InventoryNeedle"){
 			contNeedle++;

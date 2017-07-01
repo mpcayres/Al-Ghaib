@@ -6,9 +6,9 @@
 
  Music Mission3::music;
 
-Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false) {
-	initialState = "StageState";
-	initialX = 100; initialY = 450;
+Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
+	initialState = "StageState"; // trocar para começar da sala?
+	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	meowcount = 0;
 	momcount = 0;
@@ -83,33 +83,76 @@ void Mission3::Update(float dt){
 		fadeIn = false;
 	}
 
-	if(endMission){
+	/*if(endMission){
 			MissionManager::player->SetBlocked(false);
 			MissionManager::player->SetBloqInv(false);
 			Game::GetInstance().GetCurrentState().SetPopRequested();
-			Game::GetInstance().GetMissionManager().ChangeMission(2);
-		}
-	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
+			Game::GetInstance().GetMissionManager().ChangeMission(4);
+	}*/
+	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 
-
-		if(flagTimer == true && time.Get() > 25){
+		MissionManager::player->SetBlocked(true);
+		if(flagTimer == true && time.Get() > 3){
 			tx.SetText(" ");
-			creepy.SetText(" ");
 			showBox = false;
+			creepy.SetText(" ");
 			flagTimer = false;
+		}
+
+		if(time.Get() > 5 && trancada == false && cooldown.Get() > 3){
+			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+			sussurro.Play(0);
+			falas.SetText("U: OLHA SÓ ESSA QUE CHAMAS DE MÃE");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = 5;
+			showBox = true;
+		}
+		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3){
+			falas.SetText("U: O QUE É ESSA ROUPA?");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = 10;
+			showBox = true;
+		}
+		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3){
+			falas.SetText("U: AINDA É REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = 15;
+			showBox = true;
+			MissionManager::player->SetBlocked(false);
+		}
+		if(time.Get() > 20 && trancada == false && cooldown.Get() > 3){
+			falas.SetText("U: DEVEMOS INVESTIGAR O QUARTO DA VELHA");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = 20;
+			showBox = true;
+		}
+		if(time.Get() > 25 && trancada == false && cooldown.Get() > 3){
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = 25;
+			showBox = false;
 		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
+		MissionManager::player->SetBlocked(false);
 		//HallState++;
 		std::cout << MissionManager::missionManager->countHallState << std::endl;
 		std::cout << "HallState" << std::endl;
 		if(state != MissionManager::missionManager->changeState){
-				state = MissionManager::missionManager->changeState;
-				time.Restart();
+			state = MissionManager::missionManager->changeState;
+			MissionManager::missionManager->player->box.x = 510;
+			MissionManager::missionManager->player->box.y = 200;
+			time.Restart();
+		}
+		if(time.Get() < 3 && trancada == false && cooldown.Get() > 3){
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = 3;
+			showBox = false;
 		}
 
 
@@ -130,25 +173,42 @@ void Mission3::Update(float dt){
 		//}
 		//if(Enemy::turn == 1)
 
-		std::cout << "coutCat" << countCat << std::endl;
-		if(countCat == 1 && dist > 250){
+		std::cout << "CAT X" << Cat::cat->box.x << "CAT Y" << Cat::cat->box.y << std::endl;
+		if(countCat == 1){
+					//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+			Cat::cat->SetDestinationPath(Vec2(1000, 200));
+			Cat::cat->SetDestinationPath(Vec2(900, 200));
+			Cat::cat->SetDestinationPath(Vec2(1000, 200));
+			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1º DESTINO
+					//paradoGato = true;
+		}
+		if(time.Get()>5){
+			Cat::cat->SetDestinationPath(Vec2(890, 200));
+		}
+		if( dist < 250){
+			Cat::cat->SetDestinationPath(Vec2(980, 200));
+		}
+		/*if(countCat == 1 && dist > 250){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
 			std::cout << "ka" << std::endl;
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200));
+			Cat::cat->SetDestinationPath(Vec2(900, 200));
+			Cat::cat->SetDestinationPath(Vec2(1000, 200));
 			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1º DESTINO
 			//paradoGato = true;
 		}
-		/*if(dist > 250){
+		if(dist > 250){
 			std::cout << "dist > 250" << std::endl;
 			Cat::cat->SetDestinationPath(Vec2(1100, 200)); //2º DESTINO
 			Cat::cat->SetDestinationPath(Vec2(940, 200)); //1º DESTINO
-		}
-		if(dist < 250){
+		}*/
+		/*if(dist < 250){
 			paradoGato = true;
 		}*/
 		if( dist < 250){
@@ -174,29 +234,29 @@ void Mission3::Update(float dt){
 			SceneDoor::count = ABRE;
 			//if(Enemy::turn == 1)
 			momcount ++;
-			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
-			if(momcount == 1){
-			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-				//Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+			std::cout << "momcount" << momcount << std::endl;
+			if(Enemy::show){
+				if(momcount == 1){
+
+					SceneDoor::ValorPassar = 15;
+					falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = (int)time.Get();
+					showBox = true;
+				}
 			}
-		}
-		if(Enemy::show && time.Get() > ultimoTempo + 2){
-			if(momcount == 1){
-				falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
+			if(Enemy::show && time.Get() > ultimoTempo + 2){
+				SceneDoor::ValorPassar = 0;
+			}
+			if(Enemy::show && time.Get() > ultimoTempo + 4){
+
+				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = ultimoTempo + 2;
-				showBox = true;
+				ultimoTempo = ultimoTempo + 4;
+				showBox = false;
 			}
 		}
-		if(Enemy::show && time.Get() > ultimoTempo + 4){
-			falas.SetText(" ");
-			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = ultimoTempo + 4;
-			showBox = false;
-		}
+
 	}
 	if(time.Get() >= 4 && begin && fadeIn){
 			UpdateVariable(dt, 80);
@@ -251,7 +311,7 @@ void Mission3::SetObjectHall(){
 	Cat* gatinho = new Cat(1000, 200);
 	objectHall.emplace_back(gatinho);
 
-	SceneObject* Apple = new SceneObject(350, 330, "img/object-maca.png", "img/object-maca.png");
+	SceneObject* Apple = new SceneObject(350, 330, "img/object-maca.png", "img/object-maca.png", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);
 }
 

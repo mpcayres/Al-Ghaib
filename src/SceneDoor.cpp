@@ -3,7 +3,7 @@
 #include "Mission.hpp"
 #include "Player.hpp"
 
-int SceneDoor::ValorPassar =15;
+int SceneDoor::ValorPassar = 0;
 int SceneDoor::count = 200;
 
 SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::string img, std::string img2) :
@@ -21,7 +21,7 @@ bool SceneDoor::NotifyCollision(GameObject& other){
 		return false;
 	}
 
-	if(other.Is("Bear") || other.Is("Enemy")){
+	if((other.Is("Bear") || other.Is("Enemy")) && ValorPassar!=0 ){
 		count ++;
 		//std::cout << "teste door" << count << std::endl;
 		if(count == 1)

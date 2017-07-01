@@ -185,6 +185,29 @@ void  Mission1::Update(float dt){
 				showBox = false;
 			}
 
+			if( time.Get() > 80 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText("PENA QUE VOCÊ É BAIXINHO"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 80;
+				showBox = true;
+			}
+			if( time.Get() > 84 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				ultimoTempo = 84;
+				showBox = false;
+			}
+			if( time.Get() > 90 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText("TALVEZ ESSA CADEIRA POSSA AJUDAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 90;
+				showBox = true;
+			}
+			if( time.Get() > 94 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+				ultimoTempo = 94;
+				showBox = false;
+			}
+
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 		} else if(MissionManager::missionManager->GetStage("HallState") &&
@@ -357,7 +380,7 @@ void  Mission1::Update(float dt){
 		UpdateVariable(dt, 80);
 	}
 	if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
-		//PiscaPisca(dt, 20, 0.4);
+		PiscaPisca(dt, 20, 0.4);
 		MissionManager::player->SetBloqInv(true);
 	}
 

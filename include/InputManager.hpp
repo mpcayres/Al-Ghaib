@@ -39,6 +39,14 @@
 #define I_KEY SDLK_i
 #define G_KEY SDLK_g
 
+#define KEY_1 SDLK_1
+#define KEY_2 SDLK_2
+#define KEY_3 SDLK_3
+#define KEY_4 SDLK_4
+#define KEY_5 SDLK_5
+#define KEY_6 SDLK_6
+
+
 class InputManager{
 public:
 	InputManager();

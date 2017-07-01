@@ -28,6 +28,7 @@ protected:
 
 	bool played, endMission;
 	Text creepy1, creepy2, creepy3, creepy4, creepy5, creepy6;
+	bool momArrive;
 };
 
 
