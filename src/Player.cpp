@@ -15,6 +15,10 @@
 #define AUMENTO_VELOCIDADE	2
 #define DESACELERA			1
 
+bool Player::drogado = false;
+#define MODULO_SPEED_DROGADO		2
+
+
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
 		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
@@ -129,48 +133,88 @@ void Player::Update(float dt){
 
 	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && !climbing){
 		direcaoShift = false;
-		if(InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+
+		//SETA PARA CIMA//
+		if((InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)
+				&& !drogado) ||
+
+			(InputInstance.IsKeyDown(DOWN_ARROW_KEY) && !InputInstance.IsKeyDown(UP_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)
+				&& drogado)
+				){
 			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == SUL) direcaoShift = true;
 			} else{
 				direcao = NORTE;
 			}
 			speed.y = -MODULO_SPEED;
+			if(drogado)
+				speed.y = MODULO_SPEED/2;
 			speed.x = 0;
 			//rotation = -90;
 			//nao pode ficar fora, senao o movimento fica bugado
 			Running(InputInstance);
-		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+
+		//SETA PARA BAIXO //
+		} else if((!InputInstance.IsKeyDown(UP_ARROW_KEY) && InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !drogado)
+				||
+				(!InputInstance.IsKeyDown(DOWN_ARROW_KEY) && InputInstance.IsKeyDown(UP_ARROW_KEY) &&
+			!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY) && drogado)
+
+
+
+		){
 			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == NORTE) direcaoShift = true;
 			} else{
 				direcao = SUL;
 			}
 			speed.y = MODULO_SPEED;
+			if(drogado)
+					speed.y = -MODULO_SPEED/2;
 			speed.x = 0;
 			//rotation = 90;
 			Running(InputInstance);
-		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+
+			//SETA PARA DIREITA //
+		} else if((!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !drogado)
+				||
+				(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+							InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && drogado)
+
+
+
+
+		){
 			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == OESTE) direcaoShift = true;
 			} else{
 				direcao = LESTE;
 			}
 			speed.x = MODULO_SPEED;
+			if(drogado)
+				speed.x = -MODULO_SPEED/2;
 			speed.y = 0;
 			//rotation = 0;
 			Running(InputInstance);
-		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
+
+			//SETA PARA DIREITA//
+		} else if((!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && InputInstance.IsKeyDown(LEFT_ARROW_KEY) && !drogado)
+				||
+				(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
+				!InputInstance.IsKeyDown(LEFT_ARROW_KEY) && InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && drogado) ){
 			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == LESTE) direcaoShift = true;
 			} else{
 				direcao = OESTE;
 			}
 			speed.x = -MODULO_SPEED;
+			if(drogado)
+				speed.x = MODULO_SPEED/2;
 			speed.y = 0;
 			//rotation = 180;
 			Running(InputInstance);
@@ -445,7 +489,6 @@ int Player::GetDirecao(){
 Vec2 Player::GetSpeed(){
 	return speed;
 }
-
 void Player::SetDoor(bool value){
 	door = value;
 }

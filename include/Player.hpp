@@ -69,6 +69,8 @@ public:
 	std::string lastPicked;
 	std::vector<Rect> wallLimits;
 
+	static bool drogado;
+
 private:
 	Timer timeRuido, timeCooldown, timeSound, timePicked;
 	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush, spKinderClimbing;

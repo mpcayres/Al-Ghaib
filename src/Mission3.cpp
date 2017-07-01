@@ -14,6 +14,7 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	momcount = 0;
 	countBear = 0;
 	countCat = 0;
+	bronca = false;
 
 	SDL_Color redwine = SDL_Color();
 		redwine.r = 102;
@@ -89,7 +90,7 @@ void Mission3::Update(float dt){
 			Game::GetInstance().GetCurrentState().SetPopRequested();
 			Game::GetInstance().GetMissionManager().ChangeMission(4);
 	}*/
-	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL
+	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL ////////////////////////////////////////////////////////////////////
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 
@@ -225,6 +226,11 @@ void Mission3::Update(float dt){
 			meowcount++;
 		}
 
+		// FALTA, DISTRAIR O GATO
+		// CAIXINHA DE AREIA + NOVELO
+		// OU
+		// TV + CONTROLE DA TV
+
 		if(time.Get() > 7 && time.Get() < 7.5 && trancada == false && cooldown.Get() > 3){
 			Sound portaDestrancando = Sound ("audio/meow-sample.wav");
 			portaDestrancando.Play(0);
@@ -257,6 +263,24 @@ void Mission3::Update(float dt){
 			}
 		}
 
+		//////////////// TROCAR PARA QUARTO DA MÃE 1
+		//else if(MissionManager::missionManager->GetStage("MomState") &&
+		//						MissionManager::missionManager->countMomState > 1){
+			//PEGAR PROXIMIDADE AO ALÇAPÃO
+			// SE PERTO DEMAIS, MÃE APARECE
+
+			//MANDA IR PARA O QUARTO DORMIR
+
+
+		//}else if(MissionManager::missionManager->GetStage("StageState") &&
+		//						bronca){
+			//PEGAR PROXIMIDADE AO ALÇAPÃO
+			// SE PERTO DEMAIS, MÃE APARECE
+
+			//MANDA IR PARA O QUARTO DORMIR
+
+
+		//}
 	}
 	if(time.Get() >= 4 && begin && fadeIn){
 			UpdateVariable(dt, 80);
