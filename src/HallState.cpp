@@ -157,7 +157,6 @@ void HallState::SetInitialObjectArray(){
 	objectArray.emplace_back(Book);
 
 
-
 	SceneObject* Abajur = new SceneObject(1300, 310, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
 

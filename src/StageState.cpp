@@ -76,14 +76,53 @@ void StageState::Update(float dt){
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState", "HallState");
 	}
-	if(instance.KeyPress(A_KEY)){
+
+	/* area de cheat de missao*/
+	if(instance.KeyPress(KEY_1)){
+		popRequested = true;
+		Camera::Unfollow();
+		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeMission(1, MissionManager::player->GetInHandIndex(), inventory);
+	}else if(instance.KeyPress(KEY_2)){
 		popRequested = true;
 		Camera::Unfollow();
 		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
 		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
 				ChangeMission(2, MissionManager::player->GetInHandIndex(), inventory);
+	} else if(instance.KeyPress(KEY_3)){
+		popRequested = true;
+		Camera::Unfollow();
+		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeMission(3, MissionManager::player->GetInHandIndex(), inventory);
+	} else if(instance.KeyPress(KEY_4)){
+		popRequested = true;
+		Camera::Unfollow();
+		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeMission(4, MissionManager::player->GetInHandIndex(), inventory);
+	} else if(instance.KeyPress(KEY_5)){
+		popRequested = true;
+		Camera::Unfollow();
+		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeMission(5, MissionManager::player->GetInHandIndex(), inventory);
+	} else if(instance.KeyPress(KEY_6)){
+		popRequested = true;
+		Camera::Unfollow();
+		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeMission(6, MissionManager::player->GetInHandIndex(), inventory);
 	}
+
+	/* fim de area de cheat de missao*/
 	quitRequested = instance.QuitRequested();
 
 	Camera::Update(dt);

@@ -8,7 +8,7 @@
 
 Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
-	initialX = 450; initialY = 400;
+	initialX = 100; initialY = 450;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	meowcount = 0;
 	momcount = 0;
@@ -27,7 +27,7 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false) {
 
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 3", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
-	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "\"...\"", redwine, 0, 0);
+	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "  ", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
 
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , " ", white, 0, 0);
@@ -83,16 +83,23 @@ void Mission3::Update(float dt){
 		fadeIn = false;
 	}
 
-	/*if(endMission && time.Get() > (12*0.25 + 0.5)){
-		MissionManager::player->SetBlocked(false);
-		Game::GetInstance().GetCurrentState().SetPopRequested();
-		Game::GetInstance().GetMissionManager().ChangeMission(2);
-	}*/
+	if(endMission){
+			MissionManager::player->SetBlocked(false);
+			MissionManager::player->SetBloqInv(false);
+			Game::GetInstance().GetCurrentState().SetPopRequested();
+			Game::GetInstance().GetMissionManager().ChangeMission(2);
+		}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 
 
+		if(flagTimer == true && time.Get() > 25){
+			tx.SetText(" ");
+			creepy.SetText(" ");
+			showBox = false;
+			flagTimer = false;
+		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
@@ -104,6 +111,7 @@ void Mission3::Update(float dt){
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
 		}
+
 
 		Cat::show = true;
 		countCat++;
@@ -242,6 +250,9 @@ void Mission3::SetObjectHall(){
 	objectHall.emplace_back(Vase);
 	Cat* gatinho = new Cat(1000, 200);
 	objectHall.emplace_back(gatinho);
+
+	SceneObject* Apple = new SceneObject(350, 330, "img/object-maca.png", "img/object-maca.png");
+	objectHall.emplace_back(Apple);
 }
 
 void Mission3::SetObjectRoom(){

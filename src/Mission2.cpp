@@ -83,11 +83,12 @@ void Mission2::Update(float dt){
 		fadeIn = false;
 	}
 
-	/*if(endMission && time.Get() > (12*0.25 + 0.5)){
+	if(endMission){
 		MissionManager::player->SetBlocked(false);
+		MissionManager::player->SetBloqInv(false);
 		Game::GetInstance().GetCurrentState().SetPopRequested();
 		Game::GetInstance().GetMissionManager().ChangeMission(2);
-	}*/
+	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
@@ -282,8 +283,10 @@ void Mission2::Update(float dt){
 		//contNeedle = 5;
 		//contScissors = 5;
 		//contLine = 5;
-		if(contNeedle > 0 && contScissors > 0 && contLine>0)
+		if(contNeedle > 0 && contScissors > 0 && contLine>0){
 			Bear::bear->repair = true;
+			endMission = true;
+		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
 
 	}else if(MissionManager::missionManager->GetStage("HallState") &&

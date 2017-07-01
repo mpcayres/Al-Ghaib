@@ -7,6 +7,10 @@
 #include "LivingRoomState.hpp"
 #include "Mission1.hpp"
 #include "Mission2.hpp"
+#include "Mission3.hpp"
+#include "Mission4.hpp"
+#include "Mission5.hpp"
+#include "Mission6.hpp"
 
 #include <iostream>
 
@@ -109,6 +113,18 @@ void MissionManager::SetMission(){
 			break;
 		case 2:
 			mission = new Mission2();
+			break;
+		case 3:
+			mission = new Mission3();
+			break;
+		case 4:
+			mission = new Mission4();
+			break;
+		case 5:
+			mission = new Mission5();
+			break;
+		case 6:
+			mission = new Mission6();
 			break;
 		default:
 			break;
