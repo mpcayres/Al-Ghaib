@@ -12,20 +12,20 @@
 
 HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
 	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHall.txt", &tileSet) {
-
+	//std::cout << "TESTE 1" << std::endl;
 	limits = tileMap.FindLimits();
 	limits.y -=50;
 	MissionManager::player->AddWallLimits(Rect(0, 0, 768, 180 ));
 	MissionManager::player->AddWallLimits(Rect(960, 0, 576, 180 ));
 
-
+	//std::cout << "TESTE 2" << std::endl;
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
 	else SetPlayer(50, 400, CAMERA_TYPE2, limits);
 	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
 	for(unsigned i = 0; i < auxLimits.size(); i++){
 		MissionManager::player->AddWallLimits(auxLimits[i]);
 	}
-
+	//std::cout << "TESTE 3" << std::endl;
 	if(inicial){
 		//std::cout << "HSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -40,7 +40,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 
 	RandomState();
 	LoadAssets();
-	//std::cout << "HSC2" << std::endl;
+	std::cout << "HSC2" << std::endl;
 }
 
 HallState::~HallState() {
@@ -136,13 +136,15 @@ void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
+	SceneObject* Table = new SceneObject(340, 303, "img/scene-mesa.png", "img/scene-mesa.png");
+	objectArray.emplace_back(Table);
+
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
 	objectArray.emplace_back(DoorToKidRoom);
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState");
 	objectArray.emplace_back(DoorToMomRoom);
-
-	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState");
+	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState", false, "img/scene-portal.png", "img/scene-portal.png");
 	objectArray.emplace_back(DoorToLivingRoom);
 
 	/*SceneObject* Window = new SceneObject(700, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
@@ -154,8 +156,7 @@ void HallState::SetInitialObjectArray(){
 	SceneObject* Book = new SceneObject(110, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);
 	objectArray.emplace_back(Book);
 
-	SceneObject* Table = new SceneObject(340, 303, "img/scene-mesa.png", "img/scene-mesa.png");
-	objectArray.emplace_back(Table);
+
 
 	SceneObject* Abajur = new SceneObject(1300, 310, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);

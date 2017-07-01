@@ -141,7 +141,7 @@ void Cat::SetDestinationPath(Vec2 path){
 void Cat::DefinedPath(){
 	Vec2 aux;
 			aux.x = box.x; aux.y = box.y;
-			std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
+			//std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
 			if(aux.Distance(destinationPath.back())>2){
 			//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
 				if(aux.Distance(destinationPath.back())<= 5 ){

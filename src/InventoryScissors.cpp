@@ -2,7 +2,7 @@
 #include "SceneDoor.hpp"
 
 InventoryScissors::InventoryScissors(){
-	sp = Sprite("img/obj_novelo.png");
+	sp = Sprite("img/object-scissors.png");
 }
 
 InventoryScissors::~InventoryScissors(){ }

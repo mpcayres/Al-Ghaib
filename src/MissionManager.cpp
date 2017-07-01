@@ -58,12 +58,13 @@ void MissionManager::SetState(std::string dest){
 	Camera::UpdateZoom();
 	if(dirDest != -1) player->SetDirecao(dirDest);
 	if(dest == "StageState"){
-		//std::cout << "SS.1" << std::endl;
+		std::cout << "SS.1" << std::endl;
 		//std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xDest, yDest));
 		initStage = false;
 		stage = "StageState";
 		countStageState++;
+		std::cout << countStageState << std::endl;
 		changeState++;
 		//std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
@@ -72,7 +73,7 @@ void MissionManager::SetState(std::string dest){
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xDest, yDest));
 		initHall = false;
 		stage = "HallState";
-		std::cout << "HS.2" << std::endl;
+		//std::cout << "HS.2" << std::endl;
 		countHallState++;
 		std::cout << countHallState << std::endl;
 		changeState++;

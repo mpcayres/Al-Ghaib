@@ -36,6 +36,7 @@ public:
 
 	static bool show, seen;
 	static bool arrived;
+	static bool repair;
 private:
 	Timer time;
 	float offset;
