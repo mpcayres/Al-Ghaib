@@ -593,6 +593,13 @@ bool Player::GetShowingInventory(){
 	return showingInventory;
 }
 
+bool Player::HaveObject(std::string obj){
+	for(unsigned int i = 0; i < inventory.size(); i++){
+		if(inventory[i]->GetObject() == obj) return true;
+	}
+	return false;
+}
+
 std::shared_ptr<InventoryObject> Player::GetInHand(){
 	if(inHandIndex >= 0) return inventory[inHandIndex];
 	else return nullptr;

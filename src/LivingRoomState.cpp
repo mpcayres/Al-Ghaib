@@ -10,8 +10,8 @@
 #include <iostream>
 
 LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	State(), tileSetChao(150, 117, "img/tileSet/tile_sala_chao.png")
-	, tileSetParede(150, 126, "img/tileSet/tile_sala_parede.jpeg"),tileMapChao("map/tileMapSalaChao.txt", &tileSetChao),
+	State(), tileSetChao(150, 117, "img/tileSet/tile_sala_chao.png"),
+	tileSetParede(150, 126, "img/tileSet/tile_sala_parede.jpeg"), tileMapChao("map/tileMapSalaChao.txt", &tileSetChao),
 	tileMapParede("map/tileMapSalaParede.txt", &tileSetParede){
 
 	limits = tileMapChao.FindLimits();
@@ -135,7 +135,6 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Banco = new SceneObject(650, 370, "img/moveis/sala/banquinho.png", "img/moveis/sala/banquinho.png");
 	objectArray.emplace_back(Banco);
 
-
 	SceneObject* Sofa = new SceneObject(500, 280, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
 	objectArray.emplace_back(Sofa);
 
@@ -157,5 +156,13 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
 	objectArray.emplace_back(DoorToHall);
 
-
+	if(MissionManager::player->HaveObject("InventoryKey")){
+		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Bau);
+	} else{
+		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Bau);
+	}
 }

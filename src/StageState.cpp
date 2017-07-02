@@ -69,16 +69,21 @@ void StageState::Update(float dt){
 		popRequested = true;
 		Camera::Unfollow();
 	}
+
+	/* area de cheat de missao*/
 	if(instance.KeyPress(W_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
 		RemovePlayer();
 		Game::GetInstance().GetMissionManager().
 				ChangeState(std::move(objectArray), "StageState", "HallState");
-	}
-
-	/* area de cheat de missao*/
-	if(instance.KeyPress(KEY_1)){
+	} else if(instance.KeyPress(E_KEY)){
+		popRequested = true;
+		Camera::Unfollow();
+		RemovePlayer();
+		Game::GetInstance().GetMissionManager().
+				ChangeState(std::move(objectArray), "StageState", "LivingRoomState");
+	} else if(instance.KeyPress(KEY_1)){
 		popRequested = true;
 		Camera::Unfollow();
 		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();

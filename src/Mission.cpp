@@ -34,8 +34,6 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 	falasBoxRect.w = falasBox.GetScaledWidth();
 	falasBoxRect.h = falasBox.GetScaledHeight();
 
-
-
 }
 
 Mission::~Mission() {
@@ -117,6 +115,7 @@ void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
 		} else{
 			alphaAux = (float) OPAQUE;
 			alpha = OPAQUE;
+			spFade.ChangeAlpha(alpha);
 			fadeIn = false;
 		}
     } else{
@@ -126,6 +125,7 @@ void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
 		} else{
 			alphaAux = (float) TRANSPARENT;
 			alpha = TRANSPARENT;
+			spFade.ChangeAlpha(alpha);
 			fadeIn = false;
 		}
     }

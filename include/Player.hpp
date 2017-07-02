@@ -55,6 +55,7 @@ public:
 	std::vector<std::shared_ptr<InventoryObject>> GetInventory();
 	std::vector<std::string> GetStringInventory();
 	bool GetShowingInventory();
+	bool HaveObject(std::string obj);
 	std::shared_ptr<InventoryObject> GetInHand();
 	int GetInHandIndex();
 	void DeleteInventory();

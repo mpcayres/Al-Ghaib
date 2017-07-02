@@ -135,9 +135,20 @@ void Camera::Zoom(float tempoN, bool in){
 	time.Restart();
 }
 
+void Camera::ZoomCut(bool in){
+	if(in){
+		MissionManager::missionManager->factorZoom = 1.2;
+		MissionManager::player->SetBloqHUD(true);
+	} else{
+		MissionManager::missionManager->factorZoom = 1;
+		MissionManager::player->SetBloqHUD(false);
+	}
+	UpdateZoom();
+}
+
 void Camera::UpdateZoom(){
 	SDL_RenderSetScale(Game::GetInstance().GetRenderer(),
-					MissionManager::missionManager->factorZoom, MissionManager::missionManager->factorZoom);
+			MissionManager::missionManager->factorZoom, MissionManager::missionManager->factorZoom);
 }
 
 bool Camera::GetMoving(){

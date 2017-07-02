@@ -11,7 +11,7 @@
 #define DESACELERA 1
 
 Enemy* Enemy::enemy;
-bool Enemy::show, Enemy::arrived, Enemy::collidingPlayer, Enemy::dead;
+bool Enemy::show, Enemy::arrived, Enemy::collidingPlayer, Enemy::dead, Enemy::bloq;
 
 Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 
@@ -30,6 +30,7 @@ Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 	collidingPlayer = false;
 	dead = false;
 	seen = false;
+	bloq = false;
 
 	time = Timer();
 
@@ -46,10 +47,10 @@ Enemy::~Enemy(){
 }
 
 void Enemy::Update(float dt){
-	Vec2 aux, aux2;
+	if(show && !bloq){
+		Vec2 aux, aux2;
+		float dist = 0;
 
-	float dist = 0;
-	if(show){
 		dist = box.DistanceRect(MissionManager::player->box);
 		if(dist < 200){
 			seen = true;

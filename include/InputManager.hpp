@@ -38,6 +38,7 @@
 #define C_KEY SDLK_c
 #define I_KEY SDLK_i
 #define G_KEY SDLK_g
+#define E_KEY SDLK_e
 
 #define KEY_1 SDLK_1
 #define KEY_2 SDLK_2

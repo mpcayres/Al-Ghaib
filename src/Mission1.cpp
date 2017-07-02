@@ -89,7 +89,7 @@ void  Mission1::Update(float dt){
 		fadeIn = false;
 		bloqBlack = true;
 		alpha = TRANSPARENT;
-		if (spFade.IsOpen()) {
+		if(spFade.IsOpen()) {
 			spFade.ChangeAlpha(alpha);
 		}
 	}
@@ -120,13 +120,18 @@ void  Mission1::Update(float dt){
 				new Animation(x, y, 0,
 						"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
 		ultimoTempo = time.Get();
-		if(time.Get()>ultimoTempo + 4){
+		if(time.Get() > ultimoTempo + 4){
 			showBox = true;
 			falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 		}
 		time.Restart();
 		endMission = true;
+	} else if(Enemy::collidingPlayer){
+		MissionManager::player->SetBlocked(false);
+		MissionManager::player->SetBloqInv(false);
+		Game::GetInstance().GetCurrentState().SetPopRequested();
+		Game::GetInstance().GetMissionManager().ChangeMission(1);
 	} else{
 
 		/* COMEÇO DO JOGO. QUARTO DA CRIANÇA. PRIMEIRA VEZ ENTRANDO PARA LEGENDAS INICIAIS*/
@@ -236,13 +241,14 @@ void  Mission1::Update(float dt){
 				Enemy::show = true;
 				SceneDoor::count = ABRE;
 				SceneDoor::ValorPassar = 4;
-				//if(MissionManager::player->lastPicked == "InventoryBear"){
+				//if(MissionManag+er::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
 				//if(trancada == false && cooldown.Get() > 3){
 					showBox = true;
+					//Enemy::bloq = true;
 					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = time.Get();
@@ -250,6 +256,7 @@ void  Mission1::Update(float dt){
 				//}
 				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
 					showBox = false;
+					//Enemy::bloq = false;
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = ultimoTempo + 5;
@@ -294,6 +301,7 @@ void  Mission1::Update(float dt){
 				if(trancada == false){
 					if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
 						showBox = true;
+						//Enemy::bloq = true;
 						SceneDoor::count = ABRE;
 						SceneDoor::ValorPassar = 26;
 						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
@@ -306,6 +314,7 @@ void  Mission1::Update(float dt){
 						ultimoTempo = 8;
 					if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
 						showBox = false;
+						//Enemy::bloq = false;
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 						ultimoTempo = 12;
@@ -355,13 +364,15 @@ void  Mission1::Update(float dt){
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
 				if(time.Get() > 4 && trancada == false && cooldown.Get() > 3){
-						showBox = true;
-						falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-						ultimoTempo = 3;
+					showBox = true;
+					//Enemy::bloq = true;
+					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 3;
 				}
 				if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
 					showBox = false;
+					//Enemy::bloq = false;
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 6;
