@@ -62,6 +62,8 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 
 	SetObjectStage();
 	SetObjectHall();
+	SetObjectLivingRoom();
+
 
 	//std::cout << "INIT_MIS1" << std::endl;
 }
@@ -366,8 +368,9 @@ void  Mission1::Update(float dt){
 			}
 
 		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
-
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
+				Enemy::enemy->box.x = 230;
+				Enemy::enemy->box.y = 175;
 				Enemy::show = true;
 				SceneDoor::count = ABRE;
 				SceneDoor::ValorPassar = 4;
@@ -494,10 +497,7 @@ void Mission1::SetObjectLivingRoom(){
 
 	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	//objectLivingRoom.emplace_back(Bear);
-	Enemy* E = new Enemy(220, 175, "img/sprite-mom.png");
-	objectLivingRoom.emplace_back(E);
-
-	MovingObject* Vase = new MovingObject(725, 327, "img/scene-vaso.png");
-	objectLivingRoom.emplace_back(Vase);
+	//Enemy* E2 = new Enemy(500, 110, "img/sprite-mom.png");
+	//objectLivingRoom.emplace_back(E2);
 
 }
