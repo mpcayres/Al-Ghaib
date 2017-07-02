@@ -30,6 +30,7 @@ public:
 	Mission *GetMission();
 	bool GetStage(std::string type);
 	void SetPos(int x, int y);
+	int GetNumMission();
 
 	static Player* player;
 	static MissionManager* missionManager;
