@@ -205,7 +205,7 @@ void StageState::SetInitialObjectArray(){
 	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "img/scene-cama.png");
 	objectArray.emplace_back(Cama);
 
-	SceneObject* Armario =  new SceneObject(400, 240, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	SceneObject* Armario =  new SceneObject(430, 240, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	objectArray.emplace_back(Armario);
 
 	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "img/scene-abajur.png");

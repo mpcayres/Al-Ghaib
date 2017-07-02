@@ -144,6 +144,9 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Mesa = new SceneObject(500, 340, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
 	objectArray.emplace_back(Mesa);
 
+	SceneObject* TV = new SceneObject(630, 450, "img/moveis/sala/televisão_desligada.png", "img/moveis/sala/televisão_desligada.png");
+	objectArray.emplace_back(TV);
+
 	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
 	objectArray.emplace_back(Painel);
 
@@ -156,11 +159,21 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
 	objectArray.emplace_back(DoorToHall);
 
-	if(MissionManager::player->HaveObject("InventoryKey")){
+	SceneObject* Armario = new SceneObject(790, 175, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
+	objectArray.emplace_back(Armario);
+
+
+	if( MissionManager::missionManager->GetNumMission() == 1   ){
+		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Bau);
+	}
+
+	if(MissionManager::player->HaveObject("InventoryKey") &&  MissionManager::missionManager->GetNumMission() != 1){
 		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
-	} else{
+	} else if ( MissionManager::missionManager->GetNumMission() != 1){
 		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);

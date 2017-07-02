@@ -222,7 +222,9 @@ void MissionManager::SaveMission(){
 		saveMission.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
-
+int MissionManager::GetNumMission(){
+	return numMission;
+}
 bool MissionManager::GetStage(std::string type){
 	return (type == stage);
 }
