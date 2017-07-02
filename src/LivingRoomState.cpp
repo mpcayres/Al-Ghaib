@@ -10,9 +10,11 @@
 #include <iostream>
 
 LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	State(), tileSet(192, 96, "img/tileset.png"), tileMap("map/tileMap.txt", &tileSet) {
+	State(), tileSetChao(150, 117, "img/tileSet/tile_sala_chao.png")
+	, tileSetParede(150, 126, "img/tileSet/tile_sala_parede.jpeg"),tileMapChao("map/tileMapSalaChao.txt", &tileSetChao),
+	tileMapParede("map/tileMapSalaParede.txt", &tileSetParede){
 
-	limits = tileMap.FindLimits();
+	limits = tileMapChao.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
 	else SetPlayer(600, 400, CAMERA_TYPE0, limits);
 	//MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
@@ -112,7 +114,9 @@ void LivingRoomState::Update(float dt){
 void LivingRoomState::Render(){
 	background.Render(0,0,0);
 	bg.Render(0 - Camera::pos.x, Camera::pos.y+33,0);
-	tileMap.RenderLayer(0, Camera::pos.x, Camera::pos.y);
+	tileMapChao.RenderLayer(0, Camera::pos.x, Camera::pos.y);
+	tileMapParede.RenderLayer(0, Camera::pos.x, Camera::pos.y);
+
 	//bg.Render(0,0,0);
 	RenderArray();
 

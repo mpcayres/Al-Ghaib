@@ -26,8 +26,10 @@ public:
 private:
 	Sprite background;
 	Sprite bg;
-	TileSet tileSet;
-	TileMap tileMap;
+	TileSet tileSetChao;
+	TileSet tileSetParede;
+	TileMap tileMapChao;
+	TileMap tileMapParede;
 };
 
 #endif /* SRC_LIVINGROOMSTATE_HPP_ */

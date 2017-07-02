@@ -7,14 +7,14 @@
  Music Mission3::music;
 
 Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
-	initialState = "StageState"; // trocar para começar da sala?
+	initialState = "StageState"; // trocar para comeÃ§ar da sala?
 	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	meowcount = 0;
 	momcount = 0;
 	countBear = 0;
 	countCat = 0;
-	bronca = false;
+	//bronca = false;
 
 	SDL_Color redwine = SDL_Color();
 		redwine.r = 102;
@@ -105,19 +105,19 @@ void Mission3::Update(float dt){
 		if(time.Get() > 5 && trancada == false && cooldown.Get() > 3){
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			sussurro.Play(0);
-			falas.SetText("U: OLHA SÓ ESSA QUE CHAMAS DE MÃE");
+			falas.SetText("U: OLHA SÃ“ ESSA QUE CHAMAS DE MÃƒE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 5;
 			showBox = true;
 		}
 		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: O QUE É ESSA ROUPA?");
+			falas.SetText("U: O QUE Ã‰ ESSA ROUPA?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 10;
 			showBox = true;
 		}
 		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: AINDA É REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
+			falas.SetText("U: AINDA Ã‰ REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 15;
 			showBox = true;
@@ -166,24 +166,24 @@ void Mission3::Update(float dt){
 			Cat::cat->SetDestinationPath(Vec2(980, 200));
 		if(dist >= 250){
 			std::cout << "maior que 250" << std::endl;
-			//Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(940, 200)); //3º DESTINO
+			//Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(940, 200)); //3Âº DESTINO
 			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //2º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //2Âº DESTINO
 		}*/
 		//}
 		//if(Enemy::turn == 1)
 
 		std::cout << "CAT X" << Cat::cat->box.x << "CAT Y" << Cat::cat->box.y << std::endl;
 		if(countCat == 1){
-					//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+					//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
 			Cat::cat->SetDestinationPath(Vec2(1000, 200));
 			Cat::cat->SetDestinationPath(Vec2(900, 200));
 			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
 					//paradoGato = true;
 		}
 		if(time.Get()>5){
@@ -193,21 +193,21 @@ void Mission3::Update(float dt){
 			Cat::cat->SetDestinationPath(Vec2(980, 200));
 		}
 		/*if(countCat == 1 && dist > 250){
-			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+			//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
 			std::cout << "ka" << std::endl;
 			Cat::cat->SetDestinationPath(Vec2(1000, 200));
 			Cat::cat->SetDestinationPath(Vec2(900, 200));
 			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
 			//paradoGato = true;
 		}
 		if(dist > 250){
 			std::cout << "dist > 250" << std::endl;
-			Cat::cat->SetDestinationPath(Vec2(1100, 200)); //2º DESTINO
-			Cat::cat->SetDestinationPath(Vec2(940, 200)); //1º DESTINO
+			Cat::cat->SetDestinationPath(Vec2(1100, 200)); //2Âº DESTINO
+			Cat::cat->SetDestinationPath(Vec2(940, 200)); //1Âº DESTINO
 		}*/
 		/*if(dist < 250){
 			paradoGato = true;
@@ -245,7 +245,7 @@ void Mission3::Update(float dt){
 				if(momcount == 1){
 
 					SceneDoor::ValorPassar = 15;
-					falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
+					falas.SetText("M: O QUE JÃ� FALEI SOBRE SAIR DA CAMA?");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = (int)time.Get();
 					showBox = true;
@@ -263,19 +263,19 @@ void Mission3::Update(float dt){
 			}
 		}
 
-		//////////////// TROCAR PARA QUARTO DA MÃE 1
+		//////////////// TROCAR PARA QUARTO DA MÃƒE 1
 		//else if(MissionManager::missionManager->GetStage("MomState") &&
 		//						MissionManager::missionManager->countMomState > 1){
-			//PEGAR PROXIMIDADE AO ALÇAPÃO
-			// SE PERTO DEMAIS, MÃE APARECE
+			//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
+			// SE PERTO DEMAIS, MÃƒE APARECE
 
 			//MANDA IR PARA O QUARTO DORMIR
 
 
 		//}else if(MissionManager::missionManager->GetStage("StageState") &&
 		//						bronca){
-			//PEGAR PROXIMIDADE AO ALÇAPÃO
-			// SE PERTO DEMAIS, MÃE APARECE
+			//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
+			// SE PERTO DEMAIS, MÃƒE APARECE
 
 			//MANDA IR PARA O QUARTO DORMIR
 
