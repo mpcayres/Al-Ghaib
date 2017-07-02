@@ -131,4 +131,31 @@ void LivingRoomState::Render(){
 void LivingRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
+
+	SceneObject* Banco = new SceneObject(650, 370, "img/moveis/sala/banquinho.png", "img/moveis/sala/banquinho.png");
+	objectArray.emplace_back(Banco);
+
+
+	SceneObject* Sofa = new SceneObject(500, 280, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
+	objectArray.emplace_back(Sofa);
+
+	SceneObject* Poltrona = new SceneObject(400, 330, "img/moveis/sala/poltrona.png", "img/moveis/sala/poltrona.png");
+	objectArray.emplace_back(Poltrona);
+
+	SceneObject* Mesa = new SceneObject(500, 340, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
+	objectArray.emplace_back(Mesa);
+
+	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
+	objectArray.emplace_back(Painel);
+
+	SceneObject* Pilastra1 = new SceneObject(350, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
+	objectArray.emplace_back(Pilastra1);
+
+	SceneObject* Pilastra2 = new SceneObject(725, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
+	objectArray.emplace_back(Pilastra2);
+
+	SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
+	objectArray.emplace_back(DoorToHall);
+
+
 }
