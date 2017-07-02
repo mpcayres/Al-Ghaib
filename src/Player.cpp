@@ -196,8 +196,7 @@ void Player::Update(float dt){
 
 			//SETA PARA DIREITA //
 		} else if(!InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)
-){
+				InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY)){
 			if(MissionManager::missionManager->movingBox && (direcao == LESTE || direcao == OESTE)){
 				if(direcao == OESTE) direcaoShift = true;
 			} else{
@@ -543,7 +542,7 @@ void Player::AddInventory(std::string obj){
 	if(inHandIndex < 0) inHandIndex = 0;
 	if(obj == "InventoryKey"){
 		spPicked = Sprite("img/object-key.png");
-		spPicked.SetScaleX(8); spPicked.SetScaleY(8);
+		spPicked.SetScaleX(6); spPicked.SetScaleY(6);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryKey());
 	} else if(obj == "InventoryArame"){
@@ -631,13 +630,12 @@ void Player::RenderInventory(){
 	if(!bloqHUD){
 		int posX, posY, posXCenter, posYCenter, posXCaixa, posYCaixa;
 		int bordaX, bordaY;
-		float scaleX = 1, scaleY = 1;
 		int widthMinorSquare, heightMinorSquare;
 
 		bordaX = spInventory.GetScaledWidth()/9;
 		bordaY = spInventory.GetScaledHeight()/8;
-		widthMinorSquare = spInventorybox.GetScaledWidth();
-		heightMinorSquare = spInventorybox.GetScaledHeight();
+		widthMinorSquare = spInventorybox.GetScaledWidth() - 10;
+		heightMinorSquare = spInventorybox.GetScaledHeight() - 10;
 
 		posXCaixa = Game::GetInstance().GetWidth()/2 - (spInventory.GetScaledWidth()/2);
 		posYCaixa = Game::GetInstance().GetHeight()/2 - (spInventory.GetScaledHeight()/2);
@@ -651,22 +649,16 @@ void Player::RenderInventory(){
 			if((int) i == inventoryIndex) spInventoryboxSelected.Render(posX, posY, 0);
 			else spInventorybox.Render(posX, posY, 0);
 
-
 			if(inventory[i]->GetWidth() > widthMinorSquare){
-				scaleX = float(widthMinorSquare)/float(inventory[i]->GetWidth());
+				float scaleX = (float) ((float) widthMinorSquare)/((float) inventory[i]->GetWidth());
 				inventory[i]->SetScaleX(scaleX);
-				posXCenter = posX;
-			} else{
-				posXCenter = posX + (widthMinorSquare - inventory[i]->GetWidth())/2;
 			}
 			if(inventory[i]->GetHeight() > heightMinorSquare){
-				scaleY = float(heightMinorSquare)/float(inventory[i]->GetHeight());
+				float scaleY = (float) ((float) heightMinorSquare)/((float) inventory[i]->GetHeight());
 				inventory[i]->SetScaleY(scaleY);
-				posYCenter = posY;
-			} else{
-				posYCenter = posY + (heightMinorSquare - inventory[i]->GetHeight())/2;
 			}
-
+			posXCenter = posX + 5 + (widthMinorSquare - inventory[i]->GetWidth())/2;
+			posYCenter = posY + 5 + (heightMinorSquare - inventory[i]->GetHeight())/2;
 			inventory[i]->Render(posXCenter, posYCenter);
 
 			posX += bordaX*2;
@@ -675,37 +667,33 @@ void Player::RenderInventory(){
 				posY += bordaY*1.5;
 			}
 
-			scaleX = scaleY = 1;
 		}
 	}
 }
 
 void Player::RenderInHand(){
 	if(!bloqHUD){
-		int posX, posY, scaleX, scaleY;
+		int posX, posY;
 		int offset = 10, widthMinorSquare, heightMinorSquare;
 		int posXCenter, posYCenter;
 		posX = SCREEN_SIZE_W - 8*offset;
 		posY = offset;
-		widthMinorSquare = spInventorybox.GetScaledWidth();
-		heightMinorSquare = spInventorybox.GetScaledHeight();
+		widthMinorSquare = spInventorybox.GetScaledWidth() - 10;
+		heightMinorSquare = spInventorybox.GetScaledHeight() - 10;
 
 		spInventoryboxSelected.Render(posX,posY, 0);
 		if(inHandIndex >= 0){
-			if(inventory[inHandIndex]->GetWidth()> widthMinorSquare){
-				scaleX = float(widthMinorSquare)/float(inventory[inHandIndex]->GetWidth());
+			if(inventory[inHandIndex]->GetWidth() > widthMinorSquare){
+				float scaleX = (float) ((float) widthMinorSquare)/((float) inventory[inHandIndex]->GetWidth());
 				inventory[inHandIndex]->SetScaleX(scaleX);
-				posXCenter = posX;
-			} else{
-				posXCenter = posX + (widthMinorSquare - inventory[inHandIndex]->GetWidth())/2;
 			}
-			if(inventory[inHandIndex]->GetHeight()> heightMinorSquare){
-				scaleY = float(heightMinorSquare)/float(inventory[inHandIndex]->GetHeight());
+			if(inventory[inHandIndex]->GetHeight() > heightMinorSquare){
+				//std::cout << inventory[inHandIndex]->GetHeight() << std::endl;
+				float scaleY = (float) ((float) heightMinorSquare)/((float) inventory[inHandIndex]->GetHeight());
 				inventory[inHandIndex]->SetScaleY(scaleY);
-				posYCenter = posY;
-			} else{
-				posYCenter = posY + (heightMinorSquare - inventory[inHandIndex]->GetHeight())/2;
 			}
+			posXCenter = posX + 5 + (widthMinorSquare - inventory[inHandIndex]->GetWidth())/2;
+			posYCenter = posY + 5 + (heightMinorSquare - inventory[inHandIndex]->GetHeight())/2;
 			inventory[inHandIndex]->Render(posXCenter, posYCenter);
 		}
 
