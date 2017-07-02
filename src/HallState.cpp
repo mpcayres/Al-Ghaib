@@ -5,6 +5,7 @@
 #include "Walls.hpp"
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
+#include "ScenePortal.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
 
@@ -145,7 +146,7 @@ void HallState::SetInitialObjectArray(){
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState");
 	objectArray.emplace_back(DoorToMomRoom);
 
-	SceneDoor* DoorToLivingRoom = new SceneDoor(500, 105, "LivingRoomState", false, "img/scene-portal.png", "img/scene-portal.png");
+	ScenePortal* DoorToLivingRoom = new ScenePortal(500, 105, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
 
 	/*SceneObject* Window = new SceneObject(700, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);

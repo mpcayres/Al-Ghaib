@@ -3,6 +3,7 @@
 
 InventoryKey::InventoryKey(std::string file){
 	sp = Sprite(file);
+	if(file == "InventoryKey") sp.SetScaleX(0.5); sp.SetScaleY(0.5);
 }
 
 InventoryKey::~InventoryKey(){ }

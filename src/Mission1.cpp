@@ -127,7 +127,7 @@ void  Mission1::Update(float dt){
 		}
 		time.Restart();
 		endMission = true;
-	} else if(Enemy::collidingPlayer){
+	} else if(Enemy::collidingPlayer && Enemy::show){
 		//Quando a mae te pega sem vc ter o urso, deixar mais suave
 		MissionManager::player->SetBlocked(false);
 		MissionManager::player->SetBloqInv(false);

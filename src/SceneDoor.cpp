@@ -11,7 +11,6 @@ SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::strin
 
 	lock = locked;
 	changeState = false;
-	//count =0;
 	contador = 0;
 }
 
