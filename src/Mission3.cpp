@@ -172,7 +172,7 @@ void Mission3::Update(float dt){
 			Cat::cat->SetDestinationPath(Vec2(900, 200)); //2Âº DESTINO
 		}*/
 		//}
-		//if(Enemy::turn == 1)
+		//if(MissionManager::enemy->turn == 1)
 
 		std::cout << "CAT X" << Cat::cat->box.x << "CAT Y" << Cat::cat->box.y << std::endl;
 		if(countCat == 1){
@@ -236,12 +236,12 @@ void Mission3::Update(float dt){
 			portaDestrancando.Play(0);
 		}
 		if (MissionManager::player->GetRuido()>70 ){
-			Enemy::show = true;
+			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
-			//if(Enemy::turn == 1)
+			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
 			std::cout << "momcount" << momcount << std::endl;
-			if(Enemy::show){
+			if(MissionManager::enemy->show){
 				if(momcount == 1){
 
 					SceneDoor::ValorPassar = 15;
@@ -251,10 +251,10 @@ void Mission3::Update(float dt){
 					showBox = true;
 				}
 			}
-			if(Enemy::show && time.Get() > ultimoTempo + 2){
+			if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 				SceneDoor::ValorPassar = 0;
 			}
-			if(Enemy::show && time.Get() > ultimoTempo + 4){
+			if(MissionManager::enemy->show && time.Get() > ultimoTempo + 4){
 
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -327,9 +327,6 @@ void Mission3::SetObjectStage(){
 }
 
 void Mission3::SetObjectHall(){
-
-	Enemy* E = new Enemy(500, 110,"img/sprite-mom-chador.png");
-	objectHall.emplace_back(E);
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 	Cat* gatinho = new Cat(1000, 200);

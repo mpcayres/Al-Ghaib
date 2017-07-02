@@ -4,12 +4,15 @@
 #include "GameObject.hpp"
 #include "Mission.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
+
 #include <vector>
 #include <memory>
 #include <string>
 #include <fstream>
 
 class Player;
+class Enemy;
 class Mission;
 
 class MissionManager {
@@ -33,6 +36,7 @@ public:
 	int GetNumMission();
 
 	static Player* player;
+	static Enemy* enemy;
 	static MissionManager* missionManager;
 
 	int countStageState, countHallState, countLivingRoomState, changeState;

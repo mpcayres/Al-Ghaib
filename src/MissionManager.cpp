@@ -15,6 +15,7 @@
 #include <iostream>
 
 Player* MissionManager::player = nullptr;
+Enemy* MissionManager::enemy = nullptr;
 MissionManager* MissionManager::missionManager = nullptr;
 
 MissionManager::MissionManager() {
@@ -39,6 +40,7 @@ MissionManager::~MissionManager() {
 	objectLivingRoom.clear();
 	if(mission != nullptr) delete mission;
 	delete player;
+	delete enemy;
 	delete missionManager;
 }
 
@@ -160,6 +162,7 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 		SaveMission();
 	}
 	player = new Player(0, 0, oldInHand, oldInventory);
+	enemy = new Enemy(0, 0, "img/sprite-mom.png"); //se for outra imagem, ver a missao e colocar aqui
 	oldInventory.clear();
 	SetMission();
 	SetState(mission->GetInitialState());
@@ -172,6 +175,7 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 void MissionManager::DeleteStates(){
 	//free(player); -> no Ubuntu da ruim
 	player = nullptr;
+	enemy = nullptr;
 	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
@@ -222,9 +226,11 @@ void MissionManager::SaveMission(){
 		saveMission.close();
 	} else std::cout << "Nao foi possivel abrir o arquivo." << std::endl;
 }
+
 int MissionManager::GetNumMission(){
 	return numMission;
 }
+
 bool MissionManager::GetStage(std::string type){
 	return (type == stage);
 }

@@ -241,20 +241,20 @@ void Mission2::Update(float dt){
 
 
 		if (MissionManager::player->GetRuido()>80 ){
-			Enemy::show = true;
+			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
-			//if(Enemy::turn == 1)
+			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
 			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 			if(momcount == 1){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-				//Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+				//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 			}
 		}
-		if(Enemy::show && time.Get() > ultimoTempo + 2){
+		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
 				falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -262,7 +262,7 @@ void Mission2::Update(float dt){
 				showBox = true;
 			}
 		}
-		if(Enemy::show && time.Get() > ultimoTempo + 4){
+		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 4){
 			falas.SetText(" ");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = ultimoTempo + 4;
@@ -305,20 +305,20 @@ void Mission2::Update(float dt){
 		Cat::cat->SetDestinationPath(Vec2(800, 200));
 
 		if (MissionManager::player->GetRuido()>80 ){
-			Enemy::show = true;
+			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
-			//if(Enemy::turn == 1)
+			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
 			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 			if(momcount == 1){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-			//Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+			//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 			}
 		}
-		if(Enemy::show && time.Get() > ultimoTempo + 2){
+		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
 				falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -326,7 +326,7 @@ void Mission2::Update(float dt){
 				showBox = true;
 			}
 		}
-		if(Enemy::show && time.Get() > ultimoTempo + 4){
+		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 4){
 			falas.SetText(" ");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = ultimoTempo + 4;
@@ -391,10 +391,6 @@ void Mission2::SetObjectHall(){
 
 	PickUpObject* Scissors = new PickUpObject(600, 325, "InventoryScissors", "img/object-scissors.png", true, 0.5, 0.5);
 	objectHall.emplace_back(Scissors);
-
-
-	Enemy* E = new Enemy(500, 110, "img/sprite-mom-chador.png");
-	objectHall.emplace_back(E);
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);

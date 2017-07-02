@@ -37,6 +37,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 		//std::cout << "HSC1.2" << std::endl;
 		objectArray = std::move(obj);
 	}
+	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();

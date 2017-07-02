@@ -23,19 +23,18 @@ public:
 	void Render();
 	bool IsDead();
 	bool NotifyCollision(GameObject& other);
-	void Shoot();
 	bool Is(std::string type);
 	void Pursuit();
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
+	void SetPosition(float x, float y);
 	void SetDirecao(int dir);
-	static void SetDead();
+	void SetDead();
 
-	static Enemy * enemy;
 	InvBox direcao;
 	//Vec2 previousPos;
 
-	static bool show, arrived, collidingPlayer, dead, bloq;
+	bool show, arrived, collidingPlayer, dead, bloq;
 private:
 	Timer time;
 	Sprite sp;

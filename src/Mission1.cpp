@@ -55,6 +55,8 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", white, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+
+	MissionManager::enemy->SetPosition(500, 110);
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -63,7 +65,6 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	SetObjectStage();
 	SetObjectHall();
 	SetObjectLivingRoom();
-
 
 	//std::cout << "INIT_MIS1" << std::endl;
 }
@@ -110,12 +111,12 @@ void  Mission1::Update(float dt){
 		Game::GetInstance().GetMissionManager().ChangeMission(2);
 	}
 
-	if(MissionManager::player->lastPicked == "InventoryBear" && Enemy::collidingPlayer){
+	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer){
 		Camera::Unfollow();
 		Camera::SetType(CAMERA_TYPE0);
-		float x = Enemy::enemy->box.x;
-		float y = Enemy::enemy->box.y;
-		Enemy::SetDead();
+		float x = MissionManager::enemy->box.x;
+		float y = MissionManager::enemy->box.y;
+		MissionManager::enemy->SetDead();
 		MissionManager::player->SetBlocked(true);
 		MissionManager::player->DeleteInventory();
 		Game::GetInstance().GetCurrentState().AddObject(
@@ -129,7 +130,7 @@ void  Mission1::Update(float dt){
 		}
 		time.Restart();
 		endMission = true;
-	} else if(Enemy::collidingPlayer && Enemy::show){
+	} else if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show){
 		//Quando a mae te pega sem vc ter o urso, deixar mais suave
 		MissionManager::player->SetBlocked(false);
 		MissionManager::player->SetBloqInv(false);
@@ -228,12 +229,12 @@ void  Mission1::Update(float dt){
 				MissionManager::missionManager->player->box.y = 400;
 				time.Restart();
 			}
-			if(trancada == false && cooldown.Get() > 4 && Enemy::show == false)
+			if(trancada == false && cooldown.Get() > 4 && MissionManager::enemy->show == false)
 				falas.SetText("CUIDADO");
 				showBox = true;
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 4;
-			if(time.Get() > 6 && trancada == false && cooldown.Get() > 3  && Enemy::show == false){
+			if(time.Get() > 6 && trancada == false && cooldown.Get() > 3  && MissionManager::enemy->show == false){
 				falas.SetText(" ");
 				showBox = false;
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
@@ -242,18 +243,18 @@ void  Mission1::Update(float dt){
 			//MÃE APARECENDO NO CORREDOR
 /*
 			//COMEÇO MÃE TE PEGANDO  =  AGORA ISSO É NA SALA
-			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
-				Enemy::show = true;
+			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
+				MissionManager::enemy->show = true;
 				SceneDoor::count = ABRE;
 				SceneDoor::ValorPassar = 4;
 				//if(MissionManag+er::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
-				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
+				Camera::Follow(MissionManager::enemy->enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
 				//if(trancada == false && cooldown.Get() > 3){
 					showBox = true;
-					//Enemy::bloq = true;
+					//MissionManager::enemy->bloq = true;
 					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = time.Get();
@@ -261,16 +262,16 @@ void  Mission1::Update(float dt){
 				//}
 				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
 					showBox = false;
-					//Enemy::bloq = false;
+					//MissionManager::enemy->bloq = false;
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = ultimoTempo + 5;
 				}
-				//Enemy::SetDestinationPath(Vec2(1500, 300));
-				//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
+				//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300));
+				//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
 				//}
 			}*/
 
@@ -292,9 +293,9 @@ void  Mission1::Update(float dt){
 			}
 
 			if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
-					/*&& Enemy::show == false*/){
-				Enemy::show = true;
-				//if(Enemy::turn == 1)
+					/*&& MissionManager::enemy->show == false*/){
+				MissionManager::enemy->show = true;
+				//if(MissionManager::enemy->turn == 1)
 				count ++;
 				//SceneDoor::count = FECHA;
 				//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
@@ -303,16 +304,16 @@ void  Mission1::Update(float dt){
 
 					SceneDoor::count = ABRE;
 					SceneDoor::ValorPassar = 16;
-					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 				}
 				//std::cout << trancada << std::endl;
 				if(trancada == false){
 					if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
 						showBox = true;
-						//Enemy::bloq = true;
+						//MissionManager::enemy->bloq = true;
 						SceneDoor::count = ABRE;
 						SceneDoor::ValorPassar = 26;
 						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
@@ -325,13 +326,13 @@ void  Mission1::Update(float dt){
 						ultimoTempo = 8;
 					if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
 						showBox = false;
-						//Enemy::bloq = false;
+						//MissionManager::enemy->bloq = false;
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 						ultimoTempo = 12;
 						//SceneDoor::count = ABRE;
 					}
-					if(Enemy::enemy->box.Inside(Rect(970, 100, 20, 20))){
+					if(MissionManager::enemy->box.Inside(Rect(970, 100, 20, 20))){
 						//SceneDoor::count = FECHA;
 					}
 
@@ -368,20 +369,20 @@ void  Mission1::Update(float dt){
 			}
 
 		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
-			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
-				Enemy::enemy->box.x = 230;
-				Enemy::enemy->box.y = 175;
-				Enemy::show = true;
+
+			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
+				MissionManager::enemy->SetPosition(230, 175);
+				MissionManager::enemy->show = true;
 				SceneDoor::count = ABRE;
 				SceneDoor::ValorPassar = 4;
-				//if(MissionManag+er::player->lastPicked == "InventoryBear"){
+				//if(MissionManager::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
-				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
+				Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
 				//if(trancada == false && cooldown.Get() > 3){
 				showBox = true;
-				//Enemy::bloq = true;
+				//MissionManager::enemy->bloq = true;
 				falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = time.Get();
@@ -389,16 +390,16 @@ void  Mission1::Update(float dt){
 				//}
 				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
 					showBox = false;
-					//Enemy::bloq = false;
+					//MissionManager::enemy->bloq = false;
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = ultimoTempo + 5;
 				}
-					//Enemy::SetDestinationPath(Vec2(1500, 300));
-					//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
-					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
+					//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300));
+					//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
+					MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
 					//}
 			}
 
@@ -481,23 +482,25 @@ void Mission1::SetObjectStage(){
 void Mission1::SetObjectHall(){
 	//SceneWindow* Window = new SceneWindow(350, 70);
 	//objectHall.emplace_back(Window);
+
 	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
+
 	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/object-key.png");
 	objectHall.emplace_back(Key);
-	Enemy* E = new Enemy(500, 110, "img/sprite-mom.png");
-	objectHall.emplace_back(E);
+
 	//PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	//objectHall.emplace_back(Bear);
+
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 }
 
 void Mission1::SetObjectLivingRoom(){
-
 	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	//objectLivingRoom.emplace_back(Bear);
-	//Enemy* E2 = new Enemy(500, 110, "img/sprite-mom.png");
-	//objectLivingRoom.emplace_back(E2);
+
+	MovingObject* Vase = new MovingObject(725, 327, "img/scene-vaso.png");
+	objectLivingRoom.emplace_back(Vase);
 
 }

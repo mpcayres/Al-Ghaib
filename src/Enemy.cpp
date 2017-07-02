@@ -10,9 +10,6 @@
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Enemy* Enemy::enemy;
-bool Enemy::show, Enemy::arrived, Enemy::collidingPlayer, Enemy::dead, Enemy::bloq;
-
 Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 
 	sp.SetScaleX(2);
@@ -38,13 +35,10 @@ Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 
 	rotation = 0;
 	speed.y = speed.x = 0;
-	enemy = this;
 	direcaoShift = false;
 }
 
-Enemy::~Enemy(){
-	enemy = nullptr;
-}
+Enemy::~Enemy(){ }
 
 void Enemy::Update(float dt){
 	if(show && !bloq){
@@ -103,6 +97,11 @@ void Enemy::Update(float dt){
 	collidingPlayer = false;
 }
 
+void Enemy::SetPosition(float x, float y){
+	box.x = x;
+	box.y = y;
+}
+
 void Enemy::SetDirecao(int dir){
 	direcao = (InvBox) dir;
 	sp.SetFrame(1, direcao);
@@ -117,34 +116,28 @@ bool Enemy::IsDead(){
 	return dead;
 }
 
-
-void Enemy::Shoot(){
-	Vec2 aux;
-	aux.x = 70;
-	aux.y = 0;
-	//aux = aux.Rotate(cannonAngle);
-}
-
 bool Enemy::NotifyCollision(GameObject& other){
-	if(other.Is("CollidableObject")){
+	if(show){
+		if(other.Is("CollidableObject")){
 
-		if(seen && MissionManager::player != nullptr){
-			//if(MissionManager::player != nullptr){
-			Vec2 aux;
-			destination.x = MissionManager::player->box.x;
-			destination.y = MissionManager::player->box.y;
-			//seen = true;
+			if(seen && MissionManager::player != nullptr){
+				//if(MissionManager::player != nullptr){
+				Vec2 aux;
+				destination.x = MissionManager::player->box.x;
+				destination.y = MissionManager::player->box.y;
+				//seen = true;
 
-			aux.x = box.x; aux.y = box.y;
-			speed = (destination.Sub(aux)).Normalize();
-			speed.x = speed.x*SPEED_CONTROL;
-			speed.y = speed.y*SPEED_CONTROL;
-				//}
+				aux.x = box.x; aux.y = box.y;
+				speed = (destination.Sub(aux)).Normalize();
+				speed.x = speed.x*SPEED_CONTROL;
+				speed.y = speed.y*SPEED_CONTROL;
+					//}
+			}
 		}
-	}
-	if(other.Is("Player")){
-		seen = false;
-		collidingPlayer = true;
+		if(other.Is("Player")){
+			seen = false;
+			collidingPlayer = true;
+		}
 	}
 
 	return false;
@@ -267,8 +260,8 @@ void Enemy::DefinedPath(){
 			}
 		}
 
-
 }
+
 void Enemy::Pursuit(){
 	Vec2 aux;
 
