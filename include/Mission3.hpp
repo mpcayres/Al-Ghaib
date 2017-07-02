@@ -26,12 +26,13 @@ public:
 private:
 	void SetObjectStage();
 	void SetObjectHall();
-	void SetObjectRoom();
+	void SetObjectLivingRoom();
 
 	static Music music;
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0;
+	bool bronca;
 };
 
 #endif /* SRC_MISSION3_HPP_ */

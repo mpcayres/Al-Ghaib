@@ -24,7 +24,7 @@ public:
 protected:
 	void SetObjectStage();
 	void SetObjectHall();
-	void SetObjectRoom();
+	void SetObjectLivingRoom();
 
 	bool played, endMission;
 	Text creepy1, creepy2, creepy3, creepy4, creepy5, creepy6;

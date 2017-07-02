@@ -51,7 +51,7 @@ void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, 
 		objectHall = std::move(objNew);
 	} else if(orig == "LivingRoomState"){
 		std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
-				objectLivingRoom = std::move(objNew);
+		objectLivingRoom = std::move(objNew);
 	}
 }
 

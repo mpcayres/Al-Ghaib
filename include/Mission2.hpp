@@ -26,7 +26,7 @@ public:
 private:
 	void SetObjectStage();
 	void SetObjectHall();
-	void SetObjectRoom();
+	void SetObjectLivingRoom();
 
 	int ultimoCat;
 	static Music music;

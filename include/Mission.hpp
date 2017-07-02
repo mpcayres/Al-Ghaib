@@ -68,7 +68,7 @@ protected:
 
 	virtual void SetObjectStage() = 0;
 	virtual void SetObjectHall() = 0;
-	virtual void SetObjectRoom() = 0;
+	virtual void SetObjectLivingRoom() = 0;
 
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom;
 	std::string initialState;

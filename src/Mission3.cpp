@@ -339,6 +339,6 @@ void Mission3::SetObjectHall(){
 	objectHall.emplace_back(Apple);
 }
 
-void Mission3::SetObjectRoom(){
+void Mission3::SetObjectLivingRoom(){
 
 }

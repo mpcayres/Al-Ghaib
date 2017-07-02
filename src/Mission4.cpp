@@ -161,6 +161,6 @@ void Mission4::SetObjectHall(){
 	objectHall.emplace_back(gatinho);
 }
 
-void Mission4::SetObjectRoom(){
+void Mission4::SetObjectLivingRoom(){
 
 }

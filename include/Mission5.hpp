@@ -26,7 +26,7 @@ public:
 private:
 	void SetObjectStage();
 	void SetObjectHall();
-	void SetObjectRoom();
+	void SetObjectLivingRoom();
 
 	static Music music;
 	bool paradoUrso, paradoGato;

@@ -238,6 +238,8 @@ void  Mission1::Update(float dt){
 				ultimoTempo = 6;
 			}
 			//MÃE APARECENDO NO CORREDOR
+/*
+			//COMEÇO MÃE TE PEGANDO  =  AGORA ISSO É NA SALA
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
 				Enemy::show = true;
 				SceneDoor::count = ABRE;
@@ -268,7 +270,13 @@ void  Mission1::Update(float dt){
 				Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
 				Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
 				//}
-			}
+			}*/
+
+			//FIM MÃE TE PEGANDO
+
+
+
+
 			if(time.Get() > 5 && time.Get() < 6 && played == false){
 				Sound portaDestrancando = Sound ("audio/destrancando.wav");
 				portaDestrancando.Play(0);
@@ -349,42 +357,48 @@ void  Mission1::Update(float dt){
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 			MessageDoor(dt);
-		}
-		if((MissionManager::missionManager->GetStage("HallState") &&
+		} else if((MissionManager::missionManager->GetStage("HallState") &&
 				MissionManager::missionManager->countHallState > 1)){
 			if(time.Get() < 4 && trancada == false && cooldown.Get() > 3){
 				showBox = false;
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
+
+		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
+
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && Enemy::show == false){
 				Enemy::show = true;
-				//if(MissionManager::player->lastPicked == "InventoryBear"){
+				SceneDoor::count = ABRE;
+				SceneDoor::ValorPassar = 4;
+				//if(MissionManag+er::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				Camera::Unfollow();
 				Camera::Follow(Enemy::enemy, CAMERA_TYPE1);
 				Camera::Zoom(2, true);
-				if(time.Get() > 4 && trancada == false && cooldown.Get() > 3){
-					showBox = true;
-					//Enemy::bloq = true;
-					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS DE CRIANÇA!");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 3;
-				}
-				if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
+				//if(trancada == false && cooldown.Get() > 3){
+				showBox = true;
+				//Enemy::bloq = true;
+				falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = time.Get();
+				//std::cout << ultimoTempo << std::endl;
+				//}
+				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
 					showBox = false;
 					//Enemy::bloq = false;
 					falas.SetText(" ");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 6;
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					ultimoTempo = ultimoTempo + 5;
 				}
-				//Enemy::SetDestinationPath(Vec2(1500, 300));
-				//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(970, 140)); //2º DESTINO
-				Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
-				//}
+					//Enemy::SetDestinationPath(Vec2(1500, 300));
+					//Enemy::SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
+					Enemy::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
+					Enemy::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
+					Enemy::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
+					//}
 			}
+
 		}
 	}
 
@@ -466,19 +480,24 @@ void Mission1::SetObjectHall(){
 	//objectHall.emplace_back(Window);
 	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
-	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/minionbullet1.png");
+	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/object-key.png");
 	objectHall.emplace_back(Key);
 	Enemy* E = new Enemy(500, 110, "img/sprite-mom.png");
 	objectHall.emplace_back(E);
-	PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
-	objectHall.emplace_back(Bear);
+	//PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	//objectHall.emplace_back(Bear);
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 }
 
-void Mission1::SetObjectRoom(){
+void Mission1::SetObjectLivingRoom(){
 
-	PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
-	objectLivingRoom.emplace_back(Bear);
+	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	//objectLivingRoom.emplace_back(Bear);
+	Enemy* E = new Enemy(220, 175, "img/sprite-mom.png");
+	objectLivingRoom.emplace_back(E);
+
+	MovingObject* Vase = new MovingObject(725, 327, "img/scene-vaso.png");
+	objectLivingRoom.emplace_back(Vase);
 
 }

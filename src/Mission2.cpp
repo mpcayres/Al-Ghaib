@@ -406,6 +406,6 @@ void Mission2::SetObjectHall(){
 		objectHall.emplace_back(Cadeira);
 }
 
-void Mission2::SetObjectRoom(){
+void Mission2::SetObjectLivingRoom(){
 
 }
