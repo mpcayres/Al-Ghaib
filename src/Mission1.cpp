@@ -445,7 +445,7 @@ void Mission1::SetObjectStage(){
 	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
 	//objectStage.emplace_back(Vaso);
 
-	MovingObject* Cadeira = new MovingObject(700, 320, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(700, 320, "img/scene-cadeira.png", true);
 	objectStage.emplace_back(Cadeira);
 }
 

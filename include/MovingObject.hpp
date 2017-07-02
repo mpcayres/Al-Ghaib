@@ -8,7 +8,7 @@
 
 class MovingObject : public GameObject {
 public:
-	MovingObject(float x, float y, std::string img);
+	MovingObject(float x, float y, std::string img, bool up = false);
 
 	void Update(float dt);
 	void Render();
@@ -21,6 +21,7 @@ public:
 private:
 	Sprite sp;
 	float offset;
+	bool upObj;
 };
 
 #endif /* SRC_MOVINGOBJECT_H_ */

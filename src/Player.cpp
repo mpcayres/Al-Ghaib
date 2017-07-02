@@ -123,7 +123,7 @@ void Player::Update(float dt){
 			} else if(direcao == OESTE){
 				box.x -= 10;
 			} else if(direcao == NORTE){
-				//box.x -= 10;
+				box.x += 8;
 			}
 			spKinderClimbing.SetFrame(0, direcao);
 
@@ -134,13 +134,15 @@ void Player::Update(float dt){
 		spKinderDown.Update(dt, dirDown > 1 ? dirDown - 2 : dirDown + 2, false);
 		timeCooldown.Update(dt);
 		if(timeCooldown.Get() > 0.7){
-			/*if(dirDown == LESTE){
+			if(dirDown == LESTE){
 				box.x -= 30;
+				box.y += 15;
 			} else if(dirDown == OESTE){
 				box.x += 10;
+				box.y += 15;
 			} else if(dirDown == NORTE){
 				box.y -= 10;
-			}*/
+			}
 			//MissionManager::player->box.x = MissionManager::player->previousPos.x;
 			//MissionManager::player->box.y = MissionManager::player->previousPos.y;
 			spKinderDown.SetFrame(0, dirDown > 1 ? dirDown - 2 : dirDown + 2);

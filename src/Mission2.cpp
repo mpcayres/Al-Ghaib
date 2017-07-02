@@ -375,7 +375,7 @@ void Mission2::SetObjectStage(){
 	objectStage.emplace_back(Bau);
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
-	//MovingObject* Cadeira = new MovingObject(650, 300, "img/scene-cadeira.png");
+	//MovingObject* Cadeira = new MovingObject(650, 300, "img/scene-cadeira.png", true);
 	//objectStage.emplace_back(Cadeira);
 }
 
