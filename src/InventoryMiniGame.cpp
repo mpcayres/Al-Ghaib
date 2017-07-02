@@ -1,8 +1,8 @@
 #include "InventoryMiniGame.hpp"
 #include "MissionManager.hpp"
 
-InventoryMiniGame::InventoryMiniGame(std::string file, std::string file2, std::string file3){
-	sp = Sprite(file);
+InventoryMiniGame::InventoryMiniGame(std::string file, std::string file2, std::string file3) :
+	InventoryObject(file) {
 	sp2 = Sprite(file2);
 	sp3 = Sprite(file3);
 	timesPressed = 0;
@@ -30,11 +30,3 @@ bool InventoryMiniGame::IsObject(std::string type){
 std::string InventoryMiniGame::GetObject(){
 	return "InventoryMiniGame";
 }
-
-int InventoryMiniGame::GetWidth(){ return sp.GetScaledWidth();}
-
-int InventoryMiniGame::GetHeight(){ return sp.GetScaledHeight(); }
-
-void InventoryMiniGame::SetScaleX(float scale) { sp.SetScaleX(scale);}
-
-void InventoryMiniGame::SetScaleY(float scale) { sp.SetScaleY(scale);}

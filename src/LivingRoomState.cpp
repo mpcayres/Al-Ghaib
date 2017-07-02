@@ -175,7 +175,7 @@ void LivingRoomState::SetInitialObjectArray(){
 		objectArray.emplace_back(Bau);
 	} else if ( MissionManager::missionManager->GetNumMission() != 1){
 		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
-					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
 	}
 }

@@ -2,7 +2,6 @@
 #define SRC_SCENEDOOR_HPP_
 
 #include "SceneObject.hpp"
-#include "Text.hpp"
 #include <iostream>
 
 #define ABRE 0
@@ -20,15 +19,15 @@ public:
 	void SetChangeState(bool change);
 	std::string GetDest();
 	//bool Tried();
+
 	static int ValorPassar;
 	static int count;
-	bool changeState;
 
-private:
+protected:
 	int contador;
 	bool lock;
 	std::string dest;
-
+	bool changeState;
 	//bool tried;
 };
 

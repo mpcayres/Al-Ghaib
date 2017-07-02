@@ -12,13 +12,9 @@ public:
 	bool Action(GameObject* other);
 	bool IsObject(std::string type);
 	std::string GetObject();
-	int GetHeight();
-	int GetWidth();
-	void SetScaleX(float scale);
-	void SetScaleY(float scale);
 
 protected:
-	Sprite sp, sp2, sp3;
+	Sprite sp2, sp3;
 	int timesPressed;
 };
 

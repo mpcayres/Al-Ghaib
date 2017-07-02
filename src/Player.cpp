@@ -9,6 +9,7 @@
 #include "InventoryWool.hpp"
 #include "InventoryScissors.hpp"
 #include "InventoryNeedle.hpp"
+#include "InventoryControl.hpp"
 #include "Sound.hpp"
 #include <iostream>
 
@@ -38,9 +39,9 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	spInventory = Sprite("img/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
 	spInventorybox = Sprite("img/box.png", 1, 1, 1);
-	spInventorybox.SetScaleX(1.5); spInventorybox.SetScaleY(1.5);
+	spInventorybox.SetScaleX(1.6); spInventorybox.SetScaleY(1.6);
 	spInventoryboxSelected = Sprite("img/box-select.png", 1, 1, 1);
-	spInventoryboxSelected.SetScaleX(1.5); spInventoryboxSelected.SetScaleY(1.5);
+	spInventoryboxSelected.SetScaleX(1.6); spInventoryboxSelected.SetScaleY(1.6);
 
 	box.x = x; box.y = y;
 	box.w = spKinder.GetScaledWidth();
@@ -103,6 +104,8 @@ void Player::Update(float dt){
 					MissionManager::player->DeleteInventory();
 					AddInventory("InventoryArame");
 				}
+			} else if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryControl")){
+				inHand->Action(nullptr);
 			}
 			if(animShowing){
 				spAnimKinder.Update(dt);
@@ -558,21 +561,26 @@ void Player::AddInventory(std::string obj){
 		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
 		timePicked.Restart(); showPicked = true;*/
 		inventory.emplace_back(new InventoryBear());
-	}else if(obj == "InventoryWool"){
+	} else if(obj == "InventoryWool"){
 		spPicked = Sprite("img/obj_novelo.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryWool());
-	}else if(obj == "InventoryNeedle"){
+	} else if(obj == "InventoryNeedle"){
 		spPicked = Sprite("img/object-needle.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryNeedle());
-	}else if(obj == "InventoryScissors"){
+	} else if(obj == "InventoryScissors"){
 		spPicked = Sprite("img/object-scissors.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryScissors());
+	} else if(obj == "InventoryControl"){
+		spPicked = Sprite("img/object-control.png");
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryControl());
 	}
 }
 

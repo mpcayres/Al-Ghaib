@@ -1,16 +1,9 @@
 #include "InventoryKey.hpp"
 #include "SceneDoor.hpp"
 
-InventoryKey::InventoryKey(std::string file){
-	sp = Sprite(file);
-	if(file == "InventoryKey") sp.SetScaleX(0.5); sp.SetScaleY(0.5);
-}
+InventoryKey::InventoryKey(std::string file) : InventoryObject(file) { }
 
 InventoryKey::~InventoryKey(){ }
-
-void InventoryKey::Render(int x, int y){
-	sp.Render(x, y, 0);
-}
 
 bool InventoryKey::Action(GameObject* other){
 	if(other->Is("SceneDoor")){
@@ -26,11 +19,3 @@ bool InventoryKey::IsObject(std::string type){
 std::string InventoryKey::GetObject(){
 	return "InventoryKey";
 }
-
-int InventoryKey::GetWidth(){ return sp.GetScaledWidth();}
-
-int InventoryKey::GetHeight(){ return sp.GetScaledHeight(); }
-
-void InventoryKey::SetScaleX(float scale) { sp.SetScaleX(scale);}
-
-void InventoryKey::SetScaleY(float scale) { sp.SetScaleY(scale);}
