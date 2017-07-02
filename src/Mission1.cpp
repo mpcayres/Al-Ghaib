@@ -128,6 +128,7 @@ void  Mission1::Update(float dt){
 		time.Restart();
 		endMission = true;
 	} else if(Enemy::collidingPlayer){
+		//Quando a mae te pega sem vc ter o urso, deixar mais suave
 		MissionManager::player->SetBlocked(false);
 		MissionManager::player->SetBloqInv(false);
 		Game::GetInstance().GetCurrentState().SetPopRequested();

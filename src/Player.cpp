@@ -324,7 +324,7 @@ void Player::Update(float dt){
 			if(inventoryIndex + 1 <= (int) inventory.size()-1 && inventoryIndex + 1 < 16)
 				inventoryIndex += 1;
 		}
-		if(InputInstance.KeyPress(Z_KEY)){
+		if(InputInstance.KeyPress(X_KEY) || InputInstance.KeyPress(ENTER_KEY)){
 			inHandIndex = inventoryIndex;
 			showingInventory = false;
 		}
