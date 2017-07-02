@@ -1,21 +1,25 @@
 #include "InventoryMiniGame.hpp"
 #include "MissionManager.hpp"
 
-InventoryMiniGame::InventoryMiniGame(std::string file){
+InventoryMiniGame::InventoryMiniGame(std::string file, std::string file2, std::string file3){
 	sp = Sprite(file);
+	sp2 = Sprite(file2);
+	sp3 = Sprite(file3);
 	timesPressed = 0;
 }
 
 InventoryMiniGame::~InventoryMiniGame(){ }
 
 void InventoryMiniGame::Render(int x, int y){
-	sp.Render(x, y, 0);
+	if(timesPressed <= 5) sp.Render(x, y, 0);
+	if(timesPressed > 5 && timesPressed < 20) sp2.Render(x, y, 0);
+	if(timesPressed > 20) sp3.Render(x, y, 0);
 }
 
 bool InventoryMiniGame::Action(GameObject* other){
 	timesPressed++;
 	MissionManager::player->AddRuido(0.2*50);
-	if(timesPressed > 25) return true;
+	if(timesPressed > 30) return true;
 	return false;
 }
 

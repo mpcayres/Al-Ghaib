@@ -15,6 +15,7 @@ public:
 	bool IsDead();
 	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
+
 	Vec2 previousPos;
 
 private:

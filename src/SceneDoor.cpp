@@ -61,7 +61,7 @@ bool SceneDoor::Is(std::string type){
 }
 
 bool SceneDoor::ReceiveAction(InventoryObject* other){
-	if(other->IsObject("InventoryKey")){
+	if(other->IsObject("InventoryKey") || other->IsObject("InventoryArame")){
 		if(lock == true){
 			lock = false;
 			return true;

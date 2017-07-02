@@ -3,6 +3,7 @@
 #include "Game.hpp"
 #include "Animation.hpp"
 #include "InventoryKey.hpp"
+#include "InventoryArame.hpp"
 #include "InventoryClown.hpp"
 #include "InventoryBear.hpp"
 #include "InventoryWool.hpp"
@@ -11,25 +12,25 @@
 #include "Sound.hpp"
 #include <iostream>
 
-#define MODULO_SPEED		5
-#define AUMENTO_VELOCIDADE	2
-#define DESACELERA			1
-
-bool Player::drogado = false;
-#define MODULO_SPEED_DROGADO		2
+#define MODULO_SPEED			5
+#define AUMENTO_VELOCIDADE		2
+#define DESACELERA				1
+#define MODULO_SPEED_DROGADO	2
 
 
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
 		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
 		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
-		spAnimKinder("img/sprite-kinder-run.png", 15, 0.4, 4),
+		spAnimKinder("img/sprite-kinder-breaking.png", 6, 0.4, 1),
 		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 4),
-		spKinderClimbing("img/kinder-cilmb-spritesheet-Big.png", 12, 0.13, 2){
+		spKinderClimbing("img/sprite-kinder-climb.png", 12, 0.13, 4),
+		spKinderDown("img/sprite-kinder-down.png", 6, 0.13, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 	spAnimKinder.SetScaleX(2.5); spAnimKinder.SetScaleY(2.5);
 	spKinderPush.SetScaleX(2.5); spKinderPush.SetScaleY(2.5);
 	spKinderClimbing.SetScaleX(2.5); spKinderClimbing.SetScaleY(2.5);
+	spKinderDown.SetScaleX(2.5); spKinderDown.SetScaleY(2.5);
 
 	spNoise = Sprite("img/sprite-energia.png", 9, 1 ,1);
 	spNoise.SetScaleX(0.5); spNoise.SetScaleY(0.5);
@@ -37,9 +38,9 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	spInventory = Sprite("img/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
 	spInventorybox = Sprite("img/box.png", 1, 1, 1);
-	spInventorybox.SetScaleX(1.2); spInventorybox.SetScaleY(1.2);
+	spInventorybox.SetScaleX(1.5); spInventorybox.SetScaleY(1.5);
 	spInventoryboxSelected = Sprite("img/box-select.png", 1, 1, 1);
-	spInventoryboxSelected.SetScaleX(1.2); spInventoryboxSelected.SetScaleY(1.2);
+	spInventoryboxSelected.SetScaleX(1.5); spInventoryboxSelected.SetScaleY(1.5);
 
 	box.x = x; box.y = y;
 	box.w = spKinder.GetScaledWidth();
@@ -68,6 +69,9 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	direcaoShift = false;
 
 	ruido = 0;
+	dirDown = 0;
+
+	drogado = false;
 	hidden = false;
 	animShowing = false;
 	door = false;
@@ -77,6 +81,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	bloqHUD = false;
 	bloqInv = false;
 	climbing = false;
+	climbingDown = false;
 }
 
 Player::~Player(){
@@ -88,15 +93,15 @@ Player::~Player(){
 void Player::Update(float dt){
 	int multiplicador;
 	InputInstance = InputManager::GetInstance();
-	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject && !blocked && !climbing){
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !aboveObject && !blocked && !climbing && !climbingDown){
 		std::shared_ptr<InventoryObject> inHand = GetInHand();
 		if(inHand != nullptr){
-			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryMiniGame")){
+			if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryClown")){
 				animShowing = true;
 				timeCooldown.Restart();
 				if(inHand->Action(nullptr) == true){
 					MissionManager::player->DeleteInventory();
-					AddInventory("InventoryKey");
+					AddInventory("InventoryArame");
 				}
 			}
 			if(animShowing){
@@ -110,28 +115,42 @@ void Player::Update(float dt){
 		}
 	}
 	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && climbing){
-		if(direcao == LESTE)
-			spKinderClimbing.Update(dt,0, false);
-		else if(direcao == OESTE)
-			spKinderClimbing.Update(dt,1, false);
+		spKinderClimbing.Update(dt, direcao, false);
 		timeCooldown.Update(dt);
-		if(timeCooldown.Get() > 1.4){
+		if(timeCooldown.Get() > 1.5){
 			if(direcao == LESTE){
-				box.x+=30;
-				spKinderClimbing.SetFrame(0, 0);
-			}
-			else {
+				box.x += 30;
+			} else if(direcao == OESTE){
 				box.x -= 10;
-				spKinderClimbing.SetFrame(0 , 1);
+			} else if(direcao == NORTE){
+				//box.x -= 10;
 			}
+			spKinderClimbing.SetFrame(0, direcao);
 
 			climbing = false;
 			timeCooldown.Restart();
 		}
+	} else if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && climbingDown){
+		spKinderDown.Update(dt, dirDown > 1 ? dirDown - 2 : dirDown + 2, false);
+		timeCooldown.Update(dt);
+		if(timeCooldown.Get() > 0.7){
+			/*if(dirDown == LESTE){
+				box.x -= 30;
+			} else if(dirDown == OESTE){
+				box.x += 10;
+			} else if(dirDown == NORTE){
+				box.y -= 10;
+			}*/
+			//MissionManager::player->box.x = MissionManager::player->previousPos.x;
+			//MissionManager::player->box.y = MissionManager::player->previousPos.y;
+			spKinderDown.SetFrame(0, dirDown > 1 ? dirDown - 2 : dirDown + 2);
 
+			climbingDown = false;
+			timeCooldown.Restart();
+		}
 	}
 
-	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && !climbing){
+	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && !climbing && !climbingDown){
 		direcaoShift = false;
 
 		//SETA PARA CIMA//
@@ -213,7 +232,6 @@ void Player::Update(float dt){
 
 		if(!aboveObject){
 			if(speed.x != 0 || speed.y != 0){
-
 
 				spKinder.Update(dt, direcao, direcaoShift);
 				spKinderRun.Update(dt, direcao, direcaoShift);
@@ -360,6 +378,8 @@ void Player::Render(){
 	if(!hidden && !animShowing){
 		if(climbing){
 			spKinderClimbing.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+		} else if(climbingDown){
+			spKinderDown.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		} else if(MissionManager::missionManager->movingBox){
 			spKinderPush.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		} else if(running){
@@ -367,7 +387,7 @@ void Player::Render(){
 		} else{
 			spKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 		}
-	} else if(animShowing && !climbing){
+	} else if(animShowing && !climbing && !climbingDown){
 		spAnimKinder.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 	}
 }
@@ -521,9 +541,14 @@ void Player::AddInventory(std::string obj){
 		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryKey());
+	} else if(obj == "InventoryArame"){
+		spPicked = Sprite("img/object-arame.png");
+		spPicked.SetScaleX(4); spPicked.SetScaleY(4);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryArame());
 	} else if(obj == "InventoryClown"){
-		spPicked = Sprite("img/key.png");
-		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		spPicked = Sprite("img/object-caixa-sem-palhaco.png");
+		spPicked.SetScaleX(4); spPicked.SetScaleY(4);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryClown());
 	} else if(obj == "InventoryBear"){

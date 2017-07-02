@@ -15,7 +15,7 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	countBear = 0;
 	countCat = 0;
 
-	Player::drogado = true;
+	MissionManager::player->drogado = true;
 
 	SDL_Color redwine = SDL_Color();
 		redwine.r = 102;

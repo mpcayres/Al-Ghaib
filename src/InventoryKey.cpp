@@ -1,8 +1,8 @@
 #include "InventoryKey.hpp"
 #include "SceneDoor.hpp"
 
-InventoryKey::InventoryKey(){
-	sp = Sprite("img/object-key.png");
+InventoryKey::InventoryKey(std::string file){
+	sp = Sprite(file);
 }
 
 InventoryKey::~InventoryKey(){ }

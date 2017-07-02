@@ -65,15 +65,14 @@ public:
 
 	//Vec2 previousPos;
 	Rect limits;
-	bool climbing;
+	bool climbing, climbingDown, drogado;
+	int dirDown;
 	std::string lastPicked;
 	std::vector<Rect> wallLimits;
 
-	static bool drogado;
-
 private:
 	Timer timeRuido, timeCooldown, timeSound, timePicked;
-	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush, spKinderClimbing;
+	Sprite spKinder, spKinderRun, spAnimKinder, spKinderPush, spKinderClimbing, spKinderDown;
 	Sprite spInventory, spInventorybox, spInventoryboxSelected;
 	Sprite spNoise, spPicked;
 

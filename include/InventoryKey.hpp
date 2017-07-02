@@ -5,7 +5,7 @@
 
 class InventoryKey : public InventoryObject {
 public:
-	InventoryKey();
+	InventoryKey(std::string file = "img/object-key.png");
 	~InventoryKey();
 
 	void Render(int x, int y);

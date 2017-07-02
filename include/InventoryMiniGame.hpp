@@ -5,7 +5,7 @@
 
 class InventoryMiniGame : public InventoryObject {
 public:
-	InventoryMiniGame(std::string file);
+	InventoryMiniGame(std::string file, std::string file2, std::string file3);
 	~InventoryMiniGame();
 
 	void Render(int x, int y);
@@ -18,7 +18,7 @@ public:
 	void SetScaleY(float scale);
 
 protected:
-	Sprite sp;
+	Sprite sp, sp2, sp3;
 	int timesPressed;
 };
 

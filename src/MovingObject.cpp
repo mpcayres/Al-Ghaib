@@ -31,28 +31,38 @@ void MovingObject::Render(){
 bool MovingObject::NotifyCollision(GameObject& other){
 	if(other.Is("EmptyBox")){
 		// PODEMOS DIMINUIR A REGIAO ANALISADA DO MOVING OBJECT PARA QUE NAO CONSIGA "PEGAR PELAS PONTAS"
-		if(InputManager::GetInstance().IsKeyDown(LCTRL_KEY) && InputManager::GetInstance().KeyPress(C_KEY)){
+		if(InputManager::GetInstance().IsKeyDown(LCTRL_KEY) && InputManager::GetInstance().KeyPress(C_KEY) &&
+				(MissionManager::player->GetDirecao() != Player::SUL)){
 			//colocar animacao para subir na cadeira
 			if(!MissionManager::player->GetAboveObject()){
 
 				MissionManager::player->climbing = true;
-				if(MissionManager::player->box.x > box.x){
+				MissionManager::player->climbingDown = false;
+				if(MissionManager::player->GetDirecao() == Player::OESTE){
 					MissionManager::player->box.x = MissionManager::player->box.x - MissionManager::player->box.w/2 - 12;
 					MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
-				}else{
+				} else if(MissionManager::player->GetDirecao() == Player::LESTE){
 					MissionManager::player->box.x = box.x - MissionManager::player->box.w/2 - 8;
+					MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
+				} else if(MissionManager::player->GetDirecao() == Player::NORTE){
+					MissionManager::player->box.x = box.x - MissionManager::player->box.w/2;
 					MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2 - 12;
 				}
 
+				MissionManager::player->dirDown = MissionManager::player->GetDirecao();
 				MissionManager::player->ChangeAboveObject();
-
-				return true;
 			} else{
-				//MissionManager::player->climbing = true;
-				MissionManager::player->box.x = MissionManager::player->previousPos.x;
-				MissionManager::player->box.y = MissionManager::player->previousPos.y;
+				MissionManager::player->climbingDown = true;
+				MissionManager::player->climbing = false;
+
+				/*if(MissionManager::player->dirDown == Player::LESTE || MissionManager::player->dirDown == Player::OESTE){
+					MissionManager::player->box.x = MissionManager::player->previousPos.x;
+					MissionManager::player->box.y = box.y + box.h/2 - MissionManager::player->box.h/2;
+				} else{
+					MissionManager::player->box.x = box.x - MissionManager::player->box.w/2;
+					MissionManager::player->box.y = MissionManager::player->previousPos.y;
+				}*/
 				MissionManager::player->ChangeAboveObject();
-				return false;
 			}
 		} else if(InputManager::GetInstance().IsKeyDown(C_KEY) && !MissionManager::player->GetAboveObject()){
 			MissionManager::missionManager->movingBox = false;
