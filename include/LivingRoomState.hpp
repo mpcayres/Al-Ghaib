@@ -8,6 +8,7 @@
 #include "TileMap.hpp"
 
 
+
 class LivingRoomState : public State {
 public:
 	LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y);

@@ -566,14 +566,18 @@ void Player::AddInventory(std::string obj){
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryWool());
 	} else if(obj == "InventoryNeedle"){
+
 		spPicked = Sprite("img/object-needle.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryNeedle());
+
 	} else if(obj == "InventoryScissors"){
+
 		spPicked = Sprite("img/object-scissors.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
+
 		inventory.emplace_back(new InventoryScissors());
 	} else if(obj == "InventoryControl"){
 		spPicked = Sprite("img/object-control.png");

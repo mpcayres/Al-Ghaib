@@ -507,6 +507,9 @@ void Mission1::SetObjectHall(){
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
+
+	MovingObject* Banco = new MovingObject(100, 470, "img/moveis/sala/banquinho.png", true);
+	objectHall.emplace_back(Banco);
 }
 
 void Mission1::SetObjectLivingRoom(){
@@ -515,6 +518,9 @@ void Mission1::SetObjectLivingRoom(){
 
 	SceneObject* gatinho = new SceneObject(200, 500,"img/object-novelo.png", "img/object-novelo.png", true, 0.5, 0.5);
 	objectLivingRoom.emplace_back(gatinho);
+
+	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco);
 
 
 }

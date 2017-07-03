@@ -111,27 +111,32 @@ void Cat::Shoot(){
 }
 
 bool Cat::NotifyCollision(GameObject& other){
-	if(other.Is("CollidableObject")){
+	if(show){
+				if(other.Is("CollidableObject")){
 
-		if( MissionManager::player != nullptr){
-			//if(MissionManager::player != nullptr){
-			Vec2 aux;
-			destination.x = MissionManager::player->box.x;
-			destination.y = MissionManager::player->box.y;
-			//seen = true;
+					if(seen && MissionManager::player != nullptr){
+						//if(MissionManager::player != nullptr){
+						Vec2 aux;
+						destination.x = MissionManager::player->box.x;
+						destination.y = MissionManager::player->box.y;
+						//seen = true;
 
-			aux.x = box.x; aux.y = box.y;
-			speed = (destination.Sub(aux)).Normalize();
-			speed.x = speed.x*SPEED_CONTROL;
-			speed.y = speed.y*SPEED_CONTROL;
-				//}
-		}
-	}
-	if(other.Is("Player")){
-		return MissionManager::player->CollidingPlayer(box, 0);
-	}
+						aux.x = box.x; aux.y = box.y;
+						speed = (destination.Sub(aux)).Normalize();
+						speed.x = speed.x*SPEED_CONTROL;
+						speed.y = speed.y*SPEED_CONTROL;
+							//}
+					}
+				}
+				if(other.Is("Player")){
+						return MissionManager::player->CollidingPlayer(box, 2);
+					}
 
-	return false;
+
+			}
+
+
+		return false;
 }
 
 void Cat::SetDestinationPath(Vec2 path){

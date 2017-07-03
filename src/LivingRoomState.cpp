@@ -5,7 +5,9 @@
 #include "Walls.hpp"
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
+#include "ScenePortal.hpp"
 #include "MovingObject.hpp"
+#include "StealthObject.hpp"
 
 #include <iostream>
 
@@ -35,7 +37,7 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 
 	RandomState();
 	LoadAssets();
-	//std::cout << "HSC2" << std::endl;
+	std::cout << "LR2" << std::endl;
 }
 
 LivingRoomState::~LivingRoomState() {
@@ -133,8 +135,8 @@ void LivingRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneObject* Banco = new SceneObject(650, 370, "img/moveis/sala/banquinho.png", "img/moveis/sala/banquinho.png");
-	objectArray.emplace_back(Banco);
+	//MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
+	//objectArray.emplace_back(Banco);
 
 	SceneObject* Sofa = new SceneObject(500, 280, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
 	objectArray.emplace_back(Sofa);

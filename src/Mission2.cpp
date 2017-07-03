@@ -44,6 +44,7 @@ Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 
 	SetObjectStage();
 	SetObjectHall();
+	SetObjectLivingRoom();
 }
 
 Mission2::~Mission2() {
@@ -400,13 +401,17 @@ void Mission2::SetObjectHall(){
 	Cat* gatinho = new Cat(1000, 200);
 	objectHall.emplace_back(gatinho);
 
-	MovingObject* Cadeira = new MovingObject(280, 303, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(280, 303, "img/scene-cadeira.png", true);
 		objectHall.emplace_back(Cadeira);
+
 }
 
 void Mission2::SetObjectLivingRoom(){
 
-	PickUpObject* Agulha= new PickUpObject(530, 300, "InventoryNeedle", "img/object-needle.png");
+	PickUpObject* Agulha = new PickUpObject(670, 400, "InventoryNeedle", "img/object-needle.png", false, 0.5, 0.5);
 	objectLivingRoom.emplace_back(Agulha);
+
+	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco);
 
 }
