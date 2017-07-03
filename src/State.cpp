@@ -73,6 +73,11 @@ void State::RemoveAll(){
 			MissionManager::enemy = (Enemy*) objectArray[i].release();
 			objectArray.erase(objectArray.begin() + i);
 			//std::cout << "alive " << objectArray.size() << " " << MissionManager::player->Is("Enemy") << std::endl;
+		} else if(objectArray[i].get()->Is("Cat")){
+			//std::cout << "remove " << objectArray.size() << " " << i << std::endl;
+			MissionManager::cat = (Cat*) objectArray[i].release();
+			objectArray.erase(objectArray.begin() + i);
+			//std::cout << "alive " << objectArray.size() << " " << MissionManager::player->Is("Cat") << std::endl;
 		}
 	}
 }

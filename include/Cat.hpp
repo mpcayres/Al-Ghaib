@@ -20,6 +20,7 @@ public:
 	~Cat();
 
 	void Update(float dt);
+	void SetPosition(float x, float y);
 	void Render();
 	bool IsDead();
 	bool NotifyCollision(GameObject& other);
@@ -30,25 +31,19 @@ public:
 	void SetDestinationPath(Vec2 path);
 	void SetDirecao(int dir);
 
-	static Cat * cat;
-
 	//Vec2 previousPos;
+	bool show, seen, arrived;
 
-	static bool show, seen;
-	static bool arrived;
 private:
 	Timer time;
 	Sprite sp;
 	Vec2 speed;
-	int hp;
 	//bool seen;
 	Vec2 destination;
 	//Vec2 destinationPath;
 	std::vector<Vec2> destinationPath;
 
-	InvBox direcao;
-
-	bool direcaoShift/*, stop*/;
+	//InvBox direcao;
 };
 
 #endif /* INCLUDE_Cat_HPP_ */

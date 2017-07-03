@@ -84,7 +84,6 @@ protected:
 	float ultimoTempo;
 	bool flagTimer;
 	bool trancada;
-	bool begin;
 	int state;
 	int count;
 	bool doorSound;

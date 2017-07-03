@@ -10,11 +10,6 @@
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Cat* Cat::cat;
-bool Cat::show = false;
-bool Cat::seen = false;
-bool Cat::arrived = false;
-
 Cat::Cat(float x, float y): sp("img/object-novelo.png"){
 	//stop = false;
 	sp.SetScaleX(0.5);
@@ -23,8 +18,7 @@ Cat::Cat(float x, float y): sp("img/object-novelo.png"){
 	//destinationPath.x = x;
 	//destinationPath.y = y;
 
-	show = false;
-
+	show = seen = arrived = false;
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();
@@ -36,15 +30,11 @@ Cat::Cat(float x, float y): sp("img/object-novelo.png"){
 	////direcao = SUL;
 	////direcaoShift = false;
 
-	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
-	cat = this;
 }
 
-Cat::~Cat(){
-	cat = nullptr;
-}
+Cat::~Cat(){ }
 
 void Cat::Update(float dt){
 	Vec2 aux, aux2;
@@ -93,13 +83,18 @@ void Cat::Update(float dt){
 	sp.SetFrame(1, ////direcao);
 }*/
 
+void Cat::SetPosition(float x, float y){
+	box.x = x;
+	box.y = y;
+}
+
 void Cat::Render(){
 	if(show)
 		sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool Cat::IsDead(){
-	return (hp <= 0);
+	return false;
 }
 
 
@@ -107,36 +102,33 @@ void Cat::Shoot(){
 	Vec2 aux;
 	aux.x = 70;
 	aux.y = 0;
-	//aux = aux.Rotate(cannonAngle);
 }
 
 bool Cat::NotifyCollision(GameObject& other){
 	if(show){
-				if(other.Is("CollidableObject")){
+		if(other.Is("CollidableObject")){
 
-					if(seen && MissionManager::player != nullptr){
-						//if(MissionManager::player != nullptr){
-						Vec2 aux;
-						destination.x = MissionManager::player->box.x;
-						destination.y = MissionManager::player->box.y;
-						//seen = true;
+			if(seen && MissionManager::player != nullptr){
+				//if(MissionManager::player != nullptr){
+				Vec2 aux;
+				destination.x = MissionManager::player->box.x;
+				destination.y = MissionManager::player->box.y;
+				//seen = true;
 
-						aux.x = box.x; aux.y = box.y;
-						speed = (destination.Sub(aux)).Normalize();
-						speed.x = speed.x*SPEED_CONTROL;
-						speed.y = speed.y*SPEED_CONTROL;
-							//}
-					}
-				}
-				if(other.Is("Player")){
-						return MissionManager::player->CollidingPlayer(box, 2);
-					}
-
-
+				aux.x = box.x; aux.y = box.y;
+				speed = (destination.Sub(aux)).Normalize();
+				speed.x = speed.x*SPEED_CONTROL;
+				speed.y = speed.y*SPEED_CONTROL;
+					//}
 			}
+		}
+		if(other.Is("Player")){
+			return MissionManager::player->CollidingPlayer(box, 2);
+		}
 
+	}
 
-		return false;
+	return false;
 }
 
 void Cat::SetDestinationPath(Vec2 path){
@@ -145,125 +137,126 @@ void Cat::SetDestinationPath(Vec2 path){
 
 void Cat::DefinedPath(){
 	Vec2 aux;
-		aux.x = box.x; aux.y = box.y;
-		//std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
-		if(aux.Distance(destinationPath.back())>2){
-		//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
-			if(aux.Distance(destinationPath.back())<= 5 ){
-					//printf("POPANDO");
+	aux.x = box.x; aux.y = box.y;
+	//std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
+	if(aux.Distance(destinationPath.back())>2){
+	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
+		if(aux.Distance(destinationPath.back())<= 5 ){
+				//printf("POPANDO");
 
-				arrived = true;
+			arrived = true;
+			box.x = destinationPath.back().x;
+			box.y = destinationPath.back().y;
+			destinationPath.pop_back();
+
+
+		}
+		else
+			arrived = false;
+		//if(destinationPath.empty())
+			//show = false;
+		if(MissionManager::player != nullptr){
+			/*destination.x = MissionManager::player->box.x;
+			destination.y = MissionManager::player->box.y;*/
+			//seen = true;
+
+			//aux.x = box.x; aux.y = box.y;
+			speed = (destinationPath.back().Sub(aux)).Normalize();
+			speed.x = speed.x*SPEED_CONTROL;
+			speed.y = speed.y*SPEED_CONTROL;
+		}
+
+		if(!arrived){
+			//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
+			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
+				if(destinationPath.back().x < box.x){
+					//std::cout << " OESTE " << std::endl;
+					//////direcao = OESTE;
+				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
+					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
+					//////direcao = LESTE;
+				}
+			}
+			else{
+					if(destinationPath.back().y < box.y){
+					//std::cout << " NORTE " << std::endl;
+					//////direcao = NORTE;
+				}
+				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
+					//std::cout << " SUL " << std::endl;
+					//////direcao = SUL;
+				}
+			}
+		//}
+
+		if (speed.x < 0 && speed.y < 0){
+			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
+				speed.y + box.y -  VALUE <= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
+				box.x = destinationPath.back().x - box.w/2;
+				box.y = destinationPath.back().y - box.h/2;
+
+				//seen = false;
+
+			} else{
+				previousPos.x = box.x;
+				previousPos.y = box.y;
+				box.x += speed.x;
+				box.y += speed.y;
+			}
+		} else if (speed.x > 0 && speed.y < 0){
+			if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
+					speed.y + box.y -  VALUE <= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
-				destinationPath.pop_back();
 
+				//seen = false;
 
-			}
-			else
-				arrived = false;
-			//if(destinationPath.empty())
-				//show = false;
-			if(MissionManager::player != nullptr){
-				/*destination.x = MissionManager::player->box.x;
-				destination.y = MissionManager::player->box.y;*/
-				//seen = true;
-
-				//aux.x = box.x; aux.y = box.y;
-				speed = (destinationPath.back().Sub(aux)).Normalize();
-				speed.x = speed.x*SPEED_CONTROL;
-				speed.y = speed.y*SPEED_CONTROL;
-			}
-
-			if(!arrived){
-				//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
-				if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
-					if(destinationPath.back().x < box.x){
-						//std::cout << " OESTE " << std::endl;
-						//////direcao = OESTE;
-					}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
-						//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
-						//////direcao = LESTE;
-					}
-				}
-				else{
-						if(destinationPath.back().y < box.y){
-						//std::cout << " NORTE " << std::endl;
-						//////direcao = NORTE;
-					}
-					else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
-						//std::cout << " SUL " << std::endl;
-						//////direcao = SUL;
-					}
-				}
-			//}
-
-			if (speed.x < 0 && speed.y < 0){
-				if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
-					speed.y + box.y -  VALUE <= destinationPath.back().y){
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x = destinationPath.back().x - box.w/2;
-					box.y = destinationPath.back().y - box.h/2;
-
-					//seen = false;
-
-				} else{
+				}else{
 					previousPos.x = box.x;
 					previousPos.y = box.y;
 					box.x += speed.x;
 					box.y += speed.y;
 				}
-			} else if (speed.x > 0 && speed.y < 0){
-				if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
-						speed.y + box.y -  VALUE <= destinationPath.back().y){
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x = destinationPath.back().x;
-					box.y = destinationPath.back().y;
+		} else if (speed.x < 0 && speed.y > 0){
+			if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
+					speed.y + box.y +  VALUE >= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
+				box.x = destinationPath.back().x;
+				box.y = destinationPath.back().y;
 
-					//seen = false;
+				//seen = false;
 
-					}else{
-						previousPos.x = box.x;
-						previousPos.y = box.y;
-						box.x += speed.x;
-						box.y += speed.y;
-					}
-			} else if (speed.x < 0 && speed.y > 0){
-				if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
-						speed.y + box.y +  VALUE >= destinationPath.back().y){
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x = destinationPath.back().x;
-					box.y = destinationPath.back().y;
-
-					//seen = false;
-
-					}else{
-						previousPos.x = box.x;
-						previousPos.y = box.y;
-						box.x += speed.x;
-						box.y += speed.y;
-					}
-			} else if (speed.x > 0 && speed.y > 0){
-				if(box.x +speed.x + VALUE >= destinationPath.back().x &&
-						speed.y + box.y + VALUE >= destinationPath.back().y){
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x = destinationPath.back().x;
-					box.y = destinationPath.back().y;
-
-					//seen = false;
-				} else{
+				}else{
 					previousPos.x = box.x;
 					previousPos.y = box.y;
 					box.x += speed.x;
 					box.y += speed.y;
 				}
-			}
+		} else if (speed.x > 0 && speed.y > 0){
+			if(box.x +speed.x + VALUE >= destinationPath.back().x &&
+					speed.y + box.y + VALUE >= destinationPath.back().y){
+				previousPos.x = box.x;
+				previousPos.y = box.y;
+				box.x = destinationPath.back().x;
+				box.y = destinationPath.back().y;
+
+				//seen = false;
+			} else{
+				previousPos.x = box.x;
+				previousPos.y = box.y;
+				box.x += speed.x;
+				box.y += speed.y;
 			}
 		}
+		}
+	}
 }
+
 /*void Cat::Pursuit(){
 	Vec2 aux;
 
@@ -371,6 +364,7 @@ void Cat::DefinedPath(){
 		stop = true;
 	}
 }*/
+
 bool Cat::Is(std::string type){
 	return (type == "Cat");
 }

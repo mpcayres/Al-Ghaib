@@ -8,7 +8,6 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 
 	doorSound = false;
 	trancada = false;
-	begin = true;
 	bloqBlack = false;
 	fadeIn = true;
 	count = 0;

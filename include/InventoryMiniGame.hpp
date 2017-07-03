@@ -8,13 +8,12 @@ public:
 	InventoryMiniGame(std::string file, std::string file2, std::string file3);
 	~InventoryMiniGame();
 
-	void Render(int x, int y);
 	bool Action(GameObject* other);
 	bool IsObject(std::string type);
 	std::string GetObject();
 
 protected:
-	Sprite sp2, sp3;
+	std::string file2, file3;
 	int timesPressed;
 };
 

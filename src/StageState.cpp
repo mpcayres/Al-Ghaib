@@ -153,7 +153,7 @@ void StageState::SetInitialObjectArray(){
 	StealthObject* Mesa = new StealthObject(900, 400, "img/scene-mesa.png");
 	objectArray.emplace_back(Mesa);
 
-	SceneObject* Window = new SceneObject(500, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.7, 0.7);
+	SceneObject* Window = new SceneObject(540, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.7, 0.7);
 	objectArray.emplace_back(Window);
 
 	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "img/scene-cama.png");

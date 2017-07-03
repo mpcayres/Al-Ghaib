@@ -5,6 +5,7 @@
 #include "Mission.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Cat.hpp"
 
 #include <vector>
 #include <memory>
@@ -13,6 +14,7 @@
 
 class Player;
 class Enemy;
+class Cat;
 class Mission;
 
 class MissionManager {
@@ -37,6 +39,7 @@ public:
 
 	static Player* player;
 	static Enemy* enemy;
+	static Cat* cat;
 	static MissionManager* missionManager;
 
 	int countStageState, countHallState, countLivingRoomState, changeState;

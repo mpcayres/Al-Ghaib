@@ -11,6 +11,7 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	initialState = "StageState";
 	initialX = 400; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
+	MissionManager::missionManager->randomStates = false;
 
 	//StageState = 0;
 	//HallState = 0;
@@ -56,7 +57,6 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , "A NOITE É FRIA E PERIGOSA", white, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 
-	MissionManager::enemy->SetPosition(500, 110);
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -66,7 +66,7 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	SetObjectHall();
 	SetObjectLivingRoom();
 
-	//std::cout << "INIT_MIS1" << std::endl;
+	MissionManager::enemy->SetPosition(500, 110);
 }
 
 Mission1::~Mission1() { }
@@ -86,7 +86,6 @@ void  Mission1::Update(float dt){
 		std::cout << "SPACE KEY PRESSED" << std::endl;
 		if(time.Get() < 23){
 			time.Set(3);
-			begin = false;
 		}
 		fadeIn = false;
 		bloqBlack = true;
@@ -97,11 +96,6 @@ void  Mission1::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
-	//std::cout << "time: " << time.Get() << std::endl;
-	if(time.Get() > 26){
-		begin = false;
-		fadeIn = false;
-	}
 
 	if(endMission && time.Get() > (12*0.25 + 0.5)){
 		Game::GetInstance().GetCurrentState().ChangeMission(2);
@@ -115,13 +109,13 @@ void  Mission1::Update(float dt){
 		float y = MissionManager::enemy->box.y;
 		//MissionManager::enemy->show = false;
 
-		std::cout << "MOM DEAD 1" << std::endl;
+		//std::cout << "MOM DEAD 1" << std::endl;
 		MissionManager::enemy->SetDead();
-		std::cout << "MOM DEAD 2" << std::endl;
+		//std::cout << "MOM DEAD 2" << std::endl;
 
 		MissionManager::player->SetBlocked(true);
 		MissionManager::player->DeleteInventory();
-		std::cout << "MOM DEAD 3" << std::endl;
+		//std::cout << "MOM DEAD 3" << std::endl;
 		Game::GetInstance().GetCurrentState().AddObject(
 				new Animation(x, y, 0,
 						"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
@@ -133,7 +127,7 @@ void  Mission1::Update(float dt){
 		}
 		time.Restart();
 		endMission = true;
-		std::cout << "MOM DEAD 4" << std::endl;
+		//std::cout << "MOM DEAD 4" << std::endl;
 	} else if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission){
 		//Quando a mae te pega sem vc ter o urso, deixar mais suave
 		Game::GetInstance().GetCurrentState().ChangeMission(1);
@@ -411,7 +405,7 @@ void  Mission1::Update(float dt){
 		}
 	}
 
-	if(time.Get() >= 24 && begin && fadeIn){
+	if(time.Get() >= 24 && fadeIn){
 		UpdateVariable(dt, 80);
 	}
 
@@ -424,7 +418,7 @@ void  Mission1::Update(float dt){
 
 void  Mission1::Render(){
 	//printf("teste2 \n");
-	if(time.Get() < 24 && begin){
+	if(time.Get() < 24 && fadeIn){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
@@ -434,7 +428,7 @@ void  Mission1::Render(){
 		creepy4.Render(0,0);
 		creepy5.Render(0,0);
 		creepy6.Render(0,0);
-	} else if((time.Get() >= 24 && begin && fadeIn) || !bloqBlack){
+	} else if((time.Get() >= 24 && fadeIn) || !bloqBlack){
 		spFade.Render(0, 0, 0);
 	}
 

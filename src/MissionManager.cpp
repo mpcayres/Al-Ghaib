@@ -16,6 +16,7 @@
 
 Player* MissionManager::player = nullptr;
 Enemy* MissionManager::enemy = nullptr;
+Cat* MissionManager::cat = nullptr;
 MissionManager* MissionManager::missionManager = nullptr;
 
 MissionManager::MissionManager() {
@@ -30,7 +31,7 @@ MissionManager::MissionManager() {
 	xDest = yDest = -1;
 	dirDest = -1;
 	movingBox = false;
-	randomStates = true; // COLOCAR PARA MISSOES ESPECIFICAS, NAO SEMPRE
+	randomStates = false;
 	factorZoom = 1.0;
 }
 
@@ -41,6 +42,7 @@ MissionManager::~MissionManager() {
 	if(mission != nullptr) delete mission;
 	delete player;
 	delete enemy;
+	delete cat;
 	delete missionManager;
 }
 
@@ -140,7 +142,7 @@ void MissionManager::SetMission(){
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
 	//std::cout << "INI_MIS1: " << objectStage.size() << " " << objectHall.size() << std::endl;
-	initStage = initHall = true;
+	initStage = initHall = initLivingRoom = true;
 	objectStage = std::move(mission->GetObjectStage());
 	objectHall = std::move(mission->GetObjectHall());
 	objectLivingRoom = std::move(mission->GetObjectLivingRoom());
@@ -163,6 +165,7 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 	}
 	player = new Player(0, 0, oldInHand, oldInventory);
 	enemy = new Enemy(0, 0, "img/sprite-mom.png"); //se for outra imagem, ver a missao e colocar aqui
+	cat = new Cat(0, 0);
 	oldInventory.clear();
 	SetMission();
 	SetState(mission->GetInitialState());

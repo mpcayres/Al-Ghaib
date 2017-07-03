@@ -10,6 +10,8 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	initialState = "StageState"; // trocar para comeÃ§ar da sala?
 	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
+	MissionManager::missionManager->randomStates = true;
+
 	meowcount = 0;
 	momcount = 0;
 	countBear = 0;
@@ -17,14 +19,14 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	//bronca = false;
 
 	SDL_Color redwine = SDL_Color();
-		redwine.r = 102;
-		redwine.g = 0;
-		redwine.b = 0;
+	redwine.r = 102;
+	redwine.g = 0;
+	redwine.b = 0;
 
-		SDL_Color white = SDL_Color();
-		white.r = 255;
-		white.g = 255;
-		white.b = 255;
+	SDL_Color white = SDL_Color();
+	white.r = 255;
+	white.g = 255;
+	white.b = 255;
 
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 3", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
@@ -45,6 +47,9 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 
 	SetObjectStage();
 	SetObjectHall();
+	SetObjectLivingRoom();
+
+	MissionManager::cat->SetPosition(1000, 200);
 }
 
 Mission3::~Mission3() {
@@ -67,7 +72,6 @@ void Mission3::Update(float dt){
 		std::cout << "SPACE KEY PRESSED" << std::endl;
 		if(time.Get() < 3){
 			time.Set(3);
-			begin = false;
 		}
 		bloqBlack = true;
 		fadeIn = false;
@@ -78,17 +82,9 @@ void Mission3::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
-	//std::cout << "time: " << time.Get() << std::endl;
-	if(time.Get() > 6){
-		begin = false;
-		fadeIn = false;
-	}
 
 	/*if(endMission){
-			MissionManager::player->SetBlocked(false);
-			MissionManager::player->SetBloqInv(false);
-			Game::GetInstance().GetCurrentState().SetPopRequested();
-			Game::GetInstance().GetMissionManager().ChangeMission(4);
+		Game::GetInstance().GetCurrentState()..ChangeMission(4);
 	}*/
 	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL ////////////////////////////////////////////////////////////////////
 	if(MissionManager::missionManager->GetStage("StageState") &&
@@ -157,63 +153,63 @@ void Mission3::Update(float dt){
 		}
 
 
-		Cat::show = true;
+		MissionManager::cat->show = true;
 		countCat++;
 		//if(count == 1){
-		int dist = Cat::cat->box.DistanceRect(MissionManager::player->box);
+		int dist = MissionManager::cat->box.DistanceRect(MissionManager::player->box);
 		std::cout << "dist" << dist << std::endl;
 		/*if(dist < 250)
-			Cat::cat->SetDestinationPath(Vec2(980, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		if(dist >= 250){
 			std::cout << "maior que 250" << std::endl;
-			//Cat::cat->SetDestinationPath(Vec2(1000, 200)); //4Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(940, 200)); //3Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //2Âº DESTINO
+			//MissionManager::cat->SetDestinationPath(Vec2(1000, 200)); //4Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(940, 200)); //3Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(900, 200)); //2Âº DESTINO
 		}*/
 		//}
 		//if(MissionManager::enemy->turn == 1)
 
-		std::cout << "CAT X" << Cat::cat->box.x << "CAT Y" << Cat::cat->box.y << std::endl;
+		std::cout << "CAT X" << MissionManager::cat->box.x << "CAT Y" << MissionManager::cat->box.y << std::endl;
 		if(countCat == 1){
 					//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
-			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200));
-			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
 					//paradoGato = true;
 		}
 		if(time.Get()>5){
-			Cat::cat->SetDestinationPath(Vec2(890, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(890, 200));
 		}
 		if( dist < 250){
-			Cat::cat->SetDestinationPath(Vec2(980, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
 		/*if(countCat == 1 && dist > 250){
 			//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
 			std::cout << "ka" << std::endl;
-			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(900, 200));
-			Cat::cat->SetDestinationPath(Vec2(1000, 200));
-			Cat::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
 			//paradoGato = true;
 		}
 		if(dist > 250){
 			std::cout << "dist > 250" << std::endl;
-			Cat::cat->SetDestinationPath(Vec2(1100, 200)); //2Âº DESTINO
-			Cat::cat->SetDestinationPath(Vec2(940, 200)); //1Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(1100, 200)); //2Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(940, 200)); //1Âº DESTINO
 		}*/
 		/*if(dist < 250){
 			paradoGato = true;
 		}*/
 		if( dist < 250){
-				Cat::cat->SetDestinationPath(Vec2(980, 200));
+				MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
 		if(dist < 100){
 			if(meowcount%2 && ((int)time.Get())%5){
@@ -282,8 +278,8 @@ void Mission3::Update(float dt){
 
 		//}
 	}
-	if(time.Get() >= 4 && begin && fadeIn){
-			UpdateVariable(dt, 80);
+	if(time.Get() >= 4 && fadeIn){
+		UpdateVariable(dt, 80);
 	}
 
 	if(time.Get() >= 6){
@@ -293,11 +289,11 @@ void Mission3::Update(float dt){
 }
 
 void Mission3::Render(){
-	if(time.Get() < 4 && begin){
+	if(time.Get() < 4 && fadeIn){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
-	} else if((time.Get() >= 4 && begin && fadeIn) || !bloqBlack){
+	} else if((time.Get() >= 4 && fadeIn) || !bloqBlack){
 		spFade.Render(0,0,0);
 	}
 
@@ -329,8 +325,6 @@ void Mission3::SetObjectStage(){
 void Mission3::SetObjectHall(){
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
-	Cat* gatinho = new Cat(1000, 200);
-	objectHall.emplace_back(gatinho);
 
 	SceneObject* Apple = new SceneObject(350, 330, "img/object-maca.png", "img/object-maca.png", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);

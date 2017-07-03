@@ -685,14 +685,13 @@ void Player::RenderInHand(){
 		widthMinorSquare = spInventorybox.GetScaledWidth() - 10;
 		heightMinorSquare = spInventorybox.GetScaledHeight() - 10;
 
-		spInventoryboxSelected.Render(posX,posY, 0);
+		spInventoryboxSelected.Render(posX, posY, 0);
 		if(inHandIndex >= 0){
 			if(inventory[inHandIndex]->GetWidth() > widthMinorSquare){
 				float scaleX = (float) ((float) widthMinorSquare)/((float) inventory[inHandIndex]->GetWidth());
 				inventory[inHandIndex]->SetScaleX(scaleX);
 			}
 			if(inventory[inHandIndex]->GetHeight() > heightMinorSquare){
-				//std::cout << inventory[inHandIndex]->GetHeight() << std::endl;
 				float scaleY = (float) ((float) heightMinorSquare)/((float) inventory[inHandIndex]->GetHeight());
 				inventory[inHandIndex]->SetScaleY(scaleY);
 			}

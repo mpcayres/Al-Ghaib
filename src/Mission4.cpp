@@ -10,6 +10,8 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
 	initialX = 350; initialY = 300;
 	MissionManager::missionManager->SetPos(initialX, initialY);
+	MissionManager::missionManager->randomStates = true;
+
 	meowcount = 0;
 	momcount = 0;
 	countBear = 0;
@@ -18,14 +20,14 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	MissionManager::player->drogado = true;
 
 	SDL_Color redwine = SDL_Color();
-		redwine.r = 102;
-		redwine.g = 0;
-		redwine.b = 0;
+	redwine.r = 102;
+	redwine.g = 0;
+	redwine.b = 0;
 
-		SDL_Color white = SDL_Color();
-		white.r = 255;
-		white.g = 255;
-		white.b = 255;
+	SDL_Color white = SDL_Color();
+	white.r = 255;
+	white.g = 255;
+	white.b = 255;
 
 	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 4", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
@@ -46,6 +48,9 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 
 	SetObjectStage();
 	SetObjectHall();
+	SetObjectLivingRoom();
+
+	MissionManager::cat->SetPosition(1000, 200);
 }
 
 Mission4::~Mission4() {
@@ -59,7 +64,7 @@ void  Mission4::Resume(){ }
 void Mission4::Update(float dt){
 
 	InputManager instance = InputManager::GetInstance();
-	bool trancada = false;
+	//bool trancada = false;
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 	}
@@ -68,7 +73,6 @@ void Mission4::Update(float dt){
 		std::cout << "SPACE KEY PRESSED" << std::endl;
 		if(time.Get() < 3){
 			time.Set(3);
-			begin = false;
 		}
 		bloqBlack = true;
 		fadeIn = false;
@@ -79,16 +83,8 @@ void Mission4::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
-	//std::cout << "time: " << time.Get() << std::endl;
-	if(time.Get() > 6){
-		begin = false;
-		fadeIn = false;
-	}
-
 	/*if(endMission && time.Get() > (12*0.25 + 0.5)){
-		MissionManager::player->SetBlocked(false);
-		Game::GetInstance().GetCurrentState().SetPopRequested();
-		Game::GetInstance().GetMissionManager().ChangeMission(2);
+		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}*/
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
@@ -106,7 +102,7 @@ void Mission4::Update(float dt){
 		}
 
 	}
-	if(time.Get() >= 4 && begin && fadeIn){
+	if(time.Get() >= 4 && fadeIn){
 			UpdateVariable(dt, 80);
 	}
 
@@ -117,11 +113,11 @@ void Mission4::Update(float dt){
 }
 
 void Mission4::Render(){
-	if(time.Get() < 4 && begin){
+	if(time.Get() < 4 && fadeIn){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
-	} else if((time.Get() >= 4 && begin && fadeIn) || !bloqBlack){
+	} else if((time.Get() >= 4 && fadeIn) || !bloqBlack){
 		spFade.Render(0,0,0);
 	}
 
@@ -151,11 +147,8 @@ void Mission4::SetObjectStage(){
 }
 
 void Mission4::SetObjectHall(){
-
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
-	Cat* gatinho = new Cat(1000, 200);
-	objectHall.emplace_back(gatinho);
 }
 
 void Mission4::SetObjectLivingRoom(){
