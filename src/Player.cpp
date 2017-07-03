@@ -142,7 +142,7 @@ void Player::Update(float dt){
 				box.y += 24;
 			} else if(dirDown == NORTE){
 				box.x = centerMX;
-				box.y += 36;
+				box.y += 40;
 			}
 			spKinderDown.SetFrame(0, dirDown > 1 ? dirDown - 2 : dirDown + 2);
 
@@ -534,8 +534,6 @@ void Player::AddInventory(std::string obj){
 	// Coloquei os parametros como as strings e nao o objeto, pq estava dando erro comigo
 	// Coloquei a string da imagem comentada caso seja necessario
 
-	lastPicked = obj;
-	if(inHandIndex < 0) inHandIndex = 0;
 	if(obj == "InventoryKey"){
 		spPicked = Sprite("img/object-key.png");
 		spPicked.SetScaleX(6); spPicked.SetScaleY(6);
@@ -562,18 +560,14 @@ void Player::AddInventory(std::string obj){
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryWool());
 	} else if(obj == "InventoryNeedle"){
-
 		spPicked = Sprite("img/object-needle.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryNeedle());
-
 	} else if(obj == "InventoryScissors"){
-
 		spPicked = Sprite("img/object-scissors.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
-
 		inventory.emplace_back(new InventoryScissors());
 	} else if(obj == "InventoryControl"){
 		spPicked = Sprite("img/object-control.png");
@@ -581,6 +575,9 @@ void Player::AddInventory(std::string obj){
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryControl());
 	}
+
+	lastPicked = obj;
+	inHandIndex = inventory.size() - 1;
 }
 
 std::vector<std::shared_ptr<InventoryObject>> Player::GetInventory(){

@@ -9,8 +9,8 @@
 
 class SceneDoor : public SceneObject {
 public:
-	SceneDoor(float x, float y, std::string dest,bool locked = true,
-			std::string img = "img/scene-door-closed.png", std::string img2 = "img/scene-door-opened.png");
+	SceneDoor(float x, float y, std::string dest, bool locked = true,
+		std::string img = "img/scene-door-closed.png", std::string img2 = "img/scene-door-opened.png", bool block = false);
 
 	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
@@ -25,7 +25,7 @@ public:
 
 protected:
 	int contador;
-	bool lock;
+	bool lock, blockArame;
 	std::string dest;
 	bool changeState;
 	//bool tried;
