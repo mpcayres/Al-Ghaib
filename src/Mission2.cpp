@@ -119,6 +119,8 @@ void Mission2::Update(float dt){
 				}
 				if(paradoUrso){
 					Bear::bear->SetDestinationPath(Vec2(810, 450));
+					Bear::bear->box.x = 810;
+					Bear::bear->box.y = 450;
 				}
 				//std::cout << "test 1 " << std::endl;
 				if(time.Get() > 18 ){
@@ -403,5 +405,8 @@ void Mission2::SetObjectHall(){
 }
 
 void Mission2::SetObjectLivingRoom(){
+
+	PickUpObject* Agulha= new PickUpObject(530, 300, "InventoryNeedle", "img/object-needle.png");
+	objectLivingRoom.emplace_back(Agulha);
 
 }

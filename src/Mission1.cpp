@@ -76,7 +76,9 @@ void  Mission1::Pause(){ }
 void  Mission1::Resume(){ }
 
 void  Mission1::Update(float dt){
-
+	std::cout << "SUPER BEGIN" << std::endl;
+	std::cout << "SUPER BEGIN" << std::endl;
+	std::cout << "SUPER BEGIN" << std::endl;
 	InputManager instance = InputManager::GetInstance();
 	bool trancada = false;
 	if(instance.KeyPress(ESCAPE_KEY)){
@@ -103,20 +105,25 @@ void  Mission1::Update(float dt){
 		begin = false;
 		fadeIn = false;
 	}
-
+	std::cout << "begin" << std::endl;std::cout << "begin" << std::endl;std::cout << "begin" << std::endl;
 	if(endMission && time.Get() > (12*0.25 + 0.5)){
 		MissionManager::player->SetBlocked(false);
 		MissionManager::player->SetBloqInv(false);
 		Game::GetInstance().GetCurrentState().SetPopRequested();
 		Game::GetInstance().GetMissionManager().ChangeMission(2);
 	}
-
+	std::cout << "antes do if la em cima" << std::endl;
 	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer){
+		std::cout << "if la em cima 0" << std::endl;
 		Camera::Unfollow();
 		Camera::SetType(CAMERA_TYPE0);
 		float x = MissionManager::enemy->box.x;
 		float y = MissionManager::enemy->box.y;
+		//MissionManager::enemy->show = false;
+
+		std::cout << "if la em cima" << std::endl;
 		MissionManager::enemy->SetDead();
+
 		MissionManager::player->SetBlocked(true);
 		MissionManager::player->DeleteInventory();
 		Game::GetInstance().GetCurrentState().AddObject(
@@ -373,17 +380,21 @@ void  Mission1::Update(float dt){
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
 				MissionManager::enemy->SetPosition(230, 175);
 				MissionManager::enemy->show = true;
-				SceneDoor::count = ABRE;
-				SceneDoor::ValorPassar = 4;
+				//SceneDoor::count = ABRE;
+				//SceneDoor::ValorPassar = 4;
+				std::cout << "if la em baixo" << std::endl;
 				//if(MissionManager::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
-				Camera::Unfollow();
-				Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
+				//Camera::Unfollow();
+				std::cout << "if la em baixo 2" << std::endl;
+				//Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
+				std::cout << "if la em baixo 3" << std::endl;
 				Camera::Zoom(2, true);
+				std::cout << "if la em baixo 4" << std::endl;
 				//if(trancada == false && cooldown.Get() > 3){
-				showBox = true;
+				//showBox = true;
 				//MissionManager::enemy->bloq = true;
-				falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
+				/*falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = time.Get();
 				//std::cout << ultimoTempo << std::endl;
@@ -394,25 +405,27 @@ void  Mission1::Update(float dt){
 					falas.SetText(" ");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 					ultimoTempo = ultimoTempo + 5;
-				}
+				}*/
 					//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300));
 					//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-					MissionManager::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-					MissionManager::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
-					MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
+					//MissionManager::enemy->SetDestinationPath(Vec2(350, 490)); //3º DESTINO
+					//MissionManager::enemy->SetDestinationPath(Vec2(350, 300)); //2º DESTINO
+					//MissionManager::enemy->SetDestinationPath(Vec2(230, 300)); //1º DESTINO
 					//}
 			}
 
 		}
 	}
-
+	std::cout << "fora if 0" << std::endl;
 	if(time.Get() >= 24 && begin && fadeIn){
 		UpdateVariable(dt, 80);
 	}
+	std::cout << "fora if 1" << std::endl;
 	if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
 		PiscaPisca(dt, 20, 0.4);
 		MissionManager::player->SetBloqInv(true);
 	}
+	std::cout << "fora if 2" << std::endl;
 
 }
 
@@ -500,7 +513,8 @@ void Mission1::SetObjectLivingRoom(){
 	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	//objectLivingRoom.emplace_back(Bear);
 
-	MovingObject* Vase = new MovingObject(725, 327, "img/scene-vaso.png");
-	objectLivingRoom.emplace_back(Vase);
+	SceneObject* gatinho = new SceneObject(200, 500,"img/object-novelo.png", "img/object-novelo.png", true, 0.5, 0.5);
+	objectLivingRoom.emplace_back(gatinho);
+
 
 }

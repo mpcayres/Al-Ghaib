@@ -112,32 +112,36 @@ void Bear::Shoot(){
 }
 
 bool Bear::NotifyCollision(GameObject& other){
-	if(other.Is("CollidableObject")){
+	if(show){
+			if(other.Is("CollidableObject")){
 
-		if( MissionManager::player != nullptr){
-			//if(MissionManager::player != nullptr){
-			Vec2 aux;
-			destination.x = MissionManager::player->box.x;
-			destination.y = MissionManager::player->box.y;
-			//seen = true;
+				if(seen && MissionManager::player != nullptr){
+					//if(MissionManager::player != nullptr){
+					Vec2 aux;
+					destination.x = MissionManager::player->box.x;
+					destination.y = MissionManager::player->box.y;
+					//seen = true;
 
-			aux.x = box.x; aux.y = box.y;
-			speed = (destination.Sub(aux)).Normalize();
-			speed.x = speed.x*SPEED_CONTROL;
-			speed.y = speed.y*SPEED_CONTROL;
-				//}
-		}
-	}
-	if(other.Is("Player")){
-		return MissionManager::player->CollidingPlayer(box, offset);
-	}
-
-	if(other.Is("EmptyBox")){
-			if(InputManager::GetInstance().KeyPress(Z_KEY) && repair == true){
-				sp.Open("img/object-bear.png");
-
+					aux.x = box.x; aux.y = box.y;
+					speed = (destination.Sub(aux)).Normalize();
+					speed.x = speed.x*SPEED_CONTROL;
+					speed.y = speed.y*SPEED_CONTROL;
+						//}
+				}
 			}
-	}
+			if(other.Is("Player")){
+					return MissionManager::player->CollidingPlayer(box, offset);
+				}
+
+				if(other.Is("EmptyBox")){
+						if(InputManager::GetInstance().KeyPress(Z_KEY) && repair == true){
+							sp.Open("img/object-bear.png");
+
+						}
+				}
+
+		}
+
 
 	return false;
 }
