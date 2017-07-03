@@ -76,9 +76,6 @@ void  Mission1::Pause(){ }
 void  Mission1::Resume(){ }
 
 void  Mission1::Update(float dt){
-	std::cout << "SUPER BEGIN" << std::endl;
-	std::cout << "SUPER BEGIN" << std::endl;
-	std::cout << "SUPER BEGIN" << std::endl;
 	InputManager instance = InputManager::GetInstance();
 	bool trancada = false;
 	if(instance.KeyPress(ESCAPE_KEY)){
@@ -105,27 +102,26 @@ void  Mission1::Update(float dt){
 		begin = false;
 		fadeIn = false;
 	}
-	std::cout << "begin" << std::endl;std::cout << "begin" << std::endl;std::cout << "begin" << std::endl;
+
 	if(endMission && time.Get() > (12*0.25 + 0.5)){
-		MissionManager::player->SetBlocked(false);
-		MissionManager::player->SetBloqInv(false);
-		Game::GetInstance().GetCurrentState().SetPopRequested();
-		Game::GetInstance().GetMissionManager().ChangeMission(2);
+		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}
-	std::cout << "antes do if la em cima" << std::endl;
-	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer){
-		std::cout << "if la em cima 0" << std::endl;
+
+	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer && !endMission){
+		//std::cout << "MOM DEAD 0" << std::endl;
 		Camera::Unfollow();
 		Camera::SetType(CAMERA_TYPE0);
 		float x = MissionManager::enemy->box.x;
 		float y = MissionManager::enemy->box.y;
 		//MissionManager::enemy->show = false;
 
-		std::cout << "if la em cima" << std::endl;
+		std::cout << "MOM DEAD 1" << std::endl;
 		MissionManager::enemy->SetDead();
+		std::cout << "MOM DEAD 2" << std::endl;
 
 		MissionManager::player->SetBlocked(true);
 		MissionManager::player->DeleteInventory();
+		std::cout << "MOM DEAD 3" << std::endl;
 		Game::GetInstance().GetCurrentState().AddObject(
 				new Animation(x, y, 0,
 						"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
@@ -137,12 +133,10 @@ void  Mission1::Update(float dt){
 		}
 		time.Restart();
 		endMission = true;
-	} else if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show){
+		std::cout << "MOM DEAD 4" << std::endl;
+	} else if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission){
 		//Quando a mae te pega sem vc ter o urso, deixar mais suave
-		MissionManager::player->SetBlocked(false);
-		MissionManager::player->SetBloqInv(false);
-		Game::GetInstance().GetCurrentState().SetPopRequested();
-		Game::GetInstance().GetMissionManager().ChangeMission(1);
+		Game::GetInstance().GetCurrentState().ChangeMission(1);
 	} else{
 
 		/* COMEÇO DO JOGO. QUARTO DA CRIANÇA. PRIMEIRA VEZ ENTRANDO PARA LEGENDAS INICIAIS*/
@@ -382,15 +376,15 @@ void  Mission1::Update(float dt){
 				MissionManager::enemy->show = true;
 				//SceneDoor::count = ABRE;
 				//SceneDoor::ValorPassar = 4;
-				std::cout << "if la em baixo" << std::endl;
+
 				//if(MissionManager::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				//Camera::Unfollow();
-				std::cout << "if la em baixo 2" << std::endl;
+
 				//Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
-				std::cout << "if la em baixo 3" << std::endl;
+
 				Camera::Zoom(2, true);
-				std::cout << "if la em baixo 4" << std::endl;
+
 				//if(trancada == false && cooldown.Get() > 3){
 				//showBox = true;
 				//MissionManager::enemy->bloq = true;
@@ -416,16 +410,15 @@ void  Mission1::Update(float dt){
 
 		}
 	}
-	std::cout << "fora if 0" << std::endl;
+
 	if(time.Get() >= 24 && begin && fadeIn){
 		UpdateVariable(dt, 80);
 	}
-	std::cout << "fora if 1" << std::endl;
+
 	if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
 		PiscaPisca(dt, 20, 0.4);
 		MissionManager::player->SetBloqInv(true);
 	}
-	std::cout << "fora if 2" << std::endl;
 
 }
 

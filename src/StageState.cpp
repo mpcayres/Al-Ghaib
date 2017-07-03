@@ -72,59 +72,21 @@ void StageState::Update(float dt){
 
 	/* area de cheat de missao*/
 	if(instance.KeyPress(W_KEY)){
-		popRequested = true;
-		Camera::Unfollow();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "StageState", "HallState");
+		ChangeState("StageState", "HallState");
 	} else if(instance.KeyPress(E_KEY)){
-		popRequested = true;
-		Camera::Unfollow();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "StageState", "LivingRoomState");
+		ChangeState("StageState", "LivingRoomState");
 	} else if(instance.KeyPress(KEY_1)){
-		popRequested = true;
-		Camera::Unfollow();
-		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeMission(1, MissionManager::player->GetInHandIndex(), inventory);
+		ChangeMission(1);
 	}else if(instance.KeyPress(KEY_2)){
-		popRequested = true;
-		Camera::Unfollow();
-		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeMission(2, MissionManager::player->GetInHandIndex(), inventory);
+		ChangeMission(2);
 	} else if(instance.KeyPress(KEY_3)){
-		popRequested = true;
-		Camera::Unfollow();
-		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeMission(3, MissionManager::player->GetInHandIndex(), inventory);
+		ChangeMission(3);
 	} else if(instance.KeyPress(KEY_4)){
-		popRequested = true;
-		Camera::Unfollow();
-		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeMission(4, MissionManager::player->GetInHandIndex(), inventory);
+		ChangeMission(4);
 	} else if(instance.KeyPress(KEY_5)){
-		popRequested = true;
-		Camera::Unfollow();
-		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeMission(5, MissionManager::player->GetInHandIndex(), inventory);
+		ChangeMission(5);
 	} else if(instance.KeyPress(KEY_6)){
-		popRequested = true;
-		Camera::Unfollow();
-		std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeMission(6, MissionManager::player->GetInHandIndex(), inventory);
+		ChangeMission(6);
 	}
 
 	/* fim de area de cheat de missao*/
@@ -158,17 +120,9 @@ void StageState::Update(float dt){
 	}
 
 	if(changeIndex != -1){
-		//std::cout << "DOOR2 " << changeIndex << std::endl;
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
-		popRequested = true;
-		Camera::Unfollow();
-		RemovePlayer();
-		std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
-		//Nao sei pq aqui nao esta funcionando
-		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "StageState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 400, 380, (int) Player::SUL);
-		//std::cout << "DOOR4" << std::endl;
+		ChangeState("StageState",
+				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 400, 380, (int) Player::SUL);
 	}
 }
 

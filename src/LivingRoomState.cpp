@@ -61,14 +61,9 @@ void LivingRoomState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 		Camera::Unfollow();
-		//MissionManager::DeletePlayer();
 	}
 	if(instance.KeyPress(W_KEY)){
-		popRequested = true;
-		Camera::Unfollow();
-		RemovePlayer();
-		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "LivingRoomState", "StageState");
+		ChangeState("LivingRoomState", "StageState");
 	}
 	quitRequested = instance.QuitRequested();
 
@@ -100,17 +95,9 @@ void LivingRoomState::Update(float dt){
 	}
 
 	if(changeIndex != -1){
-		//std::cout << "DOOR2 " << changeIndex << std::endl;
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
-		popRequested = true;
-		Camera::Unfollow();
-		RemovePlayer();
-		//std::cout << "DOOR3 " << ((SceneDoor*)objectArray[changeIndex].get())->GetDest() << std::endl;
-		//Nao sei pq aqui nao esta funcionando
-		Game::GetInstance().GetMissionManager().
-				ChangeState(std::move(objectArray), "LivingRoomState",
-						((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
-		//std::cout << "DOOR4" << std::endl;
+		ChangeState("LivingRoomState",
+				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
 	}
 }
 

@@ -23,10 +23,13 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
 	void SetPlayer(int x, int y, int type, Rect limits);
-	void RemovePlayer();
+	void RemoveAll();
+	void RemoveEnemy();
 	void SetPopRequested();
 	Rect GetStateLimits();
 	void RandomState();
+	void ChangeState(std::string orig, std::string dest, int x = -1, int y = -1, int dir = -1);
+	void ChangeMission(int num);
 
 protected:
 	virtual void UpdateArray(float dt);

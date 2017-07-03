@@ -25,7 +25,6 @@ Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 	show = false;
 	arrived = false;
 	collidingPlayer = false;
-	dead = false;
 	seen = false;
 	bloq = false;
 
@@ -113,7 +112,7 @@ void Enemy::Render(){
 }
 
 bool Enemy::IsDead(){
-	return dead;
+	return false;
 }
 
 bool Enemy::NotifyCollision(GameObject& other){
@@ -367,5 +366,5 @@ bool Enemy::Is(std::string type){
 }
 
 void Enemy::SetDead(){
-	dead = true;
+	Game::GetInstance().GetCurrentState().RemoveEnemy();
 }

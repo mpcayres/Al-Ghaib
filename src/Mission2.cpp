@@ -85,10 +85,7 @@ void Mission2::Update(float dt){
 	}
 
 	if(endMission){
-		MissionManager::player->SetBlocked(false);
-		MissionManager::player->SetBloqInv(false);
-		Game::GetInstance().GetCurrentState().SetPopRequested();
-		Game::GetInstance().GetMissionManager().ChangeMission(3);
+		Game::GetInstance().GetCurrentState().ChangeMission(3);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&

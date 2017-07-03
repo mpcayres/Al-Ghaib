@@ -61,7 +61,7 @@ void State::SetPlayer(int x, int y, int type, Rect limits){
 	MissionManager::player->SetMovementLimits(limits);
 }
 
-void State::RemovePlayer(){
+void State::RemoveAll(){
 	for(unsigned int i = 0; i < objectArray.size(); i++) {
 		if(objectArray[i].get()->Is("Player")){
 			//std::cout << "remove " << objectArray.size() << " " << i << std::endl;
@@ -69,6 +69,17 @@ void State::RemovePlayer(){
 			objectArray.erase(objectArray.begin() + i);
 			//std::cout << "alive " << objectArray.size() << " " << MissionManager::player->Is("Player") << std::endl;
 		} else if(objectArray[i].get()->Is("Enemy")){
+			//std::cout << "remove " << objectArray.size() << " " << i << std::endl;
+			MissionManager::enemy = (Enemy*) objectArray[i].release();
+			objectArray.erase(objectArray.begin() + i);
+			//std::cout << "alive " << objectArray.size() << " " << MissionManager::player->Is("Enemy") << std::endl;
+		}
+	}
+}
+
+void State::RemoveEnemy(){
+	for(unsigned int i = 0; i < objectArray.size(); i++) {
+		if(objectArray[i].get()->Is("Enemy")){
 			//std::cout << "remove " << objectArray.size() << " " << i << std::endl;
 			MissionManager::enemy = (Enemy*) objectArray[i].release();
 			objectArray.erase(objectArray.begin() + i);
@@ -102,4 +113,23 @@ void State::RandomState(){
 			}
 		}
 	}
+}
+
+void State::ChangeState(std::string orig, std::string dest, int x, int y, int dir){
+	popRequested = true;
+	Camera::Unfollow();
+	RemoveAll();
+	Game::GetInstance().GetMissionManager().
+			ChangeState(std::move(objectArray), orig, dest, x, y, dir);
+}
+
+void State::ChangeMission(int num){
+	MissionManager::player->SetBlocked(false);
+	MissionManager::player->SetBloqInv(false);
+	popRequested = true;
+	Camera::Unfollow();
+	std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
+	RemoveAll();
+	Game::GetInstance().GetMissionManager().
+			ChangeMission(num, MissionManager::player->GetInHandIndex(), inventory);
 }

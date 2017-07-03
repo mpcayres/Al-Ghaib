@@ -34,7 +34,7 @@ public:
 	InvBox direcao;
 	//Vec2 previousPos;
 
-	bool show, arrived, collidingPlayer, dead, bloq;
+	bool show, arrived, collidingPlayer, bloq;
 private:
 	Timer time;
 	Sprite sp;
