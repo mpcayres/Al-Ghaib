@@ -147,7 +147,7 @@ void StageState::SetInitialObjectArray(){
 	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectArray.emplace_back(Door);
 
-	SceneObject* Escrivaninha = new SceneObject(649, 420, "img/scene-escrivaninha-fechado.png", "img/scene-escrivaninha-aberto.png");
+	SceneObject* Escrivaninha = new SceneObject(650, 440, "img/scene-escrivaninha-fechado.png", "img/scene-escrivaninha-aberto.png");
 	objectArray.emplace_back(Escrivaninha);
 
 	StealthObject* Mesa = new StealthObject(900, 400, "img/scene-mesa.png");

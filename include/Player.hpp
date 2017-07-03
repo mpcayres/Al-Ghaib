@@ -68,6 +68,7 @@ public:
 	Rect limits;
 	bool climbing, climbingDown, drogado;
 	int dirDown;
+	float centerMX, centerMY;
 	std::string lastPicked;
 	std::vector<Rect> wallLimits;
 

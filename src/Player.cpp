@@ -71,6 +71,7 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 
 	ruido = 0;
 	dirDown = 0;
+	centerMX = centerMY = 0;
 
 	drogado = false;
 	hidden = false;
@@ -118,17 +119,13 @@ void Player::Update(float dt){
 		}
 	}
 	if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && climbing){
-		spKinderClimbing.Update(dt, direcao, false);
+		spKinderClimbing.Update(dt, dirDown, false);
 		timeCooldown.Update(dt);
-		if(timeCooldown.Get() > 1.5){
-			if(direcao == LESTE){
-				box.x += 30;
-			} else if(direcao == OESTE){
-				box.x -= 10;
-			} else if(direcao == NORTE){
-				box.x += 8;
-			}
-			spKinderClimbing.SetFrame(0, direcao);
+		if(timeCooldown.Get() >= 1.56){
+			box.x = centerMX;
+			box.y = centerMY - 18;
+			spKinderClimbing.SetFrame(0, dirDown);
+			spKinder.SetFrame(10, dirDown);
 
 			climbing = false;
 			timeCooldown.Restart();
@@ -136,20 +133,20 @@ void Player::Update(float dt){
 	} else if(!showingInventory && !hidden && !Camera::GetMoving() && !animShowing && !blocked && climbingDown){
 		spKinderDown.Update(dt, dirDown > 1 ? dirDown - 2 : dirDown + 2, false);
 		timeCooldown.Update(dt);
-		if(timeCooldown.Get() > 0.7){
+		if(timeCooldown.Get() >= 0.78){
 			if(dirDown == LESTE){
-				box.x -= 30;
-				box.y += 15;
+				box.x -= 16;
+				box.y += 24;
 			} else if(dirDown == OESTE){
-				box.x += 10;
-				box.y += 15;
+				box.x += 36;
+				box.y += 24;
 			} else if(dirDown == NORTE){
-				box.y -= 10;
+				box.x = centerMX;
+				box.y += 36;
 			}
-			//MissionManager::player->box.x = MissionManager::player->previousPos.x;
-			//MissionManager::player->box.y = MissionManager::player->previousPos.y;
 			spKinderDown.SetFrame(0, dirDown > 1 ? dirDown - 2 : dirDown + 2);
 
+			ChangeAboveObject();
 			climbingDown = false;
 			timeCooldown.Restart();
 		}
@@ -160,8 +157,7 @@ void Player::Update(float dt){
 
 		//SETA PARA CIMA//
 		if((InputInstance.IsKeyDown(UP_ARROW_KEY) && !InputInstance.IsKeyDown(DOWN_ARROW_KEY) &&
-				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY))
-				){
+				!InputInstance.IsKeyDown(RIGHT_ARROW_KEY) && !InputInstance.IsKeyDown(LEFT_ARROW_KEY))){
 			if(MissionManager::missionManager->movingBox && (direcao == NORTE || direcao == SUL)){
 				if(direcao == SUL) direcaoShift = true;
 			} else{
@@ -189,7 +185,7 @@ void Player::Update(float dt){
 			}
 			speed.y = MODULO_SPEED;
 			if(drogado)
-					speed.y = -MODULO_SPEED/2;
+				speed.y = -MODULO_SPEED/2;
 			speed.x = 0;
 			//rotation = 90;
 			Running(InputInstance);

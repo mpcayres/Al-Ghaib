@@ -11,8 +11,14 @@ InventoryMiniGame::~InventoryMiniGame(){ }
 
 bool InventoryMiniGame::Action(GameObject* other){
 	timesPressed++;
-	if(timesPressed == 5) sp = Sprite(file2);
-	if(timesPressed == 20) sp = Sprite(file3);
+	if(timesPressed == 5){
+		sp = Sprite(file2);
+		sp.SetScaleX(0.6);
+	}
+	if(timesPressed == 20){
+		sp = Sprite(file3);
+		sp.SetScaleY(0.6);
+	}
 	MissionManager::player->AddRuido(0.2*50);
 	if(timesPressed >= 30) return true;
 	return false;
