@@ -5,6 +5,7 @@
 #include "Walls.hpp"
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
+#include "SceneObject.hpp"
 #include "ScenePortal.hpp"
 #include "SceneAnimated.hpp"
 #include "MovingObject.hpp"
@@ -120,6 +121,26 @@ void MomRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	//MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
-	//objectArray.emplace_back(Banco);
+	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/scene-door-closed.png", "img/scene-door-opened.png");
+	objectArray.emplace_back(DoorToHall);
+
+	SceneObject* Mirror = new SceneObject(300, 170, "img/moveis/object-espelho.png", "img/moveis/object-espelho.png", 0, 0.5, 0.5);
+	objectArray.emplace_back(Mirror);
+
+	SceneObject* Table = new SceneObject(300, 250, "img/moveis/object-mesinha.png", "img/moveis/object-mesinha.png", 0, 0.7, 0.7);
+	objectArray.emplace_back(Table);
+
+	SceneObject* Mask= new SceneObject(650, 480, "img/moveis/object-cabideiro.png", "img/moveis/object-cabideiro.png");
+	objectArray.emplace_back(Mask);
+
+	SceneObject* Armario =  new SceneObject(600, 200, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	objectArray.emplace_back(Armario);
+
+
+	SceneObject* Cama =  new SceneObject(500, 200, "img/scene-cama.png", "");
+	objectArray.emplace_back(Cama);
+
+
+
+
 }
