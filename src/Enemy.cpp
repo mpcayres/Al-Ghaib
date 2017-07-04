@@ -10,13 +10,10 @@
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.08, 4){
+Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
 
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);
-
-	//destinationPath.x = x;
-	//destinationPath.y = y;
 
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
@@ -26,6 +23,8 @@ Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.08, 4){
 	arrived = false;
 	collidingPlayer = false;
 	seen = false;
+	canPursuit = true;
+	inDefinedPath = false;
 	bloq = false;
 
 	time = Timer();
@@ -45,42 +44,28 @@ void Enemy::Update(float dt){
 		float dist = 0;
 
 		dist = box.DistanceRect(MissionManager::player->box);
-		if(dist < 200){
-			seen = true;
-		}
 		float noise = ((100/dist))*MissionManager::player->GetRuido();
 		//printf("N: %f\n", noise);
-		if(noise >= 15 || MissionManager::player->GetRuido()>70){
+		if((noise >= 15) || ((MissionManager::player->GetRuido()>70) && !inDefinedPath && canPursuit)){
 			seen = true;
 		}
 
-		bool bloqMov = false;
-		Rect boxAux = box;
-		boxAux.x += speed.x; boxAux.y += speed.y;
-		for(unsigned int i = 0; i < MissionManager::player->wallLimits.size(); i++){
-			Rect aux;
-			aux = MissionManager::player->wallLimits[i];
-			aux.h -= sp.GetHeight()*2;
-			bloqMov = boxAux.Collide(aux);
-			if(bloqMov == true) break;
-		}
+		box.x += speed.x;
+		box.y += speed.y;
 
-		if(boxAux.x < MissionManager::player->limits.w - box.w &&
-				boxAux.x > MissionManager::player->limits.x - sp.GetWidth() *2&& !bloqMov){
-			previousPos.x = box.x;
-			box.x += speed.x;
+		if(destinationPursuit.size()>0 && !inDefinedPath){
+			Pursuit();
+		}else if(destinationPath.size() > 0){
+			DefinedPath();
 		}
-		if(boxAux.y < MissionManager::player->limits.h - box.h &&
-				boxAux.y > MissionManager::player->limits.y - sp.GetHeight() *2&& !bloqMov){
-			previousPos.y = box.y;
-			box.y += speed.y;
+		else {
+			speed.x = 0;
+			speed.y = 0;
+			sp.SetFrame(1,2);
 		}
-		direcao = LESTE;
-		if(seen == true) Pursuit();
-		if(seen == false)DefinedPath();
 
 		if(speed.x != 0 || speed.y != 0){
-					sp.Update(dt, direcao, direcaoShift);
+			sp.Update(dt, direcao, direcaoShift);
 		} else{
 			if(sp.GetCurrentFrame() > 1 && sp.GetCurrentFrame() < 8){
 			if(direcao == NORTE) speed.y = -DESACELERA;
@@ -117,22 +102,8 @@ bool Enemy::IsDead(){
 
 bool Enemy::NotifyCollision(GameObject& other){
 	if(show){
-		if(other.Is("CollidableObject")){
 
-			if(seen && MissionManager::player != nullptr){
-				//if(MissionManager::player != nullptr){
-				Vec2 aux;
-				destination.x = MissionManager::player->box.x;
-				destination.y = MissionManager::player->box.y;
-				//seen = true;
 
-				aux.x = box.x; aux.y = box.y;
-				speed = (destination.Sub(aux)).Normalize();
-				speed.x = speed.x*SPEED_CONTROL;
-				speed.y = speed.y*SPEED_CONTROL;
-					//}
-			}
-		}
 		if(other.Is("Player")){
 			seen = false;
 			collidingPlayer = true;
@@ -149,111 +120,71 @@ void Enemy::SetDestinationPath(Vec2 path){
 void Enemy::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
-	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
-		if(/*this->box.x == destinationPath.back().x && this->box.y == destinationPath.back().y */ aux.Distance(destinationPath.back())<= 5 ){
-				//printf("POPANDO");
+	inDefinedPath = true;
+	canPursuit = false;
 
-			arrived = true;
+
+		if( aux.Distance(destinationPath.back())<= 10 ){
 			destinationPath.pop_back();
 		}
-		else
-			arrived = false;
-		if(destinationPath.empty())
-			show = false;
-		if(MissionManager::player != nullptr){
-			/*destination.x = MissionManager::player->box.x;
-			destination.y = MissionManager::player->box.y;*/
-			//seen = true;
 
-			//aux.x = box.x; aux.y = box.y;
-			speed = (destinationPath.back().Sub(aux)).Normalize();
-			speed.x = speed.x*SPEED_CONTROL;
-			speed.y = speed.y*SPEED_CONTROL;
+		speed = (destinationPath.back().Sub(aux)).Normalize();
+		speed.x = speed.x*SPEED_CONTROL;
+		speed.y = speed.y*SPEED_CONTROL;
+
+
+		if(destinationPath.empty()){
+			speed.x = 0;
+			speed.y = 0;
+			direcao = SUL;
+			inDefinedPath = false;
+			canPursuit = true;
 		}
 
-		//if(arrived){
-			//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
-			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
-				if(destinationPath.back().x < box.x){
-					//std::cout << " OESTE " << std::endl;
-					direcao = OESTE;
-				} else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
-					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
-					direcao = LESTE;
-				}
-			}
-			else{
-					if(destinationPath.back().y < box.y){
-					//std::cout << " NORTE " << std::endl;
-					direcao = NORTE;
-				}
-				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
-					//std::cout << " SUL " << std::endl;
-					direcao = SUL;
-				}
-			}
-		//}
+		if(speed.x > 0 && abs(speed.y) < 5){
+			direcao = LESTE;
+		}else if (speed.x < 0 && abs(speed.y) < 5){
+			direcao = OESTE;
+		}else if (abs(speed.x) < 5 && speed.y < 0){
+			direcao = NORTE;
+		}else{
+			direcao = SUL;
+		}
 
 		if (speed.x < 0 && speed.y < 0){
-			if(box.x + speed.x -  VALUE <= destinationPath.back().x  &&
-				speed.y + box.y -  VALUE <= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destinationPath.back().x - box.w/2;
-				box.y = destinationPath.back().y - box.h/2;
-
-				//seen = false;
-
+			if(box.x + speed.x -  10 <= destinationPath.back().x  &&
+				speed.y + box.y -  10 <= destinationPath.back().y){
+				box.x = destinationPath.back().x;
+				box.y = destinationPath.back().y;
 			} else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
 				box.x += speed.x;
 				box.y += speed.y;
 			}
 		} else if (speed.x > 0 && speed.y < 0){
-			if(box.x +speed.x +  VALUE >= destinationPath.back().x &&
-					speed.y + box.y -  VALUE <= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
+			if(box.x +speed.x +  10 >= destinationPath.back().x &&
+					speed.y + box.y - 10 <= destinationPath.back().y){
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
 
-				//seen = false;
-
 				}else{
-					previousPos.x = box.x;
-					previousPos.y = box.y;
 					box.x += speed.x;
 					box.y += speed.y;
 				}
 		} else if (speed.x < 0 && speed.y > 0){
-			if(box.x +speed.x -  VALUE <= destinationPath.back().x &&
-					speed.y + box.y +  VALUE >= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
+			if(box.x +speed.x - 10 <= destinationPath.back().x &&
+					speed.y + box.y +  10 >= destinationPath.back().y){
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
-
-				//seen = false;
-
 				}else{
-					previousPos.x = box.x;
-					previousPos.y = box.y;
 					box.x += speed.x;
 					box.y += speed.y;
 				}
 		} else if (speed.x > 0 && speed.y > 0){
-			if(box.x +speed.x + VALUE >= destinationPath.back().x &&
-					speed.y + box.y + VALUE >= destinationPath.back().y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
+			if(box.x +speed.x + 10 >= destinationPath.back().x &&
+					speed.y + box.y + 10 >= destinationPath.back().y){
 				box.x = destinationPath.back().x;
 				box.y = destinationPath.back().y;
-
-				//seen = false;
 			} else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
 				box.x += speed.x;
 				box.y += speed.y;
 			}
@@ -261,103 +192,82 @@ void Enemy::DefinedPath(){
 
 }
 
+void Enemy::SetDestinationPursuit(std::queue<Vec2> path){
+	std::queue<Vec2> aux = path;
+	canPursuit = false;
+	for(unsigned i = 0; i < path.size(); i++){
+		destinationPursuit.emplace(Vec2(aux.front().x, aux.front().y - sp.GetHeight()-30));
+		aux.pop();
+	}
+}
+
 void Enemy::Pursuit(){
 	Vec2 aux;
+	aux.x = box.x; aux.y = box.y;
 
-	if(MissionManager::player != nullptr){
-		destination.x = MissionManager::player->box.x;
-		destination.y = MissionManager::player->box.y;
-		//seen = true;
+		if( aux.Distance(destinationPursuit.front())<= 10 ){
+			destinationPursuit.pop();
+		}
 
-		aux.x = box.x; aux.y = box.y;
-		speed = (destination.Sub(aux)).Normalize();
+		speed = (destinationPursuit.front().Sub(aux)).Normalize();
 		speed.x = speed.x*SPEED_CONTROL;
 		speed.y = speed.y*SPEED_CONTROL;
-	}
-	if((unsigned) (destination.x- box.x) > (unsigned) (destination.y- box.y)){
-		if(destination.x > box.x){
-			//std::cout << " lESTE " << std::endl;
-			direcao = LESTE;
-		}else if(destination.x < box.CenterX() || destination.x < box.x){
-			//std::cout << " OESTE " << std::endl;
-			direcao = OESTE;
-		}
-	}
-	else{
-		if(destination.y > box.y){
-			//std::cout << " SUL " << std::endl;
+
+		if(destinationPursuit.empty()){
+			speed.x = 0;
+			speed.y = 0;
 			direcao = SUL;
-		}else if(destination.y < box.CenterY()  || destination.y < box.y){
-			//std::cout << " NORTE " << std::endl;
+			canPursuit = true;
+		}
+
+		if(speed.x > 0 && abs(speed.y) < 5){
+			direcao = LESTE;
+		}else if (speed.x < 0 && abs(speed.y) < 5){
+			direcao = OESTE;
+		}else if (abs(speed.x) < 5 && speed.y < 0){
 			direcao = NORTE;
+		}else{
+			direcao = SUL;
 		}
-	}
 
+		if (speed.x < 0 && speed.y < 0){
+			if(box.x + speed.x -  10 <= destinationPursuit.front().x  &&
+				speed.y + box.y -  10 <= destinationPursuit.front().y){
+				box.x = destinationPursuit.front().x ;
+				box.y = destinationPursuit.front().y ;
 
-	if (speed.x < 0 && speed.y < 0){
-		if(box.x + speed.x -  VALUE <= destination.x &&
-			speed.y + box.y -  VALUE <= destination.y){
-			previousPos.x = box.x;
-			previousPos.y = box.y;
-			box.x = destination.x - box.w/2;
-			box.y = destination.y - box.h/2;
-
-			//seen = false;
-
-		} else{
-			previousPos.x = box.x;
-			previousPos.y = box.y;
-			box.x += speed.x;
-			box.y += speed.y;
-		}
-	} else if (speed.x > 0 && speed.y < 0){
-		if(box.x +speed.x +  VALUE >= destination.x &&
-				speed.y + box.y -  VALUE <= destination.y){
-			previousPos.x = box.x;
-			previousPos.y = box.y;
-			box.x = destination.x;
-			box.y = destination.y;
-
-			//seen = false;
-
-			}else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
+			} else{
 				box.x += speed.x;
 				box.y += speed.y;
 			}
-	} else if (speed.x < 0 && speed.y > 0){
-		if(box.x +speed.x -  VALUE <= destination.x &&
-				speed.y + box.y +  VALUE >= destination.y){
-			previousPos.x = box.x;
-			previousPos.y = box.y;
-			box.x = destination.x;
-			box.y = destination.y;
-
-			//seen = false;
-
-			}else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
+		} else if (speed.x > 0 && speed.y < 0){
+			if(box.x +speed.x +  10 >= destinationPursuit.front().x &&
+					speed.y + box.y -  10 <= destinationPursuit.front().y){
+				box.x = destinationPursuit.front().x;
+				box.y = destinationPursuit.front().y;
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
+		} else if (speed.x < 0 && speed.y > 0){
+			if(box.x +speed.x -  10 <= destinationPursuit.front().x &&
+					speed.y + box.y +  10 >= destinationPursuit.front().y){
+				box.x = destinationPursuit.front().x;
+				box.y = destinationPursuit.front().y;
+				}else{
+					box.x += speed.x;
+					box.y += speed.y;
+				}
+		} else if (speed.x > 0 && speed.y > 0){
+			if(box.x +speed.x + 10 >= destinationPursuit.front().x &&
+					speed.y + box.y + 10 >= destinationPursuit.front().y){
+				box.x = destinationPursuit.front().x;
+				box.y = destinationPursuit.front().y;
+			} else{
 				box.x += speed.x;
 				box.y += speed.y;
 			}
-	} else if (speed.x > 0 && speed.y > 0){
-		if(box.x +speed.x + VALUE >= destination.x &&
-				speed.y + box.y + VALUE >= destination.y){
-			previousPos.x = box.x;
-			previousPos.y = box.y;
-			box.x = destination.x;
-			box.y = destination.y;
-
-			//seen = false;
-		} else{
-			previousPos.x = box.x;
-			previousPos.y = box.y;
-			box.x += speed.x;
-			box.y += speed.y;
 		}
-	}
 
 }
 
@@ -376,4 +286,8 @@ void Enemy::ChangeClothes(){
 	//box.x = box.x; box.y = box.y;
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();
+}
+
+int Enemy::GetHeight(){
+	return sp.GetHeight();
 }

@@ -37,16 +37,6 @@ bool StealthObject::NotifyCollision(GameObject& other){
 		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
-	if (other.Is("Enemy")){
-		if(other.box.x < box.x + box.w ||
-				other.box.x + other.box.w > box.x){
-			other.box.x = box.x + box.w + 1;
-		} else if(other.box.y < box.y + box.h ||
-				other.box.y + other.box.h > box.y){
-			other.box.x = box.x - other.box.w - 1;
-		}
-	}
-
 	return false;
 }
 

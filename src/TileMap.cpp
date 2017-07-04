@@ -374,6 +374,7 @@ void TileMap::aStarSearch(std::vector<std::vector<int>> grid, Pair src, Pair des
 
 
 void TileMap::PathFind(Vec2 origem, Vec2 destino){
+		while(!path.empty()) path.pop();
 	    Pair src = std::make_pair(origem.y/tileSet->GetTileHeight(), origem.x/tileSet->GetTileWidth());
 	    Pair dest = std::make_pair(destino.y/tileSet->GetTileHeight(), destino.x/tileSet->GetTileWidth());
 	    aStarSearch(grid, src, dest);

@@ -4,6 +4,8 @@
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "Animation.hpp"
+#include "HallState.hpp"
+#include "LivingRoomState.hpp"
 
 #include <iostream>
 
@@ -103,6 +105,29 @@ void  Mission1::Update(float dt){
 	if(endMission && time.Get() > (12*0.25 + 0.5)){
 		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}
+
+	if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
+			if(MissionManager::missionManager->GetStage("HallState")){
+				((HallState&) Game::GetInstance().GetCurrentState())
+						.tileMap.PathFind(Vec2(MissionManager::enemy->box.x
+								, MissionManager::enemy->box.y+MissionManager::enemy->GetHeight())
+								, Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+				MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
+						GetCurrentState()).tileMap.GetPath());
+				MissionManager::enemy->seen = false;
+			}
+			if(MissionManager::missionManager->GetStage("LivingRoomState")){
+				((LivingRoomState&) Game::GetInstance().GetCurrentState())
+						.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x
+								, MissionManager::enemy->box.y+MissionManager::enemy->GetHeight())
+								, Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
+						GetCurrentState()).tileMapChao.GetPath());
+				MissionManager::enemy->seen = false;
+			}
+
+
+		}
 
 	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer && !endMission && peguei){
 		//std::cout << "MOM DEAD 0" << std::endl;
@@ -267,7 +292,7 @@ void  Mission1::Update(float dt){
 
 					SceneDoor::count = ABRE;
 					SceneDoor::ValorPassar = 16;
-					MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+					//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
 					MissionManager::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
 					MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
 					MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
@@ -311,6 +336,7 @@ void  Mission1::Update(float dt){
 			if(state != MissionManager::missionManager->changeState){
 						state = MissionManager::missionManager->changeState;
 						time.Restart();
+						MissionManager::enemy->show = false;
 			}
 			if(trancada == false && cooldown.Get() > 3){
 				showBox = true;
@@ -333,11 +359,10 @@ void  Mission1::Update(float dt){
 
 		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
 			if(state != MissionManager::missionManager->changeState){
-				MissionManager::enemy->SetPosition(230, 300);
-				MissionManager::enemy->show = false;
 				MissionManager::player->SetPosition(230, 300);
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
+				MissionManager::enemy->show = false;
 			}
 
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
@@ -348,7 +373,14 @@ void  Mission1::Update(float dt){
 				//SceneDoor::ValorPassar = 4;
 				// tentativa fail de fazer mãe parar de andar
 				peguei = true; //era da tentativa fail;
-				MissionManager::enemy->SetDestinationPath(Vec2(230, 230));
+				//MissionManager::enemy->SetDestinationPath(Vec2(230, 230));
+				((LivingRoomState&) Game::GetInstance().GetCurrentState())
+				.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x
+						, MissionManager::enemy->box.y+MissionManager::enemy->GetHeight())
+						, Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
+				GetCurrentState()).tileMapChao.GetPath());
+
 				Camera::Zoom(2, true);
 			}
 

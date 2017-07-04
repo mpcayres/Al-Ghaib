@@ -7,6 +7,7 @@
 #include "Geometry.hpp"
 #include "Player.hpp"
 #include "EmptyBox.hpp"
+#include <queue>
 #include <iostream>
 #define  VALUE 3
 #define SPEED_CONTROL 3
@@ -27,22 +28,25 @@ public:
 	void Pursuit();
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
+	void SetDestinationPursuit(std::queue<Vec2> path);
 	void SetPosition(float x, float y);
 	void SetDirecao(int dir);
 	void SetDead();
 	void ChangeClothes();
+	int GetHeight();
+
 	InvBox direcao;
 	//Vec2 previousPos;
 
-	bool show, arrived, collidingPlayer, bloq;
+	bool show, arrived, collidingPlayer, bloq,  seen, canPursuit, inDefinedPath;;
 private:
 	Timer time;
 	Sprite sp;
 	Vec2 speed;
-	bool seen;
 	Vec2 destination;
 	//Vec2 destinationPath;
 	std::vector<Vec2> destinationPath;
+	std::queue<Vec2> destinationPursuit;
 
 	bool direcaoShift;
 };

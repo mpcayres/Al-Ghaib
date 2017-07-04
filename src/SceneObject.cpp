@@ -34,23 +34,6 @@ bool SceneObject::NotifyCollision(GameObject& other){
 		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
-	if (other.Is("Enemy")){
-		if(other.box.y + other.box.h - offset < box.y + box.h){
-
-			if((other.box.x < box.x + box.w &&
-					other.box.x + other.box.w > box.x + box.w )
-					|| (box.InsideX(other.box) &&
-					other.box.CenterX() >= box.CenterX())){
-								other.box.x = box.x + box.w + 1;
-			} else if((other.box.x + other.box.w > box.x &&
-					other.box.x < box.x)
-					|| (box.InsideX(MissionManager::player->box) &&
-					other.box.CenterX() < box.CenterX())){
-							other.box.x = box.x - other.box.w - 1;
-			}
-
-		}
-	}
 
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){

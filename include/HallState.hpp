@@ -27,6 +27,8 @@ private:
 	Sprite background;
 	Sprite bg;
 	TileSet tileSet;
+
+public:
 	TileMap tileMap;
 };
 

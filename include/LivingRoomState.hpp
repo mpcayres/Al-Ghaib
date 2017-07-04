@@ -29,6 +29,8 @@ private:
 	Sprite bg;
 	TileSet tileSetChao;
 	TileSet tileSetParede;
+
+public:
 	TileMap tileMapChao;
 	TileMap tileMapParede;
 };
