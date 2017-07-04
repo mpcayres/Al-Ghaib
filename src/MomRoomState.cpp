@@ -130,15 +130,18 @@ void MomRoomState::SetInitialObjectArray(){
 	SceneObject* Table = new SceneObject(300, 250, "img/moveis/object-mesinha.png", "img/moveis/object-mesinha.png", 0, 0.7, 0.7);
 	objectArray.emplace_back(Table);
 
-	SceneObject* Mask= new SceneObject(650, 480, "img/moveis/object-cabideiro.png", "img/moveis/object-cabideiro.png");
-	objectArray.emplace_back(Mask);
-
-	SceneObject* Armario =  new SceneObject(600, 200, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+		SceneObject* Armario =  new SceneObject(600, 200, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	objectArray.emplace_back(Armario);
 
 
-	SceneObject* Cama =  new SceneObject(500, 200, "img/scene-cama.png", "");
+	SceneObject* Cama =  new SceneObject(500, 200, "img/scene-cama.png", "img/scene-cama.png");
 	objectArray.emplace_back(Cama);
+
+	SceneObject* Covil =  new SceneObject(570, 470, "img/moveis/porao-fechado.png", "img/moveis/porao-aberto.png", 0, 0.6, 0.6);
+	objectArray.emplace_back(Covil);
+
+	SceneObject* Mask= new SceneObject(650, 480, "img/moveis/object-cabideiro.png", "img/moveis/object-cabideiro.png");
+		objectArray.emplace_back(Mask);
 
 
 
