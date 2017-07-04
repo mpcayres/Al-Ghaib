@@ -6,7 +6,7 @@
 int SceneDoor::ValorPassar = 0;
 int SceneDoor::count = 200;
 
-SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::string img, std::string img2, bool block) :
+SceneDoor::SceneDoor(float x, float y, std::string dest, bool locked, std::string img, std::string img2, int block) :
 	SceneObject(x, y, img, img2, 0, 1, 1, "", SAMEX), dest(dest) {
 
 	lock = locked;
@@ -61,8 +61,9 @@ bool SceneDoor::Is(std::string type){
 }
 
 bool SceneDoor::ReceiveAction(InventoryObject* other){
-	if(other->IsObject("InventoryKey") || other->IsObject("InventoryArame")){
-		if(other->IsObject("InventoryArame") && blockArame) return true;
+	if((other->IsObject("InventoryKey") || other->IsObject("InventoryArame")) && (blockArame != -1)){
+		if(other->IsObject("InventoryArame") && (blockArame == 1)) return true;
+		if(other->IsObject("InventoryKey") && (blockArame == 0)) return false;
 		if(lock == true){
 			lock = false;
 			if(other->IsObject("InventoryKey")) return true;

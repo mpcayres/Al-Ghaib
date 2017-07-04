@@ -495,6 +495,9 @@ void Mission1::SetObjectStage(){
 	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	//objectStage.emplace_back(Armario);
 
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
+	objectStage.emplace_back(Door);
+
 	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
@@ -513,6 +516,10 @@ void Mission1::SetObjectStage(){
 void Mission1::SetObjectHall(){
 	//SceneWindow* Window = new SceneWindow(350, 70);
 	//objectHall.emplace_back(Window);
+
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
+	objectHall.emplace_back(DoorToMomRoom);
 
 	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);

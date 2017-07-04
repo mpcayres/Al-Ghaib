@@ -391,13 +391,19 @@ void Mission2::Render(){
 }
 
 void Mission2::SetObjectStage(){
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState", false);
+	objectStage.emplace_back(Door);
+
 	Bear* bear = new Bear(810, 210);
 	objectStage.emplace_back(bear);
+
 	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
+
 	MovingObject* Box = new MovingObject(400, 500, "img/moveis/sala/banquinho.png");
 	objectStage.emplace_back(Box);
+
 	//MovingObject* Cadeira = new MovingObject(650, 300, "img/scene-cadeira.png", true);
 	//objectStage.emplace_back(Cadeira);
 }
@@ -405,8 +411,13 @@ void Mission2::SetObjectStage(){
 void Mission2::SetObjectHall(){
 	//SceneWindow* Window = new SceneWindow(350, 70);
 	//objectHall.emplace_back(Window);
+
 	//* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
-		//		"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+	//		"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
+	objectHall.emplace_back(DoorToMomRoom);
 
 	SceneObject* Armario2 = new SceneObject(1400, 110, "img/scene-armario-corredor-fechado.png",
 			 "img/scene-armario-corredor-fechado.png", 0, 1, 1, "InventoryWool", SceneObject::SAMEY_UP);
