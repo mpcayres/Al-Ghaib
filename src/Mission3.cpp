@@ -233,7 +233,7 @@ void Mission3::Update(float dt){
 		// OU
 		// TV + CONTROLE DA TV
 		//std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
-		if(MissionManager::cat->attracted == true){
+		if(MissionManager::cat->attractedWool == true){
 			atraidoNovelo++;
 			std::cout << "atraidoNovelo" << atraidoNovelo << std::endl;
 			if(atraidoNovelo == 1){
@@ -283,7 +283,45 @@ void Mission3::Update(float dt){
 			}
 		}
 
-		//////////////// TROCAR PARA QUARTO DA MÃƒE 1
+
+	}
+	if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+				MissionManager::missionManager->countLivingRoomState > 1){
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
+			MissionManager::missionManager->player->box.x = 400;
+			MissionManager::missionManager->player->box.y = 400;
+			time.Restart();
+		}
+		std::cout << "attractedTV" << std::endl;
+		if(MissionManager::cat->attractedTV == true){
+			MissionManager::cat->show = true;
+			atraidoTV++;
+			std::cout << "atraindo" << std::endl;
+			std::cout << atraidoTV << std::endl;
+
+			if(atraidoTV == 1){
+				MissionManager::cat->SetPosition(230, 300);
+				//MissionManager::missionManager->cat->box.x = 400;
+				//MissionManager::missionManager->cat->box.y = 400;
+				time.Restart();
+				std::cout << "ENTREI" << std::endl;
+				MissionManager::cat->SetDestinationPath(Vec2(610, 450));
+				MissionManager::cat->SetDestinationPath(Vec2(500, 450));
+				MissionManager::cat->SetDestinationPath(Vec2(400, 430));
+				MissionManager::cat->SetDestinationPath(Vec2(400, 350));
+				MissionManager::cat->SetDestinationPath(Vec2(230, 350));
+			}
+			else if (time.Get()>5){
+				MissionManager::cat->SetDestinationPath(Vec2(610, 450));
+			}
+
+			MissionManager::cat->SetDestinationPath(Vec2(610, 450));
+		}
+
+	}
+
+	//////////////// TROCAR PARA QUARTO DA MÃƒE 1
 		//else if(MissionManager::missionManager->GetStage("MomState") &&
 		//						MissionManager::missionManager->countMomState > 1){
 			//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
@@ -301,7 +339,6 @@ void Mission3::Update(float dt){
 
 
 		//}
-	}
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);
 	}

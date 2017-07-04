@@ -239,46 +239,6 @@ void  Mission1::Update(float dt){
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				ultimoTempo = 6;
 			}
-			//MÃE APARECENDO NO CORREDOR
-/*
-			//COMEÇO MÃE TE PEGANDO  =  AGORA ISSO É NA SALA
-			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
-				MissionManager::enemy->show = true;
-				SceneDoor::count = ABRE;
-				SceneDoor::ValorPassar = 4;
-				//if(MissionManag+er::player->lastPicked == "InventoryBear"){
-				//MissionManager::player->SetBlocked(true);
-				Camera::Unfollow();
-				Camera::Follow(MissionManager::enemy->enemy, CAMERA_TYPE1);
-				Camera::Zoom(2, true);
-				//if(trancada == false && cooldown.Get() > 3){
-					showBox = true;
-					//MissionManager::enemy->bloq = true;
-					falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = time.Get();
-					//std::cout << ultimoTempo << std::endl;
-				//}
-				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
-					showBox = false;
-					//MissionManager::enemy->bloq = false;
-					falas.SetText(" ");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-					ultimoTempo = ultimoTempo + 5;
-				}
-				//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300));
-				//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(1100, 350)); //3º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(970, 250)); //2º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //1º DESTINO
-				//}
-			}*/
-
-			//FIM MÃE TE PEGANDO
-
-
-
-
 			if(time.Get() > 5 && time.Get() < 6 && played == false){
 				Sound portaDestrancando = Sound ("audio/destrancando.wav");
 				portaDestrancando.Play(0);
@@ -383,54 +343,7 @@ void  Mission1::Update(float dt){
 				// tentativa fail de fazer mãe parar de andar
 				peguei = true; //era da tentativa fail;
 				MissionManager::enemy->SetDestinationPath(Vec2(230, 230));
-/*
-				contPega++;
-				if(contPega == 0)
-					num = (int)time.Get();
-				if(num + 500 > time.Get()){
-					time.Update(dt);
-					MissionManager::enemy->SetDestinationPath(Vec2(230, 180));
-					//std::cout << time.Get() << " e " << num << std::endl;
-					MissionManager::player->SetBlocked(true);
-					showBox = true;
-					falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				}
-				else{
-					peguei = true;
-					showBox = false;
-					falas.SetText(" ");
-					MissionManager::enemy->SetDestinationPath(Vec2(230, 300));
-					Camera::Zoom(2, true);
-				}*/
 				Camera::Zoom(2, true);
-				//if(MissionManager::player->lastPicked == "InventoryBear"){
-				//MissionManager::player->SetBlocked(true);
-				//Camera::Unfollow();
-
-				//Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
-
-				//if(trancada == false && cooldown.Get() > 3){
-				//showBox = true;
-				//MissionManager::enemy->bloq = true;
-				/*falas.SetText("M: COMO OUSA? NADA DE TAIS BRINQUEDOS INFANTIS!");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = time.Get();
-				//std::cout << ultimoTempo << std::endl;
-				//}
-				if(time.Get() > (ultimoTempo + 5) && trancada == false && cooldown.Get() > 3){
-					showBox = false;
-					//MissionManager::enemy->bloq = false;
-					falas.SetText(" ");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-					ultimoTempo = ultimoTempo + 5;
-				}*/
-					//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300));
-					//MissionManager::enemy->SetDestinationPath(Vec2(1500, 300)); //4º DESTINO
-					//MissionManager::enemy->SetDestinationPath(Vec2(350, 490)); //3º DESTINO
-					//MissionManager::enemy->SetDestinationPath(Vec2(350, 300)); //2º DESTINO
-					//MissionManager::enemy->SetDestinationPath(Vec2(230, 300)); //1º DESTINO
-					//}
 			}
 
 		}

@@ -18,7 +18,7 @@ Cat::Cat(float x, float y): sp("img/object-novelo.png"){
 	//destinationPath.x = x;
 	//destinationPath.y = y;
 
-	show = seen = arrived = attracted = false;
+	show = seen = arrived = attractedWool = attractedTV = false;
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
 	box.h = sp.GetScaledHeight();

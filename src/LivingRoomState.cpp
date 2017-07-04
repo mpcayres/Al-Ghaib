@@ -31,7 +31,7 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 		objectArray = std::move(obj);
 	}
 	objectArray.emplace_back(MissionManager::enemy);
-	//objectArray.emplace_back(MissionManager::cat);
+	objectArray.emplace_back(MissionManager::cat);
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();

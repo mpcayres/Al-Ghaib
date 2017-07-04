@@ -357,6 +357,9 @@ void Mission2::Update(float dt){
 			showBox = false;
 		}
 
+	}else if(MissionManager::missionManager->GetStage("LivingRoomState")){
+		MissionManager::cat->show = false;
+
 	}
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);

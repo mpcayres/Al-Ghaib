@@ -38,6 +38,8 @@ bool SceneAnimated::NotifyCollision(GameObject& other){
 
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
+			std::cout << " attrac TV" << std::endl;
+			MissionManager::cat->attractedTV = true;
 			ChangeImage();
 		}
 	}
