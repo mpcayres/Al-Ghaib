@@ -136,17 +136,29 @@ void Mission4::Render(){
 }
 
 void Mission4::SetObjectStage(){
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState", false);
+	objectStage.emplace_back(Door);
 
 	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
+
 	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
 	objectStage.emplace_back(Box);
+
 	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission4::SetObjectHall(){
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+			"img/scene-door-closed.png", "img/scene-door-opened.png", 1);
+	objectHall.emplace_back(DoorToMomRoom);
+
+	SceneObject* Bau = new SceneObject(1000, 490,  "img/scene-bau-fechado.png",
+			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+	objectHall.emplace_back(Bau);
+
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 }

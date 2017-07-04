@@ -144,8 +144,6 @@ void StageState::SetInitialObjectArray(){
 	objectArray.emplace_back(EB);
 	//Walls *Wall = new Walls(700, 400, 100,100);
 	//objectArray.emplace_back(Wall);
-	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
-	objectArray.emplace_back(Door);
 
 	SceneObject* Escrivaninha = new SceneObject(650, 440, "img/scene-escrivaninha-fechado.png", "img/scene-escrivaninha-aberto.png");
 	objectArray.emplace_back(Escrivaninha);
