@@ -144,8 +144,11 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Pilastra2 = new SceneObject(725, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra2);
 
-	SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
-	objectArray.emplace_back(DoorToHall);
+	//SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
+	//objectArray.emplace_back(DoorToHall);
+
+	ScenePortal* DoorToLivingRoom = new ScenePortal(220, 165, "HallState");
+	objectArray.emplace_back(DoorToLivingRoom);
 
 	SceneObject* Armario = new SceneObject(790, 175, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);

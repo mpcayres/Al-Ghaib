@@ -31,7 +31,6 @@ public:
 	void SetDirecao(int dir);
 	void SetDead();
 	void ChangeClothes();
-
 	InvBox direcao;
 	//Vec2 previousPos;
 

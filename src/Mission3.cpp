@@ -93,31 +93,25 @@ void Mission3::Update(float dt){
 			MissionManager::missionManager->countLivingRoomState <= 1){
 		MissionManager::enemy->show = true;
 
-		if(time.Get()>5)
+
 			momcount ++;
-			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
-std::cout << " time e mom" << time.Get() << momcount << std::endl;
-std::cout << MissionManager::enemy->box.x << "e" << MissionManager::enemy->box.y << std::endl;
-		if(momcount == 2 && time.Get() > 5){
+
+		if(momcount == 1 ){
+			MissionManager::enemy->SetPosition(700, 190);
 			std::cout << "mae?" << std::endl;
-			//MissionManager::enemy->SetPosition(700, 180);
-		//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-		//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-			MissionManager::enemy->SetDestinationPath(Vec2(220, 165)); //3º DESTINO
-			MissionManager::enemy->SetDestinationPath(Vec2(220, 190)); //3º DESTINO
-			MissionManager::enemy->SetDestinationPath(Vec2(620, 190)); //2º DESTINO
-			MissionManager::enemy->SetDestinationPath(Vec2(660, 190)); //1º DESTINO
-		}
-		if(time.Get () < 5){
-			std::cout << "oi" << std::endl;
-			if(momcount == 0){
-				MissionManager::enemy->SetPosition(700, 190);
-				momcount++;
-			}
-			//if(momcount < 4){
-				MissionManager::enemy->SetDestinationPath(Vec2(620, 190)); //1º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(700, 190)); //1º DESTINO
-			//}
+
+			MissionManager::enemy->SetDestinationPath(Vec2(220, 165));
+			MissionManager::enemy->SetDestinationPath(Vec2(220, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(620, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(660, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(620, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(730, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(620, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(730, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(620, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(730, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(620, 190));
+			MissionManager::enemy->SetDestinationPath(Vec2(730, 190));
 		}
 
 		MissionManager::player->SetBlocked(true);
@@ -147,19 +141,22 @@ std::cout << MissionManager::enemy->box.x << "e" << MissionManager::enemy->box.y
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 15;
 			showBox = true;
-			MissionManager::player->SetBlocked(false);
+
 		}
 		if(time.Get() > 20 && trancada == false && cooldown.Get() > 3){
 			falas.SetText("U: TEMOS QUE INVESTIGAR ISSO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 20;
 			showBox = true;
+			MissionManager::player->SetBlocked(false);
+			MissionManager::enemy->show = false;
 		}
 		if(time.Get() > 25 && trancada == false && cooldown.Get() > 3){
 			falas.SetText(" ");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 25;
 			showBox = false;
+			MissionManager::enemy->show = false;
 		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
@@ -218,26 +215,7 @@ std::cout << MissionManager::enemy->box.x << "e" << MissionManager::enemy->box.y
 		if( dist < 250){
 			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
-		/*if(countCat == 1 && dist > 250){
-			//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
-			std::cout << "ka" << std::endl;
-			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
-			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
-			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
-			MissionManager::cat->SetDestinationPath(Vec2(890, 200)); //4Âº DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(970, 200)); //3Âº DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(1000, 200)); //2Âº DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
-			//paradoGato = true;
-		}
-		if(dist > 250){
-			std::cout << "dist > 250" << std::endl;
-			MissionManager::cat->SetDestinationPath(Vec2(1100, 200)); //2Âº DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(940, 200)); //1Âº DESTINO
-		}*/
-		/*if(dist < 250){
-			paradoGato = true;
-		}*/
+
 		if( dist < 250){
 				MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
