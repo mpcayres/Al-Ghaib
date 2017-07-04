@@ -151,11 +151,11 @@ void LivingRoomState::SetInitialObjectArray(){
 	objectArray.emplace_back(Armario);
 
 	if(MissionManager::player->HaveObject("InventoryControl")){
-		SceneObject* Bau = new SceneObject(320, 500,  "img/scene-bau-fechado.png",
+		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
 	} else {
-		SceneObject* Bau = new SceneObject(320, 500,  "img/scene-bau-fechado.png",
+		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
 	}
