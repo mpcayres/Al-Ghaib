@@ -13,6 +13,7 @@
 #define Bear_COOLDOWN 3
 #define MOV_OFFSET 1
 
+
 class Bear : public GameObject {
 public:
 	enum InvBox{SUL, NORTE, LESTE, OESTE};
@@ -37,6 +38,7 @@ public:
 	static bool show, seen;
 	static bool arrived;
 	static bool repair;
+	static bool retorno;
 private:
 	Timer time;
 	float offset;
@@ -51,6 +53,7 @@ private:
 	InvBox direcao;
 
 	bool direcaoShift/*, stop*/;
+
 };
 
 #endif /* INCLUDE_Bear_HPP_ */
