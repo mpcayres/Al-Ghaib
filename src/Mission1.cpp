@@ -142,8 +142,8 @@ void  Mission1::Update(float dt){
 			//MissionManager::enemy->show = false;
 
 			//std::cout << "MOM DEAD 1" << std::endl;
-			std::cout << "piscapisca" << std::endl;
-			PiscaPisca(dt, 20, 0.4);
+			//std::cout << "piscapisca" << std::endl;
+			//PiscaPisca(dt, 20, 0.4);
 			MissionManager::enemy->SetDead();
 			//std::cout << "MOM DEAD 2" << std::endl;
 
@@ -399,7 +399,7 @@ void  Mission1::Update(float dt){
 			UpdateVariable(dt, 80);
 		}
 
-		if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
+		if(MissionManager::player->lastPicked == "InventoryBear"){
 			PiscaPisca(dt, 20, 0.4);
 			MissionManager::player->SetBloqInv(true);
 		}

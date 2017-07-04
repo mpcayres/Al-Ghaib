@@ -19,7 +19,7 @@ MomRoomState::MomRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool in
 
 	limits = tileMapChao.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
-	else SetPlayer(600, 400, CAMERA_TYPE1, limits);
+	else SetPlayer(200, 400, CAMERA_TYPE1, limits);
 	if(inicial){
 		//std::cout << "HSC1.1 " << objectArray.size() << std::endl;
 		SetInitialObjectArray();
