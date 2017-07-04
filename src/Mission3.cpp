@@ -170,8 +170,8 @@ void Mission3::Update(float dt){
 		std::cout << "HallState" << std::endl;
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
-			MissionManager::missionManager->player->box.x = 510;
-			MissionManager::missionManager->player->box.y = 200;
+			//MissionManager::missionManager->player->box.x = 510;
+			//MissionManager::missionManager->player->box.y = 200;
 			MissionManager::enemy->show = false;
 			MissionManager::enemy->SetPosition(975,115);
 			time.Restart();
@@ -282,8 +282,8 @@ void Mission3::Update(float dt){
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
-			MissionManager::missionManager->player->box.x = 400;
-			MissionManager::missionManager->player->box.y = 400;
+			//MissionManager::missionManager->player->box.x = 400;
+			//MissionManager::missionManager->player->box.y = 400;
 			MissionManager::enemy->SetPosition(400,400);
 			time.Restart();
 		}

@@ -259,8 +259,8 @@ void  Mission1::Update(float dt){
 				//std::cout << "HallState" << std::endl;
 				if(state != MissionManager::missionManager->changeState){
 					state = MissionManager::missionManager->changeState;
-					MissionManager::missionManager->player->box.x = 400;
-					MissionManager::missionManager->player->box.y = 400;
+					//MissionManager::missionManager->player->box.x = 400;
+					//MissionManager::missionManager->player->box.y = 400;
 					MissionManager::enemy->SetPosition(975,115);
 					MissionManager::enemy->show = false;
 					time.Restart();

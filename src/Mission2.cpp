@@ -174,8 +174,8 @@ void Mission2::Update(float dt){
 
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
-			MissionManager::missionManager->player->box.x = 400;
-			MissionManager::missionManager->player->box.y = 400;
+			//MissionManager::missionManager->player->box.x = 400;
+			//MissionManager::missionManager->player->box.y = 400;
 			MissionManager::enemy->show = false;
 			time.Restart();
 		}
@@ -322,8 +322,8 @@ void Mission2::Update(float dt){
 			MissionManager::enemy->show = false;
 			MissionManager::enemy->SetPosition(975,115);
 			state = MissionManager::missionManager->changeState;
-			MissionManager::missionManager->player->box.x = 400;
-			MissionManager::missionManager->player->box.y = 400;
+			//MissionManager::missionManager->player->box.x = 400;
+			//MissionManager::missionManager->player->box.y = 400;
 			time.Restart();
 		}
 
