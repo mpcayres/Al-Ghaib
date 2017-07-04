@@ -20,17 +20,14 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 	limits = tileMapChao.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
 	else SetPlayer(600, 400, CAMERA_TYPE0, limits);
-	//MissionManager::player->AddWallLimits(Rect(270, 282, 130, 125));
-	//MissionManager::player->AddWallLimits(Rect(725, 282, 130, 125));
-	//MissionManager::player->AddWallLimits(Rect(1175, 282, 130, 125));
 	if(inicial){
-		//std::cout << "HSC1.1" << std::endl;
+		//std::cout << "HSC1.1 " << objectArray.size() << std::endl;
 		SetInitialObjectArray();
 		objectArray.insert( objectArray.end(),
 				std::make_move_iterator(obj.begin()),
 				std::make_move_iterator(obj.end()) );
 	} else{
-		//std::cout << "HSC1.2" << std::endl;
+		//std::cout << "HSC1.2 " << objectArray.size() << std::endl;
 		objectArray = std::move(obj);
 	}
 	objectArray.emplace_back(MissionManager::enemy);
@@ -39,7 +36,7 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 
 	RandomState();
 	LoadAssets();
-	std::cout << "LR2" << std::endl;
+	std::cout << "LR2 " << objectArray.size() << std::endl;
 }
 
 LivingRoomState::~LivingRoomState() {
@@ -61,8 +58,7 @@ void LivingRoomState::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
 
 	if(instance.KeyPress(ESCAPE_KEY)){
-		popRequested = true;
-		Camera::Unfollow();
+		EndState();
 	}
 	if(instance.KeyPress(W_KEY)){
 		ChangeState("LivingRoomState", "StageState");

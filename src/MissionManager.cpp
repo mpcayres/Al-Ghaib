@@ -89,7 +89,7 @@ void MissionManager::SetState(std::string dest){
 		//std::cout << "LRS.1" << std::endl;
 		//std::cout << "SIZE: " << objectLivingRoom.size() << std::endl;
 		Game::GetInstance().Push(new LivingRoomState(std::move(objectLivingRoom), initLivingRoom, xDest, yDest));
-		initHall = false;
+		initLivingRoom = false;
 		stage = "LivingRoomState";
 		//std::cout << "LRS.2" << std::endl;
 		countLivingRoomState++;
@@ -176,15 +176,17 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 
 //Ver para liberar memoria dos dados e do player quando vai para o Menu
 void MissionManager::DeleteStates(){
+	std::cout << "Player NULL 1" << std::endl;
 	//free(player); -> no Ubuntu da ruim
 	player = nullptr;
 	enemy = nullptr;
+	cat = nullptr;
 	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
 	factorZoom = 1;
 	Camera::UpdateZoom();
-	std::cout << "Player NULL" << std::endl;
+	std::cout << "Player NULL 2" << std::endl;
 }
 
 void MissionManager::LoadMission(int num){

@@ -25,7 +25,7 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	limits.y -= 50;
 	MissionManager::player->AddWallLimits(Rect(600, 192, 200, 80));
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE3, limits);
-	else SetPlayer(600, 400, CAMERA_TYPE3, limits);
+	else SetPlayer(550, 400, CAMERA_TYPE3, limits);
 	if(inicial){
 		//std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -44,7 +44,7 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	time = Timer();
 	flagMorte = false;
 	LoadAssets();
-	//std::cout << "SSC2" << std::endl;
+	std::cout << "SSC2 "  << objectArray.size() << std::endl;
 }
 
 StageState::~StageState(){
@@ -66,9 +66,9 @@ void StageState::LoadAssets(){
 void StageState::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
 	time.Update(dt);
+
 	if(instance.KeyPress(ESCAPE_KEY)){
-		popRequested = true;
-		Camera::Unfollow();
+		EndState();
 	}
 
 	/* area de cheat de missao*/

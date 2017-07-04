@@ -19,6 +19,7 @@ public:
 	static void Unfollow();
 	static void Update(float dt);
 	static void Move(int xDest, int yDest, float tempo);
+	static void DontMove();
 	static void Zoom(float tempoN, bool in);
 	static void ZoomCut(bool in);
 	static void UpdateZoom();

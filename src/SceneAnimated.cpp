@@ -3,28 +3,28 @@
 #include "Camera.hpp"
 
 SceneAnimated::SceneAnimated(float x, float y, std::string img, std::string img2,
-		float rot, float scaleX, float scaleY) : sp(img) {
+		float rot, float scaleX, float scaleY) : sp(img), sp2(img2, 14, 0.1, 1) {
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
-	change1 = img;
-	change2 = img2;
+	sp2.SetScaleX(scaleX); sp2.SetScaleY(scaleY);
 	estado = false;
 	rotation = rot;
 	box.x = x; box.y = y;
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
-	offset = box.h/3;
+	offset = box.h/2.5;
 }
 
 SceneAnimated::~SceneAnimated() { }
 
 void SceneAnimated::Update(float dt){
 	if(estado){
-		sp.Update(dt);
+		sp2.Update(dt);
 	}
 }
 
 void SceneAnimated::Render(){
-	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(estado) sp2.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	else sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool SceneAnimated::IsDead(){
@@ -51,9 +51,4 @@ bool SceneAnimated::Is(std::string type){
 
 void SceneAnimated::ChangeImage(){
 	estado = !estado;
-	if(estado){
-		sp.Open(change2, 14, 0.1, 1);
-	} else{
-		sp.Open(change1);
-	}
 }

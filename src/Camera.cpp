@@ -127,6 +127,16 @@ void Camera::Move(int xd, int yd, float tempoN){
 	MissionManager::player->SetBloqHUD(true);
 }
 
+void Camera::DontMove(){
+	isMoving = false;
+	isZoomIn = false;
+	isZoomOut = false;
+	time.Restart();
+
+	MissionManager::missionManager->factorZoom = 1;
+	UpdateZoom();
+}
+
 void Camera::Zoom(float tempoN, bool in){
 	if(in) isZoomIn = true;
 	else isZoomOut = true;

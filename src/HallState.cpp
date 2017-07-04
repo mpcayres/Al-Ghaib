@@ -43,7 +43,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 
 	RandomState();
 	LoadAssets();
-	std::cout << "HSC2" << std::endl;
+	std::cout << "HSC2 " << objectArray.size() << std::endl;
 }
 
 HallState::~HallState() {
@@ -65,9 +65,7 @@ void HallState::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
 
 	if(instance.KeyPress(ESCAPE_KEY)){
-		popRequested = true;
-		Camera::Unfollow();
-		//MissionManager::DeletePlayer();
+		EndState();
 	}
 	if(instance.KeyPress(W_KEY)){
 		ChangeState("HallState", "StageState");

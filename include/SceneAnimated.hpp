@@ -17,9 +17,8 @@ public:
 	void ChangeImage();
 
 private:
-	Sprite sp;
+	Sprite sp, sp2;
 	bool estado;
-	std::string change1, change2;
 	float offset;
 };
 
