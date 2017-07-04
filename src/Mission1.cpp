@@ -547,9 +547,9 @@ void Mission1::SetObjectLivingRoom(){
 	SceneObject* gatinho = new SceneObject(200, 500,"img/object-novelo.png", "img/object-novelo.png", true, 0.5, 0.5);
 	objectLivingRoom.emplace_back(gatinho);
 
-	SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
-				"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
-	objectLivingRoom.emplace_back(Bau);
+	//SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
+	//			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
+	//objectLivingRoom.emplace_back(Bau);
 
 	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);

@@ -153,11 +153,16 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Armario = new SceneObject(790, 175, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
 
-	if(MissionManager::player->HaveObject("InventoryControl")){
+	if(MissionManager::player->HaveObject("InventoryControl") && MissionManager::missionManager->GetNumMission() != 1){
 		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
-	} else {
+	} else if(MissionManager::missionManager->GetNumMission() == 1){
+		SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
+						"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
+			objectArray.emplace_back(Bau);
+	}
+	else{
 		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
