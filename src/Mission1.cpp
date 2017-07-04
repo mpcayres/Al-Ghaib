@@ -8,6 +8,9 @@
 #include <iostream>
 
 Mission1::Mission1() : Mission(), played(false), endMission(false) {
+	num = 0;
+	contPega = 0;
+	peguei = false;
 	initialState = "StageState";
 	initialX = 400; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -101,7 +104,7 @@ void  Mission1::Update(float dt){
 		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}
 
-	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer && !endMission){
+	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer && !endMission && peguei){
 		//std::cout << "MOM DEAD 0" << std::endl;
 		Camera::Unfollow();
 		Camera::SetType(CAMERA_TYPE0);
@@ -364,20 +367,47 @@ void  Mission1::Update(float dt){
 			}
 
 		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
+			if(state != MissionManager::missionManager->changeState){
+				MissionManager::player->SetPosition(230, 300);
+				state = MissionManager::missionManager->changeState;
+				time.Restart();
+			}
 
 			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
 				MissionManager::enemy->SetPosition(230, 175);
 				MissionManager::enemy->show = true;
+
 				//SceneDoor::count = ABRE;
 				//SceneDoor::ValorPassar = 4;
-
+				// tentativa fail de fazer mãe parar de andar
+				peguei = true; //era da tentativa fail;
+				MissionManager::enemy->SetDestinationPath(Vec2(230, 230));
+/*
+				contPega++;
+				if(contPega == 0)
+					num = (int)time.Get();
+				if(num + 500 > time.Get()){
+					time.Update(dt);
+					MissionManager::enemy->SetDestinationPath(Vec2(230, 180));
+					//std::cout << time.Get() << " e " << num << std::endl;
+					MissionManager::player->SetBlocked(true);
+					showBox = true;
+					falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				}
+				else{
+					peguei = true;
+					showBox = false;
+					falas.SetText(" ");
+					MissionManager::enemy->SetDestinationPath(Vec2(230, 300));
+					Camera::Zoom(2, true);
+				}*/
+				Camera::Zoom(2, true);
 				//if(MissionManager::player->lastPicked == "InventoryBear"){
 				//MissionManager::player->SetBlocked(true);
 				//Camera::Unfollow();
 
 				//Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
-
-				Camera::Zoom(2, true);
 
 				//if(trancada == false && cooldown.Get() > 3){
 				//showBox = true;
