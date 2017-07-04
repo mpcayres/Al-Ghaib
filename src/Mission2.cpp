@@ -3,6 +3,8 @@
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
+#include "Animation.hpp"
+
 
  Music Mission2::music;
 
@@ -229,9 +231,6 @@ void Mission2::Update(float dt){
 			meowcount++;
 			meow1.Stop();
 		}
-		if(MissionManager::player->lastPicked == "InventoryNeedle"){
-			contNeedle++;
-		}
 		if(MissionManager::player->lastPicked == "InventoryScissors"){
 			contScissors++;
 		}
@@ -274,10 +273,16 @@ void Mission2::Update(float dt){
 			state = MissionManager::missionManager->changeState;
 			time.Restart();
 		}
+		Bear::bear->show = true;
 		Bear::bear->box.x = 300;
 		Bear::bear->box.y = 380;
 		count++;
-		std::cout << count << std::endl;
+		Bear::bear->retorno = true;
+		if(time.Get() > 0){
+				Bear::bear->SetDestinationPath(Vec2(300, 380));
+				//Bear::bear->box.x = 810;
+				//Bear::bear->box.y = 450;
+		}
 		if(count == 1){
 			MissionManager::missionManager->player->box.x = 800;
 			MissionManager::missionManager->player->box.y = 300;
@@ -289,7 +294,22 @@ void Mission2::Update(float dt){
 		//contLine = 5;
 		if(contNeedle > 0 && contScissors > 0 && contLine>0){
 			Bear::bear->repair = true;
-			endMission = true;
+
+			if(InputManager::GetInstance().KeyPress(Z_KEY)){
+				time.Restart();
+				falas.SetText("U: OBRIGADO AMIGO");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = (int)time.Get();
+				showBox = true;
+				if(time.Get()> ultimoTempo + 7){
+
+					falas.SetText(" ");
+					showBox = false;
+					endMission = true;
+				}
+			}
+
+
 		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
 
@@ -302,6 +322,9 @@ void Mission2::Update(float dt){
 			time.Restart();
 		}
 
+		if(MissionManager::player->lastPicked == "InventoryNeedle"){
+			contNeedle++;
+		}
 		MissionManager::cat->SetDestinationPath(Vec2(800, 200));
 
 		if (MissionManager::player->GetRuido()>80 ){
@@ -373,7 +396,7 @@ void Mission2::SetObjectStage(){
 	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
-	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
+	MovingObject* Box = new MovingObject(400, 500, "img/moveis/sala/banquinho.png");
 	objectStage.emplace_back(Box);
 	//MovingObject* Cadeira = new MovingObject(650, 300, "img/scene-cadeira.png", true);
 	//objectStage.emplace_back(Cadeira);

@@ -112,6 +112,7 @@ void  Mission1::Update(float dt){
 		float y = MissionManager::enemy->box.y;
 		//MissionManager::enemy->show = false;
 
+
 		//std::cout << "MOM DEAD 1" << std::endl;
 		MissionManager::enemy->SetDead();
 		//std::cout << "MOM DEAD 2" << std::endl;
