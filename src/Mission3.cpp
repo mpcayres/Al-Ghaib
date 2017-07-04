@@ -164,7 +164,7 @@ void Mission3::Update(float dt){
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
-		MissionManager::player->SetBlocked(false);
+			MissionManager::player->SetBlocked(false);
 		//HallState++;
 		std::cout << MissionManager::missionManager->countHallState << std::endl;
 		std::cout << "HallState" << std::endl;
@@ -172,6 +172,8 @@ void Mission3::Update(float dt){
 			state = MissionManager::missionManager->changeState;
 			MissionManager::missionManager->player->box.x = 510;
 			MissionManager::missionManager->player->box.y = 200;
+			MissionManager::enemy->show = false;
+			MissionManager::enemy->SetPosition(975,115);
 			time.Restart();
 		}
 		if(time.Get() < 3 && trancada == false && cooldown.Get() > 3){
@@ -187,17 +189,7 @@ void Mission3::Update(float dt){
 		//if(count == 1){
 		int dist = MissionManager::cat->box.DistanceRect(MissionManager::player->box);
 		std::cout << "dist" << dist << std::endl;
-		/*if(dist < 250)
-			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
-		if(dist >= 250){
-			std::cout << "maior que 250" << std::endl;
-			//MissionManager::cat->SetDestinationPath(Vec2(1000, 200)); //4Âº DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(940, 200)); //3Âº DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
-			MissionManager::cat->SetDestinationPath(Vec2(900, 200)); //2Âº DESTINO
-		}*/
-		//}
-		//if(MissionManager::enemy->turn == 1)
+
 
 		if(countCat == 1  && atraidoNovelo == 0){
 					//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
@@ -287,10 +279,12 @@ void Mission3::Update(float dt){
 	}
 	if(MissionManager::missionManager->GetStage("LivingRoomState") &&
 				MissionManager::missionManager->countLivingRoomState > 1){
+		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
 			MissionManager::missionManager->player->box.x = 400;
 			MissionManager::missionManager->player->box.y = 400;
+			MissionManager::enemy->SetPosition(400,400);
 			time.Restart();
 		}
 		std::cout << "attractedTV" << std::endl;

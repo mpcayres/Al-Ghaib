@@ -173,10 +173,11 @@ void Mission2::Update(float dt){
 		//HallState++;
 
 		if(state != MissionManager::missionManager->changeState){
-						state = MissionManager::missionManager->changeState;
-						MissionManager::missionManager->player->box.x = 400;
-						MissionManager::missionManager->player->box.y = 400;
-						time.Restart();
+			state = MissionManager::missionManager->changeState;
+			MissionManager::missionManager->player->box.x = 400;
+			MissionManager::missionManager->player->box.y = 400;
+			MissionManager::enemy->show = false;
+			time.Restart();
 		}
 		if(time.Get() < 2){
 			falas.SetText(" ");
@@ -240,11 +241,11 @@ void Mission2::Update(float dt){
 
 
 		if (MissionManager::player->GetRuido()>80 ){
+			MissionManager::enemy->SetPosition(975,115);
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
 			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
-			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
 			if(momcount == 1){
 			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
 				//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
@@ -315,8 +316,11 @@ void Mission2::Update(float dt){
 
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 					MissionManager::missionManager->countHallState > 1){
+
 		MissionManager::player->SetBlocked(false);
 		if(state != MissionManager::missionManager->changeState){
+			MissionManager::enemy->show = false;
+			MissionManager::enemy->SetPosition(975,115);
 			state = MissionManager::missionManager->changeState;
 			MissionManager::missionManager->player->box.x = 400;
 			MissionManager::missionManager->player->box.y = 400;
@@ -358,6 +362,7 @@ void Mission2::Update(float dt){
 		}
 
 	}else if(MissionManager::missionManager->GetStage("LivingRoomState")){
+
 		MissionManager::cat->show = false;
 
 	}

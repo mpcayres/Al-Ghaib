@@ -226,6 +226,8 @@ void  Mission1::Update(float dt){
 				state = MissionManager::missionManager->changeState;
 				MissionManager::missionManager->player->box.x = 400;
 				MissionManager::missionManager->player->box.y = 400;
+				MissionManager::enemy->SetPosition(975,115);
+				MissionManager::enemy->show = false;
 				time.Restart();
 			}
 			if(trancada == false && cooldown.Get() > 4 && MissionManager::enemy->show == false)
@@ -329,6 +331,8 @@ void  Mission1::Update(float dt){
 
 		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
 			if(state != MissionManager::missionManager->changeState){
+				MissionManager::enemy->SetPosition(230, 300);
+				MissionManager::enemy->show = false;
 				MissionManager::player->SetPosition(230, 300);
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
