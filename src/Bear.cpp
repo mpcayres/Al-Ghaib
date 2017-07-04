@@ -6,7 +6,7 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 3
+#define MODULO_SPEED 1
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
@@ -16,7 +16,7 @@ bool Bear::seen = false;
 bool Bear::arrived = false;
 bool Bear::repair = false;
 
-Bear::Bear(float x, float y): sp("img/object-bear-destr.png"){
+Bear::Bear(float x, float y): sp("img/sprite-bear-walking.png", 8, 0.6, 1){
 	//stop = false;
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);
@@ -34,7 +34,7 @@ Bear::Bear(float x, float y): sp("img/object-bear-destr.png"){
 
 	time = Timer();
 
-	////direcao = SUL;
+	direcao = SUL;
 	////direcaoShift = false;
 
 	hp = 30;
@@ -74,25 +74,29 @@ void Bear::Update(float dt){
 		//if(seen == true) Pursuit();
 		/*else*/ DefinedPath();
 
-		/*if(speed.x != 0 || speed.y != 0){
-					sp.Update(dt, ////direcao, ////direcaoShift);
+		if(direcao == SUL)
+			std::cout << "aaak " << std::endl;
+ 		std::cout << "direcao" << direcao << std::endl;
+
+		if(speed.x != 0 || speed.y != 0){
+			sp.Update(dt, direcao, direcaoShift);
 		} else{
 			if(sp.GetCurrentFrame() > 1 && sp.GetCurrentFrame() < 8){
-			if(////direcao == NORTE) speed.y = -DESACELERA;
-			if(////direcao == SUL) speed.y = DESACELERA;
-			if(////direcao == LESTE) speed.x = DESACELERA;
-			if(////direcao == OESTE) speed.x = -DESACELERA;
+			if(direcao == NORTE) speed.y = -DESACELERA;
+			if(direcao == SUL) speed.y = DESACELERA;
+			if(direcao == LESTE) speed.x = DESACELERA;
+			if(direcao == OESTE) speed.x = -DESACELERA;
 
-			sp.Update(dt, ////direcao, ////direcaoShift);
+			sp.Update(dt, direcao, direcaoShift);
 			}
-		}*/
+		}
 	}
 }
 
-/*void Bear::Set////direcao(int dir){
-	////direcao = (InvBox) dir;
-	sp.SetFrame(1, ////direcao);
-}*/
+void Bear::SetDirecao(int dir){
+	direcao = (InvBox) dir;
+	sp.SetFrame(1, direcao);
+}
 
 void Bear::Render(){
 	if(show)

@@ -15,7 +15,7 @@
 
 class Bear : public GameObject {
 public:
-	enum InvBox{LESTE, OESTE, SUL, NORTE};
+	enum InvBox{SUL, NORTE, LESTE, OESTE};
 	Bear(float x, float y);
 	~Bear();
 

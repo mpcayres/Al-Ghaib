@@ -97,26 +97,28 @@ void Mission2::Update(float dt){
 				flagTimer = false;
 			}
 			if(time.Get() > 7 && time.Get() < 8 && trancada == false && cooldown.Get() > 3){
-				Sound portaDestrancando = Sound ("audio/weird-door.wav");
+				Sound portaDestrancando = Sound ("audio/destrancando.wav");
 				portaDestrancando.Play(0);
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
 				Bear::show = true;
 				countBear ++;
-				//std::cout << "test 0 " << std::endl;
+				std::cout << "test 0 " << countBear << std::endl;
 				if(countBear == 1){
 
+					Bear::bear->box.x = 805;
+					Bear::bear->box.y = 250;
 					SceneDoor::count = ABRE;
 					SceneDoor::ValorPassar = 24;
 					paradoUrso = true;
-					Bear::bear->SetDestinationPath(Vec2(810, 450)); //2º DESTINO
-					Bear::bear->SetDestinationPath(Vec2(810, 220)); //1º DESTINO
+					Bear::bear->SetDestinationPath(Vec2(805, 450)); //2º DESTINO
+					Bear::bear->SetDestinationPath(Vec2(805, 250)); //1º DESTINO
 					ultimoTempo = 12;
 				}
-				if(paradoUrso){
-					Bear::bear->SetDestinationPath(Vec2(810, 450));
-					Bear::bear->box.x = 810;
-					Bear::bear->box.y = 450;
+				if(time.Get() > 15){
+					Bear::bear->SetDestinationPath(Vec2(805, 450));
+					//Bear::bear->box.x = 810;
+					//Bear::bear->box.y = 450;
 				}
 				//std::cout << "test 1 " << std::endl;
 				if(time.Get() > 18 ){
