@@ -6,11 +6,11 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 2
+#define MODULO_SPEED 3
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.06, 4){
+Enemy::Enemy(float x, float y, std::string file): sp(file, 8, 0.08, 4){
 
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);

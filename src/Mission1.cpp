@@ -517,6 +517,9 @@ void Mission1::SetObjectHall(){
 	//SceneWindow* Window = new SceneWindow(350, 70);
 	//objectHall.emplace_back(Window);
 
+	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png");
+	objectHall.emplace_back(CriadoMudo);
+
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
 			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);

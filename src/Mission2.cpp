@@ -315,6 +315,7 @@ void Mission2::Update(float dt){
 
 	}else if(MissionManager::missionManager->GetStage("HallState") &&
 					MissionManager::missionManager->countHallState > 1){
+		MissionManager::player->SetBlocked(false);
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
 			MissionManager::missionManager->player->box.x = 400;
@@ -419,17 +420,23 @@ void Mission2::SetObjectHall(){
 			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	SceneObject* Armario2 = new SceneObject(1400, 110, "img/scene-armario-corredor-fechado.png",
-			 "img/scene-armario-corredor-fechado.png", 0, 1, 1, "InventoryWool", SceneObject::SAMEY_UP);
+	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/scene-armario-corredor-fechado.png",
+	//		 "img/scene-armario-corredor-fechado.png", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
+	//objectHall.emplace_back(Armario2);
+	SceneObject* Armario2 = new SceneObject(1450, 150, "img/scene-armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
 
-	PickUpObject* Scissors = new PickUpObject(600, 325, "InventoryScissors", "img/object-scissors.png", true, 0.5, 0.5);
+	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png"
+			, 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
+	objectHall.emplace_back(CriadoMudo);
+
+	PickUpObject* Scissors = new PickUpObject(1470, 185, "InventoryScissors", "img/object-scissors.png", true, 0.5, 0.5);
 	objectHall.emplace_back(Scissors);
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 
-	MovingObject* Cadeira = new MovingObject(280, 303, "img/scene-cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(1000, 303, "img/scene-cadeira.png", true);
 		objectHall.emplace_back(Cadeira);
 
 }

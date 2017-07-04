@@ -54,12 +54,28 @@ bool SceneObject::NotifyCollision(GameObject& other){
 
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			if(objCreate != ""){
-				MissionManager::player->AddInventory(objCreate);
-				objCreate = "";
+			std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
+			if(inHand!=nullptr){
+				if(!inHand->IsObject("InventoryWool")){
+					if(objCreate != ""){
+						MissionManager::player->AddInventory(objCreate);
+						objCreate = "";
+					}
+					ChangeImage();
+				}
+				else{
+						ChangeImage();
+				}
+			}else{
+				if(objCreate != ""){
+					MissionManager::player->AddInventory(objCreate);
+					objCreate = "";
+				}
+				ChangeImage();
 			}
-			ChangeImage();
+
 		}
+
 	}
 
 	return false;
