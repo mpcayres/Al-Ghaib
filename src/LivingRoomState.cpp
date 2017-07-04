@@ -123,16 +123,16 @@ void LivingRoomState::SetInitialObjectArray(){
 	//MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
 	//objectArray.emplace_back(Banco);
 
-	SceneObject* Sofa = new SceneObject(500, 320, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
+	SceneObject* Sofa = new SceneObject(500, 340, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
 	objectArray.emplace_back(Sofa);
 
-	SceneObject* Poltrona = new SceneObject(400, 330, "img/moveis/sala/poltrona.png", "img/moveis/sala/poltrona.png");
+	SceneObject* Poltrona = new SceneObject(400, 350, "img/moveis/sala/poltrona.png", "img/moveis/sala/poltrona.png");
 	objectArray.emplace_back(Poltrona);
 
-	SceneObject* Mesa = new SceneObject(500, 380, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
+	SceneObject* Mesa = new SceneObject(500, 400, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
 	objectArray.emplace_back(Mesa);
 
-	SceneAnimated* TV = new SceneAnimated(630, 450, "img/moveis/sala/televisao_desligada.png", "img/moveis/sala/televisao.png");
+	SceneAnimated* TV = new SceneAnimated(630, 470, "img/moveis/sala/televisao_desligada.png", "img/moveis/sala/televisao.png");
 	objectArray.emplace_back(TV);
 
 	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
@@ -150,7 +150,7 @@ void LivingRoomState::SetInitialObjectArray(){
 	ScenePortal* DoorToLivingRoom = new ScenePortal(220, 165, "HallState");
 	objectArray.emplace_back(DoorToLivingRoom);
 
-	SceneObject* Armario = new SceneObject(790, 175, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
+	SceneObject* Armario = new SceneObject(790, 180, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
 
 	if(MissionManager::player->HaveObject("InventoryControl") && MissionManager::missionManager->GetNumMission() != 1){
