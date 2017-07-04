@@ -6,7 +6,7 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 3
+#define MODULO_SPEED 2
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
@@ -367,4 +367,13 @@ bool Enemy::Is(std::string type){
 
 void Enemy::SetDead(){
 	Game::GetInstance().GetCurrentState().RemoveEnemy();
+}
+
+void Enemy::ChangeClothes(){
+	sp = Sprite("img/sprite-mom-chador.png", 8, 0.06, 4);
+	sp.SetScaleX(2);
+	sp.SetScaleY(2);
+	box.x = box.x; box.y = box.y;
+	box.w = sp.GetScaledWidth();
+	box.h = sp.GetScaledHeight();
 }
