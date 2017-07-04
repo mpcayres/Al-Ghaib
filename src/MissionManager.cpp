@@ -5,6 +5,7 @@
 #include "StageState.hpp"
 #include "HallState.hpp"
 #include "LivingRoomState.hpp"
+#include "MomRoomState.hpp"
 #include "Mission1.hpp"
 #include "Mission2.hpp"
 #include "Mission3.hpp"
@@ -22,11 +23,12 @@ MissionManager* MissionManager::missionManager = nullptr;
 MissionManager::MissionManager() {
 	numMission = 0;
 	mission = nullptr;
-	initStage = initHall = initLivingRoom = true;
+	initStage = initHall = initLivingRoom = initMomRoom = true;
 	missionManager = this;
 	countStageState = 0;
 	countHallState = 0;
 	countLivingRoomState = 0;
+	countMomRoomState = 0;
 	changeState = 0;
 	xDest = yDest = -1;
 	dirDest = -1;
@@ -39,6 +41,7 @@ MissionManager::~MissionManager() {
 	objectStage.clear();
 	objectHall.clear();
 	objectLivingRoom.clear();
+	objectMomRoom.clear();
 	if(mission != nullptr) delete mission;
 	delete player;
 	delete enemy;
@@ -56,6 +59,9 @@ void MissionManager::SetObject(std::vector<std::unique_ptr<GameObject>> objNew, 
 	} else if(orig == "LivingRoomState"){
 		std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
 		objectLivingRoom = std::move(objNew);
+	} else if(orig == "MomRoomState"){
+		std::vector<std::unique_ptr<GameObject>>().swap(objectMomRoom);
+		objectMomRoom = std::move(objNew);
 	}
 }
 
@@ -93,6 +99,15 @@ void MissionManager::SetState(std::string dest){
 		stage = "LivingRoomState";
 		//std::cout << "LRS.2" << std::endl;
 		countLivingRoomState++;
+		changeState++;
+	} else if(dest == "MomRoomState"){
+		//std::cout << "MRS.1" << std::endl;
+		//std::cout << "SIZE: " << objectMomRoom.size() << std::endl;
+		Game::GetInstance().Push(new MomRoomState(std::move(objectMomRoom), initMomRoom, xDest, yDest));
+		initMomRoom = false;
+		stage = "MomRoomState";
+		//std::cout << "LRS.2" << std::endl;
+		countMomRoomState++;
 		changeState++;
 	}
 }
@@ -141,11 +156,13 @@ void MissionManager::SetMission(){
 	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
+	std::vector<std::unique_ptr<GameObject>>().swap(objectMomRoom);
 	//std::cout << "INI_MIS1: " << objectStage.size() << " " << objectHall.size() << std::endl;
 	initStage = initHall = initLivingRoom = true;
 	objectStage = std::move(mission->GetObjectStage());
 	objectHall = std::move(mission->GetObjectHall());
 	objectLivingRoom = std::move(mission->GetObjectLivingRoom());
+	objectMomRoom = std::move(mission->GetObjectMomRoom());
 	//std::cout << "INI_MIS2: " << objectStage.size() << " " << objectHall.size() << std::endl;
 }
 
@@ -184,6 +201,7 @@ void MissionManager::DeleteStates(){
 	std::vector<std::unique_ptr<GameObject>>().swap(objectStage);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectHall);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
+	std::vector<std::unique_ptr<GameObject>>().swap(objectMomRoom);
 	factorZoom = 1;
 	Camera::UpdateZoom();
 	std::cout << "Player NULL 2" << std::endl;

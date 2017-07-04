@@ -49,6 +49,7 @@ public:
 	std::vector<std::unique_ptr<GameObject>> GetObjectStage();
 	std::vector<std::unique_ptr<GameObject>> GetObjectHall();
 	std::vector<std::unique_ptr<GameObject>> GetObjectLivingRoom();
+	std::vector<std::unique_ptr<GameObject>> GetObjectMomRoom();
 
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
@@ -69,8 +70,9 @@ protected:
 	virtual void SetObjectStage() = 0;
 	virtual void SetObjectHall() = 0;
 	virtual void SetObjectLivingRoom() = 0;
+	virtual void SetObjectMomRoom() = 0;
 
-	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom;
+	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom, objectMomRoom;
 	std::string initialState;
 	int initialX, initialY;
 
@@ -99,6 +101,7 @@ protected:
 	bool showBox;
 	Rect falasBoxRect;
 
+	bool gameOver;
 };
 
 #endif /* SRC_MISSION_HPP_ */

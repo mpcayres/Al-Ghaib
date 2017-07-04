@@ -138,9 +138,12 @@ void State::AccessAnimated(int pos){
 }
 
 void State::EndState(){
+	MissionManager::player->SetBlocked(false);
+	MissionManager::player->SetBloqHUD(false);
+	MissionManager::player->SetBloqInv(false);
 	Camera::Unfollow();
-	RemoveAll();
 	Camera::DontMove();
+	RemoveAll();
 	popRequested = true;
 }
 
@@ -151,12 +154,8 @@ void State::ChangeState(std::string orig, std::string dest, int x, int y, int di
 }
 
 void State::ChangeMission(int num){
-	MissionManager::player->SetBlocked(false);
-	MissionManager::player->SetBloqInv(false);
-	popRequested = true;
-	Camera::Unfollow();
+	EndState();
 	std::vector<std::string> inventory = MissionManager::player->GetStringInventory();
-	RemoveAll();
 	Game::GetInstance().GetMissionManager().
 			ChangeMission(num, MissionManager::player->GetInHandIndex(), inventory);
 }

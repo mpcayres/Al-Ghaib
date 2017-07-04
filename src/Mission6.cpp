@@ -150,7 +150,7 @@ void Mission6::SetObjectStage(){
 }
 
 void Mission6::SetObjectHall(){
-	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
@@ -159,5 +159,9 @@ void Mission6::SetObjectHall(){
 }
 
 void Mission6::SetObjectLivingRoom(){
+
+}
+
+void Mission6::SetObjectMomRoom(){
 
 }

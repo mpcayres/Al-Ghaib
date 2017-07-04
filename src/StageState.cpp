@@ -143,8 +143,6 @@ void StageState::Render(){
 void StageState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
-	//Walls *Wall = new Walls(700, 400, 100,100);
-	//objectArray.emplace_back(Wall);
 
 	SceneObject* Escrivaninha = new SceneObject(650, 440, "img/scene-escrivaninha-fechado.png", "img/scene-escrivaninha-aberto.png");
 	objectArray.emplace_back(Escrivaninha);
@@ -155,13 +153,13 @@ void StageState::SetInitialObjectArray(){
 	SceneObject* Window = new SceneObject(540, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.7, 0.7);
 	objectArray.emplace_back(Window);
 
-	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "img/scene-cama.png");
+	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "");
 	objectArray.emplace_back(Cama);
 
 	SceneObject* Armario =  new SceneObject(430, 240, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
 	objectArray.emplace_back(Armario);
 
-	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "img/scene-abajur.png");
+	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "");
 	objectArray.emplace_back(Abajur);
 
 	MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");

@@ -10,6 +10,7 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 	trancada = false;
 	bloqBlack = false;
 	fadeIn = true;
+	gameOver = false;
 	count = 0;
 
 	flagTimer = true; //stopMusic = false;
@@ -61,6 +62,10 @@ std::vector<std::unique_ptr<GameObject>> Mission::GetObjectHall(){
 
 std::vector<std::unique_ptr<GameObject>> Mission::GetObjectLivingRoom(){
 	return std::move(objectLivingRoom);
+}
+
+std::vector<std::unique_ptr<GameObject>> Mission::GetObjectMomRoom(){
+	return std::move(objectMomRoom);
 }
 
 bool Mission::PopRequested(){

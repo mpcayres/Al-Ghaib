@@ -34,21 +34,19 @@ bool SceneObject::NotifyCollision(GameObject& other){
 		return MissionManager::player->CollidingPlayer(box, offset);
 	}
 
-
 	if(other.Is("EmptyBox")){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
-			if(inHand!=nullptr){
+			if(inHand != nullptr){
 				if(!inHand->IsObject("InventoryWool")){
 					if(objCreate != ""){
 						MissionManager::player->AddInventory(objCreate);
 						objCreate = "";
 					}
 					ChangeImage();
-				}
-				else{
-						ChangeImage();
-						MissionManager::cat->attractedWool=true;
+				} else{
+					ChangeImage();
+					MissionManager::cat->attractedWool=true;
 				}
 			}else{
 				if(objCreate != ""){
@@ -78,72 +76,74 @@ bool SceneObject::GetState(){
 }
 
 void SceneObject::ChangeImage(){
-	if(estado){
-		estado = false;
-		sp.Open(change1);
-		switch(caseChange){
-			case SAMEX:
-				if(box.w != sp.GetWidth()){
-					box.x += box.w - sp.GetWidth();
-					box.w = sp.GetWidth();
-				}
-				box.h = sp.GetHeight();
-				break;
-			case SAMEY_UP:
-				box.w = sp.GetWidth();
-				if(box.h != sp.GetHeight()){
-					box.y += box.h - sp.GetHeight();
+	if(change2 != ""){
+		if(estado){
+			estado = false;
+			sp.Open(change1);
+			switch(caseChange){
+				case SAMEX:
+					if(box.w != sp.GetWidth()){
+						box.x += box.w - sp.GetWidth();
+						box.w = sp.GetWidth();
+					}
 					box.h = sp.GetHeight();
-				}
-				break;
-			case DEFAULT:
-				if(box.w != sp.GetWidth()){
-					box.x = box.x + box.w/2 - sp.GetWidth()/2;
+					break;
+				case SAMEY_UP:
 					box.w = sp.GetWidth();
-				}
-				if(box.h != sp.GetHeight()){
-					box.y = box.y + box.h/2 - sp.GetHeight()/2;
+					if(box.h != sp.GetHeight()){
+						box.y += box.h - sp.GetHeight();
+						box.h = sp.GetHeight();
+					}
+					break;
+				case DEFAULT:
+					if(box.w != sp.GetWidth()){
+						box.x = box.x + box.w/2 - sp.GetWidth()/2;
+						box.w = sp.GetWidth();
+					}
+					if(box.h != sp.GetHeight()){
+						box.y = box.y + box.h/2 - sp.GetHeight()/2;
+						box.h = sp.GetHeight();
+					}
+					break;
+				default:
+					break;
+			}
+		} else{
+			estado = true;
+			sp.Open(change2);
+			int w = box.w; int h = box.h;
+			switch(caseChange){
+				case SAMEX:
+					if(box.w != sp.GetWidth()){
+						box.x += box.w - sp.GetWidth();
+						box.w = sp.GetWidth();
+					}
 					box.h = sp.GetHeight();
-				}
-				break;
-			default:
-				break;
-		}
-	} else{
-		estado = true;
-		sp.Open(change2);
-		int w = box.w; int h = box.h;
-		switch(caseChange){
-			case SAMEX:
-				if(box.w != sp.GetWidth()){
-					box.x += box.w - sp.GetWidth();
+					break;
+				case SAMEY_DOWN:
+				case SAMEY_UP:
 					box.w = sp.GetWidth();
-				}
-				box.h = sp.GetHeight();
-				break;
-			case SAMEY_DOWN:
-			case SAMEY_UP:
-				box.w = sp.GetWidth();
-				if(box.h != sp.GetHeight()){
-					box.y += box.h - sp.GetHeight();
-					box.h = sp.GetHeight();
-				}
-				break;
-			case DEFAULT:
-				if(box.w != sp.GetWidth()){
-					box.x += box.w/2 - sp.GetWidth()/2;
-					box.w = sp.GetWidth();
-				}
-				if(box.h != sp.GetHeight()){
-					box.y += box.h/2 - sp.GetHeight()/2;
-					box.h = sp.GetHeight();
-				}
-				break;
-			default:
-				break;
-		}
+					if(box.h != sp.GetHeight()){
+						box.y += box.h - sp.GetHeight();
+						box.h = sp.GetHeight();
+					}
+					break;
+				case DEFAULT:
+					if(box.w != sp.GetWidth()){
+						box.x += box.w/2 - sp.GetWidth()/2;
+						box.w = sp.GetWidth();
+					}
+					if(box.h != sp.GetHeight()){
+						box.y += box.h/2 - sp.GetHeight()/2;
+						box.h = sp.GetHeight();
+					}
+					break;
+				default:
+					break;
+			}
 
-		MovePlayerColliding(w, h);
+			MovePlayerColliding(w, h);
+		}
 	}
 }
 

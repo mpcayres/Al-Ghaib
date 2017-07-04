@@ -367,7 +367,7 @@ void Mission3::Render(){
 }
 
 void Mission3::SetObjectStage(){
-	SceneDoor* Door = new SceneDoor(800, 200, "HallState", false);
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectStage.emplace_back(Door);
 
 	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
@@ -385,7 +385,7 @@ void Mission3::SetObjectStage(){
 }
 
 void Mission3::SetObjectHall(){
-	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/scene-door-closed.png", "img/scene-door-opened.png", 0);
 	objectHall.emplace_back(DoorToMomRoom);
 
@@ -403,5 +403,9 @@ void Mission3::SetObjectHall(){
 }
 
 void Mission3::SetObjectLivingRoom(){
+
+}
+
+void Mission3::SetObjectMomRoom(){
 
 }

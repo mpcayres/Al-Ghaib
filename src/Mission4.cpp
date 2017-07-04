@@ -103,30 +103,28 @@ void Mission4::Update(float dt){
 
 	}
 	if(time.Get() >= 4 && fadeIn){
-			UpdateVariable(dt, 80);
+		UpdateVariable(dt, 80);
 	}
 	PiscaPisca(dt, 1000000, 0.5);
 	std::cout << (int)time.Get() << std::endl;
 	if((((int)time.Get())%3 == 0) && creepyeffect == 0){
-
 		creepyeffect = time.Get();
 		std::cout << "piscapisca" << std::endl;
 		PiscaPisca(dt, 3, 0.4);
-		std::cout << "oi" << std::endl;
+		//std::cout << "oi" << std::endl;
 	}
 
 	if(((int)time.Get())%4 == 0 && creepyeffect == 0){
-
-			creepyeffect = time.Get();
-			Camera::ZoomCreepy(1, false);
-			PiscaPisca(dt, 3, 0.4);
-			std::cout << "oi" << std::endl;
-		}
+		creepyeffect = time.Get();
+		Camera::ZoomCreepy(1, false);
+		PiscaPisca(dt, 3, 0.4);
+		//std::cout << "oi" << std::endl;
+	}
 
 	if((((int)time.Get())%5  == 0) && creepyeffect == 0){
 		creepyeffect = time.Get();
 		Camera::ZoomCreepy(1, true);
-		std::cout << "oi" << std::endl;
+		//std::cout << "oi" << std::endl;
 	}
 	if(creepyeffect + 5 > time.Get() && creepyeffect!=0){
 		creepyeffect = 0;
@@ -176,7 +174,7 @@ void Mission4::SetObjectStage(){
 }
 
 void Mission4::SetObjectHall(){
-	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/scene-door-closed.png", "img/scene-door-opened.png", 1);
 	objectHall.emplace_back(DoorToMomRoom);
 
@@ -189,5 +187,9 @@ void Mission4::SetObjectHall(){
 }
 
 void Mission4::SetObjectLivingRoom(){
+
+}
+
+void Mission4::SetObjectMomRoom(){
 
 }

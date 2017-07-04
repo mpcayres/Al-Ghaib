@@ -148,7 +148,7 @@ void Camera::Zoom(float tempoN, bool in){
 void Camera::ZoomCreepy(float tempoN, bool in){
 	if(in) isZoomIn = true;
 	else isZoomOut = true;
-		//MissionManager::player->SetBloqHUD(true);
+	//MissionManager::player->SetBloqHUD(true);
 	tempo = tempoN;
 	time.Restart();
 }

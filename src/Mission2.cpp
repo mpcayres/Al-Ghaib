@@ -400,7 +400,7 @@ void Mission2::Render(){
 }
 
 void Mission2::SetObjectStage(){
-	SceneDoor* Door = new SceneDoor(800, 200, "HallState", false);
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectStage.emplace_back(Door);
 
 	Bear* bear = new Bear(810, 210);
@@ -424,7 +424,7 @@ void Mission2::SetObjectHall(){
 	//* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
 	//		"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 
-	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
@@ -456,5 +456,9 @@ void Mission2::SetObjectLivingRoom(){
 
 	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);
+
+}
+
+void Mission2::SetObjectMomRoom(){
 
 }

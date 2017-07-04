@@ -42,16 +42,16 @@ public:
 	static Cat* cat;
 	static MissionManager* missionManager;
 
-	int countStageState, countHallState, countLivingRoomState, changeState;
+	int countStageState, countHallState, countLivingRoomState, countMomRoomState, changeState;
 	float factorZoom;
 	bool movingBox, randomStates;
 
 private:
-	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom;
+	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom, objectMomRoom;
 	Mission *mission;
 	std::string stage;
 	int numMission;
-	bool initStage, initHall, initLivingRoom;
+	bool initStage, initHall, initLivingRoom, initMomRoom;
 	int xDest, yDest;
 	int dirDest;
 };

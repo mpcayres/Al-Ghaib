@@ -102,298 +102,307 @@ void  Mission1::Update(float dt){
 	time.Update(dt);
 	cooldown.Update(dt);
 
-	if(endMission && time.Get() > (12*0.25 + 0.5)){
-		Game::GetInstance().GetCurrentState().ChangeMission(2);
-	}
+	if(gameOver){
+		if(time.Get() > 4){
+			Game::GetInstance().GetCurrentState().ChangeMission(1);
+		}
+	} else{
+		if(endMission && time.Get() > (12*0.25 + 0.5)){
+			Game::GetInstance().GetCurrentState().ChangeMission(2);
+		}
 
-	if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
+		if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
 			if(MissionManager::missionManager->GetStage("HallState")){
 				((HallState&) Game::GetInstance().GetCurrentState())
-						.tileMap.PathFind(Vec2(MissionManager::enemy->box.x
-								, MissionManager::enemy->box.y+MissionManager::enemy->GetHeight())
-								, Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+		 			.tileMap.PathFind(Vec2(MissionManager::enemy->box.x,
+		 					MissionManager::enemy->box.y+MissionManager::enemy->GetHeight()),
+		 					Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
 				MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
 						GetCurrentState()).tileMap.GetPath());
 				MissionManager::enemy->seen = false;
 			}
 			if(MissionManager::missionManager->GetStage("LivingRoomState")){
 				((LivingRoomState&) Game::GetInstance().GetCurrentState())
-						.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x
-								, MissionManager::enemy->box.y+MissionManager::enemy->GetHeight())
-								, Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+					.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x,
+							MissionManager::enemy->box.y+MissionManager::enemy->GetHeight()),
+							Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
 				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
 						GetCurrentState()).tileMapChao.GetPath());
 				MissionManager::enemy->seen = false;
 			}
 
-
 		}
 
-	if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer && !endMission && peguei){
-		//std::cout << "MOM DEAD 0" << std::endl;
-		Camera::Unfollow();
-		Camera::SetType(CAMERA_TYPE0);
-		float x = MissionManager::enemy->box.x;
-		float y = MissionManager::enemy->box.y;
-		//MissionManager::enemy->show = false;
+		if(MissionManager::player->lastPicked == "InventoryBear" && MissionManager::enemy->collidingPlayer && !endMission && peguei){
+			//std::cout << "MOM DEAD 0" << std::endl;
+			Camera::Unfollow();
+			Camera::SetType(CAMERA_TYPE0);
+			float x = MissionManager::enemy->box.x;
+			float y = MissionManager::enemy->box.y;
+			//MissionManager::enemy->show = false;
 
+			//std::cout << "MOM DEAD 1" << std::endl;
+			std::cout << "piscapisca" << std::endl;
+			PiscaPisca(dt, 20, 0.4);
+			MissionManager::enemy->SetDead();
+			//std::cout << "MOM DEAD 2" << std::endl;
 
-		//std::cout << "MOM DEAD 1" << std::endl;
-		std::cout << "piscapisca" << std::endl;
-		PiscaPisca(dt, 20, 0.4);
-		MissionManager::enemy->SetDead();
-		//std::cout << "MOM DEAD 2" << std::endl;
-
-		MissionManager::player->SetBlocked(true);
-		MissionManager::player->DeleteInventory();
-		//std::cout << "MOM DEAD 3" << std::endl;
-		Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(x, y, 0,
-						"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
-		ultimoTempo = time.Get();
-		if(time.Get() > ultimoTempo + 4){
-			showBox = true;
-			falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
-			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-		}
-		time.Restart();
-		endMission = true;
-		//std::cout << "MOM DEAD 4" << std::endl;
-	} else if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission){
-		//Quando a mae te pega sem vc ter o urso, deixar mais suave
-		Game::GetInstance().GetCurrentState().ChangeMission(1);
-	} else{
-
-		/* COMEÇO DO JOGO. QUARTO DA CRIANÇA. PRIMEIRA VEZ ENTRANDO PARA LEGENDAS INICIAIS*/
-		if(MissionManager::missionManager->GetStage("StageState") &&
-				MissionManager::missionManager->countStageState <= 1){
-			//StageState++;
-			//std::cout << "StageState" << std::endl;
-			if(flagTimer == true && time.Get() > 25){
-				tx.SetText(" ");
-				creepy.SetText(" ");
-				creepy1.SetText(" ");
-				creepy2.SetText(" ");
-				creepy3.SetText(" ");
-				creepy4.SetText(" ");
-				creepy5.SetText(" ");
-				creepy6.SetText(" ");
+			MissionManager::player->SetBlocked(true);
+			MissionManager::player->DeleteInventory();
+			//std::cout << "MOM DEAD 3" << std::endl;
+			Game::GetInstance().GetCurrentState().AddObject(
+					new Animation(x, y, 0,
+							"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
+			ultimoTempo = time.Get();
+			if(time.Get() > ultimoTempo + 4){
 				showBox = true;
-				flagTimer = false;
-			}
-			if( time.Get() > 30 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 5.5*/){
-				showBox = true;
-				falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
+				falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 30; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
+			}
+			time.Restart();
+			endMission = true;
+			//std::cout << "MOM DEAD 4" << std::endl;
+		} else if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission){
+			//Quando a mae te pega sem vc ter o urso, deixar mais suave
+			gameOver = true;
+			MissionManager::player->SetBlocked(true);
+			MissionManager::player->SetBloqHUD(true);
+			MissionManager::player->SetBloqInv(true);
+			time.Restart();
+			Camera::Zoom(2, true);
+		} else{
 
-				//flagTimer = true;
-			}
-
-			if( time.Get() > 35 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				ultimoTempo = 35;
-				showBox = false;
-			}
-
-			if( time.Get() > 50 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText("TENTE DESMONTAR ALGO PARA ABRIR A PORTA");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 50;
-				showBox = true;
-			}
-			if( time.Get() > 54 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				ultimoTempo = 54;
-				showBox = false;
-			}
-
-			if( time.Get() > 70 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText("TALVEZ ALGO QUE ESTEJA NO ALTO DE ALGUM LUGAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 70;
-				showBox = true;
-			}
-			if( time.Get() > 74 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				ultimoTempo = 74;
-				showBox = false;
-			}
-
-			if( time.Get() > 80 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText("PENA QUE VOCÊ É BAIXINHO"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 80;
-				showBox = true;
-			}
-			if( time.Get() > 84 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				ultimoTempo = 84;
-				showBox = false;
-			}
-			if( time.Get() > 90 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText("TALVEZ ESSA CADEIRA POSSA AJUDAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 90;
-				showBox = true;
-			}
-			if( time.Get() > 94 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
-				falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
-				ultimoTempo = 94;
-				showBox = false;
-			}
-
-			MessageDoor(dt);
-			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-		} else if(MissionManager::missionManager->GetStage("HallState") &&
-				MissionManager::missionManager->countHallState <= 1){
-			//HallState++;
-			//std::cout << "HallState" << std::endl;
-			if(state != MissionManager::missionManager->changeState){
-				state = MissionManager::missionManager->changeState;
-				MissionManager::missionManager->player->box.x = 400;
-				MissionManager::missionManager->player->box.y = 400;
-				MissionManager::enemy->SetPosition(975,115);
-				MissionManager::enemy->show = false;
-				time.Restart();
-			}
-			if(trancada == false && cooldown.Get() > 4 && MissionManager::enemy->show == false)
-				falas.SetText("CUIDADO");
-				showBox = true;
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 4;
-			if(time.Get() > 6 && trancada == false && cooldown.Get() > 3  && MissionManager::enemy->show == false){
-				falas.SetText(" ");
-				showBox = false;
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-				ultimoTempo = 6;
-			}
-			if(time.Get() > 5 && time.Get() < 6 && played == false){
-				Sound portaDestrancando = Sound ("audio/destrancando.wav");
-				portaDestrancando.Play(0);
-				played = true;
-			}
-			if(time.Get() > 6 && time.Get() < 7 && played == true){
-				Sound portaDestrancando = Sound ("audio/weird-door.wav");
-				portaDestrancando.Play(0);
-				played = false;
-				//SceneDoor::count = ABRE;
-			}
-
-			if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
-					/*&& MissionManager::enemy->show == false*/){
-				MissionManager::enemy->show = true;
-				//if(MissionManager::enemy->turn == 1)
-				count ++;
-				//SceneDoor::count = FECHA;
-				//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
-				if(count == 1){
-					//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-
-					SceneDoor::count = ABRE;
-					SceneDoor::ValorPassar = 16;
-					//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-					MissionManager::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
-					MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-					MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+			/* COMEÇO DO JOGO. QUARTO DA CRIANÇA. PRIMEIRA VEZ ENTRANDO PARA LEGENDAS INICIAIS*/
+			if(MissionManager::missionManager->GetStage("StageState") &&
+					MissionManager::missionManager->countStageState <= 1){
+				//StageState++;
+				//std::cout << "StageState" << std::endl;
+				if(flagTimer == true && time.Get() > 25){
+					tx.SetText(" ");
+					creepy.SetText(" ");
+					creepy1.SetText(" ");
+					creepy2.SetText(" ");
+					creepy3.SetText(" ");
+					creepy4.SetText(" ");
+					creepy5.SetText(" ");
+					creepy6.SetText(" ");
+					showBox = true;
+					flagTimer = false;
 				}
-				//std::cout << trancada << std::endl;
-				if(trancada == false){
-					if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
-						showBox = true;
-						//MissionManager::enemy->bloq = true;
+				if( time.Get() > 30 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 5.5*/){
+					showBox = true;
+					falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 30; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
+
+					//flagTimer = true;
+				}
+
+				if( time.Get() > 35 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					ultimoTempo = 35;
+					showBox = false;
+				}
+
+				if( time.Get() > 50 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText("TENTE DESMONTAR ALGO PARA ABRIR A PORTA");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 50;
+					showBox = true;
+				}
+				if( time.Get() > 54 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					ultimoTempo = 54;
+					showBox = false;
+				}
+
+				if( time.Get() > 70 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText("TALVEZ ALGO QUE ESTEJA NO ALTO DE ALGUM LUGAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 70;
+					showBox = true;
+				}
+				if( time.Get() > 74 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					ultimoTempo = 74;
+					showBox = false;
+				}
+
+				if( time.Get() > 80 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText("PENA QUE VOCÊ É BAIXINHO"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 80;
+					showBox = true;
+				}
+				if( time.Get() > 84 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					ultimoTempo = 84;
+					showBox = false;
+				}
+				if( time.Get() > 90 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText("TALVEZ ESSA CADEIRA POSSA AJUDAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 90;
+					showBox = true;
+				}
+				if( time.Get() > 94 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					falas.SetText(" "); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					ultimoTempo = 94;
+					showBox = false;
+				}
+
+				MessageDoor(dt);
+				//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
+			} else if(MissionManager::missionManager->GetStage("HallState") &&
+					MissionManager::missionManager->countHallState <= 1){
+				//HallState++;
+				//std::cout << "HallState" << std::endl;
+				if(state != MissionManager::missionManager->changeState){
+					state = MissionManager::missionManager->changeState;
+					MissionManager::missionManager->player->box.x = 400;
+					MissionManager::missionManager->player->box.y = 400;
+					MissionManager::enemy->SetPosition(975,115);
+					MissionManager::enemy->show = false;
+					time.Restart();
+				}
+				if(trancada == false && cooldown.Get() > 4 && MissionManager::enemy->show == false)
+					falas.SetText("CUIDADO");
+					showBox = true;
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ultimoTempo = 4;
+				if(time.Get() > 6 && trancada == false && cooldown.Get() > 3  && MissionManager::enemy->show == false){
+					falas.SetText(" ");
+					showBox = false;
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+					ultimoTempo = 6;
+				}
+				if(time.Get() > 5 && time.Get() < 6 && played == false){
+					Sound portaDestrancando = Sound ("audio/destrancando.wav");
+					portaDestrancando.Play(0);
+					played = true;
+				}
+				if(time.Get() > 6 && time.Get() < 7 && played == true){
+					Sound portaDestrancando = Sound ("audio/weird-door.wav");
+					portaDestrancando.Play(0);
+					played = false;
+					//SceneDoor::count = ABRE;
+				}
+
+				if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
+						/*&& MissionManager::enemy->show == false*/){
+					MissionManager::enemy->show = true;
+					//if(MissionManager::enemy->turn == 1)
+					count ++;
+					//SceneDoor::count = FECHA;
+					//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
+					if(count == 1){
+						//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+
 						SceneDoor::count = ABRE;
-						SceneDoor::ValorPassar = 26;
-						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-						if(played == false){
-							Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
-							portaDestrancando.Play(0);
-							played = true;
+						SceneDoor::ValorPassar = 16;
+						//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+						MissionManager::enemy->SetDestinationPath(Vec2(970, 140)); //3º DESTINO
+						MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
+						MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+					}
+					//std::cout << trancada << std::endl;
+					if(trancada == false){
+						if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
+							showBox = true;
+							//MissionManager::enemy->bloq = true;
+							SceneDoor::count = ABRE;
+							SceneDoor::ValorPassar = 26;
+							falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
+							falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+							if(played == false){
+								Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
+								portaDestrancando.Play(0);
+								played = true;
+							}
+							ultimoTempo = 8;
+						if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
+							showBox = false;
+							//MissionManager::enemy->bloq = false;
+							falas.SetText(" ");
+							falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+							ultimoTempo = 12;
+							//SceneDoor::count = ABRE;
 						}
-						ultimoTempo = 8;
-					if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
-						showBox = false;
-						//MissionManager::enemy->bloq = false;
-						falas.SetText(" ");
-						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-						ultimoTempo = 12;
-						//SceneDoor::count = ABRE;
+						if(MissionManager::enemy->box.Inside(Rect(970, 100, 20, 20))){
+							//SceneDoor::count = FECHA;
+						}
+
 					}
-					if(MissionManager::enemy->box.Inside(Rect(970, 100, 20, 20))){
-						//SceneDoor::count = FECHA;
 					}
-
 				}
+
+				MessageDoor(dt);
+				//NO CASO DE JOGADOR VOLTAR PARA QUARTO DA CRIANÇA
+			} else if(MissionManager::missionManager->GetStage("StageState") &&
+					MissionManager::missionManager->countStageState > 1){
+				//std::cout << MissionManager::missionManager->GetStage("StageState") << std::endl;
+				if(state != MissionManager::missionManager->changeState){
+					state = MissionManager::missionManager->changeState;
+					time.Restart();
+					MissionManager::enemy->show = false;
 				}
-			}
+				if(trancada == false && cooldown.Get() > 3){
+					showBox = true;
+					falas.SetText("CERTEZA QUE QUER PASSAR A NOITE SEM PROTEÇÃO?");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				}
+				if(time.Get() > 7 && trancada == false && cooldown.Get() > 3){
+					showBox = false;
+					falas.SetText(" ");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				}
+				MessageDoor(dt);
+			} else if((MissionManager::missionManager->GetStage("HallState") &&
+					MissionManager::missionManager->countHallState > 1)){
+				if(time.Get() < 4 && trancada == false && cooldown.Get() > 3){
+					showBox = false;
+					falas.SetText(" ");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+				}
 
-			MessageDoor(dt);
-			//NO CASO DE JOGADOR VOLTAR PARA QUARTO DA CRIANÇA
-		} else if(MissionManager::missionManager->GetStage("StageState") &&
-				MissionManager::missionManager->countStageState > 1){
-			//std::cout << MissionManager::missionManager->GetStage("StageState") << std::endl;
-			if(state != MissionManager::missionManager->changeState){
-						state = MissionManager::missionManager->changeState;
-						time.Restart();
-						MissionManager::enemy->show = false;
-			}
-			if(trancada == false && cooldown.Get() > 3){
-				showBox = true;
-				falas.SetText("CERTEZA QUE QUER PASSAR A NOITE SEM PROTEÇÃO?");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			}
-			if(time.Get() > 7 && trancada == false && cooldown.Get() > 3){
-				showBox = false;
-				falas.SetText(" ");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
-			MessageDoor(dt);
-		} else if((MissionManager::missionManager->GetStage("HallState") &&
-				MissionManager::missionManager->countHallState > 1)){
-			if(time.Get() < 4 && trancada == false && cooldown.Get() > 3){
-				showBox = false;
-				falas.SetText(" ");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
+			}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
+				if(state != MissionManager::missionManager->changeState){
+					MissionManager::player->SetPosition(230, 300);
+					state = MissionManager::missionManager->changeState;
+					time.Restart();
+					MissionManager::enemy->show = false;
+				}
 
-		}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
-			if(state != MissionManager::missionManager->changeState){
-				MissionManager::player->SetPosition(230, 300);
-				state = MissionManager::missionManager->changeState;
-				time.Restart();
-				MissionManager::enemy->show = false;
+				if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
+					MissionManager::enemy->SetPosition(230, 175);
+					MissionManager::enemy->show = true;
+
+					//SceneDoor::count = ABRE;
+					//SceneDoor::ValorPassar = 4;
+					// tentativa fail de fazer mãe parar de andar
+					peguei = true; //era da tentativa fail;
+					//MissionManager::enemy->SetDestinationPath(Vec2(230, 230));
+					((LivingRoomState&) Game::GetInstance().GetCurrentState())
+							.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x,
+								MissionManager::enemy->box.y+MissionManager::enemy->GetHeight()),
+								Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+					MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
+							GetCurrentState()).tileMapChao.GetPath());
+
+					Camera::Zoom(2, true);
+				}
+
 			}
-
-			if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
-				MissionManager::enemy->SetPosition(230, 175);
-				MissionManager::enemy->show = true;
-
-				//SceneDoor::count = ABRE;
-				//SceneDoor::ValorPassar = 4;
-				// tentativa fail de fazer mãe parar de andar
-				peguei = true; //era da tentativa fail;
-				//MissionManager::enemy->SetDestinationPath(Vec2(230, 230));
-				((LivingRoomState&) Game::GetInstance().GetCurrentState())
-				.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x
-						, MissionManager::enemy->box.y+MissionManager::enemy->GetHeight())
-						, Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
-				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
-				GetCurrentState()).tileMapChao.GetPath());
-
-				Camera::Zoom(2, true);
-			}
-
 		}
-	}
 
-	if(time.Get() >= 24 && fadeIn){
-		UpdateVariable(dt, 80);
-	}
+		if(time.Get() >= 24 && fadeIn){
+			UpdateVariable(dt, 80);
+		}
 
-	if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
-		PiscaPisca(dt, 20, 0.4);
-		MissionManager::player->SetBloqInv(true);
+		if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
+			PiscaPisca(dt, 20, 0.4);
+			MissionManager::player->SetBloqInv(true);
+		}
 	}
 
 }
@@ -471,7 +480,7 @@ void Mission1::SetObjectHall(){
 	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png");
 	objectHall.emplace_back(CriadoMudo);
 
-	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "StageState", true,
+	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
@@ -505,5 +514,9 @@ void Mission1::SetObjectLivingRoom(){
 	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);
 
+
+}
+
+void Mission1::SetObjectMomRoom(){
 
 }
