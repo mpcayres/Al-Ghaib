@@ -51,6 +51,8 @@ Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	SetObjectLivingRoom();
 
 	MissionManager::cat->SetPosition(1000, 200);
+
+	destrancAudioFlag = false;
 }
 
 Mission2::~Mission2() {
@@ -100,7 +102,10 @@ void Mission2::Update(float dt){
 			}
 			if(time.Get() > 7 && time.Get() < 8 && trancada == false && cooldown.Get() > 3){
 				Sound portaDestrancando = Sound ("audio/destrancando.wav");
-				portaDestrancando.Play(0);
+				if(destrancAudioFlag == false){
+					portaDestrancando.Play(0);
+					destrancAudioFlag = true;
+				}
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
 				Bear::show = true;
@@ -113,8 +118,8 @@ void Mission2::Update(float dt){
 					SceneDoor::count = ABRE;
 					SceneDoor::ValorPassar = 24;
 					paradoUrso = true;
-					Bear::bear->SetDestinationPath(Vec2(805, 450)); //2º DESTINO
-					Bear::bear->SetDestinationPath(Vec2(805, 250)); //1º DESTINO
+					Bear::bear->SetDestinationPath(Vec2(805, 450)); //2Âº DESTINO
+					Bear::bear->SetDestinationPath(Vec2(805, 250)); //1Âº DESTINO
 					ultimoTempo = 12;
 				}
 				if(time.Get() > 15){
@@ -194,7 +199,7 @@ void Mission2::Update(float dt){
 
 		//std::cout << "time" << time.Get() << std::endl;
 		if(countCat == 1){
-			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+			//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
 			MissionManager::cat->SetDestinationPath(Vec2(500, 300)); //ULTIMO DESTINO
 			MissionManager::cat->SetDestinationPath(Vec2(500, 200));
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
@@ -209,9 +214,9 @@ void Mission2::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
 			MissionManager::cat->SetDestinationPath(Vec2(900, 450));
 			MissionManager::cat->SetDestinationPath(Vec2(900, 500));
-			MissionManager::cat->SetDestinationPath(Vec2(900, 300)); //3º DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(800, 300)); //2º DESTINO
-			MissionManager::cat->SetDestinationPath(Vec2(700, 300)); //1º DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(900, 300)); //3Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(800, 300)); //2Âº DESTINO
+			MissionManager::cat->SetDestinationPath(Vec2(700, 300)); //1Âº DESTINO
 			//paradoGato = true;
 		}
 		if(time.Get()>5){
@@ -230,7 +235,7 @@ void Mission2::Update(float dt){
 			//Sound meow2 = Sound ("audio/cat-meow-2.wav");
 			//meow2.Play(0);
 			meowcount++;
-			meow1.Stop();
+			//meow1.Stop();
 		}
 		if(MissionManager::player->lastPicked == "InventoryScissors"){
 			contScissors++;
@@ -247,16 +252,16 @@ void Mission2::Update(float dt){
 			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
 			if(momcount == 1){
-			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-				//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+			//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
+				//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4Âº DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(800, 140)); //3Âº DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2Âº DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1Âº DESTINO
 			}
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
-				falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
+				falas.SetText("M: O QUE JÃ� FALEI SOBRE SAIR DA CAMA?");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 2;
 				showBox = true;
@@ -337,18 +342,18 @@ void Mission2::Update(float dt){
 			SceneDoor::count = ABRE;
 			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
-			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
+			//DEFINIR CAMINHO DA MÃƒE NA PRIMEIRA VEZ QUE CHAMA A FUNÃ‡ÃƒO UPDATE DE MISSION1 NO GAME LOOP
 			if(momcount == 1){
-			//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
-			//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(800, 140)); //3º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
-				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
+			//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
+			//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4Âº DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(800, 140)); //3Âº DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2Âº DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1Âº DESTINO
 			}
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
-				falas.SetText("M: O QUE JÁ FALEI SOBRE SAIR DA CAMA?");
+				falas.SetText("M: O QUE JÃ� FALEI SOBRE SAIR DA CAMA?");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 2;
 				showBox = true;

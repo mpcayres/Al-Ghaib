@@ -1,5 +1,6 @@
 #include "SceneObject.hpp"
 #include "MissionManager.hpp"
+#include "Sound.hpp"
 
 SceneObject::SceneObject(float x, float y, std::string img, std::string img2,
 		float rot, float scaleX, float scaleY, std::string create, int change) :
@@ -77,6 +78,9 @@ bool SceneObject::GetState(){
 
 void SceneObject::ChangeImage(){
 	if(change2 != ""){
+		Sound s = Sound("audio/portapequenaconvertida.wav");
+		s.Play(0);
+
 		if(estado){
 			estado = false;
 			sp.Open(change1);

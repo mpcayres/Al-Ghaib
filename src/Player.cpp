@@ -347,7 +347,7 @@ void Player::Update(float dt){
 			Sound s = Sound("audio/arrastando.wav");
 			s.Play(0);
 			timeSound.Update(dt);
-		} else if(timeSound.Get() > 2){
+		} else if(timeSound.Get() > 0.8){
 			timeSound.Restart();
 		} else timeSound.Update(dt);
 	}

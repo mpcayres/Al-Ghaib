@@ -153,6 +153,8 @@ void  Mission1::Update(float dt){
 			Game::GetInstance().GetCurrentState().AddObject(
 					new Animation(x, y, 0,
 							"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
+			Sound s = Sound("audio/rasgando.wav");
+			s.Play(0);
 			ultimoTempo = time.Get();
 			if(time.Get() > ultimoTempo + 4){
 				showBox = true;
