@@ -7,10 +7,12 @@
  Music Mission3::music;
 
 Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
-	initialState = "StageState"; // trocar para comeÃ§ar da sala?
-	initialX = 300; initialY = 400;
+	initialState = "LivingRoomState"; // trocar para comeÃ§ar da sala?
+	initialX = 790; initialY = 500;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
+
+	MissionManager::enemy->ChangeClothes();
 
 	meowcount = 0;
 	momcount = 0;
@@ -87,8 +89,36 @@ void Mission3::Update(float dt){
 		Game::GetInstance().GetCurrentState()..ChangeMission(4);
 	}*/
 	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL ////////////////////////////////////////////////////////////////////
-	if(MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState <= 1){
+	if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+			MissionManager::missionManager->countLivingRoomState <= 1){
+		MissionManager::enemy->show = true;
+
+		if(time.Get()>5)
+			momcount ++;
+			//DEFINIR CAMINHO DA MÃE NA PRIMEIRA VEZ QUE CHAMA A FUNÇÃO UPDATE DE MISSION1 NO GAME LOOP
+std::cout << " time e mom" << time.Get() << momcount << std::endl;
+std::cout << MissionManager::enemy->box.x << "e" << MissionManager::enemy->box.y << std::endl;
+		if(momcount == 2 && time.Get() > 5){
+			std::cout << "mae?" << std::endl;
+			//MissionManager::enemy->SetPosition(700, 180);
+		//MOVIMENTO É COLOCADO DE TRÁS PARA FRENTE
+		//MissionManager::enemy->SetDestinationPath(Vec2(970, 100)); //4º DESTINO
+			MissionManager::enemy->SetDestinationPath(Vec2(220, 165)); //3º DESTINO
+			MissionManager::enemy->SetDestinationPath(Vec2(220, 190)); //3º DESTINO
+			MissionManager::enemy->SetDestinationPath(Vec2(620, 190)); //2º DESTINO
+			MissionManager::enemy->SetDestinationPath(Vec2(660, 190)); //1º DESTINO
+		}
+		if(time.Get () < 5){
+			std::cout << "oi" << std::endl;
+			if(momcount == 0){
+				MissionManager::enemy->SetPosition(700, 190);
+				momcount++;
+			}
+			//if(momcount < 4){
+				MissionManager::enemy->SetDestinationPath(Vec2(620, 190)); //1º DESTINO
+				MissionManager::enemy->SetDestinationPath(Vec2(700, 190)); //1º DESTINO
+			//}
+		}
 
 		MissionManager::player->SetBlocked(true);
 		if(flagTimer == true && time.Get() > 3){
@@ -98,29 +128,29 @@ void Mission3::Update(float dt){
 			flagTimer = false;
 		}
 
-		if(time.Get() > 5 && trancada == false && cooldown.Get() > 3){
+		if(time.Get() > 5){
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			sussurro.Play(0);
-			falas.SetText("U: OLHA SÃ“ ESSA QUE CHAMAS DE MÃƒE");
+			falas.SetText("U: OLHA ESSA QUE CHAMAS DE MÃE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 5;
 			showBox = true;
 		}
-		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: O QUE Ã‰ ESSA ROUPA?");
+		if(time.Get() > 10){
+			falas.SetText("U: O QUE É ESSA ROUPA?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 10;
 			showBox = true;
 		}
 		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: AINDA Ã‰ REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
+			falas.SetText("U: AINDA É REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 15;
 			showBox = true;
 			MissionManager::player->SetBlocked(false);
 		}
 		if(time.Get() > 20 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: DEVEMOS INVESTIGAR O QUARTO DA VELHA");
+			falas.SetText("U: TEMOS QUE INVESTIGAR ISSO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 20;
 			showBox = true;
@@ -297,10 +327,10 @@ void Mission3::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState > 1) ||
+	if(((MissionManager::missionManager->GetStage("LivingRoomState") &&
+			MissionManager::missionManager->countLivingRoomState <= 1 && time.Get() > 4) ||
+		((MissionManager::missionManager->GetStage("LivingRoomState") &&
+			MissionManager::missionManager->countLivingRoomState > 1) ||
 			MissionManager::missionManager->GetStage("HallState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){

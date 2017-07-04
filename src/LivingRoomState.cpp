@@ -127,13 +127,13 @@ void LivingRoomState::SetInitialObjectArray(){
 	//MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
 	//objectArray.emplace_back(Banco);
 
-	SceneObject* Sofa = new SceneObject(500, 280, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
+	SceneObject* Sofa = new SceneObject(500, 320, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
 	objectArray.emplace_back(Sofa);
 
 	SceneObject* Poltrona = new SceneObject(400, 330, "img/moveis/sala/poltrona.png", "img/moveis/sala/poltrona.png");
 	objectArray.emplace_back(Poltrona);
 
-	SceneObject* Mesa = new SceneObject(500, 340, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
+	SceneObject* Mesa = new SceneObject(500, 380, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
 	objectArray.emplace_back(Mesa);
 
 	SceneAnimated* TV = new SceneAnimated(630, 450, "img/moveis/sala/televisao_desligada.png", "img/moveis/sala/televisao.png");
