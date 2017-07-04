@@ -13,9 +13,9 @@
 #include <iostream>
 
 MomRoomState::MomRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
-	State(), tileSetChao(150, 117, "img/tileSet/tile_sala_chao.png"),
-	tileSetParede(150, 126, "img/tileSet/tile_sala_parede.jpeg"), tileMapChao("map/tileMapSalaChao.txt", &tileSetChao),
-	tileMapParede("map/tileMapSalaParede.txt", &tileSetParede){
+	State(), tileSetChao(144, 120, "img/tileSet/tileset_chao.png"),
+	tileSetParede(144, 129, "img/tileSet/tileset_mom_parede.png"), tileMapChao("map/tileMapMomChao.txt", &tileSetChao),
+	tileMapParede("map/tileMapMomParede.txt", &tileSetParede){
 
 	limits = tileMapChao.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
@@ -122,49 +122,4 @@ void MomRoomState::SetInitialObjectArray(){
 
 	//MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
 	//objectArray.emplace_back(Banco);
-
-	SceneObject* Sofa = new SceneObject(500, 320, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
-	objectArray.emplace_back(Sofa);
-
-	SceneObject* Poltrona = new SceneObject(400, 330, "img/moveis/sala/poltrona.png", "img/moveis/sala/poltrona.png");
-	objectArray.emplace_back(Poltrona);
-
-	SceneObject* Mesa = new SceneObject(500, 380, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
-	objectArray.emplace_back(Mesa);
-
-	SceneAnimated* TV = new SceneAnimated(630, 450, "img/moveis/sala/televisao_desligada.png", "img/moveis/sala/televisao.png");
-	objectArray.emplace_back(TV);
-
-	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
-	objectArray.emplace_back(Painel);
-
-	SceneObject* Pilastra1 = new SceneObject(350, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
-	objectArray.emplace_back(Pilastra1);
-
-	SceneObject* Pilastra2 = new SceneObject(725, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
-	objectArray.emplace_back(Pilastra2);
-
-	//SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
-	//objectArray.emplace_back(DoorToHall);
-
-	ScenePortal* DoorToLivingRoom = new ScenePortal(220, 165, "HallState");
-	objectArray.emplace_back(DoorToLivingRoom);
-
-	SceneObject* Armario = new SceneObject(790, 175, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
-	objectArray.emplace_back(Armario);
-
-	if(MissionManager::player->HaveObject("InventoryControl") && MissionManager::missionManager->GetNumMission() != 1){
-		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
-					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Bau);
-	} else if(MissionManager::missionManager->GetNumMission() == 1){
-		SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
-						"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
-			objectArray.emplace_back(Bau);
-	}
-	else{
-		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
-					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Bau);
-	}
 }
