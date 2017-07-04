@@ -114,6 +114,8 @@ void  Mission1::Update(float dt){
 
 
 		//std::cout << "MOM DEAD 1" << std::endl;
+		std::cout << "piscapisca" << std::endl;
+		PiscaPisca(dt, 20, 0.4);
 		MissionManager::enemy->SetDead();
 		//std::cout << "MOM DEAD 2" << std::endl;
 

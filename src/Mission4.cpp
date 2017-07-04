@@ -8,7 +8,7 @@
 
 Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
-	initialX = 350; initialY = 300;
+	initialX = 300; initialY = 300;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
 
@@ -105,9 +105,31 @@ void Mission4::Update(float dt){
 	if(time.Get() >= 4 && fadeIn){
 			UpdateVariable(dt, 80);
 	}
+	PiscaPisca(dt, 1000000, 0.5);
+	std::cout << (int)time.Get() << std::endl;
+	if((((int)time.Get())%3 == 0) && creepyeffect == 0){
 
-	if(time.Get() >= 6){
-		//PiscaPisca(dt, 6, 0.6);
+		creepyeffect = time.Get();
+		std::cout << "piscapisca" << std::endl;
+		PiscaPisca(dt, 3, 0.4);
+		std::cout << "oi" << std::endl;
+	}
+
+	if(((int)time.Get())%4 == 0 && creepyeffect == 0){
+
+			creepyeffect = time.Get();
+			Camera::ZoomCreepy(1, false);
+			PiscaPisca(dt, 3, 0.4);
+			std::cout << "oi" << std::endl;
+		}
+
+	if((((int)time.Get())%5  == 0) && creepyeffect == 0){
+		creepyeffect = time.Get();
+		Camera::ZoomCreepy(1, true);
+		std::cout << "oi" << std::endl;
+	}
+	if(creepyeffect + 5 > time.Get() && creepyeffect!=0){
+		creepyeffect = 0;
 	}
 
 }
@@ -143,10 +165,13 @@ void Mission4::SetObjectStage(){
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
-	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
-	objectStage.emplace_back(Box);
+	SceneObject* Copo = new SceneObject(550, 280, "img/object-copo-cheio.png", "img/object-copo-cheio.png", 0, 0.3, 0.3);
+	objectStage.emplace_back(Copo);
 
-	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
+	SceneObject* BrokenClown = new SceneObject(400, 500, "img/object-palhaco-quebrado.png", "img/object-palhaco-quebrado.png", 0, 0.3, 0.3);
+	objectStage.emplace_back(BrokenClown);
+
+	MovingObject* Cadeira = new MovingObject(200, 400, "img/scene-cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 

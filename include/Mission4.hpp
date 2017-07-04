@@ -32,6 +32,7 @@ private:
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0;
+	int creepyeffect= 0;
 };
 
 #endif /* SRC_MISSION4_HPP_ */
