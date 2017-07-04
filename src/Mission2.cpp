@@ -53,6 +53,7 @@ Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	MissionManager::cat->SetPosition(1000, 200);
 
 	destrancAudioFlag = false;
+	sussurroAudioFlag = false;
 }
 
 Mission2::~Mission2() {
@@ -130,7 +131,10 @@ void Mission2::Update(float dt){
 				//std::cout << "test 1 " << std::endl;
 				if(time.Get() > 18 ){
 
-					sussurro.Play(0);
+					if(sussurroAudioFlag == false){
+						sussurro.Play(0);
+						sussurroAudioFlag = true;
+					}
 					showBox = true;
 					falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -147,7 +151,7 @@ void Mission2::Update(float dt){
 					showBox = true;
 				}
 				if(time.Get() > 24 ){
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+					//Sound sussurro = Sound ("audio/ghostly-wspers.wav");
 					//sussurro.Play(0);
 					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);

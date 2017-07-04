@@ -36,7 +36,7 @@ private:
 	int meowcount, momcount,countBear = 0, countCat = 0;
 	int contScissors=0, contNeedle=0, contLine =0 ;
 
-	bool destrancAudioFlag;
+	bool destrancAudioFlag, sussurroAudioFlag, miadoAudioFlag;
 };
 
 #endif /* SRC_MISSION2_HPP_ */
