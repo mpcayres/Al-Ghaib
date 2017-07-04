@@ -1,6 +1,7 @@
 #include "State.hpp"
 #include "MissionManager.hpp"
 #include "SceneObject.hpp"
+#include "SceneAnimated.hpp"
 #include "Camera.hpp"
 
 #include <random>
@@ -107,7 +108,7 @@ void State::RandomState(){
 		std::uniform_int_distribution<int> distribution(1,6);
 
 		for(unsigned int i = 0; i < objectArray.size(); i++) {
-			if(objectArray[i].get()->Is("SceneObject")){
+			if(objectArray[i].get()->Is("SceneObject") && !objectArray[i].get()->Is("SceneAnimated")){
 				if(!((SceneObject*) objectArray[i].get())->GetCreateObject()){
 					int dice_roll = distribution(generator);
 					//std::cout << "DICE " << dice_roll << std::endl;
@@ -118,6 +119,19 @@ void State::RandomState(){
 			}
 		}
 	}
+}
+
+int State::GetPositionArray(std::string obj){
+	for(unsigned int i = 0; i < objectArray.size(); i++) {
+		if(objectArray[i].get()->Is(obj)){
+			return i;
+		}
+	}
+	return -1;
+}
+
+void State::AccessAnimated(int pos){
+	((SceneAnimated*)objectArray[pos].get())->ChangeImage();
 }
 
 void State::ChangeState(std::string orig, std::string dest, int x, int y, int dir){

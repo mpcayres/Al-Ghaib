@@ -28,6 +28,8 @@ public:
 	void SetPopRequested();
 	Rect GetStateLimits();
 	void RandomState();
+	int GetPositionArray(std::string obj);
+	void AccessAnimated(int pos);
 	void ChangeState(std::string orig, std::string dest, int x = -1, int y = -1, int dir = -1);
 	void ChangeMission(int num);
 

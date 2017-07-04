@@ -6,6 +6,7 @@
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
 #include "ScenePortal.hpp"
+#include "SceneAnimated.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
 
@@ -135,7 +136,7 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Mesa = new SceneObject(500, 340, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
 	objectArray.emplace_back(Mesa);
 
-	SceneObject* TV = new SceneObject(630, 450, "img/moveis/sala/televisão_desligada.png", "img/moveis/sala/televisão_desligada.png");
+	SceneAnimated* TV = new SceneAnimated(630, 450, "img/moveis/sala/televisao_desligada.png", "img/moveis/sala/televisao.png");
 	objectArray.emplace_back(TV);
 
 	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
@@ -153,19 +154,12 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Armario = new SceneObject(790, 175, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
 
-
-	if( MissionManager::missionManager->GetNumMission() == 1   ){
-		SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
-					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Bau);
-	}
-
-	if(MissionManager::player->HaveObject("InventoryKey") &&  MissionManager::missionManager->GetNumMission() != 1){
-		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+	if(MissionManager::player->HaveObject("InventoryControl")){
+		SceneObject* Bau = new SceneObject(320, 500,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
-	} else if ( MissionManager::missionManager->GetNumMission() != 1){
-		SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+	} else {
+		SceneObject* Bau = new SceneObject(320, 500,  "img/scene-bau-fechado.png",
 					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
 	}
