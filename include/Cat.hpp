@@ -32,7 +32,7 @@ public:
 	void SetDirecao(int dir);
 
 	//Vec2 previousPos;
-	bool show, seen, arrived;
+	bool show, seen, arrived, attracted;
 
 private:
 	Timer time;

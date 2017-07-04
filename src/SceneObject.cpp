@@ -65,6 +65,7 @@ bool SceneObject::NotifyCollision(GameObject& other){
 				}
 				else{
 						ChangeImage();
+						MissionManager::cat->attracted=true;
 				}
 			}else{
 				if(objCreate != ""){

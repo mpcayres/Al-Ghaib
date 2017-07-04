@@ -11,6 +11,8 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	initialX = 790; initialY = 500;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
+	atraidoNovelo = 0;
+	atraidoTV = 0;
 
 	MissionManager::enemy->ChangeClothes();
 
@@ -197,7 +199,7 @@ void Mission3::Update(float dt){
 		//}
 		//if(MissionManager::enemy->turn == 1)
 
-		if(countCat == 1){
+		if(countCat == 1  && atraidoNovelo == 0){
 					//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
 			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
@@ -208,16 +210,13 @@ void Mission3::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200)); //1Âº DESTINO
 					//paradoGato = true;
 		}
-		if(time.Get()>5){
+		if(time.Get()>5  && atraidoNovelo == 0){
 			MissionManager::cat->SetDestinationPath(Vec2(890, 200));
 		}
-		if( dist < 250){
+		if( dist < 250 && atraidoNovelo == 0){
 			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
 
-		if( dist < 250){
-				MissionManager::cat->SetDestinationPath(Vec2(980, 200));
-		}
 		if(dist < 100){
 			if(meowcount%2 && ((int)time.Get())%5){
 				MissionManager::player->AddRuido(6);
@@ -234,9 +233,23 @@ void Mission3::Update(float dt){
 		// OU
 		// TV + CONTROLE DA TV
 		//std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
-		//if(inHand->IsObject("InventoryWool")){
+		if(MissionManager::cat->attracted == true){
+			atraidoNovelo++;
+			std::cout << "atraidoNovelo" << atraidoNovelo << std::endl;
+			if(atraidoNovelo == 1){
+				std::cout << "ENTREI" << std::endl;
+				MissionManager::cat->SetDestinationPath(Vec2(1350, 450));
+				MissionManager::cat->SetDestinationPath(Vec2(980, 450));
+				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
+				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
+				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
+				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
+			}
+			else if (atraidoNovelo > 30){
+				MissionManager::cat->SetDestinationPath(Vec2(1350, 450));
+			}
 
-		//}
+		}
 
 		if(time.Get() > 7 && time.Get() < 7.5 && trancada == false && cooldown.Get() > 3){
 			Sound portaDestrancando = Sound ("audio/meow-sample.wav");

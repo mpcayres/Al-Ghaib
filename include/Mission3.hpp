@@ -33,6 +33,7 @@ private:
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0;
 	bool bronca;
+	int atraidoNovelo, atraidoTV;
 };
 
 #endif /* SRC_MISSION3_HPP_ */
