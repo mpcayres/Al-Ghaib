@@ -9,7 +9,7 @@
 #include "Sprite.hpp"
 #include "GameObject.hpp"
 
-#define DISTANCIA	18
+#define DISTANCIA	15
 #define OFFSET		5
 #define REDUCE_BOX	15 //min 2
 

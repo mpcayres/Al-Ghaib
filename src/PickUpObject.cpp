@@ -30,13 +30,17 @@ bool PickUpObject::IsDead(){
 
 // Talvez colocar pra pegar quando estiver proximo
 bool PickUpObject::NotifyCollision(GameObject& other){
-	if(!dead && other.Is("Player")){
+	if(!dead && other.Is("Player") && !bloqPick && !MissionManager::player->GetAboveObject()){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
-			if(!bloqPick || (bloqPick && MissionManager::player->GetAboveObject())){
-				dead = true;  // botar dead em condicoes diferentes. se nao estiver selecionado ou mostrando no inventario
-				//std::cout <<"ate aqui ok 1.5 " << std::endl;
-				MissionManager::player->AddInventory(obj);
-			}
+			dead = true;
+			MissionManager::player->AddInventory(obj);
+		}
+	}
+
+	if(!dead && other.Is("EmptyBox") && bloqPick && MissionManager::player->GetAboveObject()){
+		if(InputManager::GetInstance().KeyPress(Z_KEY)){
+			dead = true;
+			MissionManager::player->AddInventory(obj);
 		}
 	}
 	return false;
