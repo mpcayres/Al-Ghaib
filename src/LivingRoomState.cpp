@@ -51,8 +51,8 @@ void LivingRoomState::Resume(){
 }
 
 void LivingRoomState::LoadAssets(){
-	bg.Open("img/ocean.jpg");
-	background.Open("img/ocean.jpg");
+	bg.Open("img/HUD/blackBack.jpg");
+	background.Open("img/HUD/blackBack.jpg");
 }
 
 void LivingRoomState::Update(float dt){

@@ -59,7 +59,7 @@ void StageState::Resume(){
 }
 
 void StageState::LoadAssets(){
-	bg.Open("img/ocean.jpg");
+	bg.Open("img/HUD/blackBack.jpg");
 }
 
 void StageState::Update(float dt){

@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare2.png", 1, 1, 1, true), falasBox("img/box-frases.png"), showBox(true) {
+Mission::Mission() : blackSquare("img/HUD/blackBack.jpg"),
+	spFade("img/HUD/fadeBack.jpg", 1, 1, 1, true), falasBox("img/HUD/box-frases.png"), showBox(true) {
 	popRequested = quitRequested = false;
 	initialX = initialY = -1;
 

@@ -52,8 +52,8 @@ void MomRoomState::Resume(){
 }
 
 void MomRoomState::LoadAssets(){
-	bg.Open("img/ocean.jpg");
-	background.Open("img/ocean.jpg");
+	bg.Open("img/HUD/blackBack.jpg");
+	background.Open("img/HUD/blackBack.jpg");
 }
 
 void MomRoomState::Update(float dt){

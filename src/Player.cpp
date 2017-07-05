@@ -34,14 +34,14 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	spKinderClimbing.SetScaleX(2.5); spKinderClimbing.SetScaleY(2.5);
 	spKinderDown.SetScaleX(2.5); spKinderDown.SetScaleY(2.5);
 
-	spNoise = Sprite("img/sprite/barulho.png", 9, 1 ,1);
+	spNoise = Sprite("img/HUD/barulho.png", 9, 1 ,1);
 	spNoise.SetScaleX(0.25); spNoise.SetScaleY(0.25);
 
-	spInventory = Sprite("img/inventario/inventory.png", 1, 1, 1);
+	spInventory = Sprite("img/HUD/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
-	spInventorybox = Sprite("img/inventario/box.png", 1, 1, 1);
+	spInventorybox = Sprite("img/HUD/box.png", 1, 1, 1);
 	spInventorybox.SetScaleX(1.6); spInventorybox.SetScaleY(1.6);
-	spInventoryboxSelected = Sprite("img/inventario/box-select.png", 1, 1, 1);
+	spInventoryboxSelected = Sprite("img/HUD/box-select.png", 1, 1, 1);
 	spInventoryboxSelected.SetScaleX(1.6); spInventoryboxSelected.SetScaleY(1.6);
 
 	box.x = x; box.y = y;

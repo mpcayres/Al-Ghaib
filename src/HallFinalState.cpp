@@ -48,7 +48,7 @@ void HallFinalState::Resume(){
 }
 
 void HallFinalState::LoadAssets(){
-	background.Open("img/ocean.jpg");
+	background.Open("img/HUD/blackBack.jpg");
 	bg.Open("img/corredor.png");
 }
 
