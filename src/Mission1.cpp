@@ -99,6 +99,7 @@ void  Mission1::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
+	std::cout << time.Get() << std::endl;
 	time.Update(dt);
 	cooldown.Update(dt);
 
@@ -290,7 +291,7 @@ void  Mission1::Update(float dt){
 					//SceneDoor::count = ABRE;
 				}
 
-				if(((time.Get() > 7 && (time.Get() < 9 || MissionManager::player->GetRuido()>90 ))&& trancada == false)
+				if(((time.Get() > 7 || MissionManager::player->GetRuido()>90 )&& trancada == false)
 						/*&& MissionManager::enemy->show == false*/){
 					MissionManager::enemy->show = true;
 					//if(MissionManager::enemy->turn == 1)
@@ -307,8 +308,6 @@ void  Mission1::Update(float dt){
 						MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
 						MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 					}
-					//std::cout << trancada << std::endl;
-					if(trancada == false){
 						if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
 							showBox = true;
 							//MissionManager::enemy->bloq = true;
@@ -322,6 +321,7 @@ void  Mission1::Update(float dt){
 								played = true;
 							}
 							ultimoTempo = 8;
+						}
 						if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
 							showBox = false;
 							//MissionManager::enemy->bloq = false;
@@ -334,8 +334,7 @@ void  Mission1::Update(float dt){
 							//SceneDoor::count = FECHA;
 						}
 
-					}
-					}
+					//}
 				}
 
 				MessageDoor(dt);
