@@ -3,6 +3,7 @@
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
+#include "Animation.hpp"
 
  Music Mission4::music;
 
@@ -94,6 +95,30 @@ void Mission4::Update(float dt){
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
+			if(time.Get() > 5 && trancada == false && cooldown.Get() > 3){
+				ImageProfileBox(4);
+				falas.SetText("U:TEMOS QUE VOLTAR AO QUARTO");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 15;
+				showBox = true;
+
+			}
+			if(time.Get() > 10 && trancada == false && cooldown.Get() > 3){
+				falas.SetText("U: CERTEZA QUE DEVE TER ALGO NAQUELE PORÃO");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 20;
+				showBox = true;
+				MissionManager::player->SetBlocked(false);
+				MissionManager::enemy->show = false;
+			}
+			if(time.Get() > 15 && trancada == false && cooldown.Get() > 3){
+				falas.SetText(" ");
+				ImageProfileBox(6);
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 25;
+				showBox = false;
+				MissionManager::enemy->show = false;
+			}
 
 
 			MessageDoor(dt);
@@ -105,6 +130,36 @@ void Mission4::Update(float dt){
 				state = MissionManager::missionManager->changeState;
 				time.Restart();
 		}
+
+
+		MessageDoor(dt);
+
+	}else if(MissionManager::missionManager->GetStage("MomRoomState")){
+
+			if(state != MissionManager::missionManager->changeState){
+				state = MissionManager::missionManager->changeState;
+				time.Restart();
+			}
+
+			Vec2 *covil = new Vec2(570, 470);
+			float dist = 0;
+
+			dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+			if(dist<100 && InputManager::GetInstance().KeyPress(Z_KEY)){
+					//Animação comendo o gato
+				SetPiscaPisca(20, 10000);
+				PiscaPisca(dt);
+				Game::GetInstance().GetCurrentState().AddObject(
+				new Animation(500, 200, 0,
+						"img/sprite/mom-comendo-gato.png", 5, 0.25, true, 2, 2));
+
+			}
+			else{
+
+				SetPiscaPisca(20, 0.4);
+				PiscaPisca(dt);
+
+			}
 
 	}
 

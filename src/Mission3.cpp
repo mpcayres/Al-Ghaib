@@ -321,17 +321,19 @@ void Mission3::Update(float dt){
 		float dist = 0;
 
 		dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
-		if(dist<250){
+		if(dist<120){
 			bronca = true;
 			SceneDoor::count = ABRE;
 			SceneDoor::ValorPassar = 4;
 			MissionManager::player->SetBlocked(true);
 			MissionManager::enemy->show = true;
-			std::cout << "mom" <<  momcount2 << std::endl;
-			std::cout << time.Get() << std::endl;
+
+
 			momcount2 ++;
-			SetPiscaPisca(20, 0.4);
-			PiscaPisca(dt);
+			if(time.Get() < 17){
+				SetPiscaPisca(20, 0.4);
+				PiscaPisca(dt);
+			}
 			if(momcount2 == 1 ){
 
 				time.Restart();
@@ -369,13 +371,20 @@ void Mission3::Update(float dt){
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 			if(time.Get() > 19)
-				Game::GetInstance().GetCurrentState().ChangeState("MomRoomStage","StageStage");
-		}else if(MissionManager::missionManager->GetStage("StageState") && bronca){
-			std::cout << "entrei" << std::endl;
+				Game::GetInstance().GetCurrentState().ChangeState("MomRoomStage","StageState");
+		}else if(MissionManager::missionManager->GetStage("StageState") /*&& bronca*/){
+			std::cout << "entrei!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 			if(state != MissionManager::missionManager->changeState){
+				std::cout << "UHUUUUUUUUUUUUL!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+					MissionManager::player->SetPosition(805, 250);
 					state = MissionManager::missionManager->changeState;
 					MissionManager::enemy->show = false;
 					time.Restart();
+			}
+			if(time.Get()<1){
+				MissionManager::player->SetPosition(805, 250);
+				state = MissionManager::missionManager->changeState;
+				MissionManager::enemy->show = false;
 			}
 			if(time.Get() > 14 && time.Get() < 18){
 					showBox = true;
@@ -390,6 +399,18 @@ void Mission3::Update(float dt){
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 
+			if(time.Get() > 40 && time.Get() < 44){
+				showBox = true;
+				ImageProfileBox (4);
+				falas.SetText("U: BEBAAAAAAAAAAAAAAAA");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if(time.Get() > 44){
+				showBox = false;
+				ImageProfileBox (6);
+				falas.SetText(" ");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
 
 		}
 

@@ -312,7 +312,7 @@ void Mission2::Update(float dt){
 			if(InputManager::GetInstance().KeyPress(Z_KEY)){
 				time.Restart();
 				ImageProfileBox (6); //BOTAR URSO
-				falas.SetText("U: OBRIGADO AMIGO");
+				falas.SetText("U: OBRIGADO!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = (int)time.Get();
 				showBox = true;

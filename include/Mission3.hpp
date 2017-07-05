@@ -33,7 +33,7 @@ private:
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0;
-	bool bronca;
+	bool bronca = false;
 	int atraidoNovelo, atraidoTV;
 };
 
