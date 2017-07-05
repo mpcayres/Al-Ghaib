@@ -247,7 +247,7 @@ void Mission2::Update(float dt){
 			contScissors++;
 		}
 		if(MissionManager::player->lastPicked == "InventoryWool"){
-			contLine++;
+			contWool++;
 		}
 
 
@@ -306,7 +306,7 @@ void Mission2::Update(float dt){
 		//contNeedle = 5;
 		//contScissors = 5;
 		//contLine = 5;
-		if(contNeedle > 0 && contScissors > 0 && contLine>0){
+		if(contNeedle > 0 && contScissors > 0 && (contLine>0 || contWool>0)){
 			Bear::bear->repair = true;
 
 			if(InputManager::GetInstance().KeyPress(Z_KEY)){
@@ -329,8 +329,8 @@ void Mission2::Update(float dt){
 		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
 
-	}else if(MissionManager::missionManager->GetStage("HallState") &&
-					MissionManager::missionManager->countHallState > 1){
+	}else if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+					MissionManager::missionManager->countLivingRoomState > 1){
 
 		MissionManager::player->SetBlocked(false);
 		if(state != MissionManager::missionManager->changeState){
@@ -344,6 +344,9 @@ void Mission2::Update(float dt){
 
 		if(MissionManager::player->lastPicked == "InventoryNeedle"){
 			contNeedle++;
+		}
+		if(MissionManager::player->lastPicked == "InventoryLine"){
+			contLine++;
 		}
 		MissionManager::cat->SetDestinationPath(Vec2(800, 200));
 
