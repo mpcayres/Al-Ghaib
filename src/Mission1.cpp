@@ -195,7 +195,7 @@ void  Mission1::Update(float dt){
 				}
 				if( time.Get() > 30 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 5.5*/){
 					showBox = true;
-					ImageProfileBox (2);
+					ImageProfileBox (6);
 					falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 30; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
@@ -211,6 +211,7 @@ void  Mission1::Update(float dt){
 
 				if( time.Get() > 50 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
 					falas.SetText("TENTE DESMONTAR ALGO PARA ABRIR A PORTA");
+					ImageProfileBox (6);
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 50;
 					showBox = true;
@@ -223,6 +224,7 @@ void  Mission1::Update(float dt){
 
 				if( time.Get() > 70 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
 					falas.SetText("TALVEZ ALGO QUE ESTEJA NO ALTO DE ALGUM LUGAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
+					ImageProfileBox (6);
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 70;
 					showBox = true;
@@ -236,6 +238,7 @@ void  Mission1::Update(float dt){
 				if( time.Get() > 80 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
 					falas.SetText("PENA QUE VOCÊ É BAIXINHO"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+					ImageProfileBox (6);
 					ultimoTempo = 80;
 					showBox = true;
 				}
@@ -245,6 +248,7 @@ void  Mission1::Update(float dt){
 					showBox = false;
 				}
 				if( time.Get() > 90 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 7 && ultimoTempo > 5.5*/){
+					ImageProfileBox (6);
 					falas.SetText("TALVEZ ESSA CADEIRA POSSA AJUDAR"); //PARA FAZER TEXTO DESAPARECER. N PODE DEIXAR SEM ESPAÇO DENTRO QUE DÁ ERRO
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 90;
@@ -328,6 +332,7 @@ void  Mission1::Update(float dt){
 					if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
 						showBox = false;
 						//MissionManager::enemy->bloq = false;
+						ImageProfileBox (6);
 						falas.SetText(" ");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 						ultimoTempo = 12;
@@ -350,6 +355,7 @@ void  Mission1::Update(float dt){
 				}
 				if(trancada == false && cooldown.Get() > 3){
 					showBox = true;
+					ImageProfileBox (6);
 					falas.SetText("CERTEZA QUE QUER PASSAR A NOITE SEM PROTEÇÃO?");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				}

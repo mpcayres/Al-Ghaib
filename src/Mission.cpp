@@ -193,6 +193,13 @@ void Mission::ImageProfileBox (int option){
 		break;
 	case 5:
 		break;
+	case 6:
+		profileBox = Sprite(" ");
+		profileBox.SetScaleX(4);
+		profileBox.SetScaleY(4);
+		profileBoxX = 25;
+		profileBoxY = 450;
+			break;
 	}
 }
 

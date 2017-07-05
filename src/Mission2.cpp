@@ -136,6 +136,7 @@ void Mission2::Update(float dt){
 						sussurroAudioFlag = true;
 					}
 					showBox = true;
+					ImageProfileBox (6); //BOTAR O URSO
 					falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 14;
@@ -164,6 +165,7 @@ void Mission2::Update(float dt){
 					//sussurro.Play(0);
 					sussurro.Stop();
 					falas.SetText(" ");
+					ImageProfileBox (6);
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 29;
 					showBox = false;
@@ -274,6 +276,7 @@ void Mission2::Update(float dt){
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 4){
 			falas.SetText(" ");
+			ImageProfileBox (6);
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = ultimoTempo + 4;
 			showBox = false;
@@ -308,6 +311,7 @@ void Mission2::Update(float dt){
 
 			if(InputManager::GetInstance().KeyPress(Z_KEY)){
 				time.Restart();
+				ImageProfileBox (6); //BOTAR URSO
 				falas.SetText("U: OBRIGADO AMIGO");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = (int)time.Get();
@@ -317,6 +321,7 @@ void Mission2::Update(float dt){
 					falas.SetText(" ");
 					showBox = false;
 					endMission = true;
+					ImageProfileBox (6);
 				}
 			}
 
@@ -358,7 +363,7 @@ void Mission2::Update(float dt){
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
-				falas.SetText("M: O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
+				falas.SetText("O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
 				ImageProfileBox(1);
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 2;
