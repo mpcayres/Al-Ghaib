@@ -90,7 +90,7 @@ void  Mission1::Update(float dt){
 	if(instance.KeyPress(SPACE_KEY)){
 		std::cout << "SPACE KEY PRESSED" << std::endl;
 		if(time.Get() < 23){
-			time.Set(3);
+			time.Set(23);
 		}
 		fadeIn = false;
 		bloqBlack = true;
@@ -159,7 +159,8 @@ void  Mission1::Update(float dt){
 			ultimoTempo = time.Get();
 			if(time.Get() > ultimoTempo + 4){
 				showBox = true;
-				falas.SetText("M: NADA DE TAIS BRINQUEDOS INFANTIS");
+				mageProfileBox (1);
+				falas.SetText("NADA DE TAIS BRINQUEDOS INFANTIS");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			}
 			time.Restart();
@@ -194,6 +195,7 @@ void  Mission1::Update(float dt){
 				}
 				if( time.Get() > 30 && trancada == false && cooldown.Get() > 3/* && ultimoTempo < 5.5*/){
 					showBox = true;
+					ImageProfileBox (2);
 					falas.SetText("ENCONTRE SEU AMIGO QUE O PROTEGE DOS PERIGOS DA NOITE");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 30; //PARA CONSEGUIR VOLTAR PARA ESSA MENSAGEM NO CASO DA MENSAGEM DE PORTA TRANCADA E OUTRAS MENSAGENS QUE NÃO AFETAM A HISTORIA
@@ -313,7 +315,8 @@ void  Mission1::Update(float dt){
 						//MissionManager::enemy->bloq = true;
 						SceneDoor::count = ABRE;
 						SceneDoor::ValorPassar = 26;
-						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
+						mageProfileBox (1);
+						falas.SetText("É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 						if(played == false){
 							Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
@@ -432,6 +435,7 @@ void  Mission1::Render(){
 
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
+			profileBox.Render(profileBoxX, profileBoxY, 0);
 			//printf("renderizando");
 		}
 		falas.Render(0,0);

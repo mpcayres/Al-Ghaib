@@ -64,6 +64,7 @@ public:
 	void UpdateVariable(float dt, float speed, bool turnOpaque = false);
 	void SetPiscaPisca(int max, float time);
 	void PiscaPisca(float dt);
+	void ImageProfileBox (int option);
 
 protected:
 	bool popRequested, quitRequested;
@@ -105,6 +106,9 @@ protected:
 	bool gameOver;
 	int maxPisca;
 	float timePisca;
+
+	Sprite profileBox;
+	int profileBoxX, profileBoxY;
 };
 
 #endif /* SRC_MISSION_HPP_ */

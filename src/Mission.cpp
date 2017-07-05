@@ -81,7 +81,7 @@ bool Mission::QuitRequested(){
 void Mission::MessageDoor(float dt){
 	if(MissionManager::player->GetDoor() && trancada == false){
 		showBox = true;
-		falas.SetText("ESTÃ� TRANCADA");
+		falas.SetText("ESTÃ TRANCADA");
 		falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 		Sound portaDestrancando = Sound ("audio/portagrande.wav");
 		portaDestrancando.Play(0);
@@ -165,3 +165,38 @@ void Mission::PiscaPisca(float dt){
 		if(contPisca == maxPisca) maxPisca = timePisca = contPisca = 0;
 	}
 }
+
+void Mission::ImageProfileBox (int option){
+	switch (option){
+	case 1:
+		profileBox = Sprite("img/caixa/caixa-mae.png");
+		profileBox.SetScaleX(4);
+		profileBox.SetScaleY(4);
+		profileBoxX = 25;
+		profileBoxY = 480;
+		break;
+	case 2:
+		profileBox = Sprite("img/caixa/caixa-mae-2.png");
+		profileBox.SetScaleX(4);
+		profileBox.SetScaleY(4);
+		profileBoxX = 30;
+		profileBoxY = 480;
+		break;
+	case 3:
+		profileBox = Sprite("img/caixa/caixa-mae-3.png");
+		profileBox.SetScaleX(4);
+		profileBox.SetScaleY(4);
+		profileBoxX = 25;
+		profileBoxY = 450;
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	}
+}
+
+
+
+
+
