@@ -3,6 +3,7 @@
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
+#include "Geometry.hpp"
 
  Music Mission3::music;
 
@@ -100,7 +101,6 @@ void Mission3::Update(float dt){
 
 		if(momcount == 1 ){
 			MissionManager::enemy->SetPosition(700, 190);
-			std::cout << "mae?" << std::endl;
 
 			MissionManager::enemy->SetDestinationPath(Vec2(220, 165));
 			MissionManager::enemy->SetDestinationPath(Vec2(220, 190));
@@ -121,12 +121,14 @@ void Mission3::Update(float dt){
 			tx.SetText(" ");
 			showBox = false;
 			creepy.SetText(" ");
+			ImageProfileBox (6);
 			flagTimer = false;
 		}
 
 		if(time.Get() > 5){
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			sussurro.Play(0);
+			ImageProfileBox (6); //BOTA URSO
 			falas.SetText("U: OLHA ESSA QUE CHAMAS DE MÃE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 5;
@@ -227,9 +229,7 @@ void Mission3::Update(float dt){
 		//std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
 		if(MissionManager::cat->attractedWool == true){
 			atraidoNovelo++;
-			std::cout << "atraidoNovelo" << atraidoNovelo << std::endl;
 			if(atraidoNovelo == 1){
-				std::cout << "ENTREI" << std::endl;
 				MissionManager::cat->SetDestinationPath(Vec2(1350, 450));
 				MissionManager::cat->SetDestinationPath(Vec2(980, 450));
 				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
@@ -258,7 +258,7 @@ void Mission3::Update(float dt){
 
 					SceneDoor::ValorPassar = 15;
 					ImageProfileBox(2);
-					falas.SetText("M: O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
+					falas.SetText("O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = (int)time.Get();
 					showBox = true;
@@ -270,6 +270,7 @@ void Mission3::Update(float dt){
 			if(MissionManager::enemy->show && time.Get() > ultimoTempo + 4){
 
 				falas.SetText(" ");
+				ImageProfileBox (6);
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 4;
 				showBox = false;
@@ -277,8 +278,7 @@ void Mission3::Update(float dt){
 		}
 
 
-	}
-	if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+	}else if(MissionManager::missionManager->GetStage("LivingRoomState") &&
 				MissionManager::missionManager->countLivingRoomState > 1){
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
@@ -288,19 +288,17 @@ void Mission3::Update(float dt){
 			MissionManager::enemy->SetPosition(400,400);
 			time.Restart();
 		}
-		std::cout << "attractedTV" << std::endl;
+
 		if(MissionManager::cat->attractedTV == true){
 			MissionManager::cat->show = true;
 			atraidoTV++;
-			std::cout << "atraindo" << std::endl;
-			std::cout << atraidoTV << std::endl;
 
 			if(atraidoTV == 1){
 				MissionManager::cat->SetPosition(230, 300);
 				//MissionManager::missionManager->cat->box.x = 400;
 				//MissionManager::missionManager->cat->box.y = 400;
 				time.Restart();
-				std::cout << "ENTREI" << std::endl;
+
 				MissionManager::cat->SetDestinationPath(Vec2(610, 450));
 				MissionManager::cat->SetDestinationPath(Vec2(500, 450));
 				MissionManager::cat->SetDestinationPath(Vec2(400, 430));
@@ -314,26 +312,46 @@ void Mission3::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(610, 450));
 		}
 
+	}else if(MissionManager::missionManager->GetStage("MomRoomState")){
+
+		MissionManager::enemy->show = false;
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
+			//MissionManager::missionManager->player->box.x = 400;
+			//MissionManager::missionManager->player->box.y = 400;
+			MissionManager::enemy->SetPosition(225, 190);
+			time.Restart();
+		}
+		Vec2 *covil = new Vec2(570, 470);
+		float dist = 0;
+
+		dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+		if(dist<250){
+			std::cout << "assl" << std::endl;
+		}
+
+
+		//////////////// TROCAR PARA QUARTO DA MÃƒE 1
+				//else if(MissionManager::missionManager->GetStage("MomState") &&
+				//						MissionManager::missionManager->countMomState > 1){
+					//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
+					// SE PERTO DEMAIS, MÃƒE APARECE
+
+					//MANDA IR PARA O QUARTO DORMIR
+
+
+				//}else if(MissionManager::missionManager->GetStage("StageState") &&
+				//						bronca){
+					//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
+					// SE PERTO DEMAIS, MÃƒE APARECE
+
+					//MANDA IR PARA O QUARTO DORMIR
+
+
+				//}
 	}
 
-	//////////////// TROCAR PARA QUARTO DA MÃƒE 1
-		//else if(MissionManager::missionManager->GetStage("MomState") &&
-		//						MissionManager::missionManager->countMomState > 1){
-			//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
-			// SE PERTO DEMAIS, MÃƒE APARECE
 
-			//MANDA IR PARA O QUARTO DORMIR
-
-
-		//}else if(MissionManager::missionManager->GetStage("StageState") &&
-		//						bronca){
-			//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
-			// SE PERTO DEMAIS, MÃƒE APARECE
-
-			//MANDA IR PARA O QUARTO DORMIR
-
-
-		//}
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);
 	}
