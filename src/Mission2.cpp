@@ -385,12 +385,9 @@ void Mission2::Update(float dt){
 		MissionManager::cat->show = false;
 
 	}
+
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);
-	}
-
-	if(time.Get() >= 6){
-		//PiscaPisca(dt, 6, 0.6);
 	}
 
 }

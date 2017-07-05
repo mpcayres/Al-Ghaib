@@ -14,8 +14,8 @@ TitleState::TitleState() : menu(50, 150) {
 
 	flagTimer = true; stopMusic = false;
 	time = Timer();
-	bg = Sprite("img/menu/sprite-title.png", 6, 0.5);
-	bg.SetScaleX(1.7); bg.SetScaleY(1.5);
+	bg = Sprite("img/menu/sprite-title.png", 4, 0.5);
+	bg.SetScaleX(1.5); bg.SetScaleY(1.5);
 	tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	intro = Music("audio/menu-intro.wav");

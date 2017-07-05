@@ -74,7 +74,8 @@ bool MovingObject::NotifyCollision(GameObject& other){
 		} else if(InputManager::GetInstance().IsKeyDown(C_KEY) && !MissionManager::player->GetAboveObject()){
 			MissionManager::missionManager->movingBox = false;
 			Rect aux = MissionManager::player->box;
-			aux.x += 2; aux.y += 2; aux.w -= 2; aux.h -= 2;
+
+			aux.x += 2; aux.y += 2; aux.w -= 4; aux.h -= 4;
 			if(aux.Intersect(box) && (MissionManager::player->GetDirecao() == Player::LESTE ||
 					MissionManager::player->GetDirecao() == Player::OESTE)){
 				box.x = previousPos.x; box.y = previousPos.y;

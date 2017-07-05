@@ -158,18 +158,13 @@ void LivingRoomState::SetInitialObjectArray(){
 			"img/cenario/geral/armario-corredor-fechado.png", "img/cenario/geral/armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
 
-	//MUDAR PARA SER O CONTROLE EM OUTRO OBJETO, TIPO ARMARIO E URSO DIRETO PELA MISSAO
-	if(MissionManager::player->HaveObject("InventoryControl") && MissionManager::missionManager->GetNumMission() != 1){
-		SceneObject* Bau = new SceneObject(200, 400,  "img/cenario/geral/bau-fechado.png",
-					"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Bau);
-	} else if(MissionManager::missionManager->GetNumMission() == 1){
-		SceneObject* Bau = new SceneObject(400, 500, "img/cenario/geral/bau-fechado.png",
-					"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Bau);
+	if(MissionManager::player->HaveObject("InventoryControl")){
+		SceneObject* Criado = new SceneObject(750, 500, "img/cenario/filho/criado-fechado.png",
+					"img/cenario/filho/criado-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Criado);
 	} else{
-		SceneObject* Bau = new SceneObject(200, 400,  "img/cenario/geral/bau-fechado.png",
-					"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Bau);
+		SceneObject* Criado = new SceneObject(750, 500, "img/cenario/filho/criado-fechado.png",
+				"img/cenario/filho/criado-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Criado);
 	}
 }
