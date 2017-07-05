@@ -32,7 +32,7 @@ public:
 	void SetPosition(float x, float y);
 	void SetDirecao(int dir);
 	void SetDead();
-	void ChangeClothes();
+	void ChangeClothes(int num);
 	int GetHeight();
 
 	InvBox direcao;

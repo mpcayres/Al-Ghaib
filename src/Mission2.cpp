@@ -265,7 +265,8 @@ void Mission2::Update(float dt){
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
-				falas.SetText("M: O QUE JÃ� FALEI SOBRE SAIR DA CAMA?");
+				falas.SetText("M: O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
+				ImageProfileBox(1);
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 2;
 				showBox = true;
@@ -357,7 +358,8 @@ void Mission2::Update(float dt){
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
-				falas.SetText("M: O QUE JÃ� FALEI SOBRE SAIR DA CAMA?");
+				falas.SetText("M: O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
+				ImageProfileBox(1);
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 2;
 				showBox = true;
@@ -402,7 +404,7 @@ void Mission2::Render(){
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
-			//printf("renderizando");
+			profileBox.Render(profileBoxX, profileBoxY, 0);
 		}
 		falas.Render(0,0);
 	}

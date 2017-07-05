@@ -14,7 +14,7 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	atraidoNovelo = 0;
 	atraidoTV = 0;
 
-	MissionManager::enemy->ChangeClothes();
+	MissionManager::enemy->ChangeClothes(1);
 
 	meowcount = 0;
 	momcount = 0;
@@ -257,7 +257,8 @@ void Mission3::Update(float dt){
 				if(momcount == 1){
 
 					SceneDoor::ValorPassar = 15;
-					falas.SetText("M: O QUE JÃ� FALEI SOBRE SAIR DA CAMA?");
+					ImageProfileBox(2);
+					falas.SetText("M: O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = (int)time.Get();
 					showBox = true;
@@ -360,7 +361,7 @@ void Mission3::Render(){
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
-			//printf("renderizando");
+			profileBox.Render(profileBoxX, profileBoxY, 0);
 		}
 		falas.Render(0,0);
 	}

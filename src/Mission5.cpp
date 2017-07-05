@@ -128,7 +128,7 @@ void Mission5::Render(){
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
-			//printf("renderizando");
+			profileBox.Render(profileBoxX, profileBoxY, 0);
 		}
 		falas.Render(0,0);
 	}

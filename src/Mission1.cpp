@@ -159,7 +159,7 @@ void  Mission1::Update(float dt){
 			ultimoTempo = time.Get();
 			if(time.Get() > ultimoTempo + 4){
 				showBox = true;
-				mageProfileBox (1);
+				ImageProfileBox (1);
 				falas.SetText("NADA DE TAIS BRINQUEDOS INFANTIS");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			}
@@ -315,7 +315,7 @@ void  Mission1::Update(float dt){
 						//MissionManager::enemy->bloq = true;
 						SceneDoor::count = ABRE;
 						SceneDoor::ValorPassar = 26;
-						mageProfileBox (1);
+						ImageProfileBox (1);
 						falas.SetText("É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
 						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 						if(played == false){
