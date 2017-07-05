@@ -1,7 +1,7 @@
 #include "InventoryControl.hpp"
 #include "Game.hpp"
 
-InventoryControl::InventoryControl() : InventoryObject("img/object-control.png") { }
+InventoryControl::InventoryControl() : InventoryObject("img/inventario/control.png") { }
 
 InventoryControl::~InventoryControl(){ }
 

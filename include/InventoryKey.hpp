@@ -5,7 +5,7 @@
 
 class InventoryKey : public InventoryObject {
 public:
-	InventoryKey(std::string file = "img/object-key.png");
+	InventoryKey(std::string file = "img/inventario/key.png");
 	~InventoryKey();
 
 	bool Action(GameObject* other);

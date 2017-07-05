@@ -139,7 +139,7 @@ bool Bear::NotifyCollision(GameObject& other){
 
 				if(other.Is("EmptyBox")){
 						if(InputManager::GetInstance().KeyPress(Z_KEY) && repair == true){
-							sp.Open("img/object-fixed-bear.png");
+							sp.Open("img/inventario/bear-fixed.png");
 
 						}
 				}

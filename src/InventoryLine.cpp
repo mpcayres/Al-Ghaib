@@ -1,7 +1,7 @@
 #include "InventoryLine.hpp"
 #include "SceneDoor.hpp"
 
-InventoryLine::InventoryLine() : InventoryObject("img/object-needle.png") { }
+InventoryLine::InventoryLine() : InventoryObject("img/inventario/carretel.png") { }
 
 InventoryLine::~InventoryLine(){ }
 

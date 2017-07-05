@@ -1,6 +1,6 @@
 #include "InventoryWool.hpp"
 
-InventoryWool::InventoryWool() : InventoryObject("img/obj_novelo.png") { }
+InventoryWool::InventoryWool() : InventoryObject("img/inventario/novelo.png") { }
 
 InventoryWool::~InventoryWool(){ }
 

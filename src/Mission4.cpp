@@ -166,7 +166,7 @@ void Mission4::SetObjectStage(){
 	objectStage.emplace_back(Door);
 
 	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
-			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
 	SceneObject* Copo = new SceneObject(550, 280, "img/inventario/copo-cheio.png", "", 0, 0.3, 0.3);

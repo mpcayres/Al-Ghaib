@@ -1,7 +1,7 @@
 #include "InventoryNeedle.hpp"
 #include "SceneDoor.hpp"
 
-InventoryNeedle::InventoryNeedle() : InventoryObject("img/object-needle.png") { }
+InventoryNeedle::InventoryNeedle() : InventoryObject("img/inventario/needle.png") { }
 
 InventoryNeedle::~InventoryNeedle(){ }
 

@@ -1,6 +1,6 @@
 #include "InventoryBear.hpp"
 
-InventoryBear::InventoryBear() : InventoryObject("img/object-bear.png") { }
+InventoryBear::InventoryBear() : InventoryObject("img/inventario/bear.png") { }
 
 InventoryBear::~InventoryBear(){ }
 

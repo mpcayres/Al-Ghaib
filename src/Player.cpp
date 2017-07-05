@@ -677,10 +677,10 @@ void Player::RenderInventory(){
 void Player::RenderInHand(){
 	if(!bloqHUD){
 		int posX, posY;
-		int offset = 10, widthMinorSquare, heightMinorSquare;
+		int widthMinorSquare, heightMinorSquare;
 		int posXCenter, posYCenter;
-		posX = SCREEN_SIZE_W - 8*offset;
-		posY = offset;
+		posX = SCREEN_SIZE_W - 90;
+		posY = 15;
 		widthMinorSquare = spInventorybox.GetScaledWidth() - 10;
 		heightMinorSquare = spInventorybox.GetScaledHeight() - 10;
 

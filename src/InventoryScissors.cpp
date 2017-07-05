@@ -1,6 +1,6 @@
 #include "InventoryScissors.hpp"
 
-InventoryScissors::InventoryScissors() : InventoryObject("img/object-scissors.png") { }
+InventoryScissors::InventoryScissors() : InventoryObject("img/inventario/scissors.png") { }
 
 InventoryScissors::~InventoryScissors(){ }
 

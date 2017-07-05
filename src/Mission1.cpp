@@ -153,7 +153,7 @@ void  Mission1::Update(float dt){
 			//std::cout << "MOM DEAD 3" << std::endl;
 			Game::GetInstance().GetCurrentState().AddObject(
 					new Animation(x, y, 0,
-							"img/sprite-mom-bear.png", 12, 0.25, true, 2, 2));
+							"img/sprite/mom-bear.png", 12, 0.25, true, 2, 2));
 			Sound s = Sound("audio/rasgando.wav");
 			s.Play(0);
 			ultimoTempo = time.Get();
@@ -456,7 +456,7 @@ void Mission1::SetObjectStage(){
 	objectStage.emplace_back(Door);
 
 	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
-			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
 	PickUpObject* Clown = new PickUpObject(462, 270, "InventoryClown",

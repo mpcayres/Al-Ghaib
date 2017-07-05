@@ -1,7 +1,7 @@
 #include "InventoryClown.hpp"
 
-InventoryClown::InventoryClown() : InventoryMiniGame("img/object-caixa-sem-palhaco.png",
-		"img/object-palhaco-caixa.png", "img/object-palhaco-quebrado.png"){
+InventoryClown::InventoryClown() : InventoryMiniGame("img/inventario/palhaco-dentro-caixa.png",
+		"img/inventario/palhaco-caixa.png", "img/inventario/palhaco-quebrado.png"){
 }
 
 InventoryClown::~InventoryClown() { }

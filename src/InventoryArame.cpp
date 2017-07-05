@@ -1,7 +1,7 @@
 #include "InventoryArame.hpp"
 #include "Sound.hpp"
 
-InventoryArame::InventoryArame() : InventoryKey("img/object-arame.png") {
+InventoryArame::InventoryArame() : InventoryKey("img/inventario/arame.png") {
 	Sound s = Sound("audio/mola.wav");
 	s.Play(0);
 }

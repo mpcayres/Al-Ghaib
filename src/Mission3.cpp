@@ -374,7 +374,7 @@ void Mission3::SetObjectStage(){
 	objectStage.emplace_back(Armario2);
 
 	SceneObject* Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
-			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
 	MovingObject* Box = new MovingObject(400, 500, "img/inventario/box.png");
@@ -399,7 +399,8 @@ void Mission3::SetObjectHall(){
 	SceneObject* Apple = new SceneObject(350, 330, "img/cenario/geral/maca.png", "img/cenario/geral/maca.png", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);
 
-	SceneObject* CaixaDeAreia = new SceneObject(1400, 450, "img/inventario/box.png", "img/inventario/box-select.png", 0, 1, 1, "", 0, true);
+	SceneObject* CaixaDeAreia = new SceneObject(1400, 450,
+			"img/cenario/corredor/caixa-areia.png", "img/cenario/corredor/caixa-novelo.png", 0, 1, 1, "", 0, true);
 	objectHall.emplace_back(CaixaDeAreia);
 }
 

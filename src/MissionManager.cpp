@@ -181,7 +181,7 @@ void MissionManager::ChangeMission(int num, int oldInHand, std::vector<std::stri
 		SaveMission();
 	}
 	player = new Player(0, 0, oldInHand, oldInventory);
-	enemy = new Enemy(0, 0, "img/sprite-mom.png"); //se for outra imagem, ver a missao e colocar aqui
+	enemy = new Enemy(0, 0); //se for outra imagem, ver a missao e colocar aqui
 	cat = new Cat(0, 0);
 	oldInventory.clear();
 	SetMission();

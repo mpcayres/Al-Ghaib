@@ -31,7 +31,7 @@ void Camera::Follow(GameObject* newFocus, int Ntype){
 		} else if(focus->box.CenterX() <= Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
 			pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2/2 - Game::GetInstance().GetWidth()/2;
 		}
-		pos.y = 0;
+		pos.y = 50;
 	}
 	isMoving = isZoomIn = isZoomOut = false;
 }
