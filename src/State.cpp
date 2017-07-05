@@ -112,7 +112,7 @@ void State::RandomState(){
 
 		for(unsigned int i = 0; i < objectArray.size(); i++) {
 			if(objectArray[i].get()->Is("SceneObject") && !objectArray[i].get()->Is("SceneAnimated")){
-				if(!((SceneObject*) objectArray[i].get())->GetCreateObject()){
+				if(!((SceneObject*) objectArray[i].get())->GetBlockRandom()){
 					int dice_roll = distribution(generator);
 					//std::cout << "DICE " << dice_roll << std::endl;
 					if(dice_roll <= 2){

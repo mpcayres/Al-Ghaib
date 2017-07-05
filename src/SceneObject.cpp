@@ -3,8 +3,7 @@
 #include "Sound.hpp"
 
 SceneObject::SceneObject(float x, float y, std::string img, std::string img2,
-		float rot, float scaleX, float scaleY, std::string create, int change) :
-	sp(img) {
+		float rot, float scaleX, float scaleY, std::string create, int change, bool block) : sp(img) {
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	change1 = img;
 	change2 = img2;
@@ -14,6 +13,8 @@ SceneObject::SceneObject(float x, float y, std::string img, std::string img2,
 	box.w = sp.GetWidth();
 	box.h = sp.GetHeight();
 	objCreate = create;
+	blockRandom = block;
+	if(objCreate != "") blockRandom = true;
 	offset = box.h/3;
 	caseChange = (CaseChange) change;
 }
@@ -68,8 +69,8 @@ bool SceneObject::Is(std::string type){
 	return (type == "SceneObject" || type == "CollidableObject");
 }
 
-bool SceneObject::GetCreateObject(){
-	return (objCreate != "");
+bool SceneObject::GetBlockRandom(){
+	return blockRandom;
 }
 
 bool SceneObject::GetState(){

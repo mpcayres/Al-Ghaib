@@ -10,6 +10,7 @@ int Camera::type;
 float Camera::origDist, Camera::tempo;
 Vec2 Camera::previousPos, Camera::dest;
 bool Camera::isMoving, Camera::inWay, Camera::inWayBack, Camera::isZoomIn, Camera::isZoomOut;
+bool Camera::zoomCreepy = false;
 Timer Camera::time;
 
 void Camera::SetType(int Ntype){
@@ -60,7 +61,7 @@ void Camera::Update(float dt){
 			isZoomIn = false;
 			MissionManager::missionManager->factorZoom = 1 + MAX_ZOOM;
 		}
-		UpdateZoom();
+		if(!zoomCreepy) UpdateZoom();
 	} else if(isZoomOut){
 		time.Update(dt);
 		if(time.Get() < tempo){
@@ -68,9 +69,11 @@ void Camera::Update(float dt){
 		} else{
 			isZoomOut = false;
 			MissionManager::missionManager->factorZoom = 1;
-			MissionManager::player->SetBloqHUD(false);
+			if(!zoomCreepy) MissionManager::player->SetBloqHUD(false);
+			else MissionManager::player->SetBlocked(false);
+			zoomCreepy = false;
 		}
-		UpdateZoom();
+		if(!zoomCreepy) UpdateZoom();
 	} else if(isMoving){
 		// PODE SER UM ZOOM LOUCO, SE COLOCAR PELO SPRITE.HPP, DANDO PARA USAR EM CASOS BEM ESPECIFICOS, COMO NO QUARTO DA MAE
 		// DESSE JEITO TEM PROBLEMA NO HUD E LEGENDA -> NAO MOSTRA-LOS NESSES MOMENTOS
@@ -148,7 +151,8 @@ void Camera::Zoom(float tempoN, bool in){
 void Camera::ZoomCreepy(float tempoN, bool in){
 	if(in) isZoomIn = true;
 	else isZoomOut = true;
-	//MissionManager::player->SetBloqHUD(true);
+	MissionManager::player->SetBlocked(true);
+	zoomCreepy = true;
 	tempo = tempoN;
 	time.Restart();
 }

@@ -18,6 +18,8 @@ Mission::Mission() : blackSquare("img/blacksquare.png"), spFade("img/blacksquare
 	timerPisca = Timer();
 	cooldown = Timer();
 	contPisca = 0;
+	maxPisca = 0;
+	timePisca = 0;
 
 	ultimoTempo = 3;
 	state = MissionManager::missionManager->changeState;
@@ -135,21 +137,31 @@ void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
     }
 }
 
-void Mission::PiscaPisca(float dt, int max, float time){
-	std::cout << "PISCA " << contPisca << " " << timerPisca.Get() << std::endl;
-	if(contPisca >= max){
-		bloqBlack = true;
-		timerPisca.Restart();
-	} else{
-		bloqBlack = false;
-		if(timerPisca.Get() >= time){
-			if (spFade.IsOpen()) {
-				if((contPisca % 2) == 0) spFade.ChangeAlpha(OPAQUE);
-				else spFade.ChangeAlpha(TRANSPARENT);
-				contPisca++;
-			}
+//Setar uma vez e na missao que for chamar ter o PiscaPisca ao final do Update
+//Para nao manter a tela preta, o valor max deve ser par
+void Mission::SetPiscaPisca(int max, float time){
+	maxPisca = max;
+	timePisca = time;
+}
+
+void Mission::PiscaPisca(float dt){
+	//std::cout << "PISCA " << contPisca << " " << maxPisca << "" << timerPisca.Get() << std::endl;
+	if(maxPisca != 0 && timePisca != 0){
+		if(contPisca >= maxPisca){
+			bloqBlack = true;
 			timerPisca.Restart();
+		} else{
+			bloqBlack = false;
+			if(timerPisca.Get() >= timePisca){
+				if (spFade.IsOpen()) {
+					if((contPisca % 2) == 0) spFade.ChangeAlpha(OPAQUE);
+					else spFade.ChangeAlpha(TRANSPARENT);
+					contPisca++;
+				}
+				timerPisca.Restart();
+			}
+			timerPisca.Update(dt);
 		}
-		timerPisca.Update(dt);
+		if(contPisca == maxPisca) maxPisca = timePisca = contPisca = 0;
 	}
 }

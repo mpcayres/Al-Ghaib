@@ -17,6 +17,9 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	countBear = 0;
 	countCat = 0;
 
+	creepyEffect = Timer();
+	contCreepy = 0;
+
 	MissionManager::player->drogado = true;
 
 	SDL_Color redwine = SDL_Color();
@@ -83,6 +86,8 @@ void Mission4::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
+	if(!fadeIn) creepyEffect.Update(dt);
+
 	/*if(endMission && time.Get() > (12*0.25 + 0.5)){
 		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}*/
@@ -102,34 +107,35 @@ void Mission4::Update(float dt){
 		}
 
 	}
+
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);
 	}
-	PiscaPisca(dt, 1000000, 0.5);
-	std::cout << (int)time.Get() << std::endl;
-	if((((int)time.Get())%3 == 0) && creepyeffect == 0){
-		creepyeffect = time.Get();
-		std::cout << "piscapisca" << std::endl;
-		PiscaPisca(dt, 3, 0.4);
+
+	if(!fadeIn && (creepyEffect.Get() > 3) && (contCreepy == 0)){
+		creepyEffect.Restart();
+		contCreepy = 1;
+		//std::cout << "piscapisca" << std::endl;
+		SetPiscaPisca(4, 0.4);
 		//std::cout << "oi" << std::endl;
 	}
 
-	if(((int)time.Get())%4 == 0 && creepyeffect == 0){
-		creepyeffect = time.Get();
-		Camera::ZoomCreepy(1, false);
-		PiscaPisca(dt, 3, 0.4);
-		//std::cout << "oi" << std::endl;
-	}
-
-	if((((int)time.Get())%5  == 0) && creepyeffect == 0){
-		creepyeffect = time.Get();
+	if(!fadeIn && (creepyEffect.Get() > 8) && (contCreepy == 1)){
+		creepyEffect.Restart();
+		contCreepy = 2;
 		Camera::ZoomCreepy(1, true);
+		SetPiscaPisca(6, 0.4);
 		//std::cout << "oi" << std::endl;
 	}
-	if(creepyeffect + 5 > time.Get() && creepyeffect!=0){
-		creepyeffect = 0;
+
+	if(!fadeIn && (creepyEffect.Get() > 2) && (contCreepy == 2)){
+		creepyEffect.Restart();
+		contCreepy = 0;
+		Camera::ZoomCreepy(1, false);
+		//std::cout << "oi" << std::endl;
 	}
 
+	PiscaPisca(dt);
 }
 
 void Mission4::Render(){

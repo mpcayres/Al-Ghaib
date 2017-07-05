@@ -3,6 +3,7 @@
 #include "Sprite.hpp"
 #include "Game.hpp"
 #include "Resources.hpp"
+#include "Camera.hpp"
 
 Sprite::Sprite(){
 	texture = nullptr;
@@ -43,9 +44,13 @@ bool Sprite::IsOpen(){
 void Sprite::Render(int x, int y, float angle){
 	SDL_Rect dst;
 	dst.x = x, dst.y = y;
-	//dst.h = MissionManager::missionManager->factorZoom*clipRect.h*scaleY;
-	//dst.w = MissionManager::missionManager->factorZoom*clipRect.w*scaleX;
-	dst.h = clipRect.h*scaleY; dst.w = clipRect.w*scaleX;
+	if(Camera::zoomCreepy){
+		dst.w = MissionManager::missionManager->factorZoom*clipRect.w*scaleX;
+		dst.h = MissionManager::missionManager->factorZoom*clipRect.h*scaleY;
+	} else {
+		dst.w = clipRect.w*scaleX;
+		dst.h = clipRect.h*scaleY;
+	}
 
 	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(),
 			&clipRect, &dst, angle, nullptr, SDL_FLIP_NONE);

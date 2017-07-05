@@ -401,12 +401,13 @@ void  Mission1::Update(float dt){
 			UpdateVariable(dt, 80);
 		}
 
-		if(MissionManager::player->lastPicked == "InventoryBear"){
-			PiscaPisca(dt, 20, 0.4);
+		if(MissionManager::player->lastPicked == "InventoryBear" && !MissionManager::player->GetBloqInv()){
+			SetPiscaPisca(20, 0.4);
 			MissionManager::player->SetBloqInv(true);
 		}
 	}
 
+	PiscaPisca(dt);
 }
 
 void  Mission1::Render(){

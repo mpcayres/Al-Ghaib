@@ -28,6 +28,7 @@ public:
 
 	static Vec2 pos;
 	static Vec2 speed;
+	static bool zoomCreepy;
 
 private:
 	static Timer time;

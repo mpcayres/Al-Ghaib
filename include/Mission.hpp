@@ -62,7 +62,8 @@ public:
 
 	void MessageDoor(float dt);
 	void UpdateVariable(float dt, float speed, bool turnOpaque = false);
-	void PiscaPisca(float dt, int max, float time);
+	void SetPiscaPisca(int max, float time);
+	void PiscaPisca(float dt);
 
 protected:
 	bool popRequested, quitRequested;
@@ -102,6 +103,8 @@ protected:
 	Rect falasBoxRect;
 
 	bool gameOver;
+	int maxPisca;
+	float timePisca;
 };
 
 #endif /* SRC_MISSION_HPP_ */
