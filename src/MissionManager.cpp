@@ -6,6 +6,7 @@
 #include "HallState.hpp"
 #include "LivingRoomState.hpp"
 #include "MomRoomState.hpp"
+#include "HallFinalState.hpp"
 #include "Mission1.hpp"
 #include "Mission2.hpp"
 #include "Mission3.hpp"
@@ -108,6 +109,12 @@ void MissionManager::SetState(std::string dest){
 		stage = "MomRoomState";
 		//std::cout << "LRS.2" << std::endl;
 		countMomRoomState++;
+		changeState++;
+	} else if(dest == "HallFinalState"){
+		//std::cout << "HFS.1" << std::endl;
+		Game::GetInstance().Push(new HallFinalState());
+		stage = "HallFinalState";
+		//std::cout << "HFS.2" << std::endl;
 		changeState++;
 	}
 }
