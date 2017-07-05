@@ -66,6 +66,9 @@ public:
 	void PiscaPisca(float dt);
 	void ImageProfileBox (int option);
 
+
+	bool bronca = false;
+
 protected:
 	bool popRequested, quitRequested;
 
@@ -106,6 +109,7 @@ protected:
 	bool gameOver;
 	int maxPisca;
 	float timePisca;
+
 
 	Sprite profileBox;
 	int profileBoxX, profileBoxY;

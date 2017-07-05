@@ -164,7 +164,7 @@ void Mission3::Update(float dt){
 		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	}else if(MissionManager::missionManager->GetStage("HallState") &&
+	} if(MissionManager::missionManager->GetStage("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 			MissionManager::player->SetBlocked(false);
 		//HallState++;
@@ -272,7 +272,7 @@ void Mission3::Update(float dt){
 		}
 
 
-	}else if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+	} if(MissionManager::missionManager->GetStage("LivingRoomState") &&
 				MissionManager::missionManager->countLivingRoomState > 1){
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
@@ -306,7 +306,7 @@ void Mission3::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(610, 450));
 		}
 
-	}else if(MissionManager::missionManager->GetStage("MomRoomState")){
+	}if(MissionManager::missionManager->GetStage("MomRoomState")){
 
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
@@ -332,7 +332,7 @@ void Mission3::Update(float dt){
 			momcount2 ++;
 			if(time.Get() < 17){
 				SetPiscaPisca(20, 0.4);
-				PiscaPisca(dt);
+
 			}
 			if(momcount2 == 1 ){
 
@@ -372,27 +372,22 @@ void Mission3::Update(float dt){
 			}
 			if(time.Get() > 19)
 				Game::GetInstance().GetCurrentState().ChangeState("MomRoomStage","StageState");
-		}else if(MissionManager::missionManager->GetStage("StageState") /*&& bronca*/){
+		}if(MissionManager::missionManager->GetStage("StageState") /*&& bronca*/){
 			std::cout << "entrei!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 			if(state != MissionManager::missionManager->changeState){
-				std::cout << "UHUUUUUUUUUUUUL!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-					MissionManager::player->SetPosition(805, 250);
+				std::cout << time.Get() << std::endl;
+					MissionManager::player->SetPosition(805, 260);
 					state = MissionManager::missionManager->changeState;
 					MissionManager::enemy->show = false;
 					time.Restart();
 			}
-			if(time.Get()<1){
-				MissionManager::player->SetPosition(805, 250);
-				state = MissionManager::missionManager->changeState;
-				MissionManager::enemy->show = false;
-			}
-			if(time.Get() > 14 && time.Get() < 18){
+			if(time.Get() > 8 && time.Get() < 12){
 					showBox = true;
 					ImageProfileBox (4);
 					falas.SetText("U: É MELHOR BEBER SEU LEITE");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
-			if(time.Get() > 18){
+			if(time.Get() > 12){
 				showBox = false;
 				ImageProfileBox (6);
 				falas.SetText(" ");
@@ -411,6 +406,7 @@ void Mission3::Update(float dt){
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
+
 
 		}
 
@@ -443,7 +439,7 @@ void Mission3::Update(float dt){
 	if(time.Get() >= 6){
 		//PiscaPisca(dt, 6, 0.6);
 	}
-
+	PiscaPisca(dt);
 }
 
 void Mission3::Render(){
@@ -482,6 +478,10 @@ void Mission3::SetObjectStage(){
 
 	MovingObject* Cadeira = new MovingObject(730, 300, "img/cenario/geral/cadeira.png");
 	objectStage.emplace_back(Cadeira);
+
+	PickUpObject* Copo = new PickUpObject(255, 405, "img/inventario/copo-cheio.png", "img/inventario/copo-cheio.png", false, 0.5, 0.5, true);
+	objectStage.emplace_back(Copo);
+
 }
 
 void Mission3::SetObjectHall(){
@@ -502,6 +502,8 @@ void Mission3::SetObjectHall(){
 	SceneObject* CaixaDeAreia = new SceneObject(1400, 450,
 			"img/cenario/corredor/caixa-areia.png", "img/cenario/corredor/caixa-novelo.png", 0, 1, 1, "", 0, true);
 	objectHall.emplace_back(CaixaDeAreia);
+
+
 }
 
 void Mission3::SetObjectLivingRoom(){
