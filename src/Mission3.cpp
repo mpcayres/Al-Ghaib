@@ -398,7 +398,7 @@ void Mission3::SetObjectHall(){
 	SceneObject* Apple = new SceneObject(350, 330, "img/object-maca.png", "img/object-maca.png", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);
 
-	SceneObject* CaixaDeAreia = new SceneObject(1400, 450, "img/box.png", "img/box-select.png", 0, 0.3, 0.3);
+	SceneObject* CaixaDeAreia = new SceneObject(1400, 450, "img/box.png", "img/box-select.png", 0, 1, 1, "", 0, true);
 	objectHall.emplace_back(CaixaDeAreia);
 }
 
