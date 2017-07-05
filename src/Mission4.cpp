@@ -146,12 +146,10 @@ void Mission4::Update(float dt){
 
 			dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
 			if(dist<100 && InputManager::GetInstance().KeyPress(Z_KEY)){
-					//Animação comendo o gato
-				SetPiscaPisca(20, 10000);
-				PiscaPisca(dt);
+				//Camera::ZoomCreepy(5, true);
 				Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(500, 200, 0,
-						"img/sprite/mom-comendo-gato.png", 5, 0.25, true, 2, 2));
+				new Animation(200, 200, 0,
+						"img/sprite/mom-comendo-gato.png", 5, 0.25, false, 7 ,  7));
 
 			}
 			else{
