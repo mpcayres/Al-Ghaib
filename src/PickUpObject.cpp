@@ -4,8 +4,8 @@
 #include "Player.hpp"
 #include <iostream>
 
-PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img, bool bloq, float scaleX, float scaleY) :
-	obj(obj), sp(img){
+PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img, bool bloq, float scaleX, float scaleY, bool hide) :
+	obj(obj), sp(img), hide(hide){
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	dead = false;
 	bloqPick = bloq;
@@ -21,7 +21,8 @@ void PickUpObject::Update(float dt){
 }
 
 void PickUpObject::Render(){
-	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(!hide ||Game::GetInstance().GetMissionManager().GetMission()->bronca == true )
+		sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool PickUpObject::IsDead(){

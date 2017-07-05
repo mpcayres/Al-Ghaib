@@ -168,4 +168,7 @@ void StageState::SetInitialObjectArray(){
 	MovingObject* Vaso = new MovingObject(900, 300,  "img/cenario/geral/vaso.png");
 	objectArray.emplace_back(Vaso);
 
+	SceneObject* CriadoMudo = new SceneObject(210, 380,  "img/cenario/filho/criado-fechado.png",  "img/cenario/filho/criado-aberto.png");
+	objectArray.emplace_back(CriadoMudo);
+
 }
