@@ -35,11 +35,11 @@ public:
 private:
 	static void LinkMusic();
 
-	Sprite bg;
+	Sprite bg, control;
 	Text tx;
 	Timer time;
 	static Music intro, music;
-	bool flagTimer;
+	bool flagTimer, controlPop;
 	static bool stopMusic;
 	MenuHUD menu;
 

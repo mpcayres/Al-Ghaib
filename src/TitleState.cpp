@@ -12,10 +12,12 @@ TitleState::TitleState() : menu(50, 150) {
 	auxcolor.g = 10;
 	auxcolor.b = 10;
 
-	flagTimer = true; stopMusic = false;
+	flagTimer = true; stopMusic = false; controlPop = false;
 	time = Timer();
 	bg = Sprite("img/menu/sprite-title.png", 4, 0.5);
 	bg.SetScaleX(1.5); bg.SetScaleY(1.5);
+	control = Sprite("img/menu/controles.png");
+
 	tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	intro = Music("audio/menu-intro.wav");
@@ -27,55 +29,44 @@ TitleState::TitleState() : menu(50, 150) {
 void TitleState::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
 
-	if(instance.KeyPress(ESCAPE_KEY)) quitRequested = true;
-	else quitRequested = instance.QuitRequested();
-
-	/*
-	time.Update(dt);
-
-	if(time.Get()> 0.15 && flagTimer == true){
-		tx.SetText(" ");
-		time.Restart();
-		flagTimer = false;
-	}
-	if(time.Get()> 0.15 && flagTimer == false){
-		tx.SetText("AL GHAIB");
-		time.Restart();
-		flagTimer = true;
-	}*/
-
 	bg.Update(dt);
-	menu.Update(dt);
-	if(menu.IsSelected()){
-		menu.SetSelected(false);
-		switch(menu.GetOption()){
-			case MENU_START:
-				Pause();
-				Game::GetInstance().GetMissionManager().ChangeMission(1);
-				break;
-			case MENU_CONTINUE:
-				Pause();
-				MissionManager::missionManager->LoadMission();
-				//em uma missao salva
-				break;
-			case MENU_OPTIONS:
-				//push na tela de opcoes
-				Pause();
-				MissionManager::missionManager->LoadMission(2);
-				break;
-			case MENU_EXIT:
-				Pause();
-				quitRequested = true;
-				break;
-		}
-	}
+	if(controlPop){
+		if(instance.KeyPress(ESCAPE_KEY) || instance.KeyPress(ENTER_KEY)) controlPop = false;
+	} else{
 
+		if(instance.KeyPress(ESCAPE_KEY)) quitRequested = true;
+		else quitRequested = instance.QuitRequested();
+
+		menu.Update(dt);
+		if(menu.IsSelected()){
+			menu.SetSelected(false);
+			switch(menu.GetOption()){
+				case MENU_START:
+					Pause();
+					Game::GetInstance().GetMissionManager().ChangeMission(1);
+					break;
+				case MENU_CONTINUE:
+					Pause();
+					MissionManager::missionManager->LoadMission();
+					break;
+				case MENU_OPTIONS:
+					controlPop = true;
+					break;
+				case MENU_EXIT:
+					Pause();
+					quitRequested = true;
+					break;
+			}
+		}
+
+	}
 }
 
 void TitleState::Render(){
 	bg.Render(0,0,0);
 	tx.Render(0,0);
 	menu.Render();
+	if(controlPop) control.Render(50,50,0);
 }
 
 void TitleState::Pause(){
