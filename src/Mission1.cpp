@@ -385,8 +385,8 @@ void  Mission1::Update(float dt){
 					MissionManager::enemy->SetPosition(230, 175);
 					MissionManager::enemy->show = true;
 
-					//SceneDoor::count = ABRE;
-					//SceneDoor::ValorPassar = 4;
+					SceneDoor::count = ABRE;
+					SceneDoor::ValorPassar = 4;
 					// tentativa fail de fazer mãe parar de andar
 					peguei = true; //era da tentativa fail;
 					//MissionManager::enemy->SetDestinationPath(Vec2(230, 230));

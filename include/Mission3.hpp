@@ -32,7 +32,7 @@ private:
 	static Music music;
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
-	int meowcount, momcount,countBear = 0, countCat = 0;
+	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0;
 	bool bronca;
 	int atraidoNovelo, atraidoTV;
 };

@@ -320,6 +320,7 @@ void Mission3::Update(float dt){
 			//MissionManager::missionManager->player->box.x = 400;
 			//MissionManager::missionManager->player->box.y = 400;
 			MissionManager::enemy->SetPosition(225, 190);
+			MissionManager::enemy->Reset();
 			time.Restart();
 		}
 		Vec2 *covil = new Vec2(570, 470);
@@ -327,7 +328,47 @@ void Mission3::Update(float dt){
 
 		dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
 		if(dist<250){
-			std::cout << "assl" << std::endl;
+			SceneDoor::count = ABRE;
+			SceneDoor::ValorPassar = 4;
+			MissionManager::player->SetBlocked(true);
+			MissionManager::enemy->show = true;
+			std::cout << "mom" <<  momcount2 << std::endl;
+			std::cout << time.Get() << std::endl;
+			momcount2 ++;
+			if(momcount2 == 1 ){
+
+				time.Restart();
+				MissionManager::enemy->SetDestinationPath(Vec2(225, 190));
+			}
+			if(time.Get() > 2 && time.Get() < 6){
+				std::cout << "2  e 6"<< std::endl;
+				showBox = true;
+				ImageProfileBox (2);
+				falas.SetText("O QUE ESTÁ FAZENDO AQUI?");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if(time.Get() > 6 && time.Get() < 10){
+				std::cout << "6 e 10"<< std::endl;
+				showBox = true;
+				ImageProfileBox (2);
+				falas.SetText("NÃO TOLERAREI ISSO!");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if(time.Get() > 10 && time.Get() < 14){
+				std::cout << "10 e 14"<< std::endl;
+				showBox = true;
+				ImageProfileBox (2);
+				falas.SetText("JÁ PARA O QUARTO!");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if(time.Get() > 14){
+
+				std::cout << "14"<< std::endl;
+				showBox = false;
+				ImageProfileBox (6);
+				falas.SetText(" ");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
 		}
 
 
@@ -371,12 +412,9 @@ void Mission3::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->GetStage("LivingRoomState") &&
-			MissionManager::missionManager->countLivingRoomState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->GetStage("LivingRoomState") &&
-			MissionManager::missionManager->countLivingRoomState > 1) ||
-			MissionManager::missionManager->GetStage("HallState"))) &&
-		!MissionManager::player->GetBloqHUD()){
+	if((((MissionManager::missionManager->GetStage("LivingRoomState") && MissionManager::missionManager->countLivingRoomState <= 1 && time.Get() > 4) ||
+		((MissionManager::missionManager->GetStage("LivingRoomState") && MissionManager::missionManager->countLivingRoomState > 1) ||
+			MissionManager::missionManager->GetStage("HallState"))) && !MissionManager::player->GetBloqHUD()) || 	MissionManager::missionManager->GetStage("MomRoomState")){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
 			profileBox.Render(profileBoxX, profileBoxY, 0);

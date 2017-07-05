@@ -198,6 +198,11 @@ void Enemy::SetDestinationPursuit(std::queue<Vec2> path){
 		aux.pop();
 	}
 }
+void Enemy::Reset(){
+	while(!destinationPath.empty()){
+			destinationPath.pop_back();
+	}
+}
 
 void Enemy::Pursuit(){
 	Vec2 aux;

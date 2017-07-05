@@ -34,6 +34,7 @@ public:
 	void SetDead();
 	void ChangeClothes(int num);
 	int GetHeight();
+	void Reset();
 
 	InvBox direcao;
 	//Vec2 previousPos;
