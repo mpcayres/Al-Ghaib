@@ -222,11 +222,6 @@ void Mission3::Update(float dt){
 			meowcount++;
 		}
 
-		// FALTA, DISTRAIR O GATO
-		// CAIXINHA DE AREIA + NOVELO
-		// OU
-		// TV + CONTROLE DA TV
-		//std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
 		if(MissionManager::cat->attractedWool == true){
 			atraidoNovelo++;
 			if(atraidoNovelo == 1){
@@ -250,7 +245,6 @@ void Mission3::Update(float dt){
 		if (MissionManager::player->GetRuido()>70 ){
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
-			//if(MissionManager::enemy->turn == 1)
 			momcount ++;
 			std::cout << "momcount" << momcount << std::endl;
 			if(MissionManager::enemy->show){
@@ -328,6 +322,7 @@ void Mission3::Update(float dt){
 
 		dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
 		if(dist<250){
+			bronca = true;
 			SceneDoor::count = ABRE;
 			SceneDoor::ValorPassar = 4;
 			MissionManager::player->SetBlocked(true);
@@ -335,40 +330,67 @@ void Mission3::Update(float dt){
 			std::cout << "mom" <<  momcount2 << std::endl;
 			std::cout << time.Get() << std::endl;
 			momcount2 ++;
+			SetPiscaPisca(20, 0.4);
+			PiscaPisca(dt);
 			if(momcount2 == 1 ){
 
 				time.Restart();
 				MissionManager::enemy->SetDestinationPath(Vec2(225, 190));
 			}
 			if(time.Get() > 2 && time.Get() < 6){
-				std::cout << "2  e 6"<< std::endl;
+
 				showBox = true;
 				ImageProfileBox (2);
 				falas.SetText("O QUE ESTÁ FAZENDO AQUI?");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 			if(time.Get() > 6 && time.Get() < 10){
-				std::cout << "6 e 10"<< std::endl;
 				showBox = true;
 				ImageProfileBox (2);
 				falas.SetText("NÃO TOLERAREI ISSO!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 			if(time.Get() > 10 && time.Get() < 14){
-				std::cout << "10 e 14"<< std::endl;
 				showBox = true;
 				ImageProfileBox (2);
 				falas.SetText("JÁ PARA O QUARTO!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
-			if(time.Get() > 14){
-
-				std::cout << "14"<< std::endl;
+			if(time.Get() > 14 && time.Get() < 18){
+				showBox = true;
+				ImageProfileBox (2);
+				falas.SetText("DEIXEI SEU LEITE LÁ!");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if(time.Get() > 18){
 				showBox = false;
 				ImageProfileBox (6);
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
+			if(time.Get() > 19)
+				Game::GetInstance().GetCurrentState().ChangeState("MomRoomStage","StageStage");
+		}else if(MissionManager::missionManager->GetStage("StageState") && bronca){
+			std::cout << "entrei" << std::endl;
+			if(state != MissionManager::missionManager->changeState){
+					state = MissionManager::missionManager->changeState;
+					MissionManager::enemy->show = false;
+					time.Restart();
+			}
+			if(time.Get() > 14 && time.Get() < 18){
+					showBox = true;
+					ImageProfileBox (4);
+					falas.SetText("U: É MELHOR BEBER SEU LEITE");
+					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			if(time.Get() > 18){
+				showBox = false;
+				ImageProfileBox (6);
+				falas.SetText(" ");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+
+
 		}
 
 
