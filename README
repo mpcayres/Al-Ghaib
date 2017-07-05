@@ -10,13 +10,46 @@
 * Breve descrição do jogo e seu gênero
 
 * História do jogo
+	Uma criança vive em uma mansão escura, grande e cheia de mistérios. A mãe da criança, está longe de ser o melhor exemplo de mãe. Ela tormenta a pequenina fazendo coisas questionáveis e estranhas até que, quando seu ursinho cria vida, a criança começa a investigar
+e tentar descobrir o que realmente está acontecendo com aquela que uma vez acreditou ser sua amável mãe.
 
 * Objetivo (Como ganha e como perde)
+	Seu objetivo é desvendar os segredos de sua mãe sem se deixar ser pego tendo que lidar com empecilhos criados por ela ou pelo gato
+e tentando restaurar seu fiel amiguinho, o ursinho.
 
 * Controles (Como joga)
+	Setas do teclado = movimentação básica
+	Setas + shif = correr
+	Z = interações básicas com objetos
+	ctrl + Z = atravessar porta para proximo comodo
+	X = usar item do inventário
+	C = empurrar objetos
+	ctrl + C = subir no objeto
+	I = abrir inventário
 
 * Membros do time e seus papéis
+Ingrid Santana Lopes
+	- construção geral das missões
+	- parte do detalhamento na construção das missões
+	- legendas
+	- posicionamento de móveis dos cômodos
+	- implementação dos NPCs: mãe, urso e gato
+	- implementação dos itens: novelo, agulha, carretel e tesoura
+	- objetos intocáveis
+	- percepção de ruído da mãe
+	- implementação de empty box
+	- paredes invisíveis delimitadoras de movimento do centro do corredor
+	- início de interações básicas com objetos com dois estados
+	- algumas lógicas de colisões
+	- player correndo
+	- correção de erros
+
+Marcos Paulo Cayres Rosa
+
+Rennê Ruan Alves Oliveira
 
 * Dependencias e versões (Para instalar o jogo)
 
 * Como instala e como compila
+	- comando 'make' para compilar
+	-'./jogo' para rodar
