@@ -10,7 +10,7 @@
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Cat::Cat(float x, float y): sp("img/object-novelo.png"){
+Cat::Cat(float x, float y): sp("img/inventario/novelo.png"){
 	//stop = false;
 	sp.SetScaleX(0.5);
 	sp.SetScaleY(0.5);

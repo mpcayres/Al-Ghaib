@@ -17,7 +17,7 @@ bool Bear::arrived = false;
 bool Bear::repair = false;
 bool Bear::retorno = false;
 
-Bear::Bear(float x, float y): sp("img/sprite-bear-walking.png", 8, 0.6, 1){
+Bear::Bear(float x, float y): sp("img/sprite/bear-walking.png", 8, 0.6, 1){
 	//stop = false;
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);
@@ -36,11 +36,12 @@ Bear::Bear(float x, float y): sp("img/sprite-bear-walking.png", 8, 0.6, 1){
 	time = Timer();
 
 	direcao = SUL;
-	////direcaoShift = false;
+	direcaoShift = false;
 
 	hp = 30;
 	rotation = 0;
 	speed.y = speed.x = 0;
+	offset = box.h/3;
 	bear = this;
 }
 

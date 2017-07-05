@@ -5,7 +5,6 @@
 #include "Game.hpp"
 #include "Collision.hpp"
 #include "Music.hpp"
-#include "EndState.hpp"
 #include "Enemy.hpp"
 #include "SceneObject.hpp"
 #include "SceneDoor.hpp"
@@ -146,25 +145,27 @@ void StageState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneObject* Escrivaninha = new SceneObject(650, 440, "img/scene-escrivaninha-fechado.png", "img/scene-escrivaninha-aberto.png");
+	SceneObject* Escrivaninha = new SceneObject(650, 440,
+			"img/cenario/geral/escrivaninha-fechado.png", "img/cenario/geral/escrivaninha-aberto.png");
 	objectArray.emplace_back(Escrivaninha);
 
-	StealthObject* Mesa = new StealthObject(900, 400, "img/scene-mesa.png");
+	StealthObject* Mesa = new StealthObject(900, 400, "img/cenario/geral/mesa.png");
 	objectArray.emplace_back(Mesa);
 
-	SceneObject* Window = new SceneObject(540, 200, "img/closedwindow.png", "img/openwindow.png", 0, 0.7, 0.7);
+	SceneObject* Window = new SceneObject(540, 200,
+			"img/cenario/geral/window-closed.png", "img/cenario/geral/window-opened.png", 0, 0.7, 0.7);
 	objectArray.emplace_back(Window);
 
-	SceneObject* Cama =  new SceneObject(200, 260, "img/scene-cama.png", "");
+	SceneObject* Cama =  new SceneObject(200, 260, "img/cenario/filho/cama.png", "");
 	objectArray.emplace_back(Cama);
 
-	SceneObject* Armario =  new SceneObject(430, 240, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	SceneObject* Armario =  new SceneObject(430, 240, "img/cenario/filho/armario-quarto-fechado.png", "i");
 	objectArray.emplace_back(Armario);
 
-	SceneObject* Abajur =  new SceneObject(600, 200, "img/scene-abajur.png", "");
+	SceneObject* Abajur =  new SceneObject(600, 200, "img/cenario/geral/abajur.png", "");
 	objectArray.emplace_back(Abajur);
 
-	MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
+	MovingObject* Vaso = new MovingObject(900, 300,  "img/cenario/geral/vaso.png");
 	objectArray.emplace_back(Vaso);
 
 }

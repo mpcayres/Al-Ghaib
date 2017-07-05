@@ -21,12 +21,12 @@
 
 
 Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInventory) :
-		spKinder("img/sprite-kinder.png", 20, 0.06, 4),
-		spKinderRun("img/sprite-kinder-run.png", 15, 0.1, 4),
-		spAnimKinder("img/sprite-kinder-breaking.png", 6, 0.4, 1),
-		spKinderPush("img/sprite-kinder-push.png", 6, 0.1, 4),
-		spKinderClimbing("img/sprite-kinder-climb.png", 12, 0.13, 4),
-		spKinderDown("img/sprite-kinder-down.png", 6, 0.13, 4) {
+		spKinder("img/sprite/kinder.png", 20, 0.06, 4),
+		spKinderRun("img/sprite/kinder-run.png", 15, 0.1, 4),
+		spAnimKinder("img/sprite/kinder-breaking.png", 6, 0.4, 1),
+		spKinderPush("img/sprite/kinder-push.png", 6, 0.1, 4),
+		spKinderClimbing("img/sprite/kinder-climb.png", 12, 0.13, 4),
+		spKinderDown("img/sprite/kinder-down.png", 6, 0.13, 4) {
 	spKinder.SetScaleX(2.5); spKinder.SetScaleY(2.5);
 	spKinderRun.SetScaleX(2.5); spKinderRun.SetScaleY(2.5);
 	spAnimKinder.SetScaleX(2.5); spAnimKinder.SetScaleY(2.5);
@@ -34,14 +34,14 @@ Player::Player(float x, float y, int oldInHand, std::vector<std::string> oldInve
 	spKinderClimbing.SetScaleX(2.5); spKinderClimbing.SetScaleY(2.5);
 	spKinderDown.SetScaleX(2.5); spKinderDown.SetScaleY(2.5);
 
-	spNoise = Sprite("img/sprite-energia.png", 9, 1 ,1);
-	spNoise.SetScaleX(0.5); spNoise.SetScaleY(0.5);
+	spNoise = Sprite("img/sprite/barulho.png", 9, 1 ,1);
+	spNoise.SetScaleX(0.25); spNoise.SetScaleY(0.25);
 
-	spInventory = Sprite("img/inventory.png", 1, 1, 1);
+	spInventory = Sprite("img/inventario/inventory.png", 1, 1, 1);
 	spInventory.SetScaleX(2); spInventory.SetScaleY(2);
-	spInventorybox = Sprite("img/box.png", 1, 1, 1);
+	spInventorybox = Sprite("img/inventario/box.png", 1, 1, 1);
 	spInventorybox.SetScaleX(1.6); spInventorybox.SetScaleY(1.6);
-	spInventoryboxSelected = Sprite("img/box-select.png", 1, 1, 1);
+	spInventoryboxSelected = Sprite("img/inventario/box-select.png", 1, 1, 1);
 	spInventoryboxSelected.SetScaleX(1.6); spInventoryboxSelected.SetScaleY(1.6);
 
 	box.x = x; box.y = y;
@@ -338,7 +338,7 @@ void Player::Update(float dt){
 		}
 
 		timeCooldown.Update(dt);
-		if(timeCooldown.Get() > 3){
+		if(timeCooldown.Get() > 6){
 			ChangeHiddenState();
 		}
 	}
@@ -536,47 +536,47 @@ void Player::AddInventory(std::string obj){
 	// Coloquei a string da imagem comentada caso seja necessario
 
 	if(obj == "InventoryKey"){
-		spPicked = Sprite("img/object-key.png");
+		spPicked = Sprite("img/inventario/key.png");
 		spPicked.SetScaleX(6); spPicked.SetScaleY(6);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryKey());
 	} else if(obj == "InventoryArame"){
-		spPicked = Sprite("img/object-arame.png");
+		spPicked = Sprite("img/inventario/arame.png");
 		spPicked.SetScaleX(4); spPicked.SetScaleY(4);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryArame());
 	} else if(obj == "InventoryClown"){
-		spPicked = Sprite("img/object-caixa-sem-palhaco.png");
+		spPicked = Sprite("img/inventario/palhaco-dentro-caixa.png");
 		spPicked.SetScaleX(4); spPicked.SetScaleY(4);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryClown());
 	} else if(obj == "InventoryBear"){
-		/*spPicked = Sprite("img/object-bear.png");
+		/*spPicked = Sprite("img/inventario/bear.png");
 		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
 		timePicked.Restart(); showPicked = true;*/
 		inventory.emplace_back(new InventoryBear());
 	} else if(obj == "InventoryWool"){
-		spPicked = Sprite("img/obj_novelo.png");
+		spPicked = Sprite("img/inventario/novelo.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryWool());
 	} else if(obj == "InventoryNeedle"){
-		spPicked = Sprite("img/object-needle.png");
+		spPicked = Sprite("img/inventario/needle.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryNeedle());
 	} else if(obj == "InventoryScissors"){
-		spPicked = Sprite("img/object-scissors.png");
+		spPicked = Sprite("img/inventario/scissors.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryScissors());
 	} else if(obj == "InventoryControl"){
-		spPicked = Sprite("img/object-control.png");
+		spPicked = Sprite("img/inventario/control.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryControl());
 	}else if(obj == "InventoryLine"){
-		spPicked = Sprite("img/object-carretel.png");
+		spPicked = Sprite("img/inventario/carretel.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryLine());

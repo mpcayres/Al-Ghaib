@@ -101,9 +101,7 @@ bool Enemy::IsDead(){
 }
 
 bool Enemy::NotifyCollision(GameObject& other){
-	if(show){
-
-
+	if(show && !MissionManager::player->hidden){
 		if(other.Is("Player")){
 			seen = false;
 			collidingPlayer = true;
@@ -280,7 +278,7 @@ void Enemy::SetDead(){
 }
 
 void Enemy::ChangeClothes(){
-	sp = Sprite("img/sprite-mom-chador.png", 8, 0.06, 4);
+	sp = Sprite("img/sprite/mom-chador.png", 8, 0.06, 4);
 	sp.SetScaleX(2);
 	sp.SetScaleY(2);
 	//box.x = box.x; box.y = box.y;

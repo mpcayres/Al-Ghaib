@@ -99,7 +99,7 @@ void  Mission1::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	std::cout << time.Get() << std::endl;
+	//std::cout << time.Get() << std::endl;
 	time.Update(dt);
 	cooldown.Update(dt);
 
@@ -291,7 +291,7 @@ void  Mission1::Update(float dt){
 					//SceneDoor::count = ABRE;
 				}
 
-				if(((time.Get() > 7 || MissionManager::player->GetRuido()>90 )&& trancada == false)
+				if(((time.Get() > 7 || MissionManager::player->GetRuido() > 90 )&& trancada == false)
 						/*&& MissionManager::enemy->show == false*/){
 					MissionManager::enemy->show = true;
 					//if(MissionManager::enemy->turn == 1)
@@ -308,33 +308,31 @@ void  Mission1::Update(float dt){
 						MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2º DESTINO
 						MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1º DESTINO
 					}
-						if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
-							showBox = true;
-							//MissionManager::enemy->bloq = true;
-							SceneDoor::count = ABRE;
-							SceneDoor::ValorPassar = 26;
-							falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
-							falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-							if(played == false){
-								Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
-								portaDestrancando.Play(0);
-								played = true;
-							}
-							ultimoTempo = 8;
+					if(time.Get() > 8 && trancada == false && cooldown.Get() > 3){
+						showBox = true;
+						//MissionManager::enemy->bloq = true;
+						SceneDoor::count = ABRE;
+						SceneDoor::ValorPassar = 26;
+						falas.SetText("M: É MELHOR QUE NÃO TENHA SAÍDO DA CAMA!!");
+						falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+						if(played == false){
+							Sound portaDestrancando = Sound ("audio/ghostly-whispers.wav");
+							portaDestrancando.Play(0);
+							played = true;
 						}
-						if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
-							showBox = false;
-							//MissionManager::enemy->bloq = false;
-							falas.SetText(" ");
-							falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-							ultimoTempo = 12;
-							//SceneDoor::count = ABRE;
-						}
-						if(MissionManager::enemy->box.Inside(Rect(970, 100, 20, 20))){
-							//SceneDoor::count = FECHA;
-						}
-
-					//}
+						ultimoTempo = 8;
+					}
+					if(time.Get() > 12 && trancada == false && cooldown.Get() > 3){
+						showBox = false;
+						//MissionManager::enemy->bloq = false;
+						falas.SetText(" ");
+						falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+						ultimoTempo = 12;
+						//SceneDoor::count = ABRE;
+					}
+					if(MissionManager::enemy->box.Inside(Rect(970, 100, 20, 20))){
+						//SceneDoor::count = FECHA;
+					}
 				}
 
 				MessageDoor(dt);
@@ -448,75 +446,68 @@ void  Mission1::Render(){
 
 //!!!!!!!!! Colocar MovingObject por ultimo em todos os casos
 void Mission1::SetObjectStage(){
-	//StealthObject* Escrivaninha = new StealthObject(700, 400, "img/scene-escrivaninha-fechado.png");
+	//StealthObject* Escrivaninha = new StealthObject(700, 400, "img/cenario/geral/escrivaninha-fechado.png");
 	//objectStage.emplace_back(Escrivaninha);
 
-	/*PickUpObject* PO = new PickUpObject(700, 300, "InventoryKey", "img/minionbullet1.png");
-	objectStage.emplace_back(PO);*/
-
-	//SceneObject* Armario =  new SceneObject(400, 260, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	//SceneObject* Armario =  new SceneObject(400, 260, "img/cenario/filho/armario-quarto-fechado.png", "");
 	//objectStage.emplace_back(Armario);
 
 	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectStage.emplace_back(Door);
 
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
 	PickUpObject* Clown = new PickUpObject(462, 270, "InventoryClown",
-			"img/object-caixa-sem-palhaco.png", true, 0.4, 0.4);
+			"img/cenario/geral/palhaco-dentro-caixa.png", true, 0.4, 0.4);
 	objectStage.emplace_back(Clown);
 
-	//MovingObject* Vaso = new MovingObject(900, 300,  "img/scene-vaso.png");
+	//MovingObject* Vaso = new MovingObject(900, 300, "img/cenario/geral/vaso.png");
 	//objectStage.emplace_back(Vaso);
 
-	MovingObject* Cadeira = new MovingObject(700, 320, "img/scene-cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(700, 320, "img/cenario/geral/cadeira.png", true);
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission1::SetObjectHall(){
-	//SceneWindow* Window = new SceneWindow(350, 70);
-	//objectHall.emplace_back(Window);
-
-	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png");
+	SceneObject* CriadoMudo = new SceneObject(100, 160,
+			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
 	objectHall.emplace_back(CriadoMudo);
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
-			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
+			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
+	StealthObject* Armario2 = new StealthObject(1400, 110, "img/cenario/geral/armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
 
-	//PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/object-key.png");
+	//PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/inventario/key.png");
 	//objectHall.emplace_back(Key);
 
-	//PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	//PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/inventario/bear.png",false, 1.5, 1.5);
 	//objectHall.emplace_back(Bear);
 
-	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
+	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
 
-	MovingObject* Banco = new MovingObject(100, 470, "img/moveis/sala/banquinho.png", true);
+	MovingObject* Banco = new MovingObject(100, 470, "img/cenario/sala/banquinho.png", true);
 	objectHall.emplace_back(Banco);
 }
 
 void Mission1::SetObjectLivingRoom(){
-	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
+	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/inventario/bear.png",false, 1.5, 1.5);
 	//objectLivingRoom.emplace_back(Bear);
 
-	SceneObject* gatinho = new SceneObject(200, 500,"img/object-novelo.png", "img/object-novelo.png", true, 0.5, 0.5);
+	SceneObject* gatinho = new SceneObject(200, 500,"img/inventario/novelo.png", "", true, 0.5, 0.5);
 	objectLivingRoom.emplace_back(gatinho);
 
-	//SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
-	//			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
+	//SceneObject* Bau = new SceneObject(400, 500,  "img/cenario/geral/bau-fechado.png",
+	//			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
 	//objectLivingRoom.emplace_back(Bau);
 
-	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
+	MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);
-
-
 }
 
 void Mission1::SetObjectMomRoom(){

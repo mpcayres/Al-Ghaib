@@ -165,30 +165,30 @@ void Mission4::SetObjectStage(){
 	SceneDoor* Door = new SceneDoor(800, 200, "HallState", false);
 	objectStage.emplace_back(Door);
 
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
-	SceneObject* Copo = new SceneObject(550, 280, "img/object-copo-cheio.png", "img/object-copo-cheio.png", 0, 0.3, 0.3);
+	SceneObject* Copo = new SceneObject(550, 280, "img/inventario/copo-cheio.png", "", 0, 0.3, 0.3);
 	objectStage.emplace_back(Copo);
 
-	SceneObject* BrokenClown = new SceneObject(400, 500, "img/object-palhaco-quebrado.png", "img/object-palhaco-quebrado.png", 0, 0.3, 0.3);
+	SceneObject* BrokenClown = new SceneObject(400, 500, "img/inventario/palhaco-quebrado.png", "", 0, 0.3, 0.3);
 	objectStage.emplace_back(BrokenClown);
 
-	MovingObject* Cadeira = new MovingObject(200, 400, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(200, 400, "img/cenario/geral/cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission4::SetObjectHall(){
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
-			"img/scene-door-closed.png", "img/scene-door-opened.png", 1);
+			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", 1);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	SceneObject* Bau = new SceneObject(1000, 490,  "img/scene-bau-fechado.png",
-			"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+	SceneObject* Bau = new SceneObject(1000, 490,  "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 	objectHall.emplace_back(Bau);
 
-	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
+	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
 }
 

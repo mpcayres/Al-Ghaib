@@ -6,7 +6,7 @@
 
 class ScenePortal : public SceneDoor {
 public:
-	ScenePortal(float x, float y, std::string dest, std::string img = "img/scene-portal.png");
+	ScenePortal(float x, float y, std::string dest, std::string img = "img/cenario/geral/portal.png");
 
 	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);

@@ -126,7 +126,7 @@ void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneObject* Table = new SceneObject(340, 303, "img/scene-mesa.png", "img/scene-mesa.png");
+	SceneObject* Table = new SceneObject(340, 303, "img/cenario/geral/mesa.png", "");
 	objectArray.emplace_back(Table);
 
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
@@ -135,26 +135,22 @@ void HallState::SetInitialObjectArray(){
 	ScenePortal* DoorToLivingRoom = new ScenePortal(500, 105, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
 
-	/*SceneObject* Window = new SceneObject(700, 70, "img/openwindow.png", "img/closedwindow.png", 0, 0.8, 0.8);
-	objectArray.emplace_back(Window);*/
-
-	//SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png");
+	//SceneObject* CriadoMudo = new SceneObject(100, 160, "img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
 	//objectArray.emplace_back(CriadoMudo);
 
-	SceneObject* Book = new SceneObject(110, 150, "img/object-livro.png", "img/object-livro.png", 0, 0.3, 0.3);
+	SceneObject* Book = new SceneObject(110, 150, "img/cenario/geral/livro.png", "img/cenario/geral/livro.png", 0, 0.3, 0.3);
 	objectArray.emplace_back(Book);
 
-	SceneObject* Abajur = new SceneObject(1300, 310, "img/scene-abajur.png", "img/scene-abajur.png");
+	SceneObject* Abajur = new SceneObject(1300, 310, "img/cenario/geral/abajur.png", "img/cenario/geral/abajur.png");
 	objectArray.emplace_back(Abajur);
 
-	SceneUntouchable* Rug = new SceneUntouchable(700, 310, "img/tapete.png");
+	SceneUntouchable* Rug = new SceneUntouchable(700, 310, "img/cenario/geral/tapete.png");
 	objectArray.emplace_back(Rug);
 
-
-	StealthObject* Armario = new StealthObject(500, 305, "img/scene-armario-corredor-fechado.png");
+	StealthObject* Armario = new StealthObject(500, 305, "img/cenario/geral/armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
 
-	//StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
+	//StealthObject* Armario2 = new StealthObject(1400, 110, "img/cenario/armario-corredor-fechado.png");
 	//objectArray.emplace_back(Armario2);
 
 }

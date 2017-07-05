@@ -415,60 +415,59 @@ void Mission2::SetObjectStage(){
 	Bear* bear = new Bear(810, 210);
 	objectStage.emplace_back(bear);
 
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
-			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+	SceneObject* Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
-	MovingObject* Box = new MovingObject(400, 500, "img/moveis/sala/banquinho.png");
+	MovingObject* Box = new MovingObject(400, 500, "img/cenario/sala/banquinho.png");
 	objectStage.emplace_back(Box);
 
-	//MovingObject* Cadeira = new MovingObject(650, 300, "img/scene-cadeira.png", true);
+	//MovingObject* Cadeira = new MovingObject(650, 300, "img/cenario/geral/cadeira.png", true);
 	//objectStage.emplace_back(Cadeira);
 }
 
 void Mission2::SetObjectHall(){
-	//SceneWindow* Window = new SceneWindow(350, 70);
-	//objectHall.emplace_back(Window);
-
-	//* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
-	//		"img/scene-bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+	//Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
+	//		"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
-			"img/scene-door-closed.png", "img/scene-door-opened.png", -1);
+			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/scene-armario-corredor-fechado.png",
-	//		 "img/scene-armario-corredor-fechado.png", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
+	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/cenario/geral/armario-corredor-fechado.png",
+	//		 "", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	//objectHall.emplace_back(Armario2);
-	StealthObject* Armario2 = new StealthObject(1450, 150, "img/scene-armario-corredor-fechado.png");
+	StealthObject* Armario2 = new StealthObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
 
-	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png"
-			, 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
+	SceneObject* CriadoMudo = new SceneObject(100, 160,
+			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png",
+			0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	objectHall.emplace_back(CriadoMudo);
 
-	PickUpObject* Scissors = new PickUpObject(1470, 185, "InventoryScissors", "img/object-scissors.png", true, 0.5, 0.5);
+	PickUpObject* Scissors = new PickUpObject(1470, 185, "InventoryScissors",
+			"img/inventario/scissors.png", true, 0.5, 0.5);
 	objectHall.emplace_back(Scissors);
 
-	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
+	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
 
-	MovingObject* Cadeira = new MovingObject(1050, 303, "img/scene-cadeira.png", true);
-		objectHall.emplace_back(Cadeira);
+	MovingObject* Cadeira = new MovingObject(1050, 303, "img/cenario/geral/cadeira.png", true);
+	objectHall.emplace_back(Cadeira);
 
 }
 
 void Mission2::SetObjectLivingRoom(){
-	PickUpObject* Agulha = new PickUpObject(670, 400, "InventoryNeedle", "img/object-needle.png", false, 0.5, 0.5);
+	PickUpObject* Agulha = new PickUpObject(670, 400, "InventoryNeedle", "img/inventario/needle.png", false, 0.5, 0.5);
 	objectLivingRoom.emplace_back(Agulha);
 
-	PickUpObject* Carretel = new PickUpObject(600, 420, "InventoryLine", "img/object-carretel.png", false, 0.5, 0.5);
+	PickUpObject* Carretel = new PickUpObject(600, 420, "InventoryLine", "img/inventario/carretel.png", false, 0.5, 0.5);
 	objectLivingRoom.emplace_back(Carretel);
 
-	MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
+	MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);
 
-	MovingObject* Cadeira = new MovingObject(750, 480, "img/scene-cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(750, 480, "img/cenario/geral/cadeira.png", true);
 	objectLivingRoom.emplace_back(Cadeira);
 }
 

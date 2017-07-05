@@ -66,7 +66,7 @@ public:
 
 	//Vec2 previousPos;
 	Rect limits;
-	bool climbing, climbingDown, drogado;
+	bool hidden, climbing, climbingDown, drogado;
 	int dirDown;
 	float centerMX, centerMY;
 	std::string lastPicked;
@@ -89,7 +89,7 @@ private:
 	InputManager InputInstance;
 
 	float ruido;
-	bool door, hidden, animShowing, aboveObject;
+	bool door, animShowing, aboveObject;
 	bool blocked, bloqHUD, bloqInv;
 };
 

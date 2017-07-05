@@ -122,29 +122,25 @@ void MomRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/scene-door-closed.png", "img/scene-door-opened.png");
+	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png");
 	objectArray.emplace_back(DoorToHall);
 
-	SceneUntouchable* Mirror = new SceneUntouchable(300, 170, "img/moveis/object-espelho.png", 0, 0.5, 0.5);
+	SceneUntouchable* Mirror = new SceneUntouchable(300, 170, "img/cenario/mae/espelho.png", 0, 0.5, 0.5);
 	objectArray.emplace_back(Mirror);
 
-	SceneObject* Table = new SceneObject(300, 250, "img/moveis/object-mesinha.png", "img/moveis/object-mesinha.png", 0, 0.7, 0.7);
+	SceneObject* Table = new SceneObject(300, 250, "img/cenario/mae/mesinha.png", "img/cenario/mae/mesinha.png", 0, 0.7, 0.7);
 	objectArray.emplace_back(Table);
 
-		SceneObject* Armario =  new SceneObject(600, 200, "img/scene-armario-quarto-fechado.png", "img/scene-armario-quarto-fechado.png");
+	SceneObject* Armario =  new SceneObject(600, 200, "img/cenario/filho/armario-quarto-fechado.png", "img/cenario/filho/armario-quarto-fechado.png");
 	objectArray.emplace_back(Armario);
 
-
-	SceneObject* Cama =  new SceneObject(500, 200, "img/scene-cama.png", "img/scene-cama.png");
+	SceneObject* Cama =  new SceneObject(500, 200, "img/cenario/filho/cama.png", "img/cenario/filho/cama.png");
 	objectArray.emplace_back(Cama);
 
-	SceneObject* Covil =  new SceneObject(570, 470, "img/moveis/porao-fechado.png", "img/moveis/porao-aberto.png", 0, 0.6, 0.6);
+	SceneObject* Covil =  new SceneObject(570, 470, "img/cenario/mae/porao-fechado.png", "img/cenario/mae/porao-aberto.png", 0, 0.6, 0.6);
 	objectArray.emplace_back(Covil);
 
-	SceneObject* Mask= new SceneObject(650, 480, "img/moveis/object-cabideiro.png", "img/moveis/object-cabideiro.png");
-		objectArray.emplace_back(Mask);
-
-
-
+	SceneObject* Mask= new SceneObject(650, 480, "img/cenario/mae/cabideiro.png", "img/cenario/mae/cabideiro.png");
+	objectArray.emplace_back(Mask);
 
 }

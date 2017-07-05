@@ -10,7 +10,7 @@
 class SceneDoor : public SceneObject {
 public:
 	SceneDoor(float x, float y, std::string dest, bool locked = true,
-		std::string img = "img/scene-door-closed.png", std::string img2 = "img/scene-door-opened.png", int block = 0);
+		std::string img = "img/cenario/geral/door-closed.png", std::string img2 = "img/cenario/geral/door-opened.png", int block = 0);
 
 	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);

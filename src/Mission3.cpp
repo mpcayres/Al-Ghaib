@@ -370,35 +370,36 @@ void Mission3::SetObjectStage(){
 	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectStage.emplace_back(Door);
 
-	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
+	StealthObject* Armario2 = new StealthObject(1400, 110, "img/cenario/geral/armario-corredor-fechado.png");
 	objectStage.emplace_back(Armario2);
 
-	SceneObject* Bau = new SceneObject(300, 490,  "img/scene-bau-fechado.png",
+	SceneObject* Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
 			"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
-	MovingObject* Box = new MovingObject(400, 500, "img/box.png");
+	MovingObject* Box = new MovingObject(400, 500, "img/inventario/box.png");
 	objectStage.emplace_back(Box);
 
-	MovingObject* Cadeira = new MovingObject(730, 300, "img/scene-cadeira.png");
+	MovingObject* Cadeira = new MovingObject(730, 300, "img/cenario/geral/cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 
 void Mission3::SetObjectHall(){
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
-			"img/scene-door-closed.png", "img/scene-door-opened.png", 0);
+			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", 0);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	SceneObject* CriadoMudo = new SceneObject(100, 160, "img/scene-criado-fechado.png", "img/scene-criado-aberto.png");
+	SceneObject* CriadoMudo = new SceneObject(100, 160,
+			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
 	objectHall.emplace_back(CriadoMudo);
 
-	MovingObject* Vase = new MovingObject(1000, 450, "img/scene-vaso.png");
+	MovingObject* Vase = new MovingObject(1000, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
 
-	SceneObject* Apple = new SceneObject(350, 330, "img/object-maca.png", "img/object-maca.png", 0, 0.3, 0.3);
+	SceneObject* Apple = new SceneObject(350, 330, "img/cenario/geral/maca.png", "img/cenario/geral/maca.png", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);
 
-	SceneObject* CaixaDeAreia = new SceneObject(1400, 450, "img/box.png", "img/box-select.png", 0, 1, 1, "", 0, true);
+	SceneObject* CaixaDeAreia = new SceneObject(1400, 450, "img/inventario/box.png", "img/inventario/box-select.png", 0, 1, 1, "", 0, true);
 	objectHall.emplace_back(CaixaDeAreia);
 }
 

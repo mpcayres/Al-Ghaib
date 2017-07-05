@@ -8,14 +8,14 @@ MenuHUD::MenuHUD(float x, float y) /*: sp("img/fundoMenu.png")*/ {
 	//box.w = sp.GetWidth();
 	selected = false;
 	optSelected = 0;
-	buttons.emplace_back(Sprite("img/button-new-game.png"));
-	buttons.emplace_back(Sprite("img/button-load-game.png"));
-	buttons.emplace_back(Sprite("img/button-option.png"));
-	buttons.emplace_back(Sprite("img/button-sair.png"));
-	buttonsSelected.emplace_back(Sprite("img/button-new-game-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/button-load-game-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/button-option-select.png"));
-	buttonsSelected.emplace_back(Sprite("img/button-sair-select.png"));
+	buttons.emplace_back(Sprite("img/menu/button-new-game.png"));
+	buttons.emplace_back(Sprite("img/menu/button-load-game.png"));
+	buttons.emplace_back(Sprite("img/menu/button-option.png"));
+	buttons.emplace_back(Sprite("img/menu/button-sair.png"));
+	buttonsSelected.emplace_back(Sprite("img/menu/button-new-game-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/menu/button-load-game-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/menu/button-option-select.png"));
+	buttonsSelected.emplace_back(Sprite("img/menu/button-sair-select.png"));
 }
 
 MenuHUD::~MenuHUD() { }

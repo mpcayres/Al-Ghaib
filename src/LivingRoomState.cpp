@@ -10,6 +10,7 @@
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
 #include "SceneUntouchable.hpp"
+
 #include <iostream>
 
 LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
@@ -120,55 +121,55 @@ void LivingRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	//MovingObject* Banco = new MovingObject(650, 370, "img/moveis/sala/banquinho.png", true);
+	//MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
 	//objectArray.emplace_back(Banco);
 
-	SceneObject* Sofa = new SceneObject(500, 340, "img/moveis/sala/sofa.png", "img/moveis/sala/sofa.png");
+	SceneObject* Sofa = new SceneObject(500, 340, "img/cenario/sala/sofa.png", "img/cenario/sala/sofa.png");
 	objectArray.emplace_back(Sofa);
 
-	SceneObject* Poltrona = new SceneObject(400, 350, "img/moveis/sala/poltrona.png", "img/moveis/sala/poltrona.png");
+	SceneObject* Poltrona = new SceneObject(400, 350, "img/cenario/sala/poltrona.png", "img/cenario/sala/poltrona.png");
 	objectArray.emplace_back(Poltrona);
 
-	SceneObject* Mesa = new SceneObject(500, 400, "img/moveis/sala/mesa.png", "img/moveis/sala/mesa.png");
+	SceneObject* Mesa = new SceneObject(500, 400, "img/cenario/sala/mesa.png", "img/cenario/sala/mesa.png");
 	objectArray.emplace_back(Mesa);
 
-	SceneAnimated* TV = new SceneAnimated(630, 470, "img/moveis/sala/televisao_desligada.png", "img/moveis/sala/televisao.png");
+	SceneAnimated* TV = new SceneAnimated(630, 470, "img/cenario/sala/televisao_desligada.png", "img/cenario/sala/televisao.png");
 	objectArray.emplace_back(TV);
 
-	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
+	SceneObject* Painel = new SceneObject(390, 127, "img/cenario/sala/mosaico.png", "img/cenario/sala/mosaico.png");
 	objectArray.emplace_back(Painel);
 
-	//SceneObject* Pilastra1 = new SceneObject(350, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
+	//SceneObject* Pilastra1 = new SceneObject(350, 127, "img/cenario/sala/pilastra.png", "img/cenario/sala/pilastra.png");
 	//objectArray.emplace_back(Pilastra1);
 
-	SceneUntouchable* Pilastra1 = new SceneUntouchable (350, 127, "img/moveis/sala/pilastra.png");
+	SceneUntouchable* Pilastra1 = new SceneUntouchable(350, 127, "img/cenario/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra1);
 
-
-	SceneUntouchable* Pilastra2 = new SceneUntouchable(725, 127, "img/moveis/sala/pilastra.png");
+	SceneUntouchable* Pilastra2 = new SceneUntouchable(725, 127, "img/cenario/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra2);
 
-	//SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
+	//SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/cenario/geral/portal.png", "img/cenario/geral/portal.png");
 	//objectArray.emplace_back(DoorToHall);
 
 	ScenePortal* DoorToLivingRoom = new ScenePortal(220, 165, "HallState");
 	objectArray.emplace_back(DoorToLivingRoom);
 
-	SceneObject* Armario = new SceneObject(790, 180, "img/scene-armario-corredor-fechado.png", "img/scene-armario-corredor-fechado.png");
+	SceneObject* Armario = new SceneObject(790, 180,
+			"img/cenario/geral/armario-corredor-fechado.png", "img/cenario/geral/armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
 
+	//MUDAR PARA SER O CONTROLE EM OUTRO OBJETO, TIPO ARMARIO E URSO DIRETO PELA MISSAO
 	if(MissionManager::player->HaveObject("InventoryControl") && MissionManager::missionManager->GetNumMission() != 1){
-		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
-					"img/scene-bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+		SceneObject* Bau = new SceneObject(200, 400,  "img/cenario/geral/bau-fechado.png",
+					"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
 	} else if(MissionManager::missionManager->GetNumMission() == 1){
-		SceneObject* Bau = new SceneObject(400, 500,  "img/scene-bau-fechado.png",
-						"img/scene-bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
-			objectArray.emplace_back(Bau);
-	}
-	else{
-		SceneObject* Bau = new SceneObject(200, 400,  "img/scene-bau-fechado.png",
-					"img/scene-bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
+		SceneObject* Bau = new SceneObject(400, 500, "img/cenario/geral/bau-fechado.png",
+					"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Bau);
+	} else{
+		SceneObject* Bau = new SceneObject(200, 400,  "img/cenario/geral/bau-fechado.png",
+					"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
 		objectArray.emplace_back(Bau);
 	}
 }
