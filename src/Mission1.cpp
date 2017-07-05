@@ -490,8 +490,8 @@ void Mission1::SetObjectHall(){
 	StealthObject* Armario2 = new StealthObject(1400, 110, "img/scene-armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
 
-	PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/object-key.png");
-	objectHall.emplace_back(Key);
+	//PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/object-key.png");
+	//objectHall.emplace_back(Key);
 
 	//PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/object-bear.png",false, 1.5, 1.5);
 	//objectHall.emplace_back(Bear);

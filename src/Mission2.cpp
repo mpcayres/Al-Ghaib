@@ -453,7 +453,7 @@ void Mission2::SetObjectHall(){
 	MovingObject* Vase = new MovingObject(1300, 450, "img/scene-vaso.png");
 	objectHall.emplace_back(Vase);
 
-	MovingObject* Cadeira = new MovingObject(1000, 303, "img/scene-cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(1050, 303, "img/scene-cadeira.png", true);
 		objectHall.emplace_back(Cadeira);
 
 }

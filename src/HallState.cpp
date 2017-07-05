@@ -8,6 +8,7 @@
 #include "ScenePortal.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
+#include "SceneUntouchable.hpp"
 
 #include <iostream>
 
@@ -145,6 +146,10 @@ void HallState::SetInitialObjectArray(){
 
 	SceneObject* Abajur = new SceneObject(1300, 310, "img/scene-abajur.png", "img/scene-abajur.png");
 	objectArray.emplace_back(Abajur);
+
+	SceneUntouchable* Rug = new SceneUntouchable(700, 310, "img/tapete.png");
+	objectArray.emplace_back(Rug);
+
 
 	StealthObject* Armario = new StealthObject(500, 305, "img/scene-armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);

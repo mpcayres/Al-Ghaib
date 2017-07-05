@@ -10,6 +10,7 @@
 #include "SceneAnimated.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
+#include "SceneUntouchable.hpp"
 
 #include <iostream>
 
@@ -124,7 +125,7 @@ void MomRoomState::SetInitialObjectArray(){
 	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/scene-door-closed.png", "img/scene-door-opened.png");
 	objectArray.emplace_back(DoorToHall);
 
-	SceneObject* Mirror = new SceneObject(300, 170, "img/moveis/object-espelho.png", "img/moveis/object-espelho.png", 0, 0.5, 0.5);
+	SceneUntouchable* Mirror = new SceneUntouchable(300, 170, "img/moveis/object-espelho.png", 0, 0.5, 0.5);
 	objectArray.emplace_back(Mirror);
 
 	SceneObject* Table = new SceneObject(300, 250, "img/moveis/object-mesinha.png", "img/moveis/object-mesinha.png", 0, 0.7, 0.7);

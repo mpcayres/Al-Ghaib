@@ -9,7 +9,7 @@
 #include "SceneAnimated.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
-
+#include "SceneUntouchable.hpp"
 #include <iostream>
 
 LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial, int x, int y) :
@@ -138,10 +138,14 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneObject* Painel = new SceneObject(390, 127, "img/moveis/sala/mosaico.png", "img/moveis/sala/mosaico.png");
 	objectArray.emplace_back(Painel);
 
-	SceneObject* Pilastra1 = new SceneObject(350, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
+	//SceneObject* Pilastra1 = new SceneObject(350, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
+	//objectArray.emplace_back(Pilastra1);
+
+	SceneUntouchable* Pilastra1 = new SceneUntouchable (350, 127, "img/moveis/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra1);
 
-	SceneObject* Pilastra2 = new SceneObject(725, 127, "img/moveis/sala/pilastra.png", "img/moveis/sala/pilastra.png");
+
+	SceneUntouchable* Pilastra2 = new SceneUntouchable(725, 127, "img/moveis/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra2);
 
 	//SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/scene-portal.png", "img/scene-portal.png");
