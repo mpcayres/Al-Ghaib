@@ -12,6 +12,7 @@
 #include "InventoryNeedle.hpp"
 #include "InventoryControl.hpp"
 #include "InventoryLine.hpp"
+#include "InventoryBook.hpp"
 #include "Sound.hpp"
 #include <iostream>
 
@@ -593,7 +594,13 @@ void Player::AddInventory(std::string obj){
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryLine());
+	}else if(obj == "InventoryBook"){
+		spPicked = Sprite("img/cenario/geral/livro.png");
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryBook());
 	}
+
 
 	lastPicked = obj;
 	inHandIndex = inventory.size() - 1;

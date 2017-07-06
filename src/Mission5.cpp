@@ -84,7 +84,7 @@ void Mission5::Update(float dt){
 	}*/
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	std::cout << MissionManager::player->box.x << "e" << MissionManager::player->box.y << std::endl;
-	//MissionManager::player->box.x   = 3000;
+	//MissionManager::player->box.x   = 4000;
 	//MissionManager::player->box.y = 200;
 	if(time.Get() >= 4 && fadeIn){
 			UpdateVariable(dt, 80);
