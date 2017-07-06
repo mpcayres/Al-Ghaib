@@ -16,6 +16,7 @@ Mission6::Mission6() : Mission(), paradoUrso(false),paradoGato(false) {
 	momcount = 0;
 	countBear = 0;
 	countCat = 0;
+	MissionManager::enemy->ChangeClothes(2);
 
 	SDL_Color redwine = SDL_Color();
 	redwine.r = 102;
@@ -27,7 +28,7 @@ Mission6::Mission6() : Mission(), paradoUrso(false),paradoGato(false) {
 	white.g = 255;
 	white.b = 255;
 
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "MISSÃO 6", redwine, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "F", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
@@ -67,10 +68,18 @@ void Mission6::Update(float dt){
 		popRequested = true;
 	}
 	//quitRequested = instance.QuitRequested();
+
+	SDL_Color redwine = SDL_Color();
+	redwine.r = 102;
+	redwine.g = 0;
+	redwine.b = 0;
+	time.Update(dt);
+	cooldown.Update(dt);
+
 	if(instance.KeyPress(SPACE_KEY)){
 		std::cout << "SPACE KEY PRESSED" << std::endl;
-		if(time.Get() < 3){
-			time.Set(3);
+		if(time.Get() < 8){
+			time.Set(8);
 		}
 		bloqBlack = true;
 		fadeIn = false;
@@ -79,49 +88,198 @@ void Mission6::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	time.Update(dt);
-	cooldown.Update(dt);
 
 	/*if(endMission && time.Get() > (12*0.25 + 0.5)){
 		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}*/
-	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
-	if(MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState <= 1){
+	if(time.Get()>0.5){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "FI", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>0.7){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "  ", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>0.9){
+		tx = Text("font/uwch.ttf", 100, Text::TextStyle::BLENDED, "FI", redwine, 0, 0);
+		tx.SetPos(Game::GetInstance().GetWidth()-POSY_FALA/2,0, false, true);
+	}
+	if(time.Get()>1.1){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "FIM", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>1.3){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "FIM", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>1.5){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "FIM", redwine, 0, 0);
+		tx.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+	}
+	if(time.Get()>1.7){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "FIM D", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>2){
+		tx = Text("font/AlfredDrake.ttf", 100, Text::TextStyle::BLENDED, "FIM D", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>2.2){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "FIM DE", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>2.4){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>2.6){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "FIM DE J", redwine, 0, 0);
+		tx.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+	}
+	if(time.Get()>2.8){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "FIM DE J", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>3){
+		tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>3.2){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "#IIM DE J", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>3.4){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "#IM DE J", redwine, 0, 0);
+		tx.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+	}
+	if(time.Get()>3.8){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "#@M DE J", redwine, 0, 0);
+		tx.SetPos(Game::GetInstance().GetHeight()-POSY_FALA, Game::GetInstance().GetHeight()-POSY_FALA, false, true);
+	}
+	if(time.Get()>4){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "M@* DE J", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>4.2){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>4.4){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "MI*$DE J", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>4.6){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "MIS$*E J", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>4.8){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "MISS&% J", redwine, 0, 0);
+		tx.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+	}
+	if(time.Get()>5){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "MISSA%*J", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>5.2){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "MISSAO*&", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>5.4){
+		tx = Text("font/AlfredDrake.ttf", 50, Text::TextStyle::BLENDED, "MISSAO &", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>5.6){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "MISSAO 6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>6){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, " ISSAO 6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>6.2){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "  SSAO 6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>6.4){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "   SAO 6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>6.4){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "    AO 6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>6.8){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "     O 6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>7){
+		tx = Text("font/AlfredDrake.ttf", 100, Text::TextStyle::BLENDED, "       6", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>7.3){
+		tx = Text("font/AlfredDrake.ttf", 120, Text::TextStyle::BLENDED, "      66", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>7.6){
+		tx = Text("font/AlfredDrake.ttf", 140, Text::TextStyle::BLENDED, "     666", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
+	if(time.Get()>8){
+		tx = Text("font/AlfredDrake.ttf", 80, Text::TextStyle::BLENDED, "      ", redwine, 0, 0);
+		tx.SetPos(0, 0, true, true);
+	}
 
 
-			MessageDoor(dt);
-			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	}else if(MissionManager::missionManager->GetStage("HallState") &&
-							MissionManager::missionManager->countHallState <= 1){
 
-		if(state != MissionManager::missionManager->changeState){
-				state = MissionManager::missionManager->changeState;
-				time.Restart();
+	if(MissionManager::missionManager->GetStage("StageState")){
+		MissionManager::player->SetBlocked(true);
+		MissionManager::enemy->show = true;
+
+		std::cout << MissionManager::enemy->box.x << " e " << MissionManager::enemy->box.y << std::endl;
+		if(time.Get() > 8){
+			momcount ++;
+			std::cout << momcount << std::endl;
+			if(momcount == 1 ){
+				MissionManager::enemy->show = true;
+				SceneDoor::ValorPassar = 15;
+				MissionManager::enemy->SetPosition(800, 210);
+
+				MissionManager::enemy->SetDestinationPath(Vec2(820, 350));
+				MissionManager::enemy->SetDestinationPath(Vec2(800, 350));
+				MissionManager::enemy->SetDestinationPath(Vec2(800, 210));
+			}
+			else
+				MissionManager::enemy->SetDestinationPath(Vec2(820, 350));
 		}
 
+		if(time.Get() > 12 && time.Get() < 14){
+			showBox = true;
+			//ImageProfileBox (2);
+			falas.SetText("NÃO TOLERAREI ISSO!");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
 	}
-	if(time.Get() >= 4 && fadeIn){
+	if(time.Get() >= 8 && fadeIn){
 			UpdateVariable(dt, 80);
 	}
 
-	if(time.Get() >= 6){
+	if(time.Get() >= 8){
 		//PiscaPisca(dt, 6, 0.6);
 	}
 
 }
 
 void Mission6::Render(){
-	if(time.Get() < 4 && fadeIn){
+	if(time.Get() < 8.5 && fadeIn){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
-	} else if((time.Get() >= 4 && fadeIn) || !bloqBlack){
+	} else if((time.Get() >= 8.5 && fadeIn) || !bloqBlack){
 		spFade.Render(0,0,0);
 	}
 
 	if(((MissionManager::missionManager->GetStage("StageState") &&
-			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
+			MissionManager::missionManager->countStageState <= 1 && time.Get() > 8.5) ||
 		((MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
 			MissionManager::missionManager->GetStage("HallState"))) &&
@@ -142,11 +300,14 @@ void Mission6::SetObjectStage(){
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
-	MovingObject* Box = new MovingObject(400, 500, "img/inventario/box.png");
-	objectStage.emplace_back(Box);
+	//MovingObject* Box = new MovingObject(400, 500, "img/inventario/box.png");
+	//objectStage.emplace_back(Box);
 
 	MovingObject* Cadeira = new MovingObject(730, 300, "img/cenario/geral/cadeira.png");
 	objectStage.emplace_back(Cadeira);
+
+	SceneObject* Urso = new SceneObject(400,500, "img/inventario/bear-fixed.png", "img/inventario/bear-fixed.png", 0, 2, 2);
+	objectStage.emplace_back(Urso);
 }
 
 void Mission6::SetObjectHall(){

@@ -2,7 +2,7 @@
 #include "Camera.hpp"
 
 Animation::Animation(float x, float y, float rotation, std::string sprite,
-		int frameCount, float frameTime, bool ends, float scaleX, float scaleY, bool back):  backgroundsquare("img/HUD/blackBack.jpg"), back(back){
+		int frameCount, float frameTime, bool ends, float scaleX, float scaleY, bool back):  backgroundsquare("img/HUD/grayBack.jpg"), back(back){
 	sp = Sprite(sprite, frameCount, frameTime);
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	box.x = x;
