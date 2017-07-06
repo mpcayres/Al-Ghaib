@@ -21,9 +21,13 @@ HallFinalState::HallFinalState() :
 	//std::cout << "HFSC1.1" << std::endl;
 	SetInitialObjectArray();
 
+
+
 	objectArray.emplace_back(MissionManager::enemy);
 	//objectArray.emplace_back(MissionManager::cat);
 	objectArray.emplace_back(MissionManager::player);
+
+
 
 	LoadAssets();
 	std::cout << "HFSC2 " << objectArray.size() << std::endl;
@@ -131,4 +135,48 @@ void HallFinalState::Render(){
 void HallFinalState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
+
+	MovingObject* Banquinho1 = new MovingObject(560, 390, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(Banquinho1);
+
+	MovingObject* Banquinho2 = new MovingObject(900, 400, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(Banquinho2);
+
+	MovingObject* Banquinho3 = new MovingObject(1111, 300, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(Banquinho3);
+
+	MovingObject* Vaso1 = new MovingObject(1760, 369, "img/cenario/geral/vaso.png", false);
+			objectArray.emplace_back(Vaso1);
+
+	MovingObject* Vaso2 = new MovingObject(1900, 369, "img/cenario/geral/vaso.png", false);
+			objectArray.emplace_back(Vaso2);
+
+	SceneObject* Bau= new SceneObject(2900, 260,
+				"img/cenario/geral/bau-fechado.png", "img/cenario/geral/bau-aberto.png");
+	objectArray.emplace_back(Bau);
+
+
+	MovingObject* Cadeira = new MovingObject(2320, 280, "img/cenario/geral/cadeira.png", true);
+		objectArray.emplace_back(Cadeira);
+
+	MovingObject* BanquinhoBlock1 = new MovingObject(4100, 300, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(BanquinhoBlock1);
+
+	MovingObject* BanquinhoBlock2 = new MovingObject(4250, 300, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(BanquinhoBlock2);
+
+	MovingObject* BanquinhoBlock3 = new MovingObject(4150, 350, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(BanquinhoBlock3);
+
+	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 350, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(BanquinhoBlock4);
+
+	//SceneObject* Livro = new SceneObject(3175, 300, "img/cenario/geral/livro.png", "img/cenario/geral/livro.png" , 0, 0.4, 0.4);
+	//objectArray.emplace_back(Livro);
+
+	StealthObject* Armario = new StealthObject(5500, 210, "img/cenario/geral/armario-corredor-fechado.png");
+		objectArray.emplace_back(Armario);
+
+	SceneDoor* DoorToKidRoom = new SceneDoor(6000, 200, "StageState", false);
+		objectArray.emplace_back(DoorToKidRoom);
 }
