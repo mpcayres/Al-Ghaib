@@ -129,27 +129,27 @@ void Mission3::Update(float dt){
 		if(time.Get() > 5){
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			sussurro.Play(0);
-			ImageProfileBox (6); //BOTA URSO
-			falas.SetText("U: OLHA ESSA QUE CHAMAS DE MÃE");
+			ImageProfileBox (3); //BOTA URSO
+			falas.SetText("OLHA ESSA QUE CHAMAS DE MÃE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 5;
 			showBox = true;
 		}
 		if(time.Get() > 10){
-			falas.SetText("U: O QUE É ESSA ROUPA?");
+			falas.SetText("O QUE É ESSA ROUPA?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 10;
 			showBox = true;
 		}
 		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: AINDA É REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
+			falas.SetText("AINDA É REALMENTE ELA POR BAIXO DESSE PANO NEGRO?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 15;
 			showBox = true;
 
 		}
 		if(time.Get() > 20 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: TEMOS QUE INVESTIGAR ISSO");
+			falas.SetText("TEMOS QUE INVESTIGAR ISSO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 20;
 			showBox = true;

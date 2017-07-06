@@ -172,7 +172,7 @@ void Mission2::Update(float dt){
 				Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 				sussurro.Play(0);
 				showBox = true;
-				ImageProfileBox(3); //BOTAR O URSO
+				ImageProfileBox(4); //BOTAR O URSO
 				falas.SetText("OLHA O QUE FIZERAM COMIGO!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 14;
