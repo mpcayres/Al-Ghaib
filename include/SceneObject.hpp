@@ -24,7 +24,7 @@ public:
 	bool Is(std::string type);
 	bool GetBlockRandom();
 	bool GetState();
-	void ChangeImage();
+	void ChangeImage(bool justOpen = false);
 	void MovePlayerColliding(float w, float h);
 
 protected:

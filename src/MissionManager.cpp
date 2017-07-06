@@ -73,13 +73,14 @@ void MissionManager::SetState(std::string dest){
 	factorZoom = 1;
 	Camera::UpdateZoom();
 	setObjectTile = true;
+	previousState = state;
 	if(dirDest != -1) player->SetDirecao(dirDest);
 	if(dest == "StageState"){
 		std::cout << "SS.1" << std::endl;
 		//std::cout << "SIZE: " << objectStage.size() << std::endl;
 		Game::GetInstance().Push(new StageState(std::move(objectStage), initStage, xDest, yDest));
 		initStage = false;
-		stage = "StageState";
+		state = "StageState";
 		countStageState++;
 		//std::cout << countStageState << std::endl;
 		changeState++;
@@ -89,7 +90,7 @@ void MissionManager::SetState(std::string dest){
 		//std::cout << "SIZE: " << objectHall.size() << std::endl;
 		Game::GetInstance().Push(new HallState(std::move(objectHall), initHall, xDest, yDest));
 		initHall = false;
-		stage = "HallState";
+		state = "HallState";
 		//std::cout << "HS.2" << std::endl;
 		countHallState++;
 		std::cout << countHallState << std::endl;
@@ -99,7 +100,7 @@ void MissionManager::SetState(std::string dest){
 		//std::cout << "SIZE: " << objectLivingRoom.size() << std::endl;
 		Game::GetInstance().Push(new LivingRoomState(std::move(objectLivingRoom), initLivingRoom, xDest, yDest));
 		initLivingRoom = false;
-		stage = "LivingRoomState";
+		state = "LivingRoomState";
 		//std::cout << "LRS.2" << std::endl;
 		countLivingRoomState++;
 		changeState++;
@@ -108,14 +109,14 @@ void MissionManager::SetState(std::string dest){
 		//std::cout << "SIZE: " << objectMomRoom.size() << std::endl;
 		Game::GetInstance().Push(new MomRoomState(std::move(objectMomRoom), initMomRoom, xDest, yDest));
 		initMomRoom = false;
-		stage = "MomRoomState";
+		state = "MomRoomState";
 		//std::cout << "LRS.2" << std::endl;
 		countMomRoomState++;
 		changeState++;
 	} else if(dest == "HallFinalState"){
 		//std::cout << "HFS.1" << std::endl;
 		Game::GetInstance().Push(new HallFinalState());
-		stage = "HallFinalState";
+		state = "HallFinalState";
 		//std::cout << "HFS.2" << std::endl;
 		changeState++;
 	}
@@ -263,8 +264,12 @@ int MissionManager::GetNumMission(){
 	return numMission;
 }
 
-bool MissionManager::GetStage(std::string type){
-	return (type == stage);
+bool MissionManager::IsState(std::string type){
+	return (type == state);
+}
+
+bool MissionManager::IsPreviousState(std::string type){
+	return (type == previousState);
 }
 
 void MissionManager::SetPos(int x, int y){

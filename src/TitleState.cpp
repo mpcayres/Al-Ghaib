@@ -7,19 +7,19 @@ Music TitleState::intro, TitleState::music;
 bool TitleState::stopMusic;
 
 TitleState::TitleState() : menu(50, 150) {
-	SDL_Color auxcolor = SDL_Color();
-	auxcolor.r = 255;
-	auxcolor.g = 10;
-	auxcolor.b = 10;
+	//SDL_Color auxcolor = SDL_Color();
+	//auxcolor.r = 255;
+	//auxcolor.g = 10;
+	//auxcolor.b = 10;
 
 	flagTimer = true; stopMusic = false; controlPop = false;
 	time = Timer();
-	bg = Sprite("img/menu/sprite-title.png", 4, 0.5);
+	bg = Sprite("img/menu/sprite-title.png", 5, 0.5);
 	bg.SetScaleX(1.5); bg.SetScaleY(1.5);
 	control = Sprite("img/menu/controles.png");
 
-	tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
-	tx.SetPos(0, 0, true, true);
+	//tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
+	//tx.SetPos(0, 0, true, true);
 	intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -64,7 +64,7 @@ void TitleState::Update(float dt){
 
 void TitleState::Render(){
 	bg.Render(0,0,0);
-	tx.Render(0,0);
+	//tx.Render(0,0);
 	menu.Render();
 	if(controlPop) control.Render(50,50,0);
 }

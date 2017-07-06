@@ -123,7 +123,7 @@ void  Mission1::Update(float dt){
 				posEnemyX = MissionManager::player->limits.x + 10;
 			}
 
-			if(MissionManager::missionManager->GetStage("HallState")){
+			if(MissionManager::missionManager->IsState("HallState")){
 				((HallState&) Game::GetInstance().GetCurrentState())
 		 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
 		 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
@@ -131,7 +131,7 @@ void  Mission1::Update(float dt){
 						GetCurrentState()).tileMap.GetPath());
 				MissionManager::enemy->seen = false;
 			}
-			if(MissionManager::missionManager->GetStage("LivingRoomState")){
+			if(MissionManager::missionManager->IsState("LivingRoomState")){
 				((LivingRoomState&) Game::GetInstance().GetCurrentState())
 					.tileMapChao.PathFind(Vec2(posEnemyX,posEnemyY),
 		 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
@@ -185,7 +185,7 @@ void  Mission1::Update(float dt){
 		} else{
 
 			/* COMEÇO DO JOGO. QUARTO DA CRIANÇA. PRIMEIRA VEZ ENTRANDO PARA LEGENDAS INICIAIS*/
-			if(MissionManager::missionManager->GetStage("StageState") &&
+			if(MissionManager::missionManager->IsState("StageState") &&
 					MissionManager::missionManager->countStageState <= 1){
 				//StageState++;
 				//std::cout << "StageState" << std::endl;
@@ -270,7 +270,7 @@ void  Mission1::Update(float dt){
 
 				MessageDoor(dt);
 				//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-			} else if(MissionManager::missionManager->GetStage("HallState") &&
+			} else if(MissionManager::missionManager->IsState("HallState") &&
 					MissionManager::missionManager->countHallState <= 1){
 				//HallState++;
 				//std::cout << "HallState" << std::endl;
@@ -353,9 +353,9 @@ void  Mission1::Update(float dt){
 
 				MessageDoor(dt);
 				//NO CASO DE JOGADOR VOLTAR PARA QUARTO DA CRIANÇA
-			} else if(MissionManager::missionManager->GetStage("StageState") &&
+			} else if(MissionManager::missionManager->IsState("StageState") &&
 					MissionManager::missionManager->countStageState > 1){
-				//std::cout << MissionManager::missionManager->GetStage("StageState") << std::endl;
+				//std::cout << MissionManager::missionManager->IsState("StageState") << std::endl;
 				if(state != MissionManager::missionManager->changeState){
 					state = MissionManager::missionManager->changeState;
 					time.Restart();
@@ -373,7 +373,7 @@ void  Mission1::Update(float dt){
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				}
 				MessageDoor(dt);
-			} else if((MissionManager::missionManager->GetStage("HallState") &&
+			} else if((MissionManager::missionManager->IsState("HallState") &&
 					MissionManager::missionManager->countHallState > 1)){
 				if(time.Get() < 4 && trancada == false && cooldown.Get() > 3){
 					showBox = false;
@@ -381,7 +381,7 @@ void  Mission1::Update(float dt){
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				}
 
-			}else if (MissionManager::missionManager->GetStage("LivingRoomState")){
+			}else if (MissionManager::missionManager->IsState("LivingRoomState")){
 				if(state != MissionManager::missionManager->changeState){
 					MissionManager::player->SetPosition(230, 300);
 					state = MissionManager::missionManager->changeState;
@@ -441,11 +441,11 @@ void  Mission1::Render(){
 		spFade.Render(0, 0, 0);
 	}
 
-	if(((MissionManager::missionManager->GetStage("StageState") &&
+	if(((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1 && time.Get() > 25) ||
-		((MissionManager::missionManager->GetStage("StageState") &&
+		((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
-			MissionManager::missionManager->GetStage("HallState"))) &&
+			MissionManager::missionManager->IsState("HallState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 
 		if(showBox){
@@ -475,7 +475,7 @@ void Mission1::SetObjectStage(){
 	objectStage.emplace_back(Door);
 
 	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
-			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
 	PickUpObject* Clown = new PickUpObject(462, 270, "InventoryClown",

@@ -13,6 +13,7 @@ Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMissi
 	initialState = "StageState";
 	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
+	MissionManager::player->SetDirecao((int) Player::OESTE);
 	MissionManager::missionManager->randomStates = true;
 
 	meowcount = 0;
@@ -108,7 +109,7 @@ void Mission2::Update(float dt){
 			posEnemyX = MissionManager::player->limits.x + 10;
 		}
 
-		if(MissionManager::missionManager->GetStage("HallState")){
+		if(MissionManager::missionManager->IsState("HallState")){
 			((HallState&) Game::GetInstance().GetCurrentState())
 	 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
 	 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+30) );
@@ -126,7 +127,7 @@ void Mission2::Update(float dt){
 		Game::GetInstance().GetCurrentState().ChangeMission(3);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
-	if(MissionManager::missionManager->GetStage("StageState") &&
+	if(MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 		Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			MissionManager::player->SetBlocked(true);
@@ -212,7 +213,7 @@ void Mission2::Update(float dt){
 
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	}else if(MissionManager::missionManager->GetStage("HallState") &&
+	}else if(MissionManager::missionManager->IsState("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 
 		MissionManager::player->SetBlocked(false);
@@ -320,7 +321,7 @@ void Mission2::Update(float dt){
 			ultimoTempo = ultimoTempo + 4;
 			showBox = false;
 		}
-	}else if(MissionManager::missionManager->GetStage("StageState") &&
+	}else if(MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState > 1){
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
@@ -358,7 +359,7 @@ void Mission2::Update(float dt){
 		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
 
-	}else if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+	}else if(MissionManager::missionManager->IsState("LivingRoomState") &&
 					MissionManager::missionManager->countLivingRoomState > 1){
 
 		MissionManager::player->SetBlocked(false);
@@ -403,7 +404,7 @@ void Mission2::Update(float dt){
 			showBox = false;
 		}
 
-	}else if(MissionManager::missionManager->GetStage("LivingRoomState")){
+	}else if(MissionManager::missionManager->IsState("LivingRoomState")){
 
 		MissionManager::cat->show = false;
 
@@ -424,11 +425,11 @@ void Mission2::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->GetStage("StageState") &&
+	if(((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->GetStage("StageState") &&
+		((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
-			MissionManager::missionManager->GetStage("HallState"))) &&
+			MissionManager::missionManager->IsState("HallState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);

@@ -93,7 +93,7 @@ void Mission3::Update(float dt){
 		Game::GetInstance().GetCurrentState().ChangeMission(4);
 	}
 	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL ////////////////////////////////////////////////////////////////////
-	if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+	if(MissionManager::missionManager->IsState("LivingRoomState") &&
 			MissionManager::missionManager->countLivingRoomState <= 1){
 		MissionManager::enemy->show = true;
 
@@ -165,7 +165,7 @@ void Mission3::Update(float dt){
 		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	} if(MissionManager::missionManager->GetStage("HallState") &&
+	} if(MissionManager::missionManager->IsState("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 			MissionManager::player->SetBlocked(false);
 		//HallState++;
@@ -273,7 +273,7 @@ void Mission3::Update(float dt){
 		}
 
 
-	} if(MissionManager::missionManager->GetStage("LivingRoomState") &&
+	} if(MissionManager::missionManager->IsState("LivingRoomState") &&
 				MissionManager::missionManager->countLivingRoomState > 1){
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
@@ -307,7 +307,7 @@ void Mission3::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(610, 450));
 		}
 
-	}if(MissionManager::missionManager->GetStage("MomRoomState")){
+	}if(MissionManager::missionManager->IsState("MomRoomState")){
 
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
@@ -373,7 +373,7 @@ void Mission3::Update(float dt){
 			}
 			if(time.Get() > 19)
 				Game::GetInstance().GetCurrentState().ChangeState("MomRoomStage","StageState");
-		}if(MissionManager::missionManager->GetStage("StageState") /*&& bronca*/){
+		}if(MissionManager::missionManager->IsState("StageState") /*&& bronca*/){
 			std::cout << "entrei!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 			if(state != MissionManager::missionManager->changeState){
 				std::cout << time.Get() << std::endl;
@@ -421,7 +421,7 @@ void Mission3::Update(float dt){
 
 
 		//////////////// TROCAR PARA QUARTO DA MÃƒE 1
-				//else if(MissionManager::missionManager->GetStage("MomState") &&
+				//else if(MissionManager::missionManager->IsState("MomState") &&
 				//						MissionManager::missionManager->countMomState > 1){
 					//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
 					// SE PERTO DEMAIS, MÃƒE APARECE
@@ -429,7 +429,7 @@ void Mission3::Update(float dt){
 					//MANDA IR PARA O QUARTO DORMIR
 
 
-				//}else if(MissionManager::missionManager->GetStage("StageState") &&
+				//}else if(MissionManager::missionManager->IsState("StageState") &&
 				//						bronca){
 					//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
 					// SE PERTO DEMAIS, MÃƒE APARECE
@@ -460,9 +460,9 @@ void Mission3::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if((((MissionManager::missionManager->GetStage("LivingRoomState") && MissionManager::missionManager->countLivingRoomState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->GetStage("LivingRoomState") && MissionManager::missionManager->countLivingRoomState > 1) ||
-			MissionManager::missionManager->GetStage("HallState"))) && !MissionManager::player->GetBloqHUD()) || 	MissionManager::missionManager->GetStage("MomRoomState")){
+	if((((MissionManager::missionManager->IsState("LivingRoomState") && MissionManager::missionManager->countLivingRoomState <= 1 && time.Get() > 4) ||
+		((MissionManager::missionManager->IsState("LivingRoomState") && MissionManager::missionManager->countLivingRoomState > 1) ||
+			MissionManager::missionManager->IsState("HallState"))) && !MissionManager::player->GetBloqHUD()) || 	MissionManager::missionManager->IsState("MomRoomState")){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
 			profileBox.Render(profileBoxX, profileBoxY, 0);

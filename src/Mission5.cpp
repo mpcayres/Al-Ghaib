@@ -86,13 +86,13 @@ void Mission5::Update(float dt){
 		Game::GetInstance().GetCurrentState().ChangeMission(2);
 	}*/
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
-	if(MissionManager::missionManager->GetStage("StageState") &&
+	if(MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 
 
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	}else if(MissionManager::missionManager->GetStage("HallState") &&
+	}else if(MissionManager::missionManager->IsState("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 
 		if(state != MissionManager::missionManager->changeState){
@@ -120,11 +120,11 @@ void Mission5::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->GetStage("StageState") &&
+	if(((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->GetStage("StageState") &&
+		((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
-			MissionManager::missionManager->GetStage("HallState"))) &&
+			MissionManager::missionManager->IsState("HallState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);

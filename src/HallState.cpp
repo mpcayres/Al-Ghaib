@@ -43,6 +43,14 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
+	for(int i = objectArray.size() - 1; i >= 0; --i) {
+		if(objectArray[i].get()->Is("SceneDoor")){
+			if(MissionManager::missionManager->IsPreviousState(((SceneDoor*)objectArray[i].get())->GetDest())){
+				((SceneDoor*)objectArray[i].get())->ChangeImage(true);
+			}
+		}
+	}
+
 	RandomState();
 	LoadAssets();
 	std::cout << "HSC2 " << objectArray.size() << std::endl;
@@ -103,8 +111,13 @@ void HallState::Update(float dt){
 
 	if(changeIndex != -1){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
-		ChangeState("HallState",
-				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
+		if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "StageState"){
+			ChangeState("HallState", "StageState", 800, 280, (int) Player::SUL);
+		} else if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "LivingRoomState"){
+			ChangeState("HallState", "LivingRoomState", 240, 200, (int) Player::SUL);
+		} else if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "MomRoomState"){
+			ChangeState("HallState", "MomRoomState", 230, 210, (int) Player::SUL);
+		}
 	}
 
 	/*if(MissionManager::missionManager->setObjectTile){

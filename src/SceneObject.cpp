@@ -78,12 +78,12 @@ bool SceneObject::GetState(){
 	return estado;
 }
 
-void SceneObject::ChangeImage(){
+void SceneObject::ChangeImage(bool justOpen){
 	if(change2 != ""){
 		Sound s = Sound("audio/portapequenaconvertida.wav");
 		s.Play(0);
 
-		if(estado){
+		if(estado && !justOpen){
 			estado = false;
 			sp.Open(change1);
 			switch(caseChange){
@@ -114,7 +114,7 @@ void SceneObject::ChangeImage(){
 				default:
 					break;
 			}
-		} else{
+		} else if(!estado){
 			estado = true;
 			sp.Open(change2);
 			int w = box.w; int h = box.h;

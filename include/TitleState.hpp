@@ -36,7 +36,7 @@ private:
 	static void LinkMusic();
 
 	Sprite bg, control;
-	Text tx;
+	//Text tx;
 	Timer time;
 	static Music intro, music;
 	bool flagTimer, controlPop;

@@ -33,7 +33,8 @@ public:
 	void LoadMission(int num = 0);
 	void SaveMission();
 	Mission *GetMission();
-	bool GetStage(std::string type);
+	bool IsState(std::string type);
+	bool IsPreviousState(std::string type);
 	void SetPos(int x, int y);
 	int GetNumMission();
 
@@ -49,7 +50,7 @@ public:
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom, objectMomRoom;
 	Mission *mission;
-	std::string stage;
+	std::string state, previousState;
 	int numMission;
 	bool initStage, initHall, initLivingRoom, initMomRoom;
 	int xDest, yDest;

@@ -93,7 +93,7 @@ void Mission4::Update(float dt){
 		Game::GetInstance().GetCurrentState().ChangeMission(5);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
-	if(MissionManager::missionManager->GetStage("StageState") &&
+	if(MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 			if(time.Get() > 5 && trancada == false && cooldown.Get() > 3){
 				ImageProfileBox(4);
@@ -123,7 +123,7 @@ void Mission4::Update(float dt){
 
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	}else if(MissionManager::missionManager->GetStage("HallState") &&
+	}else if(MissionManager::missionManager->IsState("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 
 		if(state != MissionManager::missionManager->changeState){
@@ -134,7 +134,7 @@ void Mission4::Update(float dt){
 
 		MessageDoor(dt);
 
-	}else if(MissionManager::missionManager->GetStage("MomRoomState")){
+	}else if(MissionManager::missionManager->IsState("MomRoomState")){
 
 			if(state != MissionManager::missionManager->changeState){
 				state = MissionManager::missionManager->changeState;
@@ -186,7 +186,7 @@ void Mission4::Update(float dt){
 		UpdateVariable(dt, 80);
 	}
 
-	if(!fadeIn && (creepyEffect.Get() > 3) && (contCreepy == 0)&&(!MissionManager::missionManager->GetStage("MomRoomState"))){
+	if(!fadeIn && (creepyEffect.Get() > 3) && (contCreepy == 0)&&(!MissionManager::missionManager->IsState("MomRoomState"))){
 		creepyEffect.Restart();
 		contCreepy = 1;
 		//std::cout << "piscapisca" << std::endl;
@@ -194,7 +194,7 @@ void Mission4::Update(float dt){
 		//std::cout << "oi" << std::endl;
 	}
 
-	if(!fadeIn && (creepyEffect.Get() > 8) && (contCreepy == 1)&&(!MissionManager::missionManager->GetStage("MomRoomState"))){
+	if(!fadeIn && (creepyEffect.Get() > 8) && (contCreepy == 1)&&(!MissionManager::missionManager->IsState("MomRoomState"))){
 		creepyEffect.Restart();
 		contCreepy = 2;
 		Camera::ZoomCreepy(1, true);
@@ -202,7 +202,7 @@ void Mission4::Update(float dt){
 		//std::cout << "oi" << std::endl;
 	}
 
-	if(!fadeIn && (creepyEffect.Get() > 2) && (contCreepy == 2) &&(!MissionManager::missionManager->GetStage("MomRoomState"))){
+	if(!fadeIn && (creepyEffect.Get() > 2) && (contCreepy == 2) &&(!MissionManager::missionManager->IsState("MomRoomState"))){
 		creepyEffect.Restart();
 		contCreepy = 0;
 		Camera::ZoomCreepy(1, false);
@@ -221,11 +221,11 @@ void Mission4::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->GetStage("StageState") &&
+	if(((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->GetStage("StageState") &&
+		((MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
-			MissionManager::missionManager->GetStage("HallState"))) &&
+			MissionManager::missionManager->IsState("HallState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);

@@ -98,7 +98,7 @@ void LivingRoomState::Update(float dt){
 	if(changeIndex != -1){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
 		ChangeState("LivingRoomState",
-				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
+				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 500, 120, (int) Player::SUL);
 	}
 
 	/*if(MissionManager::missionManager->setObjectTile){
