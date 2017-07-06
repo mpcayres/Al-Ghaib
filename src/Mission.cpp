@@ -186,10 +186,15 @@ void Mission::ImageProfileBox (int option){
 		profileBox = Sprite("img/caixa/caixa-mae-3.png");
 		profileBox.SetScaleX(4);
 		profileBox.SetScaleY(4);
-		profileBoxX = 25;
-		profileBoxY = 450;
+		profileBoxX = 30;
+		profileBoxY = 470;
 		break;
 	case 4:
+		profileBox = Sprite("img/inventario/bear-fixed.png");
+		profileBox.SetScaleX(3);
+		profileBox.SetScaleY(3);
+		profileBoxX = 30;
+		profileBoxY = 500;
 		break;
 	case 5:
 		break;
