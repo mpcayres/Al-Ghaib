@@ -180,9 +180,6 @@ void HallState::SetInitialObjectArray(){
 	ScenePortal* DoorToLivingRoom = new ScenePortal(500, 105, "LivingRoomState");
 	objectArray.emplace_back(DoorToLivingRoom);
 
-	//SceneObject* CriadoMudo = new SceneObject(100, 160, "img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
-	//objectArray.emplace_back(CriadoMudo);
-
 	SceneObject* Book = new SceneObject(110, 150, "img/cenario/geral/livro.png", "img/cenario/geral/livro.png", 0, 0.3, 0.3);
 	objectArray.emplace_back(Book);
 
@@ -194,9 +191,6 @@ void HallState::SetInitialObjectArray(){
 
 	StealthObject* Armario = new StealthObject(500, 305, "img/cenario/geral/armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
-
-	//StealthObject* Armario2 = new StealthObject(1400, 110, "img/cenario/armario-corredor-fechado.png");
-	//objectArray.emplace_back(Armario2);
 
 	SceneObject* CamaGato = new SceneObject(1450, 300,
 				"img/cenario/corredor/cama-gato.png", "img/cenario/corredor/cama-gato.png");
