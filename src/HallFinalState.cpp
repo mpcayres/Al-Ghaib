@@ -8,6 +8,8 @@
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
 #include "SceneUntouchable.hpp"
+#include "InventoryBook.hpp"
+#include "PickUpObject.hpp"
 
 #include <iostream>
 
@@ -162,19 +164,22 @@ void HallFinalState::SetInitialObjectArray(){
 	MovingObject* BanquinhoBlock1 = new MovingObject(4100, 300, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock1);
 
-	MovingObject* BanquinhoBlock2 = new MovingObject(4250, 300, "img/cenario/sala/banquinho.png", true);
+	MovingObject* BanquinhoBlock2 = new MovingObject(4300, 300, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock2);
 
-	MovingObject* BanquinhoBlock3 = new MovingObject(4150, 350, "img/cenario/sala/banquinho.png", true);
+	MovingObject* BanquinhoBlock3 = new MovingObject(4150, 400, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock3);
 
-	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 350, "img/cenario/sala/banquinho.png", true);
+	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 400, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock4);
 
-	//SceneObject* Livro = new SceneObject(3175, 300, "img/cenario/geral/livro.png", "img/cenario/geral/livro.png" , 0, 0.4, 0.4);
-	//objectArray.emplace_back(Livro);
 
-	StealthObject* Armario = new StealthObject(5500, 210, "img/cenario/geral/armario-corredor-fechado.png");
+	PickUpObject* Livro= new PickUpObject(4200, 320, "InventoryBook","img/cenario/geral/livro.png",false, 0.4, 0.4);
+	objectArray.emplace_back(Livro);
+
+
+
+	StealthObject* Armario = new StealthObject(4700, 210, "img/cenario/geral/armario-corredor-fechado.png");
 		objectArray.emplace_back(Armario);
 
 	SceneDoor* DoorToKidRoom = new SceneDoor(6000, 200, "StageState", false);
