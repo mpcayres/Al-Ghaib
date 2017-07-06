@@ -115,6 +115,13 @@ void Enemy::SetDestinationPath(Vec2 path){
 	destinationPath.emplace_back(path);
 }
 
+void Enemy::PathFlush(){
+	while(!destinationPath.empty())
+		destinationPath.pop_back();
+	inDefinedPath = false;
+	canPursuit = true;
+}
+
 void Enemy::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;

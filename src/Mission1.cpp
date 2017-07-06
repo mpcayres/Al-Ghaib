@@ -126,7 +126,7 @@ void  Mission1::Update(float dt){
 			if(MissionManager::missionManager->GetStage("HallState")){
 				((HallState&) Game::GetInstance().GetCurrentState())
 		 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
-		 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+30) );
+		 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
 				MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
 						GetCurrentState()).tileMap.GetPath());
 				MissionManager::enemy->seen = false;
@@ -134,7 +134,7 @@ void  Mission1::Update(float dt){
 			if(MissionManager::missionManager->GetStage("LivingRoomState")){
 				((LivingRoomState&) Game::GetInstance().GetCurrentState())
 					.tileMapChao.PathFind(Vec2(posEnemyX,posEnemyY),
-		 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+30) );
+		 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
 				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
 						GetCurrentState()).tileMapChao.GetPath());
 				MissionManager::enemy->seen = false;
@@ -391,6 +391,7 @@ void  Mission1::Update(float dt){
 
 				if(MissionManager::player->lastPicked == "InventoryBear"  && trancada == false && MissionManager::enemy->show == false){
 					MissionManager::enemy->SetPosition(230, 175);
+					MissionManager::enemy->PathFlush();
 					MissionManager::enemy->show = true;
 
 					SceneDoor::count = ABRE;

@@ -36,6 +36,7 @@ public:
 	int GetHeight();
 	int GetWidth();
 	void Reset();
+	void PathFlush();
 
 	InvBox direcao;
 	//Vec2 previousPos;
