@@ -3,6 +3,7 @@
 #include "StealthObject.hpp"
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
+#include "Geometry.hpp"
 
  Music Mission6::music;
 
@@ -49,6 +50,7 @@ Mission6::Mission6() : Mission(), paradoUrso(false),paradoGato(false) {
 	SetObjectHall();
 	SetObjectLivingRoom();
 
+	MissionManager::enemy->SetPosition(800, 200);
 	MissionManager::cat->SetPosition(1000, 200);
 }
 
@@ -232,25 +234,34 @@ void Mission6::Update(float dt){
 
 
 	if(MissionManager::missionManager->GetStage("StageState")){
-		MissionManager::player->SetBlocked(true);
-		MissionManager::enemy->show = true;
+		SetPiscaPisca(20, 0.4);
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
+			MissionManager::enemy->show = false;
+			//MissionManager::missionManager->player->box.x = 400;
+			//MissionManager::missionManager->player->box.y = 400;
+			MissionManager::enemy->SetPosition(800, 210);
+			MissionManager::enemy->Reset();
+			time.Restart();
+		}
 
-		std::cout << MissionManager::enemy->box.x << " e " << MissionManager::enemy->box.y << std::endl;
+		MissionManager::player->SetBlocked(false);
+		MissionManager::enemy->show = true;
 		if(time.Get() > 8){
 			momcount ++;
-			std::cout << momcount << std::endl;
 			if(momcount == 1 ){
 				MissionManager::enemy->show = true;
+				SceneDoor::count = ABRE;
 				SceneDoor::ValorPassar = 15;
 				MissionManager::enemy->SetPosition(800, 210);
-
-				MissionManager::enemy->SetDestinationPath(Vec2(820, 350));
+				MissionManager::enemy->SetDestinationPath(Vec2(750, 350));
 				MissionManager::enemy->SetDestinationPath(Vec2(800, 350));
 				MissionManager::enemy->SetDestinationPath(Vec2(800, 210));
 			}
-			else
-				MissionManager::enemy->SetDestinationPath(Vec2(820, 350));
 		}
+		/*if(MissionManager::enemy->show == true){
+			MissionManager::enemy->SetDestinationPath(Vec2(780, 350));
+		}*/
 
 		if(time.Get() > 12 && time.Get() < 14){
 			showBox = true;
@@ -263,9 +274,7 @@ void Mission6::Update(float dt){
 			UpdateVariable(dt, 80);
 	}
 
-	if(time.Get() >= 8){
-		//PiscaPisca(dt, 6, 0.6);
-	}
+	PiscaPisca(dt);
 
 }
 
