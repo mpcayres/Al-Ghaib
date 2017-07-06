@@ -94,7 +94,8 @@ void  Mission1::Update(float dt){
 		}
 	}
 	//std::cout << time.Get() << std::endl;
-	time.Update(dt);
+	if(time.Get()<100)
+		time.Update(dt);
 	cooldown.Update(dt);
 
 	if(gameOver){
