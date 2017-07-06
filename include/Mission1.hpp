@@ -29,10 +29,7 @@ protected:
 
 	bool played, endMission;
 	Text creepy1, creepy2, creepy3, creepy4, creepy5, creepy6;
-	bool momArrive;
-	int contPega;
-	bool peguei;
-	int num;
+	int countPega, countPega2;
 };
 
 

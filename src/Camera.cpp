@@ -17,7 +17,7 @@ void Camera::SetType(int Ntype){
 	type = Ntype;
 	isMoving = false;
 	if(type == CAMERA_TYPE0){
-		pos.x = 10; pos.y = 10;
+		pos.x = 50; pos.y = 50;
 	} else if(type == CAMERA_TYPE3){
 		pos.x = 80; pos.y = 80;
 	}

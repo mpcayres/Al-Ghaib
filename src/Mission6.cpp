@@ -249,7 +249,7 @@ void Mission6::Update(float dt){
 
 	if(MissionManager::missionManager->IsState("StageState")){
 		if(state != MissionManager::missionManager->changeState){
-			SetPiscaPisca(100, 0.4);
+			SetPiscaPisca(104, 0.4);
 			state = MissionManager::missionManager->changeState;
 			MissionManager::enemy->show = false;
 			MissionManager::enemy->SetPosition(800, 210);

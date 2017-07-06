@@ -19,8 +19,8 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 	tileMapParede("map/tileMapSalaParede.txt", &tileSetParede){
 
 	limits = tileMapChao.FindLimits();
-	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
-	else SetPlayer(250, 250, CAMERA_TYPE0, limits);
+	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE3, limits);
+	else SetPlayer(250, 250, CAMERA_TYPE3, limits);
 	std::cout << "Player: " << MissionManager::player->box.x << " " << MissionManager::player->box.y << std::endl;
 
 	if(inicial){

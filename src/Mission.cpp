@@ -11,7 +11,6 @@ Mission::Mission() : blackSquare("img/HUD/blackBack.jpg"), spFade("img/HUD/fadeB
 	bloqBlack = false;
 	fadeIn = true;
 	gameOver = false;
-	count = 0;
 
 	flagTimer = true; //stopMusic = false;
 	time = Timer();
@@ -36,6 +35,7 @@ Mission::Mission() : blackSquare("img/HUD/blackBack.jpg"), spFade("img/HUD/fadeB
 	falasBoxRect.w = falasBox.GetScaledWidth();
 	falasBoxRect.h = falasBox.GetScaledHeight();
 
+	profileBoxX = profileBoxY = 0;
 }
 
 Mission::~Mission() {

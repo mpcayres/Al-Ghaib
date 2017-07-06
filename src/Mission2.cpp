@@ -7,7 +7,7 @@
 #include "HallState.hpp"
 
 
- Music Mission2::music;
+Music Mission2::music;
 
 Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMission(false) {
 	initialState = "StageState";
@@ -20,6 +20,7 @@ Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMissi
 	momcount = 0;
 	countBear = 0;
 	countCat = 0;
+	count = 0;
 
 	SDL_Color redwine = SDL_Color();
 	redwine.r = 102;

@@ -56,12 +56,6 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	SetObjectLivingRoom();
 
 	MissionManager::cat->SetPosition(1000, 200);
-
-	flagMiado = false;
-	flagWhisper = false;
-	flagPorta = false;
-	flagGameOver = false;
-	miado = Timer();
 }
 
 Mission3::~Mission3() {
@@ -95,11 +89,6 @@ void Mission3::Update(float dt){
 	time.Update(dt);
 	cooldown.Update(dt);
 
-	if(gameOver){
-		if(time.Get() > 3){
-			Game::GetInstance().GetCurrentState().ChangeMission(3);
-		}
-	}
 	if(endMission && drink){
 		Game::GetInstance().GetCurrentState().ChangeMission(4);
 	}
@@ -109,7 +98,7 @@ void Mission3::Update(float dt){
 		MissionManager::enemy->show = true;
 
 
-		momcount ++;
+			momcount ++;
 
 		if(momcount == 1 ){
 			MissionManager::enemy->SetPosition(700, 190);
@@ -139,10 +128,7 @@ void Mission3::Update(float dt){
 
 		if(time.Get() > 5){
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-			if(flagWhisper == false){
-				sussurro.Play(0);
-				flagWhisper = true;
-			}
+			sussurro.Play(0);
 			ImageProfileBox (6); //BOTA URSO
 			falas.SetText("U: OLHA ESSA QUE CHAMAS DE MÃE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -179,7 +165,8 @@ void Mission3::Update(float dt){
 		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	} if(MissionManager::missionManager->IsState("HallState")){
+	} if(MissionManager::missionManager->IsState("HallState") &&
+							MissionManager::missionManager->countHallState <= 1){
 			MissionManager::player->SetBlocked(false);
 		//HallState++;
 		std::cout << MissionManager::missionManager->countHallState << std::endl;
@@ -199,15 +186,12 @@ void Mission3::Update(float dt){
 			showBox = false;
 		}
 
-		if(MissionManager::cat->attractedTV){
-			MissionManager::cat->show = false;
-		}else{
-			MissionManager::cat->show = true;
-		}
+
+		MissionManager::cat->show = true;
 		countCat++;
 		//if(count == 1){
 		int dist = MissionManager::cat->box.DistanceRect(MissionManager::player->box);
-	//	std::cout << "dist" << dist << std::endl;
+		std::cout << "dist" << dist << std::endl;
 
 
 		if(countCat == 1  && atraidoNovelo == 0){
@@ -228,29 +212,15 @@ void Mission3::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
 
-		if(dist < 100 && !MissionManager::cat->attractedTV){
-			Sound meow1 = Sound ("audio/cat-meow-1.wav");
-			Sound meow2 = Sound ("audio/cat-meow-2.wav");
-			Sound meow3 = Sound ("audio/cat-meow-3.wav");
-			if(miado.Get() > 3){
-					flagMiado = false;
-					miado.Restart();
-				}else{
-					miado.Update(dt);
-				}
-				if(flagMiado == false){
-					MissionManager::player->AddRuido(35);
-					if(meowcount == 0)
-						meow1.Play(0);
-					else if(meowcount == 1)
-						meow2.Play(0);
-					else if(meowcount == 2){
-						meow3.Play(0);
-						meowcount = -1;
-					}
-					flagMiado = true;
-					meowcount++;
-				}
+		if(dist < 100){
+			if(meowcount%2 && ((int)time.Get())%5){
+				MissionManager::player->AddRuido(6);
+				Sound meow1 = Sound ("audio/cat-meow-1.wav");
+				meow1.Play(0);
+			}
+			//Sound meow2 = Sound ("audio/cat-meow-2.wav");
+			//meow2.Play(0);
+			meowcount++;
 		}
 
 		if(MissionManager::cat->attractedWool == true){
@@ -270,25 +240,17 @@ void Mission3::Update(float dt){
 		}
 
 		if(time.Get() > 7 && time.Get() < 7.5 && trancada == false && cooldown.Get() > 3){
-			if(flagPorta == false){
-				Sound portaDestrancando = Sound ("audio/portagrande.wav");
-				portaDestrancando.Play(0);
-				flagPorta = true;
-			}
+			Sound portaDestrancando = Sound ("audio/meow-sample.wav");
+			portaDestrancando.Play(0);
 		}
 		if (MissionManager::player->GetRuido()>70 ){
-			if(flagPorta == false){
-				Sound portaDestrancando = Sound ("audio/portagrande.wav");
-				portaDestrancando.Play(0);
-				flagPorta = true;
-			}
-
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
 			momcount ++;
+			std::cout << "momcount" << momcount << std::endl;
 			if(MissionManager::enemy->show){
-				if(momcount != 0 && flagGameOver == false ){
-					flagGameOver = true;
+				if(momcount == 1){
+
 					SceneDoor::ValorPassar = 15;
 					ImageProfileBox(2);
 					falas.SetText("O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
@@ -297,20 +259,16 @@ void Mission3::Update(float dt){
 					showBox = true;
 				}
 			}
-			if(MissionManager::enemy->show && time.Get() > ultimoTempo + 3){
+			if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 				SceneDoor::ValorPassar = 0;
+			}
+			if(MissionManager::enemy->show && time.Get() > ultimoTempo + 4){
+
 				falas.SetText(" ");
 				ImageProfileBox (6);
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 4;
 				showBox = false;
-				gameOver = true;
-				MissionManager::player->SetBlocked(true);
-				MissionManager::player->SetBloqHUD(true);
-				MissionManager::player->SetBloqInv(true);
-
-				time.Restart();
-
 			}
 		}
 

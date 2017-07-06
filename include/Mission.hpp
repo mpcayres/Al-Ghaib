@@ -94,7 +94,6 @@ protected:
 	bool flagTimer;
 	bool trancada;
 	int state;
-	int count;
 	bool doorSound;
 
 	Sprite spFade;
@@ -111,7 +110,6 @@ protected:
 	bool gameOver;
 	int maxPisca;
 	float timePisca;
-
 
 	Sprite profileBox;
 	int profileBoxX, profileBoxY;
