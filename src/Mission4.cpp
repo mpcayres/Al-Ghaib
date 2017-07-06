@@ -145,13 +145,25 @@ void Mission4::Update(float dt){
 			float dist = 0;
 
 			dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
-			if(dist<100 && InputManager::GetInstance().KeyPress(Z_KEY)){
+			if(dist<200 && InputManager::GetInstance().KeyPress(Z_KEY)){
 				//Camera::ZoomCreepy(5, true);
-				Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(200, 200, 0,
-						"img/sprite/mom-comendo-gato.png", 5, 0.25, false, 7 ,  7));
+				first++;
+				std::cout << time.Get() << " e " << first << std::endl;
+				if(first == 1)
+					time.Restart();
+				while(time.Get()< 50){
+					std::cout << time.Get() << " e " << first << std::endl;
+					time.Update(dt);
+				}
+				std::cout << time.Get() << " e " << first << std::endl;
+				if(time.Get()> 50){
+					Game::GetInstance().GetCurrentState().AddObject(
+					new Animation(300, 200, 0,
+							"img/sprite/mom-comendo-gato.png", 5, 0.3, false, 7 ,  7, true));
+				}
 
 			}
+
 			else{
 
 				SetPiscaPisca(20, 0.4);
@@ -165,7 +177,7 @@ void Mission4::Update(float dt){
 		UpdateVariable(dt, 80);
 	}
 
-	if(!fadeIn && (creepyEffect.Get() > 3) && (contCreepy == 0)){
+	if(!fadeIn && (creepyEffect.Get() > 3) && (contCreepy == 0)&&(!MissionManager::missionManager->GetStage("MomRoomState"))){
 		creepyEffect.Restart();
 		contCreepy = 1;
 		//std::cout << "piscapisca" << std::endl;
@@ -173,7 +185,7 @@ void Mission4::Update(float dt){
 		//std::cout << "oi" << std::endl;
 	}
 
-	if(!fadeIn && (creepyEffect.Get() > 8) && (contCreepy == 1)){
+	if(!fadeIn && (creepyEffect.Get() > 8) && (contCreepy == 1)&&(!MissionManager::missionManager->GetStage("MomRoomState"))){
 		creepyEffect.Restart();
 		contCreepy = 2;
 		Camera::ZoomCreepy(1, true);
@@ -181,7 +193,7 @@ void Mission4::Update(float dt){
 		//std::cout << "oi" << std::endl;
 	}
 
-	if(!fadeIn && (creepyEffect.Get() > 2) && (contCreepy == 2)){
+	if(!fadeIn && (creepyEffect.Get() > 2) && (contCreepy == 2) &&(!MissionManager::missionManager->GetStage("MomRoomState"))){
 		creepyEffect.Restart();
 		contCreepy = 0;
 		Camera::ZoomCreepy(1, false);
@@ -228,7 +240,7 @@ void Mission4::SetObjectStage(){
 	SceneObject* BrokenClown = new SceneObject(400, 500, "img/inventario/palhaco-quebrado.png", "", 0, 0.3, 0.3);
 	objectStage.emplace_back(BrokenClown);
 
-	MovingObject* Cadeira = new MovingObject(200, 400, "img/cenario/geral/cadeira.png");
+	MovingObject* Cadeira = new MovingObject(200, 470, "img/cenario/geral/cadeira.png");
 	objectStage.emplace_back(Cadeira);
 }
 

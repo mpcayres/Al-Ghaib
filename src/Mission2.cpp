@@ -422,8 +422,9 @@ void Mission2::SetObjectHall(){
 	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/cenario/geral/armario-corredor-fechado.png",
 	//		 "", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	//objectHall.emplace_back(Armario2);
-	StealthObject* Armario2 = new StealthObject(1450, 180, "img/cenario/geral/armario-corredor-fechado.png");
-	objectHall.emplace_back(Armario2);
+	StealthObject* Armario2 = new StealthObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png");
+		objectHall.emplace_back(Armario2);
+
 
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png",

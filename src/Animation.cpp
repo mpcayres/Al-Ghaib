@@ -2,7 +2,7 @@
 #include "Camera.hpp"
 
 Animation::Animation(float x, float y, float rotation, std::string sprite,
-		int frameCount, float frameTime, bool ends, float scaleX, float scaleY){
+		int frameCount, float frameTime, bool ends, float scaleX, float scaleY, bool back):  backgroundsquare("img/HUD/blackBack.jpg"), back(back){
 	sp = Sprite(sprite, frameCount, frameTime);
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	box.x = x;
@@ -21,7 +21,10 @@ void Animation::Update(float dt){
 }
 
 void Animation::Render(){
+	if(back)
+		backgroundsquare.Render(0,0, 0);
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+
 }
 
 bool Animation::IsDead(){

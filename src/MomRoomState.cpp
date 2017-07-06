@@ -122,6 +122,9 @@ void MomRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
+	SceneObject* Covil =  new SceneObject(570, 470, "img/cenario/mae/porao-fechado.png", "img/cenario/mae/porao-aberto.png", 0, 0.6, 0.6, "", 0, true);
+	objectArray.emplace_back(Covil);
+
 	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png");
 	objectArray.emplace_back(DoorToHall);
 
@@ -136,9 +139,6 @@ void MomRoomState::SetInitialObjectArray(){
 
 	SceneObject* Cama =  new SceneObject(500, 200, "img/cenario/filho/cama.png", "img/cenario/filho/cama.png");
 	objectArray.emplace_back(Cama);
-
-	SceneObject* Covil =  new SceneObject(570, 470, "img/cenario/mae/porao-fechado.png", "img/cenario/mae/porao-aberto.png", 0, 0.6, 0.6, "", 0, true);
-	objectArray.emplace_back(Covil);
 
 	SceneObject* Mask= new SceneObject(650, 480, "img/cenario/mae/cabideiro.png", "img/cenario/mae/cabideiro.png");
 	objectArray.emplace_back(Mask);
