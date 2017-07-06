@@ -148,7 +148,7 @@ void Mission2::Update(float dt){
 				if(countBear == -1){
 					countBear++;
 					Game::GetInstance().GetCurrentState().AddObject(
-							new Animation(800, 260, 0,
+							new Animation(795, 265, 0,
 									"img/sprite/bear-transformation.png", 17, 0.25, true, 2, 2));
 				}
 			}
