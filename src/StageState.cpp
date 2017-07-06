@@ -77,7 +77,9 @@ void StageState::Update(float dt){
 		ChangeState("StageState", "LivingRoomState");
 	} else if(instance.KeyPress(R_KEY)){
 		ChangeState("StageState", "MomRoomState");
-	} else if(instance.KeyPress(KEY_1)){
+	}else if(instance.KeyPress(T_KEY)){
+		ChangeState("StageState", "HallFinalState");
+	}else if(instance.KeyPress(KEY_1)){
 		ChangeMission(1);
 	}else if(instance.KeyPress(KEY_2)){
 		ChangeMission(2);

@@ -40,6 +40,7 @@
 #define G_KEY SDLK_g
 #define E_KEY SDLK_e
 #define R_KEY SDLK_r
+#define T_KEY SDLK_t
 
 #define KEY_1 SDLK_1
 #define KEY_2 SDLK_2

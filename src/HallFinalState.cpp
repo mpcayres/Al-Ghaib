@@ -13,11 +13,11 @@
 
 //NESSE STATE TUDO VAI SER SETADO DIRETO NELE
 HallFinalState::HallFinalState() :
-	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHallFinal.txt", &tileSet) {
+	State(), tileSet(192, 96, "img/tilesetHallFinal.png"), tileMap("map/tileMapHallFinal.txt", &tileSet) {
 	//std::cout << "TESTE 1" << std::endl;
 	limits = tileMap.FindLimits();
 
-	SetPlayer(50, 400, CAMERA_TYPE2, limits);
+	SetPlayer(50, 310, CAMERA_TYPE2, limits);
 	//std::cout << "HFSC1.1" << std::endl;
 	SetInitialObjectArray();
 
@@ -40,7 +40,7 @@ void HallFinalState::Resume(){
 }
 
 void HallFinalState::LoadAssets(){
-	background.Open("img/HUD/blackBack.jpg");
+	background.Open("img/HUD/semired.jpg");
 	bg.Open("img/corredor.png");
 }
 
