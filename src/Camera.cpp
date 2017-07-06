@@ -16,21 +16,18 @@ Timer Camera::time;
 void Camera::SetType(int Ntype){
 	type = Ntype;
 	isMoving = false;
-	if(type == CAMERA_TYPE3){
-		pos.x = 80;
-		pos.y = 80;
+	if(type == CAMERA_TYPE0){
+		pos.x = 10; pos.y = 10;
+	} else if(type == CAMERA_TYPE3){
+		pos.x = 80; pos.y = 80;
 	}
 }
 
 void Camera::Follow(GameObject* newFocus, int Ntype){
 	focus = newFocus;
 	type = Ntype;
-	if(type == 2){
-		if(focus->box.CenterX() >= Game::GetInstance().GetCurrentState().GetStateLimits().w - OFFSET_TYPE2){
-			pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().w - Game::GetInstance().GetWidth()/2;
-		} else if(focus->box.CenterX() <= Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
-			pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2/2 - Game::GetInstance().GetWidth()/2;
-		}
+	if(type == CAMERA_TYPE2){
+		pos.x = 0;
 		pos.y = 50;
 	}
 	isMoving = isZoomIn = isZoomOut = false;
@@ -47,6 +44,13 @@ void Camera::Update(float dt){
 			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 			pos.y = focus->box.CenterY() - Game::GetInstance().GetHeight()/2;
 		} else if(type == CAMERA_TYPE2){
+			if(pos.x == 0){
+				if(focus->box.CenterX() >= Game::GetInstance().GetCurrentState().GetStateLimits().w - OFFSET_TYPE2){
+					pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().w - Game::GetInstance().GetWidth()/2;
+				} else if(focus->box.CenterX() <= Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
+					pos.x = Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2/2 - Game::GetInstance().GetWidth()/2;
+				}
+			}
 			if(focus->box.CenterX() < Game::GetInstance().GetCurrentState().GetStateLimits().w - OFFSET_TYPE2 &&
 					focus->box.CenterX() > Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
 				pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;

@@ -56,9 +56,9 @@ bool State::PopRequested(){
 
 void State::SetPlayer(int x, int y, int type, Rect limits){
 	Camera::Unfollow();
-	MissionManager::player->SetPosition(x, y);
 	if(type != CAMERA_TYPE0 && type != CAMERA_TYPE3) Camera::Follow(MissionManager::player, type);
 	else Camera::SetType(type);
+	MissionManager::player->SetPosition(x, y);
 	MissionManager::player->SetMovementLimits(limits);
 }
 
@@ -148,14 +148,14 @@ void State::EndState(){
 }
 
 void State::ChangeState(std::string orig, std::string dest, int x, int y, int dir){
-	std::cout << "Antes do EndState()" << std::endl;
+	//std::cout << "Antes do EndState()" << std::endl;
 	EndState();
 
-	std::cout << "Depois do EndState()" << std::endl;
+	//std::cout << "Depois do EndState()" << std::endl;
 	Game::GetInstance().GetMissionManager().
 			ChangeState(std::move(objectArray), orig, dest, x, y, dir);
 
-	std::cout << "Game::Get" << std::endl;
+	//std::cout << "Game::Get" << std::endl;
 }
 
 void State::ChangeMission(int num){

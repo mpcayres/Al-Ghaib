@@ -9,8 +9,9 @@
 
 Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
 	initialState = "LivingRoomState"; // trocar para comeÃ§ar da sala?
-	initialX = 790; initialY = 500;
+	initialX = 230; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
+	MissionManager::player->SetDirecao((int) Player::NORTE);
 	MissionManager::missionManager->randomStates = true;
 	atraidoNovelo = 0;
 	atraidoTV = 0;

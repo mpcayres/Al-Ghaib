@@ -42,7 +42,7 @@ void TileMap::Load(std::string file){
 		tileMatrix.push_back(num - 1);
 		if(num == 1 && n < mapWidth && m < mapHeight){
 			grid[m][n] = 1;
-			std::cout << "TM1: " << n << " " << m << std::endl;
+			//std::cout << "TM1: " << n << " " << m << std::endl;
 		}
 		n++;
 		if(n == mapWidth){

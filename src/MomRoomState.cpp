@@ -22,23 +22,25 @@ MomRoomState::MomRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool in
 	limits = tileMapChao.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE1, limits);
 	else SetPlayer(200, 400, CAMERA_TYPE1, limits);
+	std::cout << "Player: " << MissionManager::player->box.x << " " << MissionManager::player->box.y << std::endl;
+
 	if(inicial){
-		//std::cout << "HSC1.1 " << objectArray.size() << std::endl;
+		//std::cout << "MR1.1 " << objectArray.size() << std::endl;
 		SetInitialObjectArray();
 		objectArray.insert( objectArray.end(),
 				std::make_move_iterator(obj.begin()),
 				std::make_move_iterator(obj.end()) );
 	} else{
-		//std::cout << "HSC1.2 " << objectArray.size() << std::endl;
+		//std::cout << "MR1.2 " << objectArray.size() << std::endl;
 		objectArray = std::move(obj);
 	}
-	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::cat);
+	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();
 	LoadAssets();
-	std::cout << "LR2 " << objectArray.size() << std::endl;
+	std::cout << "MR2 " << objectArray.size() << std::endl;
 }
 
 MomRoomState::~MomRoomState() {
