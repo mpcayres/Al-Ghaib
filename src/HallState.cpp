@@ -139,7 +139,7 @@ void HallState::Update(float dt){
 		if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "StageState"){
 			ChangeState("HallState", "StageState", 800, 280, (int) Player::SUL);
 		} else if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "LivingRoomState"){
-			ChangeState("HallState", "LivingRoomState", 240, 200, (int) Player::SUL);
+			ChangeState("HallState", "LivingRoomState", 240, 250, (int) Player::SUL);
 		} else if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "MomRoomState"){
 			ChangeState("HallState", "MomRoomState", 230, 210, (int) Player::SUL);
 		}
