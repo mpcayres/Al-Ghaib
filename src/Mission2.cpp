@@ -172,8 +172,8 @@ void Mission2::Update(float dt){
 				Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 				sussurro.Play(0);
 				showBox = true;
-				ImageProfileBox(6); //BOTAR O URSO
-				falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
+				ImageProfileBox(4); //BOTAR O URSO
+				falas.SetText("OLHA O QUE FIZERAM COMIGO!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 14;
 				showBox = true;
@@ -183,7 +183,7 @@ void Mission2::Update(float dt){
 				countBear++;
 				//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 				//sussurro.Play(0);
-				falas.SetText("U: ACHA QUE CONSEGUE ME REPARAR?");
+				falas.SetText("ACHA QUE CONSEGUE ME REPARAR?");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 18;
 				showBox = true;
@@ -192,7 +192,7 @@ void Mission2::Update(float dt){
 				countBear++;
 				//Sound sussurro = Sound ("audio/ghostly-wspers.wav");
 				//sussurro.Play(0);
-				falas.SetText("U: VOU FICAR AQUI ESPERANDO");
+				falas.SetText("VOU FICAR AQUI ESPERANDO");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 22;
 				showBox = true;

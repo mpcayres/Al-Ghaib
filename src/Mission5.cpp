@@ -98,7 +98,7 @@ void Mission5::Update(float dt){
 		SceneDoor::count = ABRE;
 		SceneDoor::ValorPassar = 15;
 		MissionManager::enemy->SetPosition(30, 300);
-		MissionManager::enemy->SetDestinationPath(Vec2(600, 300));
+		MissionManager::enemy->SetDestinationPath(Vec2(4550, 300));
 		MissionManager::enemy->SetDestinationPath(Vec2(4500, 300));
 		MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
 	}
