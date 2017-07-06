@@ -11,7 +11,7 @@
 
 class PickUpObject : public GameObject {
 public:
-	PickUpObject(float x, float y, std::string obj, std::string img, bool bloq = false, float scaleX = 1, float scaleY = 1, bool hide = false);
+	PickUpObject(float x, float y, std::string obj, std::string img, bool bloq = false, float scaleX = 1, float scaleY = 1, bool hide = false, float rot = 0);
 
 	void Update(float dt);
 	void Render();

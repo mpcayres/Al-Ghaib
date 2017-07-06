@@ -40,7 +40,10 @@ void TileMap::Load(std::string file){
 	while(!feof(fp)){
 		fscanf(fp, " %d,", &num);
 		tileMatrix.push_back(num - 1);
-		if(num == 1 && n < mapWidth && m < mapHeight) grid[m][n] = 1;
+		if(num == 1 && n < mapWidth && m < mapHeight){
+			grid[m][n] = 1;
+			std::cout << "TM1: " << n << " " << m << std::endl;
+		}
 		n++;
 		if(n == mapWidth){
 			n = 0;
@@ -49,6 +52,17 @@ void TileMap::Load(std::string file){
 	}
 
 	fclose(fp);
+}
+
+void TileMap::AddObjects(){
+	//PRA FUNCIONAR TERIA QUE ARRUMAR O SEG FAULT E SUBDIVIDIR EM REGIOES MENORES
+	std::vector<std::pair<int,int>> obj = Game::GetInstance().GetCurrentState().GetPosVector();
+	for(unsigned int i = 0; i < obj.size(); i++){
+		int posX = obj[i].first/tileSet->GetTileWidth();
+		int posY = obj[i].second/tileSet->GetTileHeight();
+		std::cout << "TM2: " << posX << " " << posY << std::endl;
+		grid[posY][posX] = 0;
+	}
 }
 
 void TileMap::Render(int cameraX, int cameraY){

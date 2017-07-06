@@ -33,6 +33,7 @@ public:
 	void EndState();
 	void ChangeState(std::string orig, std::string dest, int x = -1, int y = -1, int dir = -1);
 	void ChangeMission(int num);
+	std::vector<std::pair<int,int>> GetPosVector();
 
 protected:
 	virtual void UpdateArray(float dt);

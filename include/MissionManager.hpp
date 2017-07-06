@@ -44,7 +44,7 @@ public:
 
 	int countStageState, countHallState, countLivingRoomState, countMomRoomState, changeState;
 	float factorZoom;
-	bool movingBox, randomStates;
+	bool movingBox, randomStates, setObjectTile;
 
 private:
 	std::vector<std::unique_ptr<GameObject>> objectStage, objectHall, objectLivingRoom, objectMomRoom;

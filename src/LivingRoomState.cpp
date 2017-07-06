@@ -98,6 +98,12 @@ void LivingRoomState::Update(float dt){
 		ChangeState("LivingRoomState",
 				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
 	}
+
+	/*if(MissionManager::missionManager->setObjectTile){
+		tileMapChao.AddObjects();
+		MissionManager::missionManager->setObjectTile = false;
+	}*/
+
 }
 
 void LivingRoomState::Render(){

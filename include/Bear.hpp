@@ -35,14 +35,13 @@ public:
 
 	//Vec2 previousPos;
 
-	static bool show, seen;
-	static bool arrived;
-	static bool repair;
-	static bool retorno;
+	bool show, seen;
+	bool arrived, repair, retorno;
+	bool hasNeedle, hasScissors, hasCostura, colliding;
 private:
 	Timer time;
 	float offset;
-	Sprite sp;
+	Sprite sp, spNeedle, spScissors;
 	Vec2 speed;
 	int hp;
 	//bool seen;

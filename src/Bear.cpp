@@ -11,21 +11,23 @@
 #define DESACELERA 1
 
 Bear* Bear::bear;
-bool Bear::show = false;
-bool Bear::seen = false;
-bool Bear::arrived = false;
-bool Bear::repair = false;
-bool Bear::retorno = false;
 
-Bear::Bear(float x, float y): sp("img/sprite/bear-walking.png", 8, 0.6, 1){
+Bear::Bear(float x, float y): sp("img/sprite/bear-walking.png", 8, 0.6, 1),
+		spNeedle("img/inventario/needle.png"), spScissors("img/inventario/scissors.png") {
 	//stop = false;
-	sp.SetScaleX(2);
-	sp.SetScaleY(2);
-
+	sp.SetScaleX(2); sp.SetScaleY(2);
+	spNeedle.SetScaleX(0.5); spNeedle.SetScaleY(0.5);
+	spScissors.SetScaleX(0.5); spScissors.SetScaleY(0.5);
 	//destinationPath.x = x;
 	//destinationPath.y = y;
 
 	show = false;
+	seen = false;
+	arrived = false;
+	repair = false;
+	retorno = false;
+	hasNeedle = hasScissors = hasCostura = false;
+	colliding = false;
 
 	box.x = x; box.y = y;
 	box.w = sp.GetScaledWidth();
@@ -90,6 +92,7 @@ void Bear::Update(float dt){
 			//}
 		}
 	}
+	colliding = false;
 }
 
 
@@ -99,8 +102,9 @@ void Bear::SetDirecao(int dir){
 }
 
 void Bear::Render(){
-	if(show)
-		sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(show) sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(hasNeedle) spNeedle.Render(box.x + 4 - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(hasScissors) spScissors.Render(box.x + 4 + bear->box.w/2 - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 
 bool Bear::IsDead(){
@@ -117,34 +121,48 @@ void Bear::Shoot(){
 
 bool Bear::NotifyCollision(GameObject& other){
 	if(show){
-			if(other.Is("CollidableObject")){
+		if(other.Is("CollidableObject")){
 
-				if(seen && MissionManager::player != nullptr){
-					//if(MissionManager::player != nullptr){
-					Vec2 aux;
-					destination.x = MissionManager::player->box.x;
-					destination.y = MissionManager::player->box.y;
-					//seen = true;
+			if(seen && MissionManager::player != nullptr){
+				//if(MissionManager::player != nullptr){
+				Vec2 aux;
+				destination.x = MissionManager::player->box.x;
+				destination.y = MissionManager::player->box.y;
+				//seen = true;
 
-					aux.x = box.x; aux.y = box.y;
-					speed = (destination.Sub(aux)).Normalize();
-					speed.x = speed.x*SPEED_CONTROL;
-					speed.y = speed.y*SPEED_CONTROL;
-						//}
+				aux.x = box.x; aux.y = box.y;
+				speed = (destination.Sub(aux)).Normalize();
+				speed.x = speed.x*SPEED_CONTROL;
+				speed.y = speed.y*SPEED_CONTROL;
+					//}
+			}
+		}
+
+		if(other.Is("Player")){
+			return MissionManager::player->CollidingPlayer(box, offset);
+		}
+
+		if(other.Is("EmptyBox")){
+			if(hasNeedle && hasScissors && (MissionManager::player->GetDirecao() == Player::NORTE)){
+				colliding = true;
+			}
+			if(InputManager::GetInstance().KeyPress(Z_KEY) && repair == true){
+				sp.Open("img/inventario/bear-fixed.png");
+				hasNeedle = hasScissors = hasCostura = false;
+			} else if(MissionManager::player->GetInHandIndex() != -1){
+				if(InputManager::GetInstance().KeyPress(Z_KEY) &&
+						MissionManager::player->GetInHand().get()->IsObject("InventoryScissors")){
+					MissionManager::player->DeleteInventory();
+					hasScissors = true;
+				} else if(InputManager::GetInstance().KeyPress(Z_KEY) &&
+						MissionManager::player->GetInHand().get()->IsObject("InventoryNeedle")){
+					MissionManager::player->DeleteInventory();
+					hasNeedle = true;
 				}
 			}
-			if(other.Is("Player")){
-					return MissionManager::player->CollidingPlayer(box, offset);
-				}
-
-				if(other.Is("EmptyBox")){
-						if(InputManager::GetInstance().KeyPress(Z_KEY) && repair == true){
-							sp.Open("img/inventario/bear-fixed.png");
-
-						}
-				}
-
 		}
+
+	}
 
 
 	return false;
@@ -272,8 +290,8 @@ void Bear::DefinedPath(){
 					box.y += speed.y;
 				}
 			}
-			}
 		}
+	}
 }
 
 bool Bear::Is(std::string type){

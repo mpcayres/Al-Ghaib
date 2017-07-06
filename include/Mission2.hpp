@@ -34,7 +34,6 @@ private:
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0;
-	int contScissors=0, contNeedle=0, contLine =0, contWool = 0;
 
 	bool destrancAudioFlag, sussurroAudioFlag, miadoAudioFlag;
 };

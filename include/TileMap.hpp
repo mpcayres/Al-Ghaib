@@ -17,6 +17,7 @@ public:
 	TileMap(std::string file, TileSet* tileSet);
 	void Load(std::string file);
 	void SetTileSet(TileSet* tileSet);
+	void AddObjects();
 	int& At(int x, int y, int z=0);
 	void Render(int cameraX, int cameraY);
 	void RenderLayer(int layer, int cameraX, int cameraY);

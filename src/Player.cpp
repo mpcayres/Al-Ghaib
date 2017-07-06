@@ -2,6 +2,7 @@
 #include "Camera.hpp"
 #include "Game.hpp"
 #include "Animation.hpp"
+#include "Bear.hpp"
 #include "InventoryKey.hpp"
 #include "InventoryArame.hpp"
 #include "InventoryClown.hpp"
@@ -108,6 +109,14 @@ void Player::Update(float dt){
 				}
 			} else if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryControl")){
 				inHand->Action(nullptr);
+			} else if(InputManager::GetInstance().KeyPress(X_KEY) &&
+					(inHand->IsObject("InventoryLine") || inHand->IsObject("InventoryWool"))){
+
+				if(inHand->Action(nullptr) == true){
+					animShowing = true;
+					timeCooldown.Restart();
+				}
+
 			}
 			if(animShowing){
 				spAnimKinder.Update(dt);

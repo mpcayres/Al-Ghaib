@@ -38,8 +38,8 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 		//std::cout << "HSC1.2" << std::endl;
 		objectArray = std::move(obj);
 	}
-	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::cat);
+	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();
@@ -105,6 +105,12 @@ void HallState::Update(float dt){
 		ChangeState("HallState",
 				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
 	}
+
+	/*if(MissionManager::missionManager->setObjectTile){
+		tileMap.AddObjects();
+		MissionManager::missionManager->setObjectTile = false;
+	}*/
+
 }
 
 void HallState::Render(){

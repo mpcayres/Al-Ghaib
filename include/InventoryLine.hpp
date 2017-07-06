@@ -11,6 +11,9 @@ public:
 
 	bool IsObject(std::string type);
 	std::string GetObject();
+
+private:
+	int timesPressed;
 };
 
 #endif /* SRC_INVENTORYLINE_HPP_ */

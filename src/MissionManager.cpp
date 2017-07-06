@@ -35,6 +35,7 @@ MissionManager::MissionManager() {
 	dirDest = -1;
 	movingBox = false;
 	randomStates = false;
+	setObjectTile = false;
 	factorZoom = 1.0;
 }
 
@@ -71,6 +72,7 @@ void MissionManager::SetState(std::string dest){
 	player->ResetWallLimits();
 	factorZoom = 1;
 	Camera::UpdateZoom();
+	setObjectTile = true;
 	if(dirDest != -1) player->SetDirecao(dirDest);
 	if(dest == "StageState"){
 		std::cout << "SS.1" << std::endl;
@@ -79,9 +81,9 @@ void MissionManager::SetState(std::string dest){
 		initStage = false;
 		stage = "StageState";
 		countStageState++;
-		std::cout << countStageState << std::endl;
+		//std::cout << countStageState << std::endl;
 		changeState++;
-		//std::cout << "SS.2" << std::endl;
+		std::cout << "SS.2" << std::endl;
 	} else if(dest == "HallState"){
 		//std::cout << "HS.1" << std::endl;
 		//std::cout << "SIZE: " << objectHall.size() << std::endl;

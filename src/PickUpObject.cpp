@@ -4,12 +4,12 @@
 #include "Player.hpp"
 #include <iostream>
 
-PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img, bool bloq, float scaleX, float scaleY, bool hide) :
-	obj(obj), sp(img), hide(hide){
+PickUpObject::PickUpObject(float x, float y, std::string obj, std::string img,
+		bool bloq, float scaleX, float scaleY, bool hide, float rot) : obj(obj), sp(img), hide(hide){
 	sp.SetScaleX(scaleX); sp.SetScaleY(scaleY);
 	dead = false;
 	bloqPick = bloq;
-	rotation = 0;
+	rotation = rot;
 	box.x = x  - sp.GetWidth()/2;
 	box.y = y  - sp.GetHeight()/2;
 	box.w = sp.GetWidth();

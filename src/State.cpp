@@ -164,3 +164,11 @@ void State::ChangeMission(int num){
 	Game::GetInstance().GetMissionManager().
 			ChangeMission(num, MissionManager::player->GetInHandIndex(), inventory);
 }
+
+std::vector<std::pair<int,int>> State::GetPosVector(){
+	std::vector<std::pair<int,int>> aux;
+	for(unsigned int i = 0; i < objectArray.size() - 2; i++){
+		aux.push_back(std::make_pair(objectArray[i].get()->box.x, objectArray[i].get()->box.y));
+	}
+	return aux;
+}

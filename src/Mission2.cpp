@@ -8,7 +8,7 @@
 
  Music Mission2::music;
 
-Mission2::Mission2() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
+Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMission(false) {
 	initialState = "StageState";
 	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
@@ -109,7 +109,7 @@ void Mission2::Update(float dt){
 				}
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
-				Bear::show = true;
+				Bear::bear->show = true;
 				countBear ++;
 				std::cout << "test 0 " << countBear << std::endl;
 				if(countBear == 1){
@@ -170,7 +170,7 @@ void Mission2::Update(float dt){
 					ultimoTempo = 29;
 					showBox = false;
 					//parado = false;
-					Bear::seen = true;
+					//Bear::seen = true; !!!!!!!!!
 
 				}
 			}
@@ -243,12 +243,6 @@ void Mission2::Update(float dt){
 			meowcount++;
 			//meow1.Stop();
 		}
-		if(MissionManager::player->lastPicked == "InventoryScissors"){
-			contScissors++;
-		}
-		if(MissionManager::player->lastPicked == "InventoryWool"){
-			contWool++;
-		}
 
 
 		if (MissionManager::player->GetRuido()>80 ){
@@ -302,30 +296,20 @@ void Mission2::Update(float dt){
 			MissionManager::missionManager->player->box.y = 300;
 		}
 
-		//para cheat
-		//contNeedle = 5;
-		//contScissors = 5;
-		//contLine = 5;
-		if(contNeedle > 0 && contScissors > 0 && (contLine>0 || contWool>0)){
+		if(Bear::bear->hasNeedle && Bear::bear->hasScissors && Bear::bear->hasCostura){
 			Bear::bear->repair = true;
-
-			if(InputManager::GetInstance().KeyPress(Z_KEY)){
-				time.Restart();
-				ImageProfileBox (6); //BOTAR URSO
-				falas.SetText("U: OBRIGADO!");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = (int)time.Get();
-				showBox = true;
-				if(time.Get()> ultimoTempo + 7){
-
-					falas.SetText(" ");
-					showBox = false;
-					endMission = true;
-					ImageProfileBox (6);
-				}
+			time.Restart();
+			ImageProfileBox(6); //BOTAR URSO
+			falas.SetText("U: OBRIGADO!");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+			ultimoTempo = (int)time.Get();
+			showBox = true;
+			if(time.Get()> ultimoTempo + 7){
+				falas.SetText(" ");
+				showBox = false;
+				endMission = true;
+				ImageProfileBox (6);
 			}
-
-
 		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
 
@@ -342,12 +326,6 @@ void Mission2::Update(float dt){
 			time.Restart();
 		}
 
-		if(MissionManager::player->lastPicked == "InventoryNeedle"){
-			contNeedle++;
-		}
-		if(MissionManager::player->lastPicked == "InventoryLine"){
-			contLine++;
-		}
 		MissionManager::cat->SetDestinationPath(Vec2(800, 200));
 
 		if (MissionManager::player->GetRuido()>80 ){
@@ -422,7 +400,7 @@ void Mission2::SetObjectStage(){
 	Bear* bear = new Bear(810, 210);
 	objectStage.emplace_back(bear);
 
-	SceneObject* Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
+	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
@@ -444,7 +422,7 @@ void Mission2::SetObjectHall(){
 	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/cenario/geral/armario-corredor-fechado.png",
 	//		 "", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	//objectHall.emplace_back(Armario2);
-	StealthObject* Armario2 = new StealthObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png");
+	StealthObject* Armario2 = new StealthObject(1450, 180, "img/cenario/geral/armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
 
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
@@ -452,8 +430,8 @@ void Mission2::SetObjectHall(){
 			0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	objectHall.emplace_back(CriadoMudo);
 
-	PickUpObject* Scissors = new PickUpObject(1470, 185, "InventoryScissors",
-			"img/inventario/scissors.png", true, 0.5, 0.5);
+	PickUpObject* Scissors = new PickUpObject(1475, 205, "InventoryScissors",
+			"img/inventario/scissors.png", true, 0.5, 0.5, false, 90);
 	objectHall.emplace_back(Scissors);
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
