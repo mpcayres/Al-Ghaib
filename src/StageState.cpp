@@ -25,6 +25,8 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 	MissionManager::player->AddWallLimits(Rect(600, 192, 200, 80));
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE3, limits);
 	else SetPlayer(550, 400, CAMERA_TYPE3, limits);
+	std::cout << "Player: " << MissionManager::player->box.x << " " << MissionManager::player->box.y << std::endl;
+
 	if(inicial){
 		//std::cout << "SSC1.1" << std::endl;
 		SetInitialObjectArray();
@@ -35,6 +37,8 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 		//std::cout << "SSC1.2" << std::endl;
 		objectArray = std::move(obj);
 	}
+
+	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();

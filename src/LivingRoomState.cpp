@@ -20,7 +20,9 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 
 	limits = tileMapChao.FindLimits();
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE0, limits);
-	else SetPlayer(600, 400, CAMERA_TYPE0, limits);
+	else SetPlayer(250, 250, CAMERA_TYPE0, limits);
+	std::cout << "Player: " << MissionManager::player->box.x << " " << MissionManager::player->box.y << std::endl;
+
 	if(inicial){
 		//std::cout << "HSC1.1 " << objectArray.size() << std::endl;
 		SetInitialObjectArray();
@@ -31,8 +33,8 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 		//std::cout << "HSC1.2 " << objectArray.size() << std::endl;
 		objectArray = std::move(obj);
 	}
-	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::cat);
+	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();

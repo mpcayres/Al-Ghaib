@@ -167,7 +167,7 @@ void MissionManager::SetMission(){
 	std::vector<std::unique_ptr<GameObject>>().swap(objectLivingRoom);
 	std::vector<std::unique_ptr<GameObject>>().swap(objectMomRoom);
 	//std::cout << "INI_MIS1: " << objectStage.size() << " " << objectHall.size() << std::endl;
-	initStage = initHall = initLivingRoom = true;
+	initStage = initHall = initLivingRoom = initMomRoom = true;
 	objectStage = std::move(mission->GetObjectStage());
 	objectHall = std::move(mission->GetObjectHall());
 	objectLivingRoom = std::move(mission->GetObjectLivingRoom());
