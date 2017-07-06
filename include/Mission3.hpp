@@ -34,6 +34,9 @@ private:
 	bool played, endMission, drink = false;
 	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0;
 	int atraidoNovelo, atraidoTV;
+
+	Timer miado;
+	bool flagWhisper, flagMiado, flagPorta, flagGameOver;
 };
 
 #endif /* SRC_MISSION3_HPP_ */
