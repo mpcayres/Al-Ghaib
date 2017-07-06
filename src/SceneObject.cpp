@@ -28,6 +28,7 @@ void SceneObject::Update(float dt){
 }
 
 void SceneObject::Render(){
+	if(Game::GetInstance().GetMissionManager().GetMission()->first <= 1)
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 }
 

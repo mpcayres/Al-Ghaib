@@ -31,7 +31,7 @@ private:
 
 	static Music music;
 	bool paradoUrso, paradoGato;
-	bool played, endMission;
+	bool played, endMission, drink = false;
 	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0;
 	int atraidoNovelo, atraidoTV;
 };

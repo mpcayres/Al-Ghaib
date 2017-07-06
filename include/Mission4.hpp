@@ -34,7 +34,7 @@ private:
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
 	int meowcount, momcount, countBear, countCat, contCreepy;
-	int first = 0;
+
 };
 
 #endif /* SRC_MISSION4_HPP_ */

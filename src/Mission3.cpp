@@ -33,7 +33,7 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	white.g = 255;
 	white.b = 255;
 
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 3", redwine, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "MISSÃO 3", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "  ", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
@@ -88,9 +88,9 @@ void Mission3::Update(float dt){
 	time.Update(dt);
 	cooldown.Update(dt);
 
-	/*if(endMission){
-		Game::GetInstance().GetCurrentState()..ChangeMission(4);
-	}*/
+	if(endMission && drink){
+		Game::GetInstance().GetCurrentState().ChangeMission(4);
+	}
 	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL ////////////////////////////////////////////////////////////////////
 	if(MissionManager::missionManager->GetStage("LivingRoomState") &&
 			MissionManager::missionManager->countLivingRoomState <= 1){
@@ -405,6 +405,14 @@ void Mission3::Update(float dt){
 				ImageProfileBox (6);
 				falas.SetText(" ");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+			}
+			Vec2 *leite = new Vec2(255, 405);
+			float dist = 0;
+
+			dist = leite->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+			if(dist<80 && InputManager::GetInstance().KeyPress(Z_KEY)){
+				drink = true;
+				endMission = true;
 			}
 
 

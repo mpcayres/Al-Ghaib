@@ -29,7 +29,7 @@ Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMissi
 	white.g = 255;
 	white.b = 255;
 
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 2", redwine, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "MISSÃO 2", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);

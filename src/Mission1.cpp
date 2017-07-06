@@ -18,12 +18,6 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = false;
 
-	//StageState = 0;
-	//HallState = 0;
-	//trancada = false;
-	//begin = true;
-	//count = 0;
-
 	SDL_Color redwine = SDL_Color();
 	redwine.r = 102;
 	redwine.g = 0;
@@ -37,7 +31,7 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	//flagTimer = true; //stopMusic = false;
 	//time = Timer();
 	//cooldown = Timer();
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 1", redwine, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "MISSÃO 1", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, "  ", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-220, true, false);

@@ -33,7 +33,7 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	white.g = 255;
 	white.b = 255;
 
-	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NOITE 4", redwine, 0, 0);
+	tx = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "MISSÃO 4", redwine, 0, 0);
 	tx.SetPos(0, 0, true, true);
 	creepy = Text("font/uwch.ttf", 30, Text::TextStyle::BLENDED, " ", redwine, 0, 0);
 	creepy.SetPos(0, Game::GetInstance().GetHeight()-120, true, false);
@@ -89,9 +89,9 @@ void Mission4::Update(float dt){
 	cooldown.Update(dt);
 	if(!fadeIn) creepyEffect.Update(dt);
 
-	/*if(endMission && time.Get() > (12*0.25 + 0.5)){
-		Game::GetInstance().GetCurrentState().ChangeMission(2);
-	}*/
+	if(endMission && time.Get()> 10 && first == 1){
+		Game::GetInstance().GetCurrentState().ChangeMission(5);
+	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
@@ -145,30 +145,39 @@ void Mission4::Update(float dt){
 			float dist = 0;
 
 			dist = covil->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
-			if(dist<200 && InputManager::GetInstance().KeyPress(Z_KEY)){
+			if(dist<100 && InputManager::GetInstance().KeyPress(Z_KEY)){
 				//Camera::ZoomCreepy(5, true);
 				first++;
 				std::cout << time.Get() << " e " << first << std::endl;
 				if(first == 1)
 					time.Restart();
-				while(time.Get()< 50){
+				/*while(time.Get()< 500){
 					std::cout << time.Get() << " e " << first << std::endl;
 					time.Update(dt);
-				}
+				}*/
 				std::cout << time.Get() << " e " << first << std::endl;
-				if(time.Get()> 50){
+				/*if(time.Get()>= 500){
 					Game::GetInstance().GetCurrentState().AddObject(
 					new Animation(300, 200, 0,
 							"img/sprite/mom-comendo-gato.png", 5, 0.3, false, 7 ,  7, true));
-				}
 
+				}*/
+
+				std::cout << time.Get() << " e " << first << std::endl;
 			}
-
 			else{
 
 				SetPiscaPisca(20, 0.4);
 				PiscaPisca(dt);
 
+			}
+			std::cout << time.Get() << " e " << first << std::endl;
+			if(first == 1 && time.Get()>1){
+				Game::GetInstance().GetCurrentState().AddObject(
+				new Animation(300, 200, 0,
+					"img/sprite/mom-comendo-gato.png", 5, 0.3, false, 7 ,  7, true));
+				first++;
+				endMission = true;
 			}
 
 	}

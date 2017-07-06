@@ -69,6 +69,8 @@ public:
 
 	bool bronca = false;
 
+	int first = 0;
+
 protected:
 	bool popRequested, quitRequested;
 
