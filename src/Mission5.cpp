@@ -44,6 +44,11 @@ Mission5::Mission5() : Mission(), paradoUrso(false), paradoGato(false) {
 	//Sound intro("audio/boom.wav");
 	//intro.Play(1);
 
+	MissionManager::enemy->ChangeClothes(2);
+
+
+	MissionManager::enemy->SetPosition(30, 300);
+
 
 }
 
@@ -84,15 +89,50 @@ void Mission5::Update(float dt){
 	}*/
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	std::cout << MissionManager::player->box.x << "e" << MissionManager::player->box.y << std::endl;
-	//MissionManager::player->box.x   = 4000;
-	//MissionManager::player->box.y = 200;
+
+	if(time.Get()>0 && time.Get()<1)
+		MissionManager::player->drogado = true;
+	if(time.Get() > 5 && momcount == 0){
+		momcount++;
+		MissionManager::enemy->show = true;
+		SceneDoor::count = ABRE;
+		SceneDoor::ValorPassar = 15;
+		MissionManager::enemy->SetPosition(30, 300);
+		MissionManager::enemy->SetDestinationPath(Vec2(600, 300));
+		MissionManager::enemy->SetDestinationPath(Vec2(4500, 300));
+		MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+	}
+	if(time.Get()>2 && momcount == 0){
+			ImageProfileBox (6);
+			falas.SetText("CORRA!");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+	}
+
+	if(time.Get()>7 ){
+		ImageProfileBox (6);
+		falas.SetText(" ");
+		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+	}
+
+	if(time.Get()>10 && time.Get()<11)
+		MissionManager::player->drogado =false;
+	if(time.Get()>12 && time.Get()<13)
+			MissionManager::player->drogado=true;
+
+	if(time.Get()>20 && time.Get()<21)
+		MissionManager::player->drogado =false;
+	if(time.Get()>24 && time.Get()<25)
+		MissionManager::player->drogado=true;
+	if(time.Get()>60 && time.Get()<61)
+			MissionManager::player->drogado=false;
+	SetPiscaPisca(10, 0.4);
+
+
 	if(time.Get() >= 4 && fadeIn){
 			UpdateVariable(dt, 80);
 	}
+	PiscaPisca(dt);
 
-	if(time.Get() >= 6){
-		//PiscaPisca(dt, 6, 0.6);
-	}
 
 }
 
