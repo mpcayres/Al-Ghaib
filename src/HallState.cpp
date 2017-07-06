@@ -39,7 +39,8 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 		//std::cout << "HSC1.2" << std::endl;
 		objectArray = std::move(obj);
 	}
-	objectArray.emplace_back(MissionManager::cat);
+	if(Game::GetInstance().GetMissionManager().GetNumMission()<4)
+		objectArray.emplace_back(MissionManager::cat);
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
@@ -82,6 +83,30 @@ void HallState::Update(float dt){
 	}
 	quitRequested = instance.QuitRequested();
 
+	/* area de cheat de missao*/
+		if(instance.KeyPress(W_KEY)){
+			ChangeState("StageState", "HallState");
+		} else if(instance.KeyPress(E_KEY)){
+			ChangeState("StageState", "LivingRoomState");
+		} else if(instance.KeyPress(R_KEY)){
+			ChangeState("StageState", "MomRoomState");
+		}else if(instance.KeyPress(T_KEY)){
+			ChangeState("StageState", "HallFinalState");
+		}else if(instance.KeyPress(KEY_1)){
+			ChangeMission(1);
+		}else if(instance.KeyPress(KEY_2)){
+			ChangeMission(2);
+		} else if(instance.KeyPress(KEY_3)){
+			ChangeMission(3);
+		} else if(instance.KeyPress(KEY_4)){
+			ChangeMission(4);
+		} else if(instance.KeyPress(KEY_5)){
+			ChangeMission(5);
+		} else if(instance.KeyPress(KEY_6)){
+			ChangeMission(6);
+		}
+
+		/* fim de area de cheat de missao*/
 	Camera::Update(dt);
 	UpdateArray(dt);
 
@@ -172,5 +197,9 @@ void HallState::SetInitialObjectArray(){
 
 	//StealthObject* Armario2 = new StealthObject(1400, 110, "img/cenario/armario-corredor-fechado.png");
 	//objectArray.emplace_back(Armario2);
+
+	SceneObject* CamaGato = new SceneObject(1450, 300,
+				"img/cenario/corredor/cama-gato.png", "img/cenario/corredor/cama-gato.png");
+	objectArray.emplace_back(CamaGato);
 
 }

@@ -34,7 +34,8 @@ MomRoomState::MomRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool in
 		//std::cout << "MR1.2 " << objectArray.size() << std::endl;
 		objectArray = std::move(obj);
 	}
-	objectArray.emplace_back(MissionManager::cat);
+
+	//objectArray.emplace_back(MissionManager::cat);
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
@@ -68,6 +69,31 @@ void MomRoomState::Update(float dt){
 		ChangeState("MomRoomState", "StageState");
 	}
 	quitRequested = instance.QuitRequested();
+
+	/* area de cheat de missao*/
+		if(instance.KeyPress(W_KEY)){
+			ChangeState("StageState", "HallState");
+		} else if(instance.KeyPress(E_KEY)){
+			ChangeState("StageState", "LivingRoomState");
+		} else if(instance.KeyPress(R_KEY)){
+			ChangeState("StageState", "MomRoomState");
+		}else if(instance.KeyPress(T_KEY)){
+			ChangeState("StageState", "HallFinalState");
+		}else if(instance.KeyPress(KEY_1)){
+			ChangeMission(1);
+		}else if(instance.KeyPress(KEY_2)){
+			ChangeMission(2);
+		} else if(instance.KeyPress(KEY_3)){
+			ChangeMission(3);
+		} else if(instance.KeyPress(KEY_4)){
+			ChangeMission(4);
+		} else if(instance.KeyPress(KEY_5)){
+			ChangeMission(5);
+		} else if(instance.KeyPress(KEY_6)){
+			ChangeMission(6);
+		}
+
+		/* fim de area de cheat de missao*/
 
 	Camera::Update(dt);
 	UpdateArray(dt);
