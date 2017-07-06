@@ -23,6 +23,11 @@ HallFinalState::HallFinalState() :
 	//std::cout << "HFSC1.1" << std::endl;
 	SetInitialObjectArray();
 
+	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
+	for(unsigned i = 0; i < auxLimits.size(); i++){
+		MissionManager::player->AddWallLimits(auxLimits[i]);
+	}
+
 
 
 	objectArray.emplace_back(MissionManager::enemy);
@@ -138,13 +143,13 @@ void HallFinalState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	MovingObject* Banquinho1 = new MovingObject(560, 390, "img/cenario/sala/banquinho.png", true);
+	MovingObject* Banquinho1 = new MovingObject(560, 380, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho1);
 
-	MovingObject* Banquinho2 = new MovingObject(900, 400, "img/cenario/sala/banquinho.png", true);
+	MovingObject* Banquinho2 = new MovingObject(900, 380, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho2);
 
-	MovingObject* Banquinho3 = new MovingObject(1111, 300, "img/cenario/sala/banquinho.png", true);
+	MovingObject* Banquinho3 = new MovingObject(1111, 285, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho3);
 
 	MovingObject* Vaso1 = new MovingObject(1760, 369, "img/cenario/geral/vaso.png", false);
@@ -161,16 +166,16 @@ void HallFinalState::SetInitialObjectArray(){
 	MovingObject* Cadeira = new MovingObject(2320, 280, "img/cenario/geral/cadeira.png", true);
 		objectArray.emplace_back(Cadeira);
 
-	MovingObject* BanquinhoBlock1 = new MovingObject(4100, 300, "img/cenario/sala/banquinho.png", true);
+	MovingObject* BanquinhoBlock1 = new MovingObject(4085, 280, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock1);
 
-	MovingObject* BanquinhoBlock2 = new MovingObject(4300, 300, "img/cenario/sala/banquinho.png", true);
+	MovingObject* BanquinhoBlock2 = new MovingObject(4310, 280, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock2);
 
-	MovingObject* BanquinhoBlock3 = new MovingObject(4150, 400, "img/cenario/sala/banquinho.png", true);
-	objectArray.emplace_back(BanquinhoBlock3);
+	//MovingObject* BanquinhoBlock3 = new MovingObject(4150, 400, "img/cenario/sala/banquinho.png", true);
+	//objectArray.emplace_back(BanquinhoBlock3);
 
-	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 400, "img/cenario/sala/banquinho.png", true);
+	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 340, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock4);
 
 
