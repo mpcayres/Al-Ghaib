@@ -162,7 +162,6 @@ void Game::Push(State *state){
 	storedState = state;
 }
 
-
 void Game::Push(Mission *mission){
 	storedMission = mission;
 }

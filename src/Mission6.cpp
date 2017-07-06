@@ -73,8 +73,10 @@ void Mission6::Update(float dt){
 	redwine.r = 102;
 	redwine.g = 0;
 	redwine.b = 0;
-	time.Update(dt);
-	cooldown.Update(dt);
+
+	if(time.Get() < 80){
+		time.Update(dt);
+	}
 
 	if(time.Get() > 0.5 && countTitle == 0){
 		countTitle++;
@@ -362,12 +364,12 @@ void Mission6::Update(float dt){
 		}
 		if(time.Get() > 60 && countMom == 14){
 			countMom++;
-			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "ELES SÃƒO SUA CONSCIÊNCIA", redwine, 0, 0);
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "ELES SÃƒO SUA CONSCIÃŠNCIA", redwine, 0, 0);
 			creepy.SetPos(0, 0, true, true);
 		}
 		if(time.Get() > 64 && countMom == 15){
 			countMom++;
-			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "VOCÊ TEM CERTEZA DE QUEM É?", redwine, 0, 0);
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "VOCÃŠ TEM CERTEZA DE QUEM Ã‰?", redwine, 0, 0);
 			creepy.SetPos(0, 0, true, true);
 		}
 		if(time.Get() > 68 && countMom == 16){
@@ -378,7 +380,13 @@ void Mission6::Update(float dt){
 		}
 		if(time.Get() > 72 && countMom == 17){
 			countMom++;
+			creepy.SetText("");
+		}
+		if(time.Get() > 76 && countMom == 18){
+			countMom++;
+			std::cout << "ES0" << std::endl;
 			Game::GetInstance().GetCurrentState().EndState();
+			std::cout << "ESINF" << std::endl;
 		}
 	}
 
