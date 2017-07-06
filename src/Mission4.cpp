@@ -247,6 +247,11 @@ void Mission4::SetObjectStage(){
 }
 
 void Mission4::SetObjectHall(){
+	SceneObject* CriadoMudo = new SceneObject(100, 160,
+			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
+	objectHall.emplace_back(CriadoMudo);
+
+
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", 1);
 	objectHall.emplace_back(DoorToMomRoom);
@@ -257,6 +262,13 @@ void Mission4::SetObjectHall(){
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
+
+	SceneObject* PoteRacao = new SceneObject(180, 490,
+			"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
+	objectHall.emplace_back(PoteRacao);
+	SceneObject* PoteAgua = new SceneObject(120, 490,
+			"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+	objectHall.emplace_back(PoteAgua);
 }
 
 void Mission4::SetObjectLivingRoom(){
