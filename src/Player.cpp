@@ -115,6 +115,10 @@ void Player::Update(float dt){
 				if(inHand->Action(nullptr) == true){
 					animShowing = true;
 					timeCooldown.Restart();
+					if(Bear::bear->hasCostura){
+						MissionManager::player->DeleteInventory();
+						animShowing = false;
+					}
 				}
 
 			}

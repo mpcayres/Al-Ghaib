@@ -103,8 +103,8 @@ void Bear::SetDirecao(int dir){
 
 void Bear::Render(){
 	if(show) sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
-	if(hasNeedle) spNeedle.Render(box.x + 4 - Camera::pos.x, box.y - Camera::pos.y, rotation);
-	if(hasScissors) spScissors.Render(box.x + 4 + bear->box.w/2 - Camera::pos.x, box.y - Camera::pos.y, rotation);
+	if(hasNeedle) spNeedle.Render(box.x + 4 - Camera::pos.x, box.y + box.h - 5 - Camera::pos.y, rotation);
+	if(hasScissors) spScissors.Render(box.x + 4 + bear->box.w/2 - Camera::pos.x, box.y  + box.h - 5 - Camera::pos.y, rotation);
 }
 
 bool Bear::IsDead(){
@@ -146,7 +146,7 @@ bool Bear::NotifyCollision(GameObject& other){
 			if(hasNeedle && hasScissors && (MissionManager::player->GetDirecao() == Player::NORTE)){
 				colliding = true;
 			}
-			if(InputManager::GetInstance().KeyPress(Z_KEY) && repair == true){
+			if(hasCostura && repair){
 				sp.Open("img/inventario/bear-fixed.png");
 				hasNeedle = hasScissors = hasCostura = false;
 			} else if(MissionManager::player->GetInHandIndex() != -1){

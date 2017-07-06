@@ -331,13 +331,13 @@ void Mission2::Update(float dt){
 		}
 		Bear::bear->show = true;
 		Bear::bear->box.x = 300;
-		Bear::bear->box.y = 380;
+		Bear::bear->box.y = 280;
 		count++;
 		Bear::bear->retorno = true;
 		if(time.Get() > 0){
-				Bear::bear->SetDestinationPath(Vec2(300, 380));
-				//Bear::bear->box.x = 810;
-				//Bear::bear->box.y = 450;
+			Bear::bear->SetDestinationPath(Vec2(300, 380));
+			//Bear::bear->box.x = 810;
+			//Bear::bear->box.y = 450;
 		}
 		if(count == 1){
 			MissionManager::missionManager->player->box.x = 800;
@@ -350,13 +350,15 @@ void Mission2::Update(float dt){
 			ImageProfileBox(6); //BOTAR URSO
 			falas.SetText("U: OBRIGADO!");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = (int)time.Get();
+			ultimoTempo = (int) time.Get();
 			showBox = true;
+		}
+		if(Bear::bear->repair && !Bear::bear->hasNeedle && !Bear::bear->hasScissors && !Bear::bear->hasCostura){
 			if(time.Get()> ultimoTempo + 7){
 				falas.SetText(" ");
 				showBox = false;
 				endMission = true;
-				ImageProfileBox (6);
+				ImageProfileBox(6);
 			}
 		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
@@ -470,16 +472,15 @@ void Mission2::SetObjectHall(){
 	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/cenario/geral/armario-corredor-fechado.png",
 	//		 "", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	//objectHall.emplace_back(Armario2);
-	StealthObject* Armario2 = new StealthObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png");
+	SceneObject* Armario2 = new SceneObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png", "");
 		objectHall.emplace_back(Armario2);
-
 
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png",
 			0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	objectHall.emplace_back(CriadoMudo);
 
-	PickUpObject* Scissors = new PickUpObject(1475, 205, "InventoryScissors",
+	PickUpObject* Scissors = new PickUpObject(1475, 180, "InventoryScissors",
 			"img/inventario/scissors.png", true, 0.5, 0.5, false, 90);
 	objectHall.emplace_back(Scissors);
 
@@ -501,7 +502,7 @@ void Mission2::SetObjectLivingRoom(){
 	MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);
 
-	MovingObject* Cadeira = new MovingObject(750, 480, "img/cenario/geral/cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(200, 480, "img/cenario/geral/cadeira.png", true);
 	objectLivingRoom.emplace_back(Cadeira);
 }
 
