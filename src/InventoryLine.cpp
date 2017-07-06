@@ -14,7 +14,6 @@ bool InventoryLine::Action(GameObject* other){
 		MissionManager::player->AddRuido(0.2*50);
 		if(timesPressed >= 20){
 			Bear::bear->hasCostura = true;
-			MissionManager::player->DeleteInventory();
 		}
 		return true;
 	}

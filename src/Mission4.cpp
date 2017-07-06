@@ -85,7 +85,8 @@ void Mission4::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	time.Update(dt);
+	if(time.Get()<100)
+			time.Update(dt);
 	cooldown.Update(dt);
 	if(!fadeIn) creepyEffect.Update(dt);
 
@@ -151,19 +152,7 @@ void Mission4::Update(float dt){
 				std::cout << time.Get() << " e " << first << std::endl;
 				if(first == 1)
 					time.Restart();
-				/*while(time.Get()< 500){
-					std::cout << time.Get() << " e " << first << std::endl;
-					time.Update(dt);
-				}*/
-				std::cout << time.Get() << " e " << first << std::endl;
-				/*if(time.Get()>= 500){
-					Game::GetInstance().GetCurrentState().AddObject(
-					new Animation(300, 200, 0,
-							"img/sprite/mom-comendo-gato.png", 5, 0.3, false, 7 ,  7, true));
 
-				}*/
-
-				std::cout << time.Get() << " e " << first << std::endl;
 			}
 			else{
 
@@ -171,13 +160,19 @@ void Mission4::Update(float dt){
 				PiscaPisca(dt);
 
 			}
-			std::cout << time.Get() << " e " << first << std::endl;
 			if(first == 1 && time.Get()>1){
+				ImageProfileBox (4);
+				falas.SetText("I-ISSO QUE ELA TA COMENDO... É O GATO?");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				showBox = true;
+
+
 				Game::GetInstance().GetCurrentState().AddObject(
-				new Animation(300, 200, 0,
+				new Animation(350, 200, 0,
 					"img/sprite/mom-comendo-gato.png", 5, 0.3, false, 7 ,  7, true));
 				first++;
 				endMission = true;
+
 			}
 
 	}
@@ -221,11 +216,9 @@ void Mission4::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->IsState("StageState") &&
-			MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
-		((MissionManager::missionManager->IsState("StageState") &&
-			MissionManager::missionManager->countStageState > 1) ||
-			MissionManager::missionManager->IsState("HallState"))) &&
+	if(((MissionManager::missionManager->IsState("StageState") && MissionManager::missionManager->countStageState <= 1 && time.Get() > 4) ||
+		((MissionManager::missionManager->IsState("StageState") && MissionManager::missionManager->countStageState > 1) ||
+			MissionManager::missionManager->IsState("HallState") || 	MissionManager::missionManager->IsState("MomRoomState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
@@ -254,6 +247,11 @@ void Mission4::SetObjectStage(){
 }
 
 void Mission4::SetObjectHall(){
+	SceneObject* CriadoMudo = new SceneObject(100, 160,
+			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
+	objectHall.emplace_back(CriadoMudo);
+
+
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", 1);
 	objectHall.emplace_back(DoorToMomRoom);
@@ -264,6 +262,13 @@ void Mission4::SetObjectHall(){
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
+
+	SceneObject* PoteRacao = new SceneObject(180, 490,
+			"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
+	objectHall.emplace_back(PoteRacao);
+	SceneObject* PoteAgua = new SceneObject(120, 490,
+			"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+	objectHall.emplace_back(PoteAgua);
 }
 
 void Mission4::SetObjectLivingRoom(){

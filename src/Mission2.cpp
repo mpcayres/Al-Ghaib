@@ -18,7 +18,7 @@ Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMissi
 
 	meowcount = 0;
 	momcount = 0;
-	countBear = -1;
+	countBear = 0;
 	countCat = 0;
 
 	SDL_Color redwine = SDL_Color();
@@ -120,105 +120,101 @@ void Mission2::Update(float dt){
 	}
 
 
-
-
-
 	if(endMission){
 		Game::GetInstance().GetCurrentState().ChangeMission(3);
 	}
+
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
-		Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+
+		if(time.Get() > 3 && countBear == 0){
+			countBear++;
 			MissionManager::player->SetBlocked(true);
-			if(flagTimer == true && time.Get() > 3){
-				tx.SetText(" ");
+			tx.SetText(" ");
+			showBox = false;
+			creepy.SetText(" ");
+		}
+		if(time.Get() > 7 && time.Get() < 8 && trancada == false && cooldown.Get() > 3 && countBear == 1){
+			countBear++;
+			Sound portaDestrancando = Sound ("audio/destrancando.wav");
+			portaDestrancando.Play(0);
+		}
+		if(time.Get() > 14 && trancada == false && cooldown.Get() > 2 && countBear == 2){
+			countBear++;
+			Game::GetInstance().GetCurrentState().AddObject(
+					new Animation(813, 270, 0,
+							"img/sprite/bear-transformation.png", 17, 0.25, true, 2, 2));
+		}
+		if(time.Get() > (14+4.25) && trancada == false && cooldown.Get() > 2){
+			if(countBear == 3){
+				Bear::bear->show = true;
+				countBear++;
+				Bear::bear->box.x = 805;
+				Bear::bear->box.y = 250;
+				SceneDoor::count = ABRE;
+				SceneDoor::ValorPassar = 24;
+				paradoUrso = true;
+				Bear::bear->SetDestinationPath(Vec2(805, 450)); //2Âº DESTINO
+				Bear::bear->SetDestinationPath(Vec2(805, 250)); //1Âº DESTINO
+				ultimoTempo = 12;
+			}
+
+			if(time.Get() > 15+4.25){
+				Bear::bear->SetDestinationPath(Vec2(805, 450));
+				//Bear::bear->box.x = 810;
+				//Bear::bear->box.y = 450;
+			}
+
+			if(time.Get() > 18+4.25 && countBear == 4){
+				countBear++;
+				Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+				sussurro.Play(0);
+				showBox = true;
+				ImageProfileBox(6); //BOTAR O URSO
+				falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 14;
+				showBox = true;
+			}
+
+			if(time.Get() > 22+4.25 && countBear == 5){
+				countBear++;
+				//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+				//sussurro.Play(0);
+				falas.SetText("U: ACHA QUE CONSEGUE ME REPARAR?");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 18;
+				showBox = true;
+			}
+			if(time.Get() > 24+4.25 && countBear == 6){
+				countBear++;
+				//Sound sussurro = Sound ("audio/ghostly-wspers.wav");
+				//sussurro.Play(0);
+				falas.SetText("U: VOU FICAR AQUI ESPERANDO");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 22;
+				showBox = true;
+				MissionManager::player->SetBlocked(false);
+			}
+			if(time.Get() > 29+4.25 && countBear == 7){
+				countBear++;
+				//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
+				//sussurro.Play(0);
+				//sussurro.Stop(); Tava dando erro ?!
+				falas.SetText(" ");
+				ImageProfileBox (6);
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 29;
 				showBox = false;
-				creepy.SetText(" ");
-				flagTimer = false;
+				//parado = false;
+				//Bear::seen = true; !!!!!!!!!
 			}
-			if(time.Get() > 7 && time.Get() < 8 && trancada == false && cooldown.Get() > 3){
-				Sound portaDestrancando = Sound ("audio/destrancando.wav");
-				if(destrancAudioFlag == false){
-					portaDestrancando.Play(0);
-					destrancAudioFlag = true;
-				}
-			}
-			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
-				if(countBear == -1){
-					countBear++;
-					Game::GetInstance().GetCurrentState().AddObject(
-							new Animation(795, 265, 0,
-									"img/sprite/bear-transformation.png", 17, 0.25, true, 2, 2));
-				}
-			}
-			if(time.Get() > (14+4.25) && trancada == false && cooldown.Get() > 2){
-				if(countBear == 0){
-					Bear::bear->show = true;
-					countBear++;
-					Bear::bear->box.x = 805;
-					Bear::bear->box.y = 250;
-					SceneDoor::count = ABRE;
-					SceneDoor::ValorPassar = 24;
-					paradoUrso = true;
-					Bear::bear->SetDestinationPath(Vec2(805, 450)); //2Âº DESTINO
-					Bear::bear->SetDestinationPath(Vec2(805, 250)); //1Âº DESTINO
-					ultimoTempo = 12;
-				}
+		}
 
-				if(time.Get() > 15+4.25){
-					Bear::bear->SetDestinationPath(Vec2(805, 450));
-					//Bear::bear->box.x = 810;
-					//Bear::bear->box.y = 450;
-				}
+		MessageDoor(dt);
+		//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 
-				if(time.Get() > 18+4.25 && countBear == 1){
-					countBear++;
-					sussurro.Play(0);
-					showBox = true;
-					ImageProfileBox(6); //BOTAR O URSO
-					falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 14;
-					showBox = true;
-				}
-
-				if(time.Get() > 22+4.25 && countBear == 3){
-					countBear++;
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
-					falas.SetText("U: ACHA QUE CONSEGUE ME REPARAR?");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 18;
-					showBox = true;
-				}
-				if(time.Get() > 24+4.25 && countBear == 4){
-					countBear++;
-					//Sound sussurro = Sound ("audio/ghostly-wspers.wav");
-					//sussurro.Play(0);
-					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 22;
-					showBox = true;
-					MissionManager::player->SetBlocked(false);
-				}
-				if(time.Get() > 29+4.25 && countBear == 5){
-					countBear++;
-					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-					//sussurro.Play(0);
-					//sussurro.Stop(); Tava dando erro ?!
-					falas.SetText(" ");
-					ImageProfileBox (6);
-					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-					ultimoTempo = 29;
-					showBox = false;
-					//parado = false;
-					//Bear::seen = true; !!!!!!!!!
-				}
-			}
-
-			MessageDoor(dt);
-			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}else if(MissionManager::missionManager->IsState("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 
@@ -335,13 +331,13 @@ void Mission2::Update(float dt){
 		}
 		Bear::bear->show = true;
 		Bear::bear->box.x = 300;
-		Bear::bear->box.y = 380;
+		Bear::bear->box.y = 280;
 		count++;
 		Bear::bear->retorno = true;
 		if(time.Get() > 0){
-				Bear::bear->SetDestinationPath(Vec2(300, 380));
-				//Bear::bear->box.x = 810;
-				//Bear::bear->box.y = 450;
+			Bear::bear->SetDestinationPath(Vec2(300, 380));
+			//Bear::bear->box.x = 810;
+			//Bear::bear->box.y = 450;
 		}
 		if(count == 1){
 			MissionManager::missionManager->player->box.x = 800;
@@ -354,13 +350,15 @@ void Mission2::Update(float dt){
 			ImageProfileBox(6); //BOTAR URSO
 			falas.SetText("U: OBRIGADO!");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = (int)time.Get();
+			ultimoTempo = (int) time.Get();
 			showBox = true;
+		}
+		if(Bear::bear->repair && !Bear::bear->hasNeedle && !Bear::bear->hasScissors && !Bear::bear->hasCostura){
 			if(time.Get()> ultimoTempo + 7){
 				falas.SetText(" ");
 				showBox = false;
 				endMission = true;
-				ImageProfileBox (6);
+				ImageProfileBox(6);
 			}
 		}
 		Bear::bear->SetDestinationPath(Vec2(300, 400));
@@ -474,16 +472,15 @@ void Mission2::SetObjectHall(){
 	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/cenario/geral/armario-corredor-fechado.png",
 	//		 "", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	//objectHall.emplace_back(Armario2);
-	StealthObject* Armario2 = new StealthObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png");
+	SceneObject* Armario2 = new SceneObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png", "");
 		objectHall.emplace_back(Armario2);
-
 
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png",
 			0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	objectHall.emplace_back(CriadoMudo);
 
-	PickUpObject* Scissors = new PickUpObject(1475, 205, "InventoryScissors",
+	PickUpObject* Scissors = new PickUpObject(1475, 180, "InventoryScissors",
 			"img/inventario/scissors.png", true, 0.5, 0.5, false, 90);
 	objectHall.emplace_back(Scissors);
 
@@ -505,7 +502,7 @@ void Mission2::SetObjectLivingRoom(){
 	MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
 	objectLivingRoom.emplace_back(Banco);
 
-	MovingObject* Cadeira = new MovingObject(750, 480, "img/cenario/geral/cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(200, 480, "img/cenario/geral/cadeira.png", true);
 	objectLivingRoom.emplace_back(Cadeira);
 }
 

@@ -197,6 +197,11 @@ void Mission::ImageProfileBox (int option){
 		profileBoxY = 500;
 		break;
 	case 5:
+		profileBox = Sprite("img/inventario/bear-destr.png");
+		profileBox.SetScaleX(3);
+		profileBox.SetScaleY(3);
+		profileBoxX = 25;
+		profileBoxY = 500;
 		break;
 	case 6:
 		profileBox = Sprite(" ");

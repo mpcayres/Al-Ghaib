@@ -38,7 +38,9 @@ StageState::StageState(std::vector<std::unique_ptr<GameObject>> obj, bool inicia
 		objectArray = std::move(obj);
 	}
 
-	objectArray.emplace_back(MissionManager::enemy);
+	if(Game::GetInstance().GetMissionManager().GetNumMission()==6)
+		objectArray.emplace_back(MissionManager::enemy);
+
 	objectArray.emplace_back(MissionManager::player);
 
 	RandomState();

@@ -94,7 +94,8 @@ void  Mission1::Update(float dt){
 		}
 	}
 	//std::cout << time.Get() << std::endl;
-	time.Update(dt);
+	if(time.Get()<100)
+		time.Update(dt);
 	cooldown.Update(dt);
 
 	if(gameOver){
@@ -512,6 +513,13 @@ void Mission1::SetObjectHall(){
 
 	MovingObject* Banco = new MovingObject(100, 470, "img/cenario/sala/banquinho.png", true);
 	objectHall.emplace_back(Banco);
+
+	SceneObject* PoteRacao = new SceneObject(80, 300,
+				"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
+	objectHall.emplace_back(PoteRacao);
+	SceneObject* PoteAgua = new SceneObject(80, 350,
+					"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+		objectHall.emplace_back(PoteAgua);
 }
 
 void Mission1::SetObjectLivingRoom(){
@@ -520,6 +528,7 @@ void Mission1::SetObjectLivingRoom(){
 
 	SceneObject* gatinho = new SceneObject(200, 500,"img/inventario/novelo.png", "", true, 0.5, 0.5);
 	objectLivingRoom.emplace_back(gatinho);
+
 
 	SceneObject* Bau = new SceneObject(400, 500, "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
