@@ -92,8 +92,8 @@ void Mission2::Update(float dt){
 	cooldown.Update(dt);
 
 	if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
-		int posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
-		int posEnemyX = MissionManager::enemy->box.x;
+		double posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
+		double posEnemyX = MissionManager::enemy->box.x;
 
 		if(posEnemyY > MissionManager::player->limits.y+MissionManager::player->limits.h){
 			posEnemyY = MissionManager::player->limits.y+MissionManager::player->limits.h - 10;
@@ -107,15 +107,18 @@ void Mission2::Update(float dt){
 		if(posEnemyX < MissionManager::player->limits.x){
 			posEnemyX = MissionManager::player->limits.x + 10;
 		}
+
 		if(MissionManager::missionManager->GetStage("HallState")){
 			((HallState&) Game::GetInstance().GetCurrentState())
 	 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
-	 					Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+	 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+30) );
 			MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
 					GetCurrentState()).tileMap.GetPath());
 			MissionManager::enemy->seen = false;
 		}
 	}
+
+
 
 
 
