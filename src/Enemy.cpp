@@ -300,3 +300,7 @@ void Enemy::ChangeClothes(int num){
 int Enemy::GetHeight(){
 	return sp.GetHeight();
 }
+int Enemy::GetWidth(){
+	return sp.GetWidth();
+}
+

@@ -34,6 +34,7 @@ public:
 	void SetDead();
 	void ChangeClothes(int num);
 	int GetHeight();
+	int GetWidth();
 	void Reset();
 
 	InvBox direcao;

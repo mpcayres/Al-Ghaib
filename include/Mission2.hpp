@@ -35,6 +35,7 @@ private:
 	bool played, endMission;
 	int meowcount, momcount,countBear = 0, countCat = 0;
 
+	Timer miado;
 	bool destrancAudioFlag, sussurroAudioFlag, miadoAudioFlag;
 };
 

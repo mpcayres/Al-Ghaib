@@ -6,7 +6,7 @@
 #include "Sound.hpp"
 #include "MissionManager.hpp"
 
-#define MODULO_SPEED 1
+#define MODULO_SPEED 0.5
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 

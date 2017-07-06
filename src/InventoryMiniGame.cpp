@@ -1,5 +1,6 @@
 #include "InventoryMiniGame.hpp"
 #include "MissionManager.hpp"
+#include "Sound.hpp"
 
 #include <iostream>
 
@@ -19,6 +20,10 @@ bool InventoryMiniGame::Action(GameObject* other){
 		sp = Sprite(file3);
 		sp.SetScaleY(0.6);
 	}
+	//TESTE DE SOM PRA VER SE FICA BOM !
+	Sound palhaco = Sound("audio/weird.wav");
+	palhaco.Play(0);
+
 	MissionManager::player->AddRuido(0.2*50);
 	if(timesPressed >= 30) return true;
 	return false;

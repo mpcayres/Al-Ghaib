@@ -4,6 +4,7 @@
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
 #include "Animation.hpp"
+#include "HallState.hpp"
 
 
  Music Mission2::music;
@@ -54,6 +55,9 @@ Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMissi
 
 	destrancAudioFlag = false;
 	sussurroAudioFlag = false;
+	miadoAudioFlag = true;
+
+	miado = Timer();
 }
 
 Mission2::~Mission2() {
@@ -86,6 +90,34 @@ void Mission2::Update(float dt){
 	}
 	time.Update(dt);
 	cooldown.Update(dt);
+
+	if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
+		int posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
+		int posEnemyX = MissionManager::enemy->box.x;
+
+		if(posEnemyY > MissionManager::player->limits.y+MissionManager::player->limits.h){
+			posEnemyY = MissionManager::player->limits.y+MissionManager::player->limits.h - 10;
+		}
+		if(posEnemyY < MissionManager::player->limits.y){
+			posEnemyY = MissionManager::player->limits.y+10;
+		}
+		if(posEnemyX > MissionManager::player->limits.x+MissionManager::player->limits.w){
+			posEnemyX = MissionManager::player->limits.x+MissionManager::player->limits.w -10;
+		}
+		if(posEnemyX < MissionManager::player->limits.x){
+			posEnemyX = MissionManager::player->limits.x + 10;
+		}
+		if(MissionManager::missionManager->GetStage("HallState")){
+			((HallState&) Game::GetInstance().GetCurrentState())
+	 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
+	 					Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+			MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
+					GetCurrentState()).tileMap.GetPath());
+			MissionManager::enemy->seen = false;
+		}
+	}
+
+
 
 	if(endMission){
 		Game::GetInstance().GetCurrentState().ChangeMission(3);
@@ -163,7 +195,7 @@ void Mission2::Update(float dt){
 				if(time.Get() > 29 ){
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
-					sussurro.Stop();
+					//sussurro.Stop(); Tava dando erro ?!
 					falas.SetText(" ");
 					ImageProfileBox (6);
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -229,23 +261,33 @@ void Mission2::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(800, 300));
 		}
 
-
-
-		if(((int)time.Get())%5){
-			Sound meow1 = Sound ("audio/cat-meow-1.wav");
-			if(meowcount%2 && ((int)time.Get())%100){
-				//MissionManager::player->AddRuido(6);
-
+		Sound meow1 = Sound ("audio/cat-meow-1.wav");
+		Sound meow2 = Sound ("audio/cat-meow-2.wav");
+		Sound meow3 = Sound ("audio/cat-meow-3.wav");
+		if(miado.Get() > 3){
+			miadoAudioFlag = false;
+			miado.Restart();
+		}else{
+			miado.Update(dt);
+		}
+		if(miadoAudioFlag == false){
+			//MissionManager::player->AddRuido(6);
+			if(meowcount == 0)
 				meow1.Play(0);
+			else if(meowcount == 1)
+				meow2.Play(0);
+			else if(meowcount == 2){
+				meow3.Play(0);
+				meowcount = -1;
 			}
-			//Sound meow2 = Sound ("audio/cat-meow-2.wav");
-			//meow2.Play(0);
+			miadoAudioFlag = true;
 			meowcount++;
-			//meow1.Stop();
 		}
 
 
-		if (MissionManager::player->GetRuido()>80 ){
+		if (MissionManager::player->GetRuido()>80 && MissionManager::enemy->show == false){
+			MissionManager::enemy->seen = true;
+			MissionManager::enemy->canPursuit = true;
 			MissionManager::enemy->SetPosition(975,115);
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;

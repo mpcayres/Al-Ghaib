@@ -13,19 +13,11 @@
 
 //NESSE STATE TUDO VAI SER SETADO DIRETO NELE
 HallFinalState::HallFinalState() :
-	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHall.txt", &tileSet) {
+	State(), tileSet(192, 96, "img/tilesetHall.png"), tileMap("map/tileMapHallFinal.txt", &tileSet) {
 	//std::cout << "TESTE 1" << std::endl;
 	limits = tileMap.FindLimits();
-	limits.y -=50;
-	MissionManager::player->AddWallLimits(Rect(0, 0, 768, 180 ));
-	MissionManager::player->AddWallLimits(Rect(960, 0, 576, 180 ));
 
 	SetPlayer(50, 400, CAMERA_TYPE2, limits);
-	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
-	for(unsigned i = 0; i < auxLimits.size(); i++){
-		MissionManager::player->AddWallLimits(auxLimits[i]);
-	}
-
 	//std::cout << "HFSC1.1" << std::endl;
 	SetInitialObjectArray();
 

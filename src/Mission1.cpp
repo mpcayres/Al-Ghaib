@@ -107,10 +107,26 @@ void  Mission1::Update(float dt){
 		}
 
 		if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
+			int posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
+			int posEnemyX = MissionManager::enemy->box.x;
+
+			if(posEnemyY > MissionManager::player->limits.y+MissionManager::player->limits.h){
+				posEnemyY = MissionManager::player->limits.y+MissionManager::player->limits.h - 10;
+			}
+			if(posEnemyY < MissionManager::player->limits.y){
+				posEnemyY = MissionManager::player->limits.y+10;
+			}
+			if(posEnemyX > MissionManager::player->limits.x+MissionManager::player->limits.w){
+				posEnemyX = MissionManager::player->limits.x+MissionManager::player->limits.w -10;
+			}
+			if(posEnemyX < MissionManager::player->limits.x){
+				posEnemyX = MissionManager::player->limits.x + 10;
+			}
+
+
 			if(MissionManager::missionManager->GetStage("HallState")){
 				((HallState&) Game::GetInstance().GetCurrentState())
-		 			.tileMap.PathFind(Vec2(MissionManager::enemy->box.x,
-		 					MissionManager::enemy->box.y+MissionManager::enemy->GetHeight()),
+		 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
 		 					Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
 				MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
 						GetCurrentState()).tileMap.GetPath());
@@ -118,9 +134,8 @@ void  Mission1::Update(float dt){
 			}
 			if(MissionManager::missionManager->GetStage("LivingRoomState")){
 				((LivingRoomState&) Game::GetInstance().GetCurrentState())
-					.tileMapChao.PathFind(Vec2(MissionManager::enemy->box.x,
-							MissionManager::enemy->box.y+MissionManager::enemy->GetHeight()),
-							Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
+					.tileMapChao.PathFind(Vec2(posEnemyX,posEnemyY),
+		 					Vec2(MissionManager::player->box.x,MissionManager::player->box.y) );
 				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
 						GetCurrentState()).tileMapChao.GetPath());
 				MissionManager::enemy->seen = false;
