@@ -382,9 +382,8 @@ void  Mission1::Update(float dt){
 					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 				}
 
-			}else if (MissionManager::missionManager->IsState("LivingRoomState")){
+			} else if(MissionManager::missionManager->IsState("LivingRoomState")){
 				if(state != MissionManager::missionManager->changeState){
-					MissionManager::player->SetPosition(230, 300);
 					state = MissionManager::missionManager->changeState;
 					time.Restart();
 					MissionManager::enemy->show = false;
@@ -523,19 +522,18 @@ void Mission1::SetObjectHall(){
 }
 
 void Mission1::SetObjectLivingRoom(){
-	//PickUpObject* Bear = new PickUpObject(1500, 500, "InventoryBear", "img/inventario/bear.png",false, 1.5, 1.5);
-	//objectLivingRoom.emplace_back(Bear);
-
 	SceneObject* gatinho = new SceneObject(200, 500,"img/inventario/novelo.png", "", true, 0.5, 0.5);
 	objectLivingRoom.emplace_back(gatinho);
 
-
-	SceneObject* Bau = new SceneObject(400, 500, "img/cenario/geral/bau-fechado.png",
+	SceneObject* Bau = new SceneObject(250, 500, "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryBear", SceneObject::SAMEY_UP);
 	objectLivingRoom.emplace_back(Bau);
 
-	MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
-	objectLivingRoom.emplace_back(Banco);
+	MovingObject* Banco1 = new MovingObject(510, 470, "img/cenario/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco1);
+
+	MovingObject* Banco2 = new MovingObject(570, 470, "img/cenario/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco2);
 }
 
 void Mission1::SetObjectMomRoom(){

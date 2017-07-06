@@ -54,7 +54,7 @@ void Sprite::Render(int x, int y, float angle){
 
 	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture.get(),
 			&clipRect, &dst, angle, nullptr, SDL_FLIP_NONE);
-	SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
+	//SDL_RenderDrawRect(Game::GetInstance().GetRenderer(), &dst);
 }
 
 void Sprite::SetScaleX(float scale){

@@ -14,9 +14,10 @@ TitleState::TitleState() : menu(50, 150) {
 
 	flagTimer = true; stopMusic = false; controlPop = false;
 	time = Timer();
-	bg = Sprite("img/menu/sprite-title.png", 5, 0.5);
+	bg = Sprite("img/menu/sprite-title.png", 5, 0.7);
 	bg.SetScaleX(1.5); bg.SetScaleY(1.5);
 	control = Sprite("img/menu/controles.png");
+	shift = false;
 
 	//tx = Text("font/Xposed.ttf", 80, Text::TextStyle::BLENDED, "AL-GHAIB", auxcolor, 0, 0);
 	//tx.SetPos(0, 0, true, true);
@@ -29,7 +30,12 @@ TitleState::TitleState() : menu(50, 150) {
 void TitleState::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
 
-	bg.Update(dt);
+	if(bg.GetCurrentFrame() == 5){
+		shift = true;
+	} else if(bg.GetCurrentFrame() == 1){
+		shift = false;
+	}
+	bg.Update(dt, 0, shift);
 	if(controlPop){
 		if(instance.KeyPress(ESCAPE_KEY) || instance.KeyPress(ENTER_KEY)) controlPop = false;
 	} else{

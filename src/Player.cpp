@@ -564,9 +564,9 @@ void Player::AddInventory(std::string obj){
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryClown());
 	} else if(obj == "InventoryBear"){
-		/*spPicked = Sprite("img/inventario/bear.png");
+		spPicked = Sprite("img/inventario/bear.png");
 		spPicked.SetScaleX(10); spPicked.SetScaleY(10);
-		timePicked.Restart(); showPicked = true;*/
+		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryBear());
 	} else if(obj == "InventoryWool"){
 		spPicked = Sprite("img/inventario/novelo.png");

@@ -272,7 +272,11 @@ void Mission4::SetObjectHall(){
 }
 
 void Mission4::SetObjectLivingRoom(){
+	MovingObject* Banco1 = new MovingObject(510, 470, "img/cenario/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco1);
 
+	MovingObject* Banco2 = new MovingObject(570, 470, "img/cenario/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco2);
 }
 
 void Mission4::SetObjectMomRoom(){

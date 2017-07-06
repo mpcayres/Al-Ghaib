@@ -129,26 +129,33 @@ void LivingRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	//MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
-	//objectArray.emplace_back(Banco);
+	ScenePortal* DoorToLivingRoom = new ScenePortal(220, 165, "HallState");
+	objectArray.emplace_back(DoorToLivingRoom);
 
-	SceneObject* Sofa = new SceneObject(500, 340, "img/cenario/sala/sofa.png", "img/cenario/sala/sofa.png");
+	SceneObject* Sofa = new SceneObject(500, 330, "img/cenario/sala/sofa.png", "");
 	objectArray.emplace_back(Sofa);
 
-	SceneObject* Poltrona = new SceneObject(400, 350, "img/cenario/sala/poltrona.png", "img/cenario/sala/poltrona.png");
+	SceneObject* Poltrona = new SceneObject(400, 355, "img/cenario/sala/poltrona.png", "");
 	objectArray.emplace_back(Poltrona);
 
-	SceneObject* Mesa = new SceneObject(500, 400, "img/cenario/sala/mesa.png", "img/cenario/sala/mesa.png");
+	SceneObject* Mesa = new SceneObject(500, 400, "img/cenario/sala/mesa.png", "");
 	objectArray.emplace_back(Mesa);
 
-	SceneAnimated* TV = new SceneAnimated(630, 470, "img/cenario/sala/televisao_desligada.png", "img/cenario/sala/televisao.png");
+	SceneAnimated* TV = new SceneAnimated(650, 350, "img/cenario/sala/televisao_desligada.png", "img/cenario/sala/televisao.png");
 	objectArray.emplace_back(TV);
 
-	SceneObject* Painel = new SceneObject(390, 127, "img/cenario/sala/mosaico.png", "img/cenario/sala/mosaico.png");
-	objectArray.emplace_back(Painel);
+	if(MissionManager::player->HaveObject("InventoryControl")){
+		SceneObject* Criado = new SceneObject(735, 390, "img/cenario/filho/criado-fechado.png",
+					"img/cenario/filho/criado-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Criado);
+	} else{
+		SceneObject* Criado = new SceneObject(735, 390, "img/cenario/filho/criado-fechado.png",
+				"img/cenario/filho/criado-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
+		objectArray.emplace_back(Criado);
+	}
 
-	//SceneObject* Pilastra1 = new SceneObject(350, 127, "img/cenario/sala/pilastra.png", "img/cenario/sala/pilastra.png");
-	//objectArray.emplace_back(Pilastra1);
+	SceneObject* Painel = new SceneObject(390, 127, "img/cenario/sala/mosaico.png", "");
+	objectArray.emplace_back(Painel);
 
 	SceneUntouchable* Pilastra1 = new SceneUntouchable(350, 127, "img/cenario/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra1);
@@ -156,23 +163,7 @@ void LivingRoomState::SetInitialObjectArray(){
 	SceneUntouchable* Pilastra2 = new SceneUntouchable(725, 127, "img/cenario/sala/pilastra.png");
 	objectArray.emplace_back(Pilastra2);
 
-	//SceneDoor* DoorToHall = new SceneDoor(220, 165, "HallState", false, "img/cenario/geral/portal.png", "img/cenario/geral/portal.png");
-	//objectArray.emplace_back(DoorToHall);
-
-	ScenePortal* DoorToLivingRoom = new ScenePortal(220, 165, "HallState");
-	objectArray.emplace_back(DoorToLivingRoom);
-
 	SceneObject* Armario = new SceneObject(790, 180,
-			"img/cenario/geral/armario-corredor-fechado.png", "img/cenario/geral/armario-corredor-fechado.png");
+			"img/cenario/geral/armario-corredor-fechado.png", "img/cenario/geral/armario-corredor-aberto.png");
 	objectArray.emplace_back(Armario);
-
-	if(MissionManager::player->HaveObject("InventoryControl")){
-		SceneObject* Criado = new SceneObject(750, 500, "img/cenario/filho/criado-fechado.png",
-					"img/cenario/filho/criado-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Criado);
-	} else{
-		SceneObject* Criado = new SceneObject(750, 500, "img/cenario/filho/criado-fechado.png",
-				"img/cenario/filho/criado-aberto.png", 0, 1, 1, "InventoryControl", SceneObject::SAMEY_UP);
-		objectArray.emplace_back(Criado);
-	}
 }

@@ -493,17 +493,20 @@ void Mission2::SetObjectHall(){
 }
 
 void Mission2::SetObjectLivingRoom(){
-	PickUpObject* Agulha = new PickUpObject(670, 400, "InventoryNeedle", "img/inventario/needle.png", false, 0.5, 0.5);
+	PickUpObject* Agulha = new PickUpObject(535, 495, "InventoryNeedle", "img/inventario/needle.png", false, 0.5, 0.5);
 	objectLivingRoom.emplace_back(Agulha);
 
 	PickUpObject* Carretel = new PickUpObject(600, 420, "InventoryLine", "img/inventario/carretel.png", false, 0.5, 0.5);
 	objectLivingRoom.emplace_back(Carretel);
 
-	MovingObject* Banco = new MovingObject(650, 370, "img/cenario/sala/banquinho.png", true);
-	objectLivingRoom.emplace_back(Banco);
-
 	MovingObject* Cadeira = new MovingObject(200, 480, "img/cenario/geral/cadeira.png", true);
 	objectLivingRoom.emplace_back(Cadeira);
+
+	MovingObject* Banco1 = new MovingObject(510, 470, "img/cenario/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco1);
+
+	MovingObject* Banco2 = new MovingObject(570, 470, "img/cenario/sala/banquinho.png", true);
+	objectLivingRoom.emplace_back(Banco2);
 }
 
 void Mission2::SetObjectMomRoom(){

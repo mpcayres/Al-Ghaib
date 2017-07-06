@@ -39,7 +39,7 @@ private:
 	//Text tx;
 	Timer time;
 	static Music intro, music;
-	bool flagTimer, controlPop;
+	bool flagTimer, controlPop, shift;
 	static bool stopMusic;
 	MenuHUD menu;
 
