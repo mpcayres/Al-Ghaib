@@ -233,7 +233,7 @@ void Mission6::Update(float dt){
 
 
 
-	if(MissionManager::missionManager->IsState("StageState")){
+	if(MissionManager::missionManager->GetStage("StageState")){
 		SetPiscaPisca(20, 0.4);
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
@@ -263,11 +263,96 @@ void Mission6::Update(float dt){
 			MissionManager::enemy->SetDestinationPath(Vec2(780, 350));
 		}*/
 
-		if(time.Get() > 12 && time.Get() < 14){
+		if(time.Get() > 10){
 			showBox = true;
-			//ImageProfileBox (2);
-			falas.SetText("NÃO TOLERAREI ISSO!");
+			ImageProfileBox (3);
+			falas.SetText("ACHOU QUE PODERIA ESCAPAR ASSIM?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 14){
+			showBox = true;
+			ImageProfileBox (3);
+			falas.SetText("NÃO ADIANTA FUGIR");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 18){
+			showBox = true;
+			ImageProfileBox (4);
+			falas.SetText("VOCÊ É PARTE DE MIM");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 22){
+			showBox = true;
+			ImageProfileBox (3);
+			falas.SetText("VOCÊ É PARTE DE NÓS");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 26){
+			showBox = true;
+			ImageProfileBox (4);
+			falas.SetText("EU SOU QUEM VOCÊ ABRAÇAVA TODAS AS NOITES");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 30){
+			showBox = true;
+			ImageProfileBox (3);
+			falas.SetText("EM CADA MOMENTO DE DESESPERO");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 34){
+			showBox = true;
+			ImageProfileBox (4);
+			falas.SetText("SOU A ORIGEM DOS SEUS PESADELOS MAIS SOMBRIOS");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 38){
+			showBox = true;
+			ImageProfileBox (3);
+			falas.SetText("SOU OS SUSSURROS QUE CONTROLAM SUA MENTE");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 42){
+			showBox = true;
+			ImageProfileBox (4);
+			falas.SetText("SOU O FOGO QUE TE CERCA");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+
+		if(time.Get() > 46){
+			showBox = true;
+			ImageProfileBox (3);
+			falas.SetText("EU SOU O DJINN");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 50){
+			showBox = false;
+			ImageProfileBox (3);
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get()>52){
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "TODO MUNDO NASCE COM UM DJINN", redwine, 0, 0);
+			creepy.SetPos(0, 0, true, true);
+		}
+		if(time.Get()>56){
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "POR MAIS QUE VOCÊ NÃO OS OUÇA", redwine, 0, 0);
+			creepy.SetPos(0, 0, true, true);
+		}
+		if(time.Get()>60){
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "ELES SÃO SUA CONSCIENCIA", redwine, 0, 0);
+			creepy.SetPos(0, 0, true, true);
+		}
+		if(time.Get()>64){
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "VOCẼ TEM CERTEZA DE QUEM VOCÊ É?", redwine, 0, 0);
+			creepy.SetPos(0, 0, true, true);
+		}
+		if(time.Get()>68){
+			creepy = Text("font/uwch.ttf", 50, Text::TextStyle::BLENDED, "NEM TUDO É O QUE PARECE SER", redwine, 0, 0);
+			creepy.SetPos(0, 0, true, true);
+
+		}
+		if(time.Get()>72){
+			//fazer voltar pro menu aqui
 		}
 	}
 	if(time.Get() >= 8 && fadeIn){
@@ -279,7 +364,7 @@ void Mission6::Update(float dt){
 }
 
 void Mission6::Render(){
-	if(time.Get() < 8.5 && fadeIn){
+	if((time.Get() < 8.5 && fadeIn) || time.Get()>50){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
@@ -287,11 +372,11 @@ void Mission6::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(((MissionManager::missionManager->IsState("StageState") &&
+	if(((MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState <= 1 && time.Get() > 8.5) ||
-		((MissionManager::missionManager->IsState("StageState") &&
+		((MissionManager::missionManager->GetStage("StageState") &&
 			MissionManager::missionManager->countStageState > 1) ||
-			MissionManager::missionManager->IsState("HallState"))) &&
+			MissionManager::missionManager->GetStage("HallState"))) &&
 		!MissionManager::player->GetBloqHUD()){
 		if(showBox){
 			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
