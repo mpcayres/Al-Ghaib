@@ -17,18 +17,17 @@ Animation::Animation(float x, float y, float rotation, std::string sprite,
 
 void Animation::Update(float dt){
 	endTimer.Update(dt);
-	sp.Update(dt,0,false);
+	sp.Update(dt, 0, false);
 }
 
 void Animation::Render(){
-	if(back)
-		backgroundsquare.Render(0,0, 0);
+	if(back) backgroundsquare.Render(0,0, 0);
 	sp.Render(box.x - Camera::pos.x, box.y - Camera::pos.y, rotation);
 
 }
 
 bool Animation::IsDead(){
-	return (oneTimeOnly && endTimer.Get()>= timeLimit);
+	return (oneTimeOnly && endTimer.Get() >= timeLimit);
 }
 
 bool Animation::NotifyCollision(GameObject& other){

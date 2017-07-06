@@ -13,12 +13,12 @@ Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMissi
 	initialState = "StageState";
 	initialX = 300; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
-	MissionManager::player->SetDirecao((int) Player::OESTE);
+	MissionManager::player->SetDirecao((int) Player::LESTE);
 	MissionManager::missionManager->randomStates = true;
 
 	meowcount = 0;
 	momcount = 0;
-	countBear = 0;
+	countBear = -1;
 	countCat = 0;
 
 	SDL_Color redwine = SDL_Color();
@@ -145,11 +145,17 @@ void Mission2::Update(float dt){
 				}
 			}
 			if(time.Get() > 14 && trancada == false && cooldown.Get() > 2){
-				Bear::bear->show = true;
-				countBear ++;
-				std::cout << "test 0 " << countBear << std::endl;
-				if(countBear == 1){
-
+				if(countBear == -1){
+					countBear++;
+					Game::GetInstance().GetCurrentState().AddObject(
+							new Animation(800, 260, 0,
+									"img/sprite/bear-transformation.png", 17, 0.25, true, 2, 2));
+				}
+			}
+			if(time.Get() > (14+4.25) && trancada == false && cooldown.Get() > 2){
+				if(countBear == 0){
+					Bear::bear->show = true;
+					countBear++;
 					Bear::bear->box.x = 805;
 					Bear::bear->box.y = 250;
 					SceneDoor::count = ABRE;
@@ -159,27 +165,26 @@ void Mission2::Update(float dt){
 					Bear::bear->SetDestinationPath(Vec2(805, 250)); //1Âº DESTINO
 					ultimoTempo = 12;
 				}
-				if(time.Get() > 15){
+
+				if(time.Get() > 15+4.25){
 					Bear::bear->SetDestinationPath(Vec2(805, 450));
 					//Bear::bear->box.x = 810;
 					//Bear::bear->box.y = 450;
 				}
-				//std::cout << "test 1 " << std::endl;
-				if(time.Get() > 18 ){
 
-					if(sussurroAudioFlag == false){
-						sussurro.Play(0);
-						sussurroAudioFlag = true;
-					}
+				if(time.Get() > 18+4.25 && countBear == 1){
+					countBear++;
+					sussurro.Play(0);
 					showBox = true;
-					ImageProfileBox (6); //BOTAR O URSO
+					ImageProfileBox(6); //BOTAR O URSO
 					falas.SetText("U: OLHA O QUE FIZERAM COMIGO!");
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					ultimoTempo = 14;
 					showBox = true;
 				}
-				//std::cout << "test 2 " << std::endl;
-				if(time.Get() > 22 ){
+
+				if(time.Get() > 22+4.25 && countBear == 3){
+					countBear++;
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
 					falas.SetText("U: ACHA QUE CONSEGUE ME REPARAR?");
@@ -187,7 +192,8 @@ void Mission2::Update(float dt){
 					ultimoTempo = 18;
 					showBox = true;
 				}
-				if(time.Get() > 24 ){
+				if(time.Get() > 24+4.25 && countBear == 4){
+					countBear++;
 					//Sound sussurro = Sound ("audio/ghostly-wspers.wav");
 					//sussurro.Play(0);
 					falas.SetText("U: VOU FICAR AQUI ESPERANDO");
@@ -196,7 +202,8 @@ void Mission2::Update(float dt){
 					showBox = true;
 					MissionManager::player->SetBlocked(false);
 				}
-				if(time.Get() > 29 ){
+				if(time.Get() > 29+4.25 && countBear == 5){
+					countBear++;
 					//Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 					//sussurro.Play(0);
 					//sussurro.Stop(); Tava dando erro ?!
@@ -207,7 +214,6 @@ void Mission2::Update(float dt){
 					showBox = false;
 					//parado = false;
 					//Bear::seen = true; !!!!!!!!!
-
 				}
 			}
 

@@ -33,7 +33,7 @@ private:
 	static Music music;
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
-	int meowcount, momcount,countBear = 0, countCat = 0;
+	int meowcount, momcount, countBear, countCat;
 
 	Timer miado;
 	bool destrancAudioFlag, sussurroAudioFlag, miadoAudioFlag;
