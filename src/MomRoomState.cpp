@@ -5,6 +5,7 @@
 #include "Walls.hpp"
 #include "EmptyBox.hpp"
 #include "SceneDoor.hpp"
+#include "SceneCovil.hpp"
 #include "SceneObject.hpp"
 #include "ScenePortal.hpp"
 #include "SceneAnimated.hpp"
@@ -65,35 +66,10 @@ void MomRoomState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		EndState();
 	}
-	if(instance.KeyPress(W_KEY)){
+	if(instance.KeyPress(Q_KEY)){
 		ChangeState("MomRoomState", "StageState");
 	}
 	quitRequested = instance.QuitRequested();
-
-	/* area de cheat de missao*/
-		if(instance.KeyPress(W_KEY)){
-			ChangeState("StageState", "HallState");
-		} else if(instance.KeyPress(E_KEY)){
-			ChangeState("StageState", "LivingRoomState");
-		} else if(instance.KeyPress(R_KEY)){
-			ChangeState("StageState", "MomRoomState");
-		}else if(instance.KeyPress(T_KEY)){
-			ChangeState("StageState", "HallFinalState");
-		}else if(instance.KeyPress(KEY_1)){
-			ChangeMission(1);
-		}else if(instance.KeyPress(KEY_2)){
-			ChangeMission(2);
-		} else if(instance.KeyPress(KEY_3)){
-			ChangeMission(3);
-		} else if(instance.KeyPress(KEY_4)){
-			ChangeMission(4);
-		} else if(instance.KeyPress(KEY_5)){
-			ChangeMission(5);
-		} else if(instance.KeyPress(KEY_6)){
-			ChangeMission(6);
-		}
-
-		/* fim de area de cheat de missao*/
 
 	Camera::Update(dt);
 	UpdateArray(dt);
@@ -150,7 +126,7 @@ void MomRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneObject* Covil =  new SceneObject(570, 470, "img/cenario/mae/porao-fechado.png", "img/cenario/mae/porao-aberto.png", 0, 0.6, 0.6, "", 0, true);
+	SceneCovil* Covil =  new SceneCovil(570, 470);
 	objectArray.emplace_back(Covil);
 
 	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png");

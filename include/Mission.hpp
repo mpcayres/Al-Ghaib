@@ -67,9 +67,8 @@ public:
 	void ImageProfileBox (int option);
 
 
-	bool bronca = false;
-
-	int first = 0;
+	bool bronca;
+	int first;
 
 protected:
 	bool popRequested, quitRequested;

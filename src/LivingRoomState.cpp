@@ -63,7 +63,7 @@ void LivingRoomState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		EndState();
 	}
-	if(instance.KeyPress(W_KEY)){
+	if(instance.KeyPress(Q_KEY)){
 		ChangeState("LivingRoomState", "StageState");
 	}
 	quitRequested = instance.QuitRequested();
@@ -98,7 +98,7 @@ void LivingRoomState::Update(float dt){
 	if(changeIndex != -1){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
 		ChangeState("LivingRoomState",
-				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 500, 120, (int) Player::SUL);
+				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 520, 140, (int) Player::SUL);
 	}
 
 	/*if(MissionManager::missionManager->setObjectTile){

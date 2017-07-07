@@ -39,8 +39,9 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 		//std::cout << "HSC1.2" << std::endl;
 		objectArray = std::move(obj);
 	}
-	if(Game::GetInstance().GetMissionManager().GetNumMission()<4)
+	if(Game::GetInstance().GetMissionManager().GetNumMission() < 4){
 		objectArray.emplace_back(MissionManager::cat);
+	}
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
@@ -78,35 +79,11 @@ void HallState::Update(float dt){
 	if(instance.KeyPress(ESCAPE_KEY)){
 		EndState();
 	}
-	if(instance.KeyPress(W_KEY)){
+	if(instance.KeyPress(Q_KEY)){
 		ChangeState("HallState", "StageState");
 	}
 	quitRequested = instance.QuitRequested();
 
-	/* area de cheat de missao*/
-		if(instance.KeyPress(W_KEY)){
-			ChangeState("StageState", "HallState");
-		} else if(instance.KeyPress(E_KEY)){
-			ChangeState("StageState", "LivingRoomState");
-		} else if(instance.KeyPress(R_KEY)){
-			ChangeState("StageState", "MomRoomState");
-		}else if(instance.KeyPress(T_KEY)){
-			ChangeState("StageState", "HallFinalState");
-		}else if(instance.KeyPress(KEY_1)){
-			ChangeMission(1);
-		}else if(instance.KeyPress(KEY_2)){
-			ChangeMission(2);
-		} else if(instance.KeyPress(KEY_3)){
-			ChangeMission(3);
-		} else if(instance.KeyPress(KEY_4)){
-			ChangeMission(4);
-		} else if(instance.KeyPress(KEY_5)){
-			ChangeMission(5);
-		} else if(instance.KeyPress(KEY_6)){
-			ChangeMission(6);
-		}
-
-		/* fim de area de cheat de missao*/
 	Camera::Update(dt);
 	UpdateArray(dt);
 
@@ -114,7 +91,6 @@ void HallState::Update(float dt){
 	posInvert = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if(objectArray[i].get()->Is("SceneDoor")){
-			//std::cout << "DOOR" << std::endl;
 			if(((SceneDoor*)objectArray[i].get())->GetChangeState()){
 				changeIndex = i;
 			}
@@ -139,9 +115,9 @@ void HallState::Update(float dt){
 		if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "StageState"){
 			ChangeState("HallState", "StageState", 800, 280, (int) Player::SUL);
 		} else if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "LivingRoomState"){
-			ChangeState("HallState", "LivingRoomState", 240, 250, (int) Player::SUL);
+			ChangeState("HallState", "LivingRoomState", 235, 250, (int) Player::SUL);
 		} else if(((SceneDoor*)objectArray[changeIndex].get())->GetDest() == "MomRoomState"){
-			ChangeState("HallState", "MomRoomState", 230, 210, (int) Player::SUL);
+			ChangeState("HallState", "MomRoomState", 225, 260, (int) Player::SUL);
 		}
 	}
 
