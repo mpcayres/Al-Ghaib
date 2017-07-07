@@ -131,7 +131,7 @@ void StageState::Update(float dt){
 	if(changeIndex != -1){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
 		ChangeState("StageState",
-				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 400, 390, (int) Player::SUL);
+				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 400, 380, (int) Player::SUL);
 	}
 }
 

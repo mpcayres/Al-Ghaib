@@ -272,6 +272,7 @@ void Mission3::Update(float dt){
 			}
 		}
 
+
 		if(MissionManager::cat->attractedWool == true && MissionManager::cat->attractedTV == false){
 			atraidoNovelo++;
 			if(atraidoNovelo == 1){
@@ -353,8 +354,7 @@ void Mission3::Update(float dt){
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
-			//MissionManager::missionManager->player->box.x = 400;
-			//MissionManager::missionManager->player->box.y = 400;
+			MissionManager::cat->Reset();
 			MissionManager::enemy->SetPosition(400,400);
 			time.Restart();
 		}
@@ -366,19 +366,23 @@ void Mission3::Update(float dt){
 			contador =  MissionManager::missionManager->countLivingRoomState;
 			if(atraidoTV == 1){
 				MissionManager::cat->PathFlush();
+				MissionManager::cat->Reset();
 				MissionManager::cat->SetPosition(230, 300);
 				//MissionManager::missionManager->cat->box.x = 400;
 				//MissionManager::missionManager->cat->box.y = 400;
 				time.Restart();
 
-				MissionManager::cat->SetDestinationPath(Vec2(610, 450));
-				MissionManager::cat->SetDestinationPath(Vec2(500, 450));
+				MissionManager::cat->SetDestinationPath(Vec2(640, 450));
+				MissionManager::cat->SetDestinationPath(Vec2(640, 500));
+				/*MissionManager::cat->SetDestinationPath(Vec2(500, 450));
 				MissionManager::cat->SetDestinationPath(Vec2(400, 430));
-				MissionManager::cat->SetDestinationPath(Vec2(400, 350));
-				MissionManager::cat->SetDestinationPath(Vec2(230, 350));
+				MissionManager::cat->SetDestinationPath(Vec2(400, 350));*/
+				MissionManager::cat->SetDestinationPath(Vec2(230, 500));
 			}
-			else if (time.Get()>5){
-				MissionManager::cat->SetDestinationPath(Vec2(610, 450));
+			if(time.Get()>4.5){
+				MissionManager::cat->PathFlush();
+				MissionManager::cat->Reset();
+				MissionManager::cat->SetPosition(640, 450);
 			}
 		}
 
