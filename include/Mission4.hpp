@@ -33,7 +33,7 @@ private:
 	Timer creepyEffect;
 	bool paradoUrso, paradoGato;
 	bool played, endMission;
-	int meowcount, momcount, countBear, countCat, contCreepy;
+	int contCreepy, contFala;
 
 };
 

@@ -11,6 +11,7 @@ public:
 	bool NotifyCollision(GameObject& other);
 	bool Is(std::string type);
 	bool ReceiveAction(InventoryObject* other);
+	void ChangeImage(bool justOpen = false);
 
 };
 

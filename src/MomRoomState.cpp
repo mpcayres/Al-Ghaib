@@ -126,25 +126,37 @@ void MomRoomState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneCovil* Covil =  new SceneCovil(570, 470);
+	SceneCovil* Covil =  new SceneCovil(540, 485);
 	objectArray.emplace_back(Covil);
 
 	SceneDoor* DoorToHall = new SceneDoor(220, 170, "HallState", false, "img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png");
 	objectArray.emplace_back(DoorToHall);
 
-	SceneUntouchable* Mirror = new SceneUntouchable(300, 170, "img/cenario/mae/espelho.png", 0, 0.5, 0.5);
+	StealthObject* Mesa = new StealthObject(170, 480, "img/cenario/geral/mesa.png");
+	objectArray.emplace_back(Mesa);
+
+	SceneUntouchable* Mirror = new SceneUntouchable(350, 150, "img/cenario/mae/espelho.png");
 	objectArray.emplace_back(Mirror);
 
-	SceneObject* Table = new SceneObject(300, 250, "img/cenario/mae/mesinha.png", "img/cenario/mae/mesinha.png", 0, 0.7, 0.7);
+	SceneObject* Table = new SceneObject(375, 250, "img/cenario/mae/mesinha.png", "", 0, 0.7, 0.7);
 	objectArray.emplace_back(Table);
 
-	SceneObject* Armario =  new SceneObject(600, 200, "img/cenario/filho/armario-quarto-fechado.png", "img/cenario/filho/armario-quarto-fechado.png");
+	SceneObject* Armario =  new SceneObject(600, 200, "img/cenario/geral/armario-corredor-fechado.png", "img/cenario/geral/armario-corredor-aberto.png");
 	objectArray.emplace_back(Armario);
 
-	SceneObject* Cama =  new SceneObject(500, 200, "img/cenario/filho/cama.png", "img/cenario/filho/cama.png");
+	SceneObject* Cama =  new SceneObject(500, 200, "img/cenario/filho/cama.png", "");
 	objectArray.emplace_back(Cama);
 
-	SceneObject* Mask= new SceneObject(650, 480, "img/cenario/mae/cabideiro.png", "img/cenario/mae/cabideiro.png");
+	SceneObject* CriadoMudo = new SceneObject(510, 320,  "img/cenario/filho/criado-fechado.png",  "img/cenario/filho/criado-aberto.png");
+	objectArray.emplace_back(CriadoMudo);
+
+	SceneObject* Book = new SceneObject(520, 320, "img/cenario/geral/livro.png", "img/cenario/geral/livro.png", 0, 0.3, 0.3);
+	objectArray.emplace_back(Book);
+
+	SceneObject* Mask = new SceneObject(650, 480, "img/cenario/mae/cabideiro.png", "");
 	objectArray.emplace_back(Mask);
+
+	MovingObject* Banco1 = new MovingObject(220, 510, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(Banco1);
 
 }

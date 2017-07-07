@@ -13,13 +13,9 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
 
-	meowcount = 0;
-	momcount = 0;
-	countBear = 0;
-	countCat = 0;
-
 	creepyEffect = Timer();
 	contCreepy = 0;
+	contFala = 0;
 
 	MissionManager::player->drogado = true;
 
@@ -41,7 +37,7 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , " ", white, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 	showBox = false;
-	//ultimoTempo = 3;
+
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -93,30 +89,37 @@ void Mission4::Update(float dt){
 	}
 	if(!fadeIn) creepyEffect.Update(dt);
 
-	if(endMission && time.Get() > 10){
+	if(endMission && time.Get() > 10 && first == 3){
 		Game::GetInstance().GetCurrentState().ChangeMission(5);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->IsState("StageState") &&
 			MissionManager::missionManager->countStageState <= 1){
 
-		if(time.Get() > 5 && trancada == false && cooldown.Get() > 3){
+		if(state != MissionManager::missionManager->changeState){
+			state = MissionManager::missionManager->changeState;
+		}
+
+		if(time.Get() > 5 && trancada == false && cooldown.Get() > 3 && contFala == 0){
+			contFala++;
 			ImageProfileBox(4);
-			falas.SetText("U:TEMOS QUE VOLTAR AO QUARTO");
+			falas.SetText("TEMOS QUE VOLTAR AO QUARTO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 15;
 			showBox = true;
 
 		}
-		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3){
-			falas.SetText("U: CERTEZA QUE DEVE TER ALGO NAQUELE PORÃO");
+		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3 && contFala == 1){
+			contFala++;
+			falas.SetText("CERTEZA QUE DEVE TER ALGO NAQUELE PORÃO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 20;
 			showBox = true;
 			MissionManager::player->SetBlocked(false);
 			MissionManager::enemy->show = false;
 		}
-		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3){
+		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3 && contFala == 2){
+			contFala++;
 			falas.SetText(" ");
 			ImageProfileBox(6);
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -132,10 +135,9 @@ void Mission4::Update(float dt){
 							MissionManager::missionManager->countHallState <= 1){
 
 		if(state != MissionManager::missionManager->changeState){
-				state = MissionManager::missionManager->changeState;
-				time.Restart();
+			state = MissionManager::missionManager->changeState;
+			time.Restart();
 		}
-
 
 		MessageDoor(dt);
 

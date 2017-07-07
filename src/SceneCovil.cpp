@@ -32,4 +32,37 @@ bool SceneCovil::ReceiveAction(InventoryObject* other){
 	return false;
 }
 
+void SceneCovil::ChangeImage(bool justOpen){
+	if(change2 != ""){
+		Sound s = Sound("audio/portapequenaconvertida.wav");
+		s.Play(0);
+
+		if(estado && !justOpen){
+			estado = false;
+			sp.Open(change1);
+			if(box.w != sp.GetWidth()){
+				box.x = box.x + box.w/2 - sp.GetWidth()/2 - 20;
+				box.w = sp.GetWidth();
+			}
+			if(box.h != sp.GetHeight()){
+				box.y = box.y + box.h/2 - sp.GetHeight()/2;
+				box.h = sp.GetHeight();
+			}
+		} else if(!estado){
+			estado = true;
+			sp.Open(change2);
+			int w = box.w; int h = box.h;
+			if(box.w != sp.GetWidth()){
+				box.x += box.w/2 - sp.GetWidth()/2 + 20;
+				box.w = sp.GetWidth();
+			}
+			if(box.h != sp.GetHeight()){
+				box.y += box.h/2 - sp.GetHeight()/2;
+				box.h = sp.GetHeight();
+			}
+
+			MovePlayerColliding(w, h);
+		}
+	}
+}
 
