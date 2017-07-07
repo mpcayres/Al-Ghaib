@@ -5,6 +5,7 @@
 #include "MissionManager.hpp"
 #include "Animation.hpp"
 #include "HallState.hpp"
+#include "LivingRoomState.hpp"
 
 
 Music Mission2::music;
@@ -121,9 +122,30 @@ void Mission2::Update(float dt){
 	}
 
 
-	if(endMission){
+	/*if(endMission){
 		Game::GetInstance().GetCurrentState().ChangeMission(3);
-	}
+	}*/
+	if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission && !gameOver){
+					gameOver = true;
+					MissionManager::enemy->SetPosition(MissionManager::player->box.x, MissionManager::player->box.y);
+					MissionManager::enemy->SetDestinationPath(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+					MissionManager::enemy->bloq=true;
+					MissionManager::player->SetBlocked(true);
+					MissionManager::player->SetBloqHUD(true);
+					MissionManager::player->SetBloqInv(true);
+					time.Restart();
+					Camera::Follow(MissionManager::player, CAMERA_TYPE1);
+					Camera::Zoom(2, true);
+		}
+
+		if(gameOver){
+				if(time.Get() > 3){
+					Game::GetInstance().GetCurrentState().ChangeMission(2);
+				}
+			}
+			if(endMission){
+				Game::GetInstance().GetCurrentState().ChangeMission(3);
+		}
 
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->IsState("StageState") &&
@@ -308,6 +330,26 @@ void Mission2::Update(float dt){
 				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2Âº DESTINO
 				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1Âº DESTINO
 			}
+			double posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
+						double posEnemyX = MissionManager::enemy->box.x;
+
+						if(posEnemyY > MissionManager::player->limits.y+MissionManager::player->limits.h){
+							posEnemyY = MissionManager::player->limits.y+MissionManager::player->limits.h - 10;
+						}
+						if(posEnemyY < MissionManager::player->limits.y){
+							posEnemyY = MissionManager::player->limits.y+10;
+						}
+						if(posEnemyX > MissionManager::player->limits.x+MissionManager::player->limits.w){
+							posEnemyX = MissionManager::player->limits.x+MissionManager::player->limits.w -10;
+						}
+						if(posEnemyX < MissionManager::player->limits.x){
+							posEnemyX = MissionManager::player->limits.x + 10;
+						}
+			((HallState&) Game::GetInstance().GetCurrentState())
+					 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
+					 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
+							MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
+									GetCurrentState()).tileMap.GetPath());
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
@@ -349,8 +391,8 @@ void Mission2::Update(float dt){
 		if(Bear::bear->hasNeedle && Bear::bear->hasScissors && Bear::bear->hasCostura){
 			Bear::bear->repair = true;
 			time.Restart();
-			ImageProfileBox(6); //BOTAR URSO
-			falas.SetText("U: OBRIGADO!");
+			ImageProfileBox(5); //BOTAR URSO
+			falas.SetText("OBRIGADO!");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = (int) time.Get();
 			showBox = true;
@@ -393,6 +435,27 @@ void Mission2::Update(float dt){
 				MissionManager::enemy->SetDestinationPath(Vec2(500, 140)); //2Âº DESTINO
 				MissionManager::enemy->SetDestinationPath(Vec2(500, 110)); //1Âº DESTINO
 			}
+			double posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
+						double posEnemyX = MissionManager::enemy->box.x;
+
+						if(posEnemyY > MissionManager::player->limits.y+MissionManager::player->limits.h){
+							posEnemyY = MissionManager::player->limits.y+MissionManager::player->limits.h - 10;
+						}
+						if(posEnemyY < MissionManager::player->limits.y){
+							posEnemyY = MissionManager::player->limits.y+10;
+						}
+						if(posEnemyX > MissionManager::player->limits.x+MissionManager::player->limits.w){
+							posEnemyX = MissionManager::player->limits.x+MissionManager::player->limits.w -10;
+						}
+						if(posEnemyX < MissionManager::player->limits.x){
+							posEnemyX = MissionManager::player->limits.x + 10;
+						}
+
+			((LivingRoomState&) Game::GetInstance().GetCurrentState())
+				.tileMapChao.PathFind(Vec2(posEnemyX,posEnemyY),
+				Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
+				MissionManager::enemy->SetDestinationPursuit(((LivingRoomState&) Game::GetInstance().
+				GetCurrentState()).tileMapChao.GetPath());
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
@@ -464,16 +527,10 @@ void Mission2::SetObjectStage(){
 }
 
 void Mission2::SetObjectHall(){
-	//Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
-	//		"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
-
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	//SceneObject* Armario2 = new SceneObject(1300, 110, "img/cenario/geral/armario-corredor-fechado.png",
-	//		 "", 0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
-	//objectHall.emplace_back(Armario2);
 	SceneObject* Armario2 = new SceneObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png", "");
 		objectHall.emplace_back(Armario2);
 
@@ -491,6 +548,14 @@ void Mission2::SetObjectHall(){
 
 	MovingObject* Cadeira = new MovingObject(200, 420, "img/cenario/geral/cadeira.png", true);
 	objectHall.emplace_back(Cadeira);
+
+
+	SceneObject* PoteRacao = new SceneObject(280, 200,
+				"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
+	objectHall.emplace_back(PoteRacao);
+	SceneObject* PoteAgua = new SceneObject(180, 200,
+					"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+		objectHall.emplace_back(PoteAgua);
 
 }
 

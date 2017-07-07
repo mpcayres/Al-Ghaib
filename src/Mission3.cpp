@@ -98,6 +98,7 @@ void Mission3::Update(float dt){
 				gameOver = true;
 				MissionManager::enemy->SetPosition(MissionManager::player->box.x, MissionManager::player->box.y);
 				MissionManager::enemy->SetDestinationPath(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+				MissionManager::enemy->bloq=true;
 				MissionManager::player->SetBlocked(true);
 				MissionManager::player->SetBloqHUD(true);
 				MissionManager::player->SetBloqInv(true);
