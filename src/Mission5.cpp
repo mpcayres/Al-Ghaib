@@ -118,8 +118,11 @@ void Mission5::Update(float dt){
 
 		if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show == true){
 			MissionManager::player->SetBlocked(true);
+			MissionManager::player->SetBloqHUD(true);
+			MissionManager::player->SetBloqInv(true);
 			time.Restart();
 			Camera::Zoom(2, true);
+			MissionManager::enemy->bloq = true;
 			gameOver = true;
 		}
 
@@ -159,7 +162,7 @@ void Mission5::Render(){
 		spFade.Render(0,0,0);
 	}
 
-	if(showBox){
+	if(showBox && !MissionManager::player->GetBloqHUD()){
 		falasBox.Render(falasBoxRect.x, falasBoxRect.y, 0);
 		profileBox.Render(profileBoxX, profileBoxY, 0);
 		falas.Render(0,0);

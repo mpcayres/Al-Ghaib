@@ -12,7 +12,7 @@
 
 Bear* Bear::bear;
 
-Bear::Bear(float x, float y): sp("img/sprite/bear-walking.png", 8, 0.6, 1),
+Bear::Bear(float x, float y): sp("img/sprite/bear-walking.png", 8, 0.3, 1),
 		spNeedle("img/inventario/needle.png"), spScissors("img/inventario/scissors.png") {
 	//stop = false;
 	sp.SetScaleX(2); sp.SetScaleY(2);

@@ -597,18 +597,22 @@ void Player::AddInventory(std::string obj){
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryControl());
-	}else if(obj == "InventoryLine"){
+	} else if(obj == "InventoryLine"){
 		spPicked = Sprite("img/inventario/carretel.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryLine());
-	}else if(obj == "InventoryBook"){
+	} else if(obj == "InventoryBook"){
 		spPicked = Sprite("img/inventario/livro-simbolo.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryBook());
+	} else if(obj == "InventoryGum"){
+		spPicked = Sprite("img/inventario/chiclete.png");
+		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
+		timePicked.Restart(); showPicked = true;
+		inventory.emplace_back(new InventoryBear("img/inventario/chiclete.png"));
 	}
-
 
 	lastPicked = obj;
 	inHandIndex = inventory.size() - 1;

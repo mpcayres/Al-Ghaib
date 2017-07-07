@@ -5,7 +5,7 @@
 
 class InventoryBear : public InventoryObject {
 public:
-	InventoryBear();
+	InventoryBear(std::string file = "img/inventario/bear.png");
 	~InventoryBear();
 
 	bool Action(GameObject* other);

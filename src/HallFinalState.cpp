@@ -123,19 +123,47 @@ void HallFinalState::SetInitialObjectArray(){
 	MovingObject* Banquinho3 = new MovingObject(1111, 285, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho3);
 
+	MovingObject* Banquinho4 = new MovingObject(1300, 285, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(Banquinho4);
+
 	MovingObject* Vaso1 = new MovingObject(1760, 369, "img/cenario/geral/vaso.png", false);
 	objectArray.emplace_back(Vaso1);
 
 	MovingObject* Vaso2 = new MovingObject(1900, 369, "img/cenario/geral/vaso.png", false);
 	objectArray.emplace_back(Vaso2);
 
-	SceneObject* Bau= new SceneObject(2900, 260,
-				"img/cenario/geral/bau-fechado.png", "img/cenario/geral/bau-aberto.png");
-	objectArray.emplace_back(Bau);
-
-
 	MovingObject* Cadeira = new MovingObject(2320, 280, "img/cenario/geral/cadeira.png", true);
 	objectArray.emplace_back(Cadeira);
+
+	StealthObject* Escrivaninha = new StealthObject(2550, 350, "img/cenario/geral/escrivaninha-fechado.png");
+	objectArray.emplace_back(Escrivaninha);
+
+	MovingObject* SitJunto = new MovingObject(2570, 420, "img/cenario/sala/banquinho.png", true);
+	objectArray.emplace_back(SitJunto);
+
+	SceneObject* Bau1 = new SceneObject(2900, 260, "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryLine", SceneObject::SAMEY_UP);
+	objectArray.emplace_back(Bau1);
+
+	SceneObject* Bau2 = new SceneObject(3000, 260, "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryGum", SceneObject::SAMEY_UP);
+	objectArray.emplace_back(Bau2);
+
+	SceneObject* Bau3 = new SceneObject(3100, 260, "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+	objectArray.emplace_back(Bau3);
+
+	SceneObject* Bau4 = new SceneObject(3200, 260, "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+	objectArray.emplace_back(Bau4);
+
+	SceneObject* Bau5 = new SceneObject(3300, 260, "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryNeedle", SceneObject::SAMEY_UP);
+	objectArray.emplace_back(Bau5);
+
+	SceneObject* Bau6 = new SceneObject(3400, 260, "img/cenario/geral/bau-fechado.png",
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
+	objectArray.emplace_back(Bau6);
 
 	MovingObject* BanquinhoBlock1 = new MovingObject(4085, 280, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock1);
