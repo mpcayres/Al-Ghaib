@@ -21,10 +21,10 @@ e tentando restaurar seu fiel amiguinho, o ursinho.
 	Setas do teclado = movimentação básica
 	Setas + shif = correr
 	Z = interações básicas com objetos
-	ctrl + Z = atravessar porta para proximo comodo
+	ctrl + Z = atravessar porta para proximo cômodo
 	X = usar item do inventário
 	C = empurrar objetos
-	ctrl + C = subir no objeto
+	ctrl + C = subir em objetos
 	I = abrir inventário
 
 * Membros do time e seus papéis
@@ -45,6 +45,20 @@ Ingrid Santana Lopes
 	- correção de erros
 
 Marcos Paulo Cayres Rosa
+	- interação do player com os objetos
+	- comunicação entre missões, states, objetos e player/NPC
+	- desenvolvimento da lógica de missões
+	- inclusão de saves
+	- posicionamento de objetos
+	- abstração e criação dos objetos: objetos com mini-jogo, que se movem, de stealth, do inventário, que interagem com outros objetos
+	- lógica de colisão dos objetos
+	- movimentação do player pela frente ou por trás dos objetos
+	- animações gerais e das interações do player
+	- implementação do menu
+	- inclusão de sons e música
+	- revisão geral das missões
+	- inclusão de lógicas para aumentar o terror: zoom, câmera piscando, fade in/out, aleatorização do estado dos objetos
+	- correção de erros
 
 Rennê Ruan Alves Oliveira
 	- implementação de tilesets e tilemaps

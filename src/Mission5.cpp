@@ -10,7 +10,7 @@ Mission5::Mission5() : Mission(), paradoUrso(false), paradoGato(false) {
 	initialState = "HallFinalState";
 	initialX = 450; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
-	MissionManager::missionManager->randomStates = true;
+	MissionManager::missionManager->randomStates = false;
 
 	time = Timer();
 
