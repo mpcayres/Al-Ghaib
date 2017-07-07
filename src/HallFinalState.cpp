@@ -28,7 +28,7 @@ HallFinalState::HallFinalState() :
 	}
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
-
+	
 	music = Music("audio/boxmusic.wav");
 
 	LoadAssets();
@@ -73,6 +73,10 @@ void HallFinalState::Update(float dt){
 	posInvert = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if(objectArray[i].get()->Is("SceneDoor")){
+			if(endGame){
+				((SceneDoor*)objectArray[i].get())->SetLock(false);
+				((SceneDoor*)objectArray[i].get())->ChangeImage(true);
+			}
 			if(((SceneDoor*)objectArray[i].get())->GetChangeState()){
 				changeIndex = i;
 			}
@@ -118,17 +122,23 @@ void HallFinalState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	MovingObject* Banquinho1 = new MovingObject(560, 380, "img/cenario/sala/banquinho.png", true);
+	MovingObject* Banquinho1 = new MovingObject(580, 380, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho1);
 
 	MovingObject* Banquinho2 = new MovingObject(900, 380, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho2);
 
-	MovingObject* Banquinho3 = new MovingObject(1111, 285, "img/cenario/sala/banquinho.png", true);
+	SceneObject* Abajur = new SceneObject(1000, 260, "img/cenario/geral/abajur.png", "");
+	objectArray.emplace_back(Abajur);
+
+	MovingObject* Banquinho3 = new MovingObject(1120, 285, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho3);
 
 	MovingObject* Banquinho4 = new MovingObject(1300, 285, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(Banquinho4);
+
+	SceneObject* Abajur2 = new SceneObject(1410, 260, "img/cenario/geral/abajur.png", "");
+	objectArray.emplace_back(Abajur2);
 
 	MovingObject* Vaso1 = new MovingObject(1760, 369, "img/cenario/geral/vaso.png", false);
 	objectArray.emplace_back(Vaso1);
@@ -169,24 +179,24 @@ void HallFinalState::SetInitialObjectArray(){
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectArray.emplace_back(Bau6);
 
-	MovingObject* BanquinhoBlock1 = new MovingObject(4085, 280, "img/cenario/sala/banquinho.png", true);
-	objectArray.emplace_back(BanquinhoBlock1);
+	SceneObject* Mesa = new SceneObject(4200, 250, "img/cenario/mae/mesinha.png", "");
+	objectArray.emplace_back(Mesa);
 
-	MovingObject* BanquinhoBlock2 = new MovingObject(4310, 280, "img/cenario/sala/banquinho.png", true);
-	objectArray.emplace_back(BanquinhoBlock2);
-
-	//MovingObject* BanquinhoBlock3 = new MovingObject(4150, 400, "img/cenario/sala/banquinho.png", true);
-	//objectArray.emplace_back(BanquinhoBlock3);
-
-	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 340, "img/cenario/sala/banquinho.png", true);
-	objectArray.emplace_back(BanquinhoBlock4);
-
-	PickUpObject* Livro = new PickUpObject(4200, 320, "InventoryBook", "img/inventario/livro-simbolo.png", false, 0.4, 0.4);
+	PickUpObject* Livro = new PickUpObject(4245, 285, "InventoryBook", "img/inventario/livro-simbolo.png", false, 0.4, 0.4);
 	objectArray.emplace_back(Livro);
 
-	StealthObject* Armario = new StealthObject(4700, 210, "img/cenario/geral/armario-corredor-fechado.png");
-	objectArray.emplace_back(Armario);
+	SceneObject* CamaGato = new SceneObject(4700, 280, "img/cenario/corredor/cama-gato.png", "", 0, 0.7, 0.7);
+	objectArray.emplace_back(CamaGato);
 
-	SceneDoor* DoorToKidRoom = new SceneDoor(6000, 200, "StageState", false);
+	SceneObject* Gato1 = new SceneObject(4770, 285, "img/cenario/corredor/pote-com-racao.png", "", 0, 0.7, 0.7);
+	objectArray.emplace_back(Gato1);
+
+	SceneObject* Gato2 = new SceneObject(4810, 285, "img/cenario/corredor/pote-sem-racao.png", "", 0, 0.7, 0.7);
+	objectArray.emplace_back(Gato2);
+
+	StealthObject* Armario2 = new StealthObject(5500, 210, "img/cenario/geral/armario-corredor-fechado.png");
+	objectArray.emplace_back(Armario2);
+
+	SceneDoor* DoorToKidRoom = new SceneDoor(6000, 200, "StageState");
 	objectArray.emplace_back(DoorToKidRoom);
 }

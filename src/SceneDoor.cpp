@@ -83,3 +83,7 @@ void SceneDoor::SetChangeState(bool change){
 std::string SceneDoor::GetDest(){
 	return dest;
 }
+
+void SceneDoor::SetLock(bool l){
+	lock = l;
+}

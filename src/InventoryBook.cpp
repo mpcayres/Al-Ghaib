@@ -10,7 +10,10 @@ InventoryBook::~InventoryBook(){ }
 bool InventoryBook::Action(GameObject* other){
 	timesPressed++;
 	MissionManager::player->AddRuido(0.2*50);
-	if(timesPressed >= 30) return true;
+	if(timesPressed >= 50){
+		Game::GetInstance().GetCurrentState().SetEndGame();
+		return true;
+	}
 	return false;
 }
 

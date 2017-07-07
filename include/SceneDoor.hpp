@@ -18,7 +18,7 @@ public:
 	bool GetChangeState();
 	void SetChangeState(bool change);
 	std::string GetDest();
-	//bool Tried();
+	void SetLock(bool l);
 
 	static int ValorPassar;
 	static int count;

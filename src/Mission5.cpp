@@ -77,32 +77,36 @@ void Mission5::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	if(time.Get() < 25){
+	if(time.Get() < 50){
 		time.Update(dt);
 	}
 
 	if(gameOver && time.Get() > 4){
 		Game::GetInstance().GetCurrentState().ChangeMission(5);
-	} else if(endMission && time.Get() > 20){
+	} else if(endMission && time.Get() > 45){
 		Game::GetInstance().GetCurrentState().ChangeMission(6);
+	} else if(endMission && time.Get() > 35){
+		UpdateVariable(dt, 50, true);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	//std::cout << MissionManager::player->box.x << " X " << MissionManager::player->box.y << std::endl;
 
-	if(momcount == 1 && MissionManager::missionManager->IsState("StageState") && !gameOver) {
+	if(momcount == 1 && MissionManager::missionManager->IsState("StageState") && !gameOver && !endMission) {
 		MissionManager::enemy->show = false;
+		MissionManager::player->drogado = false;
 		endMission = true;
 		time.Restart();
+		alpha = alphaAux = TRANSPARENT;
 	}
 
-	if(MissionManager::missionManager->IsState("HallFinalState") && !gameOver){
+	if(MissionManager::missionManager->IsState("HallFinalState") && !gameOver && !endMission){
 
 		if(time.Get() > 4 && momcount == 0 && contFala == 0){
 			contFala++;
 			ImageProfileBox (6);
 			showBox = true;
 			falas.SetText("CORRA!");
-			falas.SetPos(0, Game::GetInstance().GetHeight()-60, true, false);
+			falas.SetPos(0, Game::GetInstance().GetHeight()-65, true, false);
 		}
 
 		if(time.Get() > 8 && MissionManager::player->box.x > 200 && momcount == 0){

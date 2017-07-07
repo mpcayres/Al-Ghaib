@@ -33,6 +33,7 @@ public:
 	void EndState();
 	void ChangeState(std::string orig, std::string dest, int x = -1, int y = -1, int dir = -1);
 	void ChangeMission(int num);
+	void SetEndGame();
 	std::vector<std::pair<int,int>> GetPosVector();
 
 protected:
@@ -43,6 +44,7 @@ protected:
 	bool quitRequested;
 	bool popRequested;
 	int posInvert;
+	bool endGame;
 
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 };

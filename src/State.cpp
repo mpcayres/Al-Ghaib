@@ -12,6 +12,7 @@ State::State(){
 	quitRequested = false;
 	popRequested = false;
 	posInvert = -1;
+	endGame = false;
 }
 
 State::~State(){
@@ -170,4 +171,8 @@ std::vector<std::pair<int,int>> State::GetPosVector(){
 		aux.push_back(std::make_pair(objectArray[i].get()->box.x, objectArray[i].get()->box.y));
 	}
 	return aux;
+}
+
+void State::SetEndGame(){
+	endGame = true;
 }
