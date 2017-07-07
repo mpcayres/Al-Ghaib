@@ -10,10 +10,10 @@
 #define AUMENTO_VALUE 2
 #define DESACELERA 1
 
-Cat::Cat(float x, float y): sp("img/inventario/novelo.png"){
+Cat::Cat(float x, float y): sp("img/sprite/CatSpritesheet.png", 6, 0.06, 6){
 	//stop = false;
-	sp.SetScaleX(0.5);
-	sp.SetScaleY(0.5);
+	sp.SetScaleX(2);
+	sp.SetScaleY(2);
 
 	//destinationPath.x = x;
 	//destinationPath.y = y;
@@ -27,8 +27,8 @@ Cat::Cat(float x, float y): sp("img/inventario/novelo.png"){
 
 	time = Timer();
 
-	////direcao = SUL;
-	////direcaoShift = false;
+	direcao = SUL;
+	direcaoShift = false;
 
 	rotation = 0;
 	speed.y = speed.x = 0;
@@ -63,25 +63,25 @@ void Cat::Update(float dt){
 		//if(seen == true) Pursuit();
 		/*else*/ DefinedPath();
 
-		/*if(speed.x != 0 || speed.y != 0){
-					sp.Update(dt, ////direcao, ////direcaoShift);
+		if(speed.x != 0 || speed.y != 0){
+					sp.Update(dt, direcao, direcaoShift);
 		} else{
 			if(sp.GetCurrentFrame() > 1 && sp.GetCurrentFrame() < 8){
-			if(////direcao == NORTE) speed.y = -DESACELERA;
-			if(////direcao == SUL) speed.y = DESACELERA;
-			if(////direcao == LESTE) speed.x = DESACELERA;
-			if(////direcao == OESTE) speed.x = -DESACELERA;
+			if(direcao == NORTE) speed.y = -DESACELERA;
+			if(direcao == SUL) speed.y = DESACELERA;
+			if(direcao == LESTE) speed.x = DESACELERA;
+			if(direcao == OESTE) speed.x = -DESACELERA;
 
-			sp.Update(dt, ////direcao, ////direcaoShift);
+			sp.Update(dt, direcao, direcaoShift);
 			}
-		}*/
+		}
 	}
 }
 
-/*void Cat::Set////direcao(int dir){
-	////direcao = (InvBox) dir;
-	sp.SetFrame(1, ////direcao);
-}*/
+void Cat::SetDirecao(int dir){
+	direcao = (InvBox) dir;
+	sp.SetFrame(1, direcao);
+}
 
 void Cat::SetPosition(float x, float y){
 	box.x = x;
@@ -143,10 +143,31 @@ void Cat::PathFlush(){
 void Cat::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
-	//std::cout <<  aux.Distance(destinationPath.back() ) << std::endl;
+	std::cout << "A" << aux.Distance(destinationPath.back()) << std::endl;
+	if(destinationPath.empty()){
+		speed.x = 0;
+		speed.y = 0;
+		direcao = PARADOF;
+		//inDefinedPath = false;
+		//canPursuit = true;
+	}
+
+	/*if(speed.x > 0 && abs(speed.y) < 5){
+		direcao = LESTE;
+	}else if (speed.x < 0 && abs(speed.y) < 5){
+		direcao = OESTE;
+	}else if (abs(speed.x) < 5 && speed.y < 0){
+		direcao = NORTE;
+	}else{
+		direcao = SUL;
+	}*/
 	if(aux.Distance(destinationPath.back())>2){
+
+		std::cout << "B" << speed.y << std::endl;
 	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
 		if(aux.Distance(destinationPath.back())<= 5 ){
+
+			std::cout << "C" << speed.y << std::endl;
 				//printf("POPANDO");
 
 			arrived = true;
@@ -172,24 +193,25 @@ void Cat::DefinedPath(){
 		}
 
 		if(!arrived){
+			std::cout << "C"  << std::endl;
 			//std::cout << " DESTINATION PATH "<< (unsigned) (destinationPath.back().x - box.x) << " e " <<  (unsigned) (destinationPath.back().y - box.y) << std::endl;
 			if((unsigned) (destinationPath.back().x - box.x) > (unsigned) (destinationPath.back().y - box.y)){
 				if(destinationPath.back().x < box.x){
 					//std::cout << " OESTE " << std::endl;
-					//////direcao = OESTE;
+					//direcao = OESTE;
 				}else if(destinationPath.back().x > box.x && destinationPath.back().x - box.x < MOV_OFFSET){
 					//std::cout << " LESTE " << destinationPath.back().x - box.x << std::endl;
-					//////direcao = LESTE;
+					//direcao = LESTE;
 				}
 			}
 			else{
 					if(destinationPath.back().y < box.y){
 					//std::cout << " NORTE " << std::endl;
-					//////direcao = NORTE;
+					//direcao = NORTE;
 				}
 				else if(destinationPath.back().y > box.y && destinationPath.back().y -  box.y < MOV_OFFSET){
 					//std::cout << " SUL " << std::endl;
-					//////direcao = SUL;
+					//direcao = SUL;
 				}
 			}
 		//}
@@ -259,6 +281,21 @@ void Cat::DefinedPath(){
 			}
 		}
 		}
+
+		std::cout << speed.x << " e " << speed.y << std::endl;
+		if(speed.x > 0 && abs(speed.y) < 5){
+			direcao = LESTE;
+		}else if (speed.x < 0 && abs(speed.y) < 5){
+			direcao = OESTE;
+		}else if (abs(speed.x) < 5 && speed.y < 0){
+			direcao = NORTE;
+		}else{
+			direcao = SUL;
+		}
+	}else{
+			speed.x = 0;
+			speed.y = 0;
+			direcao = PARADOF;
 	}
 }
 

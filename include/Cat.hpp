@@ -15,7 +15,7 @@
 
 class Cat : public GameObject {
 public:
-	enum InvBox{LESTE, OESTE, SUL, NORTE};
+	enum InvBox{LESTE, OESTE, SUL, NORTE, PARADOF, PARADOC};
 	Cat(float x, float y);
 	~Cat();
 
@@ -44,7 +44,8 @@ private:
 	//Vec2 destinationPath;
 	std::vector<Vec2> destinationPath;
 
-	//InvBox direcao;
+	InvBox direcao;
+	bool direcaoShift;
 };
 
 #endif /* INCLUDE_Cat_HPP_ */
