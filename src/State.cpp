@@ -56,10 +56,10 @@ bool State::PopRequested(){
 
 void State::SetPlayer(int x, int y, int type, Rect limits){
 	Camera::Unfollow();
-	if(type != CAMERA_TYPE0 && type != CAMERA_TYPE3) Camera::Follow(MissionManager::player, type);
-	else Camera::SetType(type);
 	MissionManager::player->SetPosition(x, y);
 	MissionManager::player->SetMovementLimits(limits);
+	if(type != CAMERA_TYPE0 && type != CAMERA_TYPE3) Camera::Follow(MissionManager::player, type);
+	else Camera::SetType(type);
 }
 
 void State::RemoveAll(){
@@ -138,13 +138,17 @@ void State::AccessAnimated(int pos){
 }
 
 void State::EndState(){
+	std::cout << "ES1" << std::endl;
 	MissionManager::player->SetBlocked(false);
 	MissionManager::player->SetBloqHUD(false);
 	MissionManager::player->SetBloqInv(false);
+	std::cout << "ES2" << std::endl;
 	Camera::Unfollow();
 	Camera::DontMove();
 	RemoveAll();
+	std::cout << "ES3" << std::endl;
 	popRequested = true;
+	std::cout << "ES4" << std::endl;
 }
 
 void State::ChangeState(std::string orig, std::string dest, int x, int y, int dir){

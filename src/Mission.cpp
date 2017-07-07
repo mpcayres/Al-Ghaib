@@ -6,6 +6,8 @@ Mission::Mission() : blackSquare("img/HUD/blackBack.jpg"), spFade("img/HUD/fadeB
 	popRequested = quitRequested = false;
 	initialX = initialY = -1;
 
+	bronca = false;
+	first = 0;
 	doorSound = false;
 	trancada = false;
 	bloqBlack = false;
@@ -113,7 +115,7 @@ void Mission::UpdateVariable(float dt, float speed, bool turnOpaque){
         spFade.ChangeAlpha(alpha);
     }
 
-    //std::cout << "Update " << alpha << std::endl;
+    //std::cout << "Update " << alpha << " = " << dt << " " << speed << std::endl;
     if(turnOpaque){
     	if (alpha < OPAQUE) {
 			alphaAux += dt * speed;
@@ -212,8 +214,3 @@ void Mission::ImageProfileBox (int option){
 			break;
 	}
 }
-
-
-
-
-

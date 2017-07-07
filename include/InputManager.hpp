@@ -29,6 +29,7 @@
 #define LCTRL_KEY SDLK_LCTRL
 #define LSHIFT_KEY SDLK_LSHIFT
 
+#define Q_KEY SDLK_q
 #define W_KEY SDLK_w
 #define A_KEY SDLK_a
 #define S_KEY SDLK_s
