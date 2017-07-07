@@ -42,6 +42,7 @@ MomRoomState::MomRoomState(std::vector<std::unique_ptr<GameObject>> obj, bool in
 
 	RandomState();
 	LoadAssets();
+	music = Music("audio/boxmusic.wav");
 	std::cout << "MR2 " << objectArray.size() << std::endl;
 }
 
@@ -50,9 +51,12 @@ MomRoomState::~MomRoomState() {
 }
 
 void MomRoomState::Pause(){
+	music.Stop();
 }
 
 void MomRoomState::Resume(){
+	music.Play(-1);
+
 }
 
 void MomRoomState::LoadAssets(){

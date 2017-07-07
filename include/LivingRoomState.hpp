@@ -6,7 +6,7 @@
 #include "Geometry.hpp"
 #include "TileSet.hpp"
 #include "TileMap.hpp"
-
+#include "Music.hpp"
 
 
 class LivingRoomState : public State {
@@ -29,6 +29,7 @@ private:
 	Sprite bg;
 	TileSet tileSetChao;
 	TileSet tileSetParede;
+	Music music;
 
 public:
 	TileMap tileMapChao;

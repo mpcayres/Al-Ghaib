@@ -6,6 +6,7 @@
 #include "Geometry.hpp"
 #include "TileSet.hpp"
 #include "TileMap.hpp"
+#include "Music.hpp"
 
 class HallFinalState : public State {
 public:
@@ -26,6 +27,7 @@ private:
 	Sprite background;
 	Sprite bg;
 	TileSet tileSet;
+	Music music;
 
 public:
 	TileMap tileMap;

@@ -9,6 +9,7 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "Sound.hpp"
+#include "Music.hpp"
 
 class Mission1 : public Mission {
 public:
@@ -30,6 +31,8 @@ protected:
 	bool played, endMission;
 	Text creepy1, creepy2, creepy3, creepy4, creepy5, creepy6;
 	int countPega, countPega2;
+
+	Music music;
 };
 
 

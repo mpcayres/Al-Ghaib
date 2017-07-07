@@ -62,7 +62,6 @@ Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	SetObjectStage();
 	SetObjectHall();
 	SetObjectLivingRoom();
-
 	MissionManager::enemy->SetPosition(500, 110);
 }
 
@@ -70,7 +69,10 @@ Mission1::~Mission1() { }
 
 void  Mission1::Pause(){ }
 
-void  Mission1::Resume(){ }
+void  Mission1::Resume(){
+
+
+}
 
 void  Mission1::Update(float dt){
 	InputManager instance = InputManager::GetInstance();
