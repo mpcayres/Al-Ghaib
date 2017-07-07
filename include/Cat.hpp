@@ -31,6 +31,7 @@ public:
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
 	void SetDirecao(int dir);
+	void Reset();
 
 	//Vec2 previousPos;
 	bool show, seen, arrived, attractedWool, attractedTV;

@@ -143,7 +143,6 @@ void Cat::PathFlush(){
 void Cat::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;
-	std::cout << "A" << aux.Distance(destinationPath.back()) << std::endl;
 	if(destinationPath.empty()){
 		speed.x = 0;
 		speed.y = 0;
@@ -163,12 +162,9 @@ void Cat::DefinedPath(){
 	}*/
 	if(aux.Distance(destinationPath.back())>2){
 
-		std::cout << "B" << speed.y << std::endl;
 	//printf("\n\n %d ; %f - %f", aux.Distance(destinationPath.back())<=10, destinationPath.back().x, destinationPath.back().y);
 		if(aux.Distance(destinationPath.back())<= 5 ){
 
-			std::cout << "C" << speed.y << std::endl;
-				//printf("POPANDO");
 
 			arrived = true;
 			box.x = destinationPath.back().x;
@@ -182,11 +178,6 @@ void Cat::DefinedPath(){
 		//if(destinationPath.empty())
 			//show = false;
 		if(MissionManager::player != nullptr){
-			/*destination.x = MissionManager::player->box.x;
-			destination.y = MissionManager::player->box.y;*/
-			//seen = true;
-
-			//aux.x = box.x; aux.y = box.y;
 			speed = (destinationPath.back().Sub(aux)).Normalize();
 			speed.x = speed.x*SPEED_CONTROL;
 			speed.y = speed.y*SPEED_CONTROL;
@@ -297,116 +288,16 @@ void Cat::DefinedPath(){
 			speed.y = 0;
 			direcao = PARADOF;
 	}
+	if(box.x == 640 &&  box.y == 450)
+		direcao = PARADOC;
+
 }
 
-/*void Cat::Pursuit(){
-	Vec2 aux;
-
-	if(MissionManager::player != nullptr){
-		destination.x = MissionManager::player->box.x;
-		destination.y = MissionManager::player->box.y;
-		//seen = true;
-
-		aux.x = box.x; aux.y = box.y;
-		speed = (destination.Sub(aux)).Normalize();
-		speed.x = speed.x*SPEED_CONTROL;
-		speed.y = speed.y*SPEED_CONTROL;
+void Cat::Reset(){
+	while(!destinationPath.empty()){
+			destinationPath.pop_back();
 	}
-	std::cout << aux.Distance(destination) << std::endl;
-	if( aux.Distance(destination) > 200 )
-		stop = false;
-	if( aux.Distance(destination) > 50 && stop == false){
-		stop = false;
-		if((unsigned) (destination.x- box.x) > (unsigned) (destination.y- box.y)){
-			if(destination.x > box.x){
-				//std::cout << " lESTE " << std::endl;
-				direcao = LESTE;
-			}else if(destination.x < box.CenterX() || destination.x < box.x){
-				//std::cout << " OESTE " << std::endl;
-				direcao = OESTE;
-			}
-		}
-		else{
-			if(destination.y > box.y){
-				//std::cout << " SUL " << std::endl;
-				direcao = SUL;
-			}else if(destination.y < box.CenterY()  || destination.y < box.y){
-				//std::cout << " NORTE " << std::endl;
-				direcao = NORTE;
-			}
-		}
-
-
-		if (speed.x < 0 && speed.y < 0){
-			if(box.x + speed.x -  VALUE <= destination.x &&
-				speed.y + box.y -  VALUE <= destination.y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destination.x - box.w/2;
-				box.y = destination.y - box.h/2;
-
-				//seen = false;
-
-			} else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x += speed.x;
-				box.y += speed.y;
-			}
-		} else if (speed.x > 0 && speed.y < 0){
-			if(box.x +speed.x +  VALUE >= destination.x &&
-					speed.y + box.y -  VALUE <= destination.y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destination.x;
-				box.y = destination.y;
-
-				//seen = false;
-
-				}else{
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x += speed.x;
-					box.y += speed.y;
-				}
-		} else if (speed.x < 0 && speed.y > 0){
-			if(box.x +speed.x -  VALUE <= destination.x &&
-					speed.y + box.y +  VALUE >= destination.y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destination.x;
-				box.y = destination.y;
-
-				//seen = false;
-
-				}else{
-					previousPos.x = box.x;
-					previousPos.y = box.y;
-					box.x += speed.x;
-					box.y += speed.y;
-				}
-		} else if (speed.x > 0 && speed.y > 0){
-			if(box.x +speed.x + VALUE >= destination.x &&
-					speed.y + box.y + VALUE >= destination.y){
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x = destination.x;
-				box.y = destination.y;
-
-				//seen = false;
-			} else{
-				previousPos.x = box.x;
-				previousPos.y = box.y;
-				box.x += speed.x;
-				box.y += speed.y;
-			}
-		}
-	}else{
-		//seen = false;
-		stop = true;
-	}
-}*/
-
+}
 bool Cat::Is(std::string type){
 	return (type == "Cat");
 }
