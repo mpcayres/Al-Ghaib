@@ -105,7 +105,7 @@ void MomRoomState::Update(float dt){
 	if(changeIndex != -1){
 		((SceneDoor*)objectArray[changeIndex].get())->SetChangeState(false);
 		ChangeState("MomRoomState",
-				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 800, 300, (int) Player::SUL);
+				((SceneDoor*)objectArray[changeIndex].get())->GetDest(), 980, 200, (int) Player::SUL);
 	}
 }
 

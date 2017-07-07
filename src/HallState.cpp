@@ -21,7 +21,7 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 	MissionManager::player->AddWallLimits(Rect(960, 0, 576, 180 ));
 
 	if(x != -1 && y != -1) SetPlayer(x, y, CAMERA_TYPE2, limits);
-	else SetPlayer(50, 400, CAMERA_TYPE2, limits);
+	else SetPlayer(520, 400, CAMERA_TYPE2, limits);
 	std::cout << "Player: " << MissionManager::player->box.x << " " << MissionManager::player->box.y << std::endl;
 
 	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
