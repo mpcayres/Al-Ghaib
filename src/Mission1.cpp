@@ -384,6 +384,7 @@ void  Mission1::Update(float dt){
 					state = MissionManager::missionManager->changeState;
 					time.Restart();
 					MissionManager::enemy->show = false;
+					MissionManager::enemy->PathFlush();
 					countPega = 0;
 				}
 				if(MissionManager::player->lastPicked == "InventoryBear" && trancada == false && MissionManager::enemy->show == false){

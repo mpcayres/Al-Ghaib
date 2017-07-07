@@ -115,11 +115,14 @@ void Mission3::Update(float dt){
 		Camera::Zoom(2, true);
 	}
 
+
+
 	if(gameOver && time.Get() > 3){
 		Game::GetInstance().GetCurrentState().ChangeMission(3);
 	}
 
 	if(endMission && drink){
+		if(time.Get() > 47)
 		Game::GetInstance().GetCurrentState().ChangeMission(4);
 	}
 
@@ -203,6 +206,7 @@ void Mission3::Update(float dt){
 			state = MissionManager::missionManager->changeState;
 			MissionManager::enemy->show = false;
 			MissionManager::enemy->SetPosition(975,115);
+			momcount = 0;
 			time.Restart();
 		}
 
@@ -237,10 +241,10 @@ void Mission3::Update(float dt){
 		if(dist < 250 && atraidoNovelo == 0){
 			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
-		/*if(MissionManager::cat->attractedWool == false && dist > 200){
+		if(MissionManager::cat->attractedWool == false && dist > 200){
 			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
-		}*/
+		}
 
 		if(dist < 100 && MissionManager::cat->show == true){
 			Sound meow1 = Sound ("audio/cat-meow-1.wav");
@@ -291,8 +295,9 @@ void Mission3::Update(float dt){
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
 			momcount++;
+			gameOver = true;
 			//std::cout << "momcount" << momcount << std::endl;
-			if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
+			/*if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
 				double posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
 				double posEnemyX = MissionManager::enemy->box.x;
 
@@ -313,7 +318,7 @@ void Mission3::Update(float dt){
 								Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
 				MissionManager::enemy->SetDestinationPursuit(
 						((HallState&) Game::GetInstance().GetCurrentState()).tileMap.GetPath());
-			}
+			}*/
 
 			if(MissionManager::enemy->show){
 				if(momcount == 1){
@@ -370,7 +375,7 @@ void Mission3::Update(float dt){
 				MissionManager::cat->SetDestinationPath(Vec2(400, 350));*/
 				MissionManager::cat->SetDestinationPath(Vec2(230, 500));
 			}
-			if(time.Get()>4.5){
+			if(time.Get()>4.3){
 				MissionManager::cat->PathFlush();
 				MissionManager::cat->Reset();
 				MissionManager::cat->SetPosition(640, 450);
@@ -489,6 +494,7 @@ void Mission3::Update(float dt){
 		float dist = 0;
 		dist = leite->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
 		if(dist<80 && InputManager::GetInstance().KeyPress(Z_KEY)){
+			time.Set(44);
 			drink = true;
 			endMission = true;
 		}

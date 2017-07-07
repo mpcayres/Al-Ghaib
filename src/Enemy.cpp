@@ -49,9 +49,12 @@ void Enemy::Update(float dt){
 		if((noise >= 15) || ((MissionManager::player->GetRuido()>70) && !inDefinedPath && canPursuit)){
 			seen = true;
 		}
+		float dupl = 1;
+		if(MissionManager::missionManager->GetNumMission()==5 && MissionManager::player->drogado==false) dupl = 2.2;
+		if(MissionManager::missionManager->GetNumMission()==5 && MissionManager::player->drogado==true) dupl = 1.5;
 
-		box.x += speed.x;
-		box.y += speed.y;
+		box.x += speed.x * dupl;
+		box.y += speed.y * dupl;
 
 		if(destinationPursuit.size()>0 && !inDefinedPath){
 			Pursuit();

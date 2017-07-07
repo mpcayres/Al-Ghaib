@@ -1,6 +1,8 @@
 #include "SceneObject.hpp"
 #include "MissionManager.hpp"
 #include "Sound.hpp"
+#include <iostream>
+#include <string>
 
 SceneObject::SceneObject(float x, float y, std::string img, std::string img2,
 		float rot, float scaleX, float scaleY, std::string create, int change, bool block) : sp(img) {
@@ -41,13 +43,14 @@ bool SceneObject::NotifyCollision(GameObject& other){
 		if(InputManager::GetInstance().KeyPress(Z_KEY)){
 			std::shared_ptr<InventoryObject> inHand = MissionManager::player->GetInHand();
 			if(inHand != nullptr){
-				if(!inHand->IsObject("InventoryWool")){
+				// str1.compare(str2) != 0
+				if(!inHand->IsObject("InventoryWool") && change1.compare((std::string)"img/cenario/corredor/caixa-areia.png")!=0){
 					if(objCreate != ""){
 						MissionManager::player->AddInventory(objCreate);
 						objCreate = "";
 					}
 					ChangeImage();
-				} else{
+				} else if(inHand->IsObject("InventoryWool") && change1.compare((std::string)"img/cenario/corredor/caixa-areia.png")==0){
 					ChangeImage();
 					MissionManager::cat->attractedWool=true;
 				}
@@ -56,7 +59,8 @@ bool SceneObject::NotifyCollision(GameObject& other){
 					MissionManager::player->AddInventory(objCreate);
 					objCreate = "";
 				}
-				ChangeImage();
+				if(change1.compare((std::string)"img/cenario/corredor/caixa-areia.png")!=0)
+					ChangeImage();
 			}
 
 		}

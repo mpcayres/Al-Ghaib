@@ -375,6 +375,8 @@ void Mission2::Update(float dt){
 			MissionManager::missionManager->countStageState > 1){
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
+			MissionManager::missionManager->cat->PathFlush();
+			MissionManager::missionManager->enemy->PathFlush();
 			time.Restart();
 		}
 		Bear::bear->show = true;
@@ -395,7 +397,7 @@ void Mission2::Update(float dt){
 		if(Bear::bear->hasNeedle && Bear::bear->hasScissors && Bear::bear->hasCostura){
 			Bear::bear->repair = true;
 			time.Restart();
-			ImageProfileBox(5); //BOTAR URSO
+			ImageProfileBox(4); //BOTAR URSO
 			falas.SetText("OBRIGADO!");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = (int) time.Get();

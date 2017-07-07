@@ -143,7 +143,7 @@ void HallFinalState::SetInitialObjectArray(){
 	MovingObject* Vaso1 = new MovingObject(1760, 369, "img/cenario/geral/vaso.png", false);
 	objectArray.emplace_back(Vaso1);
 
-	MovingObject* Vaso2 = new MovingObject(1900, 369, "img/cenario/geral/vaso.png", false);
+	MovingObject* Vaso2 = new MovingObject(1890, 369, "img/cenario/geral/vaso.png", false);
 	objectArray.emplace_back(Vaso2);
 
 	MovingObject* Cadeira = new MovingObject(2320, 280, "img/cenario/geral/cadeira.png", true);
@@ -194,9 +194,9 @@ void HallFinalState::SetInitialObjectArray(){
 	SceneObject* Gato2 = new SceneObject(4810, 285, "img/cenario/corredor/pote-sem-racao.png", "", 0, 0.7, 0.7);
 	objectArray.emplace_back(Gato2);
 
-	StealthObject* Armario2 = new StealthObject(5500, 210, "img/cenario/geral/armario-corredor-fechado.png");
+	StealthObject* Armario2 = new StealthObject(5700, 210, "img/cenario/geral/armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario2);
 
-	SceneDoor* DoorToKidRoom = new SceneDoor(6000, 200, "StageState");
+	SceneDoor* DoorToKidRoom = new SceneDoor(5850, 200, "StageState");
 	objectArray.emplace_back(DoorToKidRoom);
 }

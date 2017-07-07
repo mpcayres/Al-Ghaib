@@ -102,15 +102,24 @@ void Mission4::Update(float dt){
 		}
 
 		if(time.Get() > 5 && trancada == false && cooldown.Get() > 3 && contFala == 0){
+				contFala++;
+				ImageProfileBox(4);
+				falas.SetText("TINHA ALGO NAQUELE LEITE");
+				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
+				ultimoTempo = 15;
+				showBox = true;
+
+		}
+		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3 && contFala == 1){
 			contFala++;
 			ImageProfileBox(4);
-			falas.SetText("TEMOS QUE VOLTAR AO QUARTO");
+			falas.SetText("TEMOS QUE VOLTAR AO QUARTO DELA");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 15;
 			showBox = true;
 
 		}
-		if(time.Get() > 10 && trancada == false && cooldown.Get() > 3 && contFala == 1){
+		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3 && contFala == 2){
 			contFala++;
 			falas.SetText("CERTEZA QUE DEVE TER ALGO NAQUELE PORÃO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -119,7 +128,7 @@ void Mission4::Update(float dt){
 			MissionManager::player->SetBlocked(false);
 			MissionManager::enemy->show = false;
 		}
-		if(time.Get() > 15 && trancada == false && cooldown.Get() > 3 && contFala == 2){
+		if(time.Get() > 20 && trancada == false && cooldown.Get() > 3 && contFala == 3){
 			contFala++;
 			falas.SetText(" ");
 			ImageProfileBox(6);

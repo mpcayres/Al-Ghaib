@@ -83,9 +83,9 @@ void Mission5::Update(float dt){
 
 	if(gameOver && time.Get() > 4){
 		Game::GetInstance().GetCurrentState().ChangeMission(5);
-	} else if(endMission && time.Get() > 45){
+	} else if(endMission && time.Get() > 25){
 		Game::GetInstance().GetCurrentState().ChangeMission(6);
-	} else if(endMission && time.Get() > 35){
+	} else if(endMission && time.Get() > 15){
 		UpdateVariable(dt, 50, true);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
@@ -109,15 +109,25 @@ void Mission5::Update(float dt){
 			falas.SetPos(0, Game::GetInstance().GetHeight()-65, true, false);
 		}
 
-		if(time.Get() > 8 && MissionManager::player->box.x > 200 && momcount == 0){
+		if(MissionManager::player->box.x > 170 && momcount == 0){
 			momcount++;
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
 			SceneDoor::ValorPassar = 15;
 			MissionManager::enemy->SetPosition(30, 300);
-			MissionManager::enemy->SetDestinationPath(Vec2(4550, 300));
-			MissionManager::enemy->SetDestinationPath(Vec2(4500, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(6000, 300));
 		}
 
 		if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show == true){
@@ -174,6 +184,8 @@ void Mission5::Render(){
 }
 
 void Mission5::SetObjectStage(){
+	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
+		objectStage.emplace_back(Door);
 
 }
 
