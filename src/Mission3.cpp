@@ -199,10 +199,9 @@ void Mission3::Update(float dt){
 
 	if(MissionManager::missionManager->IsState("HallState")){
 
-		MissionManager::enemy->show = false;
-
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
+			MissionManager::enemy->show = false;
 			MissionManager::enemy->SetPosition(975,115);
 			time.Restart();
 		}
