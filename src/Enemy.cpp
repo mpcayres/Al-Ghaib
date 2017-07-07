@@ -118,6 +118,8 @@ void Enemy::SetDestinationPath(Vec2 path){
 void Enemy::PathFlush(){
 	while(!destinationPath.empty())
 		destinationPath.pop_back();
+	while(!destinationPursuit.empty())
+		destinationPursuit.pop();
 	inDefinedPath = false;
 	canPursuit = true;
 }

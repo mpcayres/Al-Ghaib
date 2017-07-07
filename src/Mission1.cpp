@@ -385,6 +385,7 @@ void  Mission1::Update(float dt){
 					countPega = 0;
 				}
 				if(MissionManager::player->lastPicked == "InventoryBear" && trancada == false && MissionManager::enemy->show == false){
+					MissionManager::enemy->PathFlush();
 					MissionManager::enemy->SetPosition(230, 175);
 					MissionManager::enemy->show = true;
 					time.Restart();
@@ -395,10 +396,10 @@ void  Mission1::Update(float dt){
 					falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 					MissionManager::player->SetBloqHUD(false);
 				}
-				if(time.Get() > 8 && MissionManager::enemy->show == true && countPega == 0){
+				if(time.Get() > 2 && MissionManager::enemy->show == true && countPega == 0){
 					countPega++;
 					MissionManager::player->SetBloqHUD(true);
-					MissionManager::enemy->PathFlush();
+
 					Camera::Follow(MissionManager::enemy, CAMERA_TYPE1);
 					SceneDoor::count = ABRE;
 					SceneDoor::ValorPassar = 4;
