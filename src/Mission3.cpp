@@ -129,7 +129,7 @@ void Mission3::Update(float dt){
 		if(time.Get() > 5){
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 			sussurro.Play(0);
-			ImageProfileBox (3); //BOTA URSO
+			ImageProfileBox (4); //BOTA URSO
 			falas.SetText("OLHA ESSA QUE CHAMAS DE MÃE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			ultimoTempo = 5;
@@ -165,7 +165,26 @@ void Mission3::Update(float dt){
 		}
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
-	} if(MissionManager::missionManager->IsState("HallState") &&
+	}
+	 if(MissionManager::missionManager->IsState("HallState") &&
+	 							MissionManager::missionManager->countHallState > 1){
+		 MissionManager::cat->show = false;
+	 }
+	if(MissionManager::missionManager->IsState("HallState") && MissionManager::missionManager->countHallState > contador
+			&&  MissionManager::cat->attractedWool == true){
+		MissionManager::cat->show =true;
+		MissionManager::cat->SetPosition(1000, 200);
+
+	}
+	 if(MissionManager::missionManager->IsState("LivingRoomState") && MissionManager::missionManager->countLivingRoomState > contador
+			 && MissionManager::cat->attractedTV == true){
+		 MissionManager::cat->show =true;
+		 MissionManager::cat->SetPosition(610, 450);
+
+	 }
+
+
+	if(MissionManager::missionManager->IsState("HallState") &&
 							MissionManager::missionManager->countHallState <= 1){
 			MissionManager::player->SetBlocked(false);
 		//HallState++;
@@ -211,6 +230,10 @@ void Mission3::Update(float dt){
 		if( dist < 250 && atraidoNovelo == 0){
 			MissionManager::cat->SetDestinationPath(Vec2(980, 200));
 		}
+		/*if(MissionManager::cat->attractedWool == false && dist > 200){
+			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
+			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
+		}*/
 
 		if(dist < 100){
 			if(meowcount%2 && ((int)time.Get())%5){
@@ -223,7 +246,7 @@ void Mission3::Update(float dt){
 			meowcount++;
 		}
 
-		if(MissionManager::cat->attractedWool == true){
+		if(MissionManager::cat->attractedWool == true && MissionManager::cat->attractedTV == false){
 			atraidoNovelo++;
 			if(atraidoNovelo == 1){
 				MissionManager::cat->SetDestinationPath(Vec2(1350, 450));
@@ -232,11 +255,14 @@ void Mission3::Update(float dt){
 				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
 				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
 				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
+				contador =  MissionManager::missionManager->countHallState;
 			}
 			else if (atraidoNovelo > 30){
 				MissionManager::cat->SetDestinationPath(Vec2(1350, 450));
 			}
 
+		}else if(MissionManager::cat->attractedWool == true && MissionManager::cat->attractedTV == true){
+			MissionManager::cat->attractedWool = false;
 		}
 
 		if(time.Get() > 7 && time.Get() < 7.5 && trancada == false && cooldown.Get() > 3){
@@ -274,7 +300,8 @@ void Mission3::Update(float dt){
 
 
 	} if(MissionManager::missionManager->IsState("LivingRoomState") &&
-				MissionManager::missionManager->countLivingRoomState > 1){
+				MissionManager::missionManager->countLivingRoomState > 1 && contador == 0){
+		MissionManager::cat->show = false;
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
 			state = MissionManager::missionManager->changeState;
@@ -284,10 +311,11 @@ void Mission3::Update(float dt){
 			time.Restart();
 		}
 
-		if(MissionManager::cat->attractedTV == true){
+		if(MissionManager::cat->attractedTV == true && MissionManager::cat->attractedWool == false){
 			MissionManager::cat->show = true;
 			atraidoTV++;
 
+			contador =  MissionManager::missionManager->countLivingRoomState;
 			if(atraidoTV == 1){
 				MissionManager::cat->SetPosition(230, 300);
 				//MissionManager::missionManager->cat->box.x = 400;
@@ -305,7 +333,10 @@ void Mission3::Update(float dt){
 			}
 
 			MissionManager::cat->SetDestinationPath(Vec2(610, 450));
+		}else if(MissionManager::cat->attractedWool == true && MissionManager::cat->attractedTV == true){
+			MissionManager::cat->attractedTV = false;
 		}
+
 
 	}if(MissionManager::missionManager->IsState("MomRoomState")){
 
@@ -398,7 +429,7 @@ void Mission3::Update(float dt){
 			if(time.Get() > 40 && time.Get() < 44){
 				showBox = true;
 				ImageProfileBox (4);
-				falas.SetText("U: BEBAAAAAAAAAAAAAAAA");
+				falas.SetText("BEBAAAAAAAAAAAAAAAA");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 			}
 			if(time.Get() > 44){
@@ -509,7 +540,7 @@ void Mission3::SetObjectHall(){
 	objectHall.emplace_back(Apple);
 
 	SceneObject* CaixaDeAreia = new SceneObject(1400, 450,
-			"img/cenario/corredor/caixa-areia.png", "img/cenario/corredor/caixa-novelo.png", 0, 1, 1, "", 0, true);
+			"img/cenario/corredor/caixa-areia.png", "img/cenario/corredor/caixa-novelo.png", 0, 1, 1, "", 3, true);
 	objectHall.emplace_back(CaixaDeAreia);
 
 

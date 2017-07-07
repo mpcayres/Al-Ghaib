@@ -172,7 +172,7 @@ void Mission2::Update(float dt){
 				Sound sussurro = Sound ("audio/ghostly-whispers.wav");
 				sussurro.Play(0);
 				showBox = true;
-				ImageProfileBox(4); //BOTAR O URSO
+				ImageProfileBox(5); //BOTAR O URSO
 				falas.SetText("OLHA O QUE FIZERAM COMIGO!");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = 14;
@@ -216,8 +216,9 @@ void Mission2::Update(float dt){
 		MessageDoor(dt);
 		//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 
-	}else if(MissionManager::missionManager->IsState("HallState") &&
-							MissionManager::missionManager->countHallState <= 1){
+	}
+	if(MissionManager::missionManager->IsState("HallState")/* &&
+							MissionManager::missionManager->countHallState <= 1*/){
 
 		MissionManager::player->SetBlocked(false);
 		//HallState++;
@@ -310,7 +311,7 @@ void Mission2::Update(float dt){
 		}
 		if(MissionManager::enemy->show && time.Get() > ultimoTempo + 2){
 			if(momcount == 1){
-				falas.SetText("M: O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
+				falas.SetText("O QUE JÃ FALEI SOBRE SAIR DA CAMA?");
 				ImageProfileBox(1);
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 				ultimoTempo = ultimoTempo + 2;
