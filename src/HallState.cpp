@@ -151,9 +151,6 @@ void HallState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
-	SceneObject* Table = new SceneObject(340, 303, "img/cenario/geral/mesa.png", "");
-	objectArray.emplace_back(Table);
-
 	SceneDoor* DoorToKidRoom = new SceneDoor(400, 303, "StageState", false);
 	objectArray.emplace_back(DoorToKidRoom);
 
@@ -163,17 +160,19 @@ void HallState::SetInitialObjectArray(){
 	SceneObject* Book = new SceneObject(110, 150, "img/cenario/geral/livro.png", "img/cenario/geral/livro.png", 0, 0.3, 0.3);
 	objectArray.emplace_back(Book);
 
+	StealthObject* Table = new StealthObject(1350, 295, "img/cenario/geral/mesa.png");
+	objectArray.emplace_back(Table);
+
 	SceneObject* Abajur = new SceneObject(1300, 310, "img/cenario/geral/abajur.png", "img/cenario/geral/abajur.png");
 	objectArray.emplace_back(Abajur);
+
+	SceneObject* Escr = new SceneObject(1180, 350, "img/cenario/geral/escrivaninha-fechado.png", "img/cenario/geral/escrivaninha-aberto.png");
+	objectArray.emplace_back(Escr);
 
 	SceneUntouchable* Rug = new SceneUntouchable(700, 310, "img/cenario/geral/tapete.png");
 	objectArray.emplace_back(Rug);
 
 	StealthObject* Armario = new StealthObject(500, 305, "img/cenario/geral/armario-corredor-fechado.png");
 	objectArray.emplace_back(Armario);
-
-	SceneObject* CamaGato = new SceneObject(1450, 300,
-				"img/cenario/corredor/cama-gato.png", "img/cenario/corredor/cama-gato.png");
-	objectArray.emplace_back(CamaGato);
 
 }

@@ -6,11 +6,11 @@
 #include "Animation.hpp"
 #include "Sound.hpp"
 
- Music Mission4::music;
+Music Mission4::music;
 
 Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
-	initialX = 300; initialY = 300;
+	initialX = 280; initialY = 300;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
 
@@ -247,27 +247,22 @@ void Mission4::SetObjectStage(){
 
 void Mission4::SetObjectHall(){
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
-				"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
-		objectHall.emplace_back(CriadoMudo);
+				"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png", 0, 1, 1, "InventoryKey");
+	objectHall.emplace_back(CriadoMudo);
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", 1);
 	objectHall.emplace_back(DoorToMomRoom);
 
 	SceneObject* Bau = new SceneObject(1000, 490,  "img/cenario/geral/bau-fechado.png",
-			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectHall.emplace_back(Bau);
+
+	SceneObject* Novelo = new SceneObject(600, 370,  "img/inventario/novelo.png", "", 0, 0.4, 0.4);
+	objectHall.emplace_back(Novelo);
 
 	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
-
-	SceneObject* PoteRacao = new SceneObject(180, 490,
-			"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
-	objectHall.emplace_back(PoteRacao);
-
-	SceneObject* PoteAgua = new SceneObject(120, 490,
-			"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
-	objectHall.emplace_back(PoteAgua);
 }
 
 void Mission4::SetObjectLivingRoom(){

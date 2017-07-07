@@ -7,7 +7,7 @@
 #include "HallState.hpp"
 #include "LivingRoomState.hpp"
 
- Music Mission3::music;
+Music Mission3::music;
 
 Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMission(false) {
 	initialState = "LivingRoomState"; // trocar para comeÃ§ar da sala?
@@ -523,7 +523,7 @@ void Mission3::Render(){
 		((MissionManager::missionManager->IsState("LivingRoomState") && MissionManager::missionManager->countLivingRoomState > 1) ||
 			MissionManager::missionManager->IsState("HallState"))) && !MissionManager::player->GetBloqHUD()) || 	MissionManager::missionManager->IsState("MomRoomState")){
 		if(showBox){
-			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
+			falasBox.Render(falasBoxRect.x, falasBoxRect.y, 0);
 			profileBox.Render(profileBoxX, profileBoxY, 0);
 		}
 		falas.Render(0,0);
@@ -558,17 +558,27 @@ void Mission3::SetObjectHall(){
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
 	objectHall.emplace_back(CriadoMudo);
 
-	MovingObject* Vase = new MovingObject(1000, 450, "img/cenario/geral/vaso.png");
-	objectHall.emplace_back(Vase);
-
-	SceneObject* Apple = new SceneObject(350, 330, "img/cenario/geral/maca.png", "img/cenario/geral/maca.png", 0, 0.3, 0.3);
+	SceneObject* Apple = new SceneObject(1355, 325, "img/cenario/geral/maca.png", "", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);
 
 	SceneObject* CaixaDeAreia = new SceneObject(1400, 450,
 			"img/cenario/corredor/caixa-areia.png", "img/cenario/corredor/caixa-novelo.png", 0, 1, 1, "", 3, true);
 	objectHall.emplace_back(CaixaDeAreia);
 
+	SceneObject* CamaGato = new SceneObject(90, 440,
+				"img/cenario/corredor/cama-gato.png", "img/cenario/corredor/cama-gato.png");
+	objectHall.emplace_back(CamaGato);
 
+	SceneObject* PoteRacao = new SceneObject(80, 500,
+				"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
+	objectHall.emplace_back(PoteRacao);
+
+	SceneObject* PoteAgua = new SceneObject(135, 500,
+				"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+	objectHall.emplace_back(PoteAgua);
+
+	MovingObject* Vase = new MovingObject(1000, 450, "img/cenario/geral/vaso.png");
+	objectHall.emplace_back(Vase);
 }
 
 void Mission3::SetObjectLivingRoom(){

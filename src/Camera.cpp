@@ -29,6 +29,9 @@ void Camera::Follow(GameObject* newFocus, int Ntype){
 	if(type == CAMERA_TYPE2){
 		pos.x = 0;
 		pos.y = 50;
+	} else if(type == CAMERA_TYPE4){
+		pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
+		pos.y = 50;
 	}
 	isMoving = isZoomIn = isZoomOut = false;
 }
@@ -55,6 +58,8 @@ void Camera::Update(float dt){
 					focus->box.CenterX() > Game::GetInstance().GetCurrentState().GetStateLimits().x + OFFSET_TYPE2){
 				pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 			}
+		} else if(type == CAMERA_TYPE4){
+			pos.x = focus->box.CenterX() - Game::GetInstance().GetWidth()/2;
 		}
 	} else if(isZoomIn){
 		//std::cout << "ZOOM" << std::endl;

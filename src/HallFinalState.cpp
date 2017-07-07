@@ -18,7 +18,7 @@ HallFinalState::HallFinalState() :
 	State(), tileSet(192, 96, "img/tilesetHallFinal.png"), tileMap("map/tileMapHallFinal.txt", &tileSet) {
 
 	limits = tileMap.FindLimits();
-	SetPlayer(50, 310, CAMERA_TYPE2, limits);
+	SetPlayer(50, 310, CAMERA_TYPE4, limits);
 
 	SetInitialObjectArray();
 

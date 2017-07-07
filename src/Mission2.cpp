@@ -12,7 +12,7 @@ Music Mission2::music;
 
 Mission2::Mission2() : Mission(), paradoUrso(false), paradoGato(false), endMission(false) {
 	initialState = "StageState";
-	initialX = 300; initialY = 400;
+	initialX = 290; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::player->SetDirecao((int) Player::LESTE);
 	MissionManager::missionManager->randomStates = true;
@@ -536,27 +536,34 @@ void Mission2::SetObjectHall(){
 
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png",
-			0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
+				0, 1, 1, "InventoryWool", SceneObject::DEFAULT);
 	objectHall.emplace_back(CriadoMudo);
 
 	PickUpObject* Scissors = new PickUpObject(1475, 180, "InventoryScissors",
 			"img/inventario/scissors.png", true, 0.5, 0.5, false, 90);
 	objectHall.emplace_back(Scissors);
 
-	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
+	SceneObject* CaixaDeAreia = new SceneObject(1400, 450,
+			"img/cenario/corredor/caixa-areia.png", "");
+	objectHall.emplace_back(CaixaDeAreia);
+
+	SceneObject* CamaGato = new SceneObject(90, 440,
+				"img/cenario/corredor/cama-gato.png", "img/cenario/corredor/cama-gato.png");
+	objectHall.emplace_back(CamaGato);
+
+	SceneObject* PoteRacao = new SceneObject(80, 500,
+				"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
+	objectHall.emplace_back(PoteRacao);
+
+	SceneObject* PoteAgua = new SceneObject(135, 500,
+				"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+	objectHall.emplace_back(PoteAgua);
+
+	MovingObject* Vase = new MovingObject(1150, 450, "img/cenario/geral/vaso.png");
 	objectHall.emplace_back(Vase);
 
 	MovingObject* Cadeira = new MovingObject(200, 420, "img/cenario/geral/cadeira.png", true);
 	objectHall.emplace_back(Cadeira);
-
-
-	SceneObject* PoteRacao = new SceneObject(280, 200,
-				"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
-	objectHall.emplace_back(PoteRacao);
-	SceneObject* PoteAgua = new SceneObject(180, 200,
-					"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
-		objectHall.emplace_back(PoteAgua);
-
 }
 
 void Mission2::SetObjectLivingRoom(){

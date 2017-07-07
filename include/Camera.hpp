@@ -9,6 +9,7 @@
 #define CAMERA_TYPE1 	1
 #define CAMERA_TYPE2	2
 #define CAMERA_TYPE3	3
+#define CAMERA_TYPE4	4
 #define OFFSET_TYPE2	400
 #define MAX_ZOOM		0.2
 

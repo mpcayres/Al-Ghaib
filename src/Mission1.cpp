@@ -12,7 +12,7 @@
 Mission1::Mission1() : Mission(), played(false), endMission(false) {
 	countPega = countPega2 = 0;
 	initialState = "StageState";
-	initialX = 400; initialY = 400;
+	initialX = 280; initialY = 300;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = false;
 
@@ -495,27 +495,33 @@ void Mission1::SetObjectHall(){
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
 
-	StealthObject* Armario2 = new StealthObject(1400, 110, "img/cenario/geral/armario-corredor-fechado.png");
+	StealthObject* Armario2 = new StealthObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png");
 	objectHall.emplace_back(Armario2);
 
-	//PickUpObject* Key = new PickUpObject(1200, 500, "InventoryKey", "img/inventario/key.png");
-	//objectHall.emplace_back(Key);
+	SceneObject* Book = new SceneObject(1190, 355, "img/cenario/geral/livro.png", "", 0, 0.3, 0.3);
+	objectHall.emplace_back(Book);
 
-	//PickUpObject* Bear = new PickUpObject(1000, 300, "InventoryBear", "img/inventario/bear.png",false, 1.5, 1.5);
-	//objectHall.emplace_back(Bear);
+	SceneObject* CaixaDeAreia = new SceneObject(1400, 450,
+			"img/cenario/corredor/caixa-areia.png", "");
+	objectHall.emplace_back(CaixaDeAreia);
 
-	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
-	objectHall.emplace_back(Vase);
+	SceneObject* CamaGato = new SceneObject(90, 440,
+				"img/cenario/corredor/cama-gato.png", "img/cenario/corredor/cama-gato.png");
+	objectHall.emplace_back(CamaGato);
 
-	MovingObject* Banco = new MovingObject(100, 470, "img/cenario/sala/banquinho.png", true);
-	objectHall.emplace_back(Banco);
-
-	SceneObject* PoteRacao = new SceneObject(80, 300,
+	SceneObject* PoteRacao = new SceneObject(80, 500,
 				"img/cenario/corredor/pote-com-racao.png", "img/cenario/corredor/pote-com-racao.png");
 	objectHall.emplace_back(PoteRacao);
-	SceneObject* PoteAgua = new SceneObject(80, 350,
-					"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
-		objectHall.emplace_back(PoteAgua);
+
+	SceneObject* PoteAgua = new SceneObject(135, 500,
+				"img/cenario/corredor/pote-sem-racao.png", "img/cenario/corredor/pote-sem-racao.png");
+	objectHall.emplace_back(PoteAgua);
+
+	MovingObject* Vase = new MovingObject(1250, 450, "img/cenario/geral/vaso.png");
+	objectHall.emplace_back(Vase);
+
+	MovingObject* Banco = new MovingObject(110, 350, "img/cenario/sala/banquinho.png", true);
+	objectHall.emplace_back(Banco);
 }
 
 void Mission1::SetObjectLivingRoom(){

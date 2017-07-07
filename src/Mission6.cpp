@@ -5,7 +5,7 @@
 #include "MissionManager.hpp"
 #include "Geometry.hpp"
 
- Music Mission6::music;
+Music Mission6::music;
 
 Mission6::Mission6() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
@@ -444,9 +444,6 @@ void Mission6::SetObjectHall(){
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", -1);
 	objectHall.emplace_back(DoorToMomRoom);
-
-	MovingObject* Vase = new MovingObject(1300, 450, "img/cenario/geral/vaso.png");
-	objectHall.emplace_back(Vase);
 }
 
 void Mission6::SetObjectLivingRoom(){
