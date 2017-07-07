@@ -380,13 +380,14 @@ void Mission6::Update(float dt){
 		}
 		if(time.Get() > 72 && countMom == 17){
 			countMom++;
-			creepy.SetText("");
+			creepy.SetText(" ");
 		}
 		if(time.Get() > 76 && countMom == 18){
 			countMom++;
 			std::cout << "ES0" << std::endl;
 			Game::GetInstance().GetCurrentState().EndState();
 			std::cout << "ESINF" << std::endl;
+			popRequested = true;
 		}
 	}
 
