@@ -30,13 +30,12 @@ private:
 	void SetObjectMomRoom();
 
 	static Music music;
-	bool paradoUrso, paradoGato;
-	bool played, endMission, drink = false;
-	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0, contador;
+	bool endMission, drink;
+	int meowcount, countCat, contador, momcount, momcount2, contFala;
 	int atraidoNovelo, atraidoTV;
 
 	Timer miado;
-	bool somGato = false,somWhispers = false, somPorta;
+	bool somGato, somPorta;
 };
 
 #endif /* SRC_MISSION3_HPP_ */

@@ -91,8 +91,12 @@ void Mission2::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	time.Update(dt);
-	cooldown.Update(dt);
+	if(time.Get() < 100){
+		time.Update(dt);
+	}
+	if(cooldown.Get() < 5){
+		cooldown.Update(dt);
+	}
 
 	if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
 		double posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
