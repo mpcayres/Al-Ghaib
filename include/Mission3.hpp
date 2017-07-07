@@ -32,8 +32,11 @@ private:
 	static Music music;
 	bool paradoUrso, paradoGato;
 	bool played, endMission, drink = false;
-	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0;
+	int meowcount, momcount,countBear = 0, countCat = 0, momcount2=0, contador;
 	int atraidoNovelo, atraidoTV;
+
+	Timer miado;
+	bool somGato = false,somWhispers = false, somPorta;
 };
 
 #endif /* SRC_MISSION3_HPP_ */

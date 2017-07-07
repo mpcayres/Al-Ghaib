@@ -135,6 +135,11 @@ void Cat::SetDestinationPath(Vec2 path){
 	destinationPath.emplace_back(path);
 }
 
+void Cat::PathFlush(){
+	while(!destinationPath.empty())
+		destinationPath.pop_back();
+}
+
 void Cat::DefinedPath(){
 	Vec2 aux;
 	aux.x = box.x; aux.y = box.y;

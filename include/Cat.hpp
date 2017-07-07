@@ -27,6 +27,7 @@ public:
 	void Shoot();
 	bool Is(std::string type);
 	//void Pursuit();
+	void PathFlush();
 	void DefinedPath();
 	void SetDestinationPath(Vec2 path);
 	void SetDirecao(int dir);

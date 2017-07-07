@@ -56,6 +56,8 @@ Mission3::Mission3() : Mission(), paradoUrso(false),paradoGato(false), endMissio
 	SetObjectLivingRoom();
 
 	MissionManager::cat->SetPosition(1000, 200);
+
+	miado = Timer();
 }
 
 Mission3::~Mission3() {
@@ -89,6 +91,11 @@ void Mission3::Update(float dt){
 	time.Update(dt);
 	cooldown.Update(dt);
 
+	if(gameOver){
+		if(time.Get() > 3){
+			Game::GetInstance().GetCurrentState().ChangeMission(3);
+		}
+	}
 	if(endMission && drink){
 		Game::GetInstance().GetCurrentState().ChangeMission(4);
 	}
@@ -127,8 +134,12 @@ void Mission3::Update(float dt){
 		}
 
 		if(time.Get() > 5){
+
 			Sound sussurro = Sound ("audio/ghostly-whispers.wav");
-			sussurro.Play(0);
+			if(somWhispers == false){
+				sussurro.Play(0);
+				somWhispers = true;
+			}
 			ImageProfileBox (4); //BOTA URSO
 			falas.SetText("OLHA ESSA QUE CHAMAS DE MÃE");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
@@ -166,26 +177,8 @@ void Mission3::Update(float dt){
 			MessageDoor(dt);
 			//TROCANDO DE COMODO. ENTRANDO NO CORREDOR PELA PRIMEIRA VEZ
 	}
-	 if(MissionManager::missionManager->IsState("HallState") &&
-	 							MissionManager::missionManager->countHallState > 1){
-		 MissionManager::cat->show = false;
-	 }
-	if(MissionManager::missionManager->IsState("HallState") && MissionManager::missionManager->countHallState > contador
-			&&  MissionManager::cat->attractedWool == true){
-		MissionManager::cat->show =true;
-		MissionManager::cat->SetPosition(1000, 200);
 
-	}
-	 if(MissionManager::missionManager->IsState("LivingRoomState") && MissionManager::missionManager->countLivingRoomState > contador
-			 && MissionManager::cat->attractedTV == true){
-		 MissionManager::cat->show =true;
-		 MissionManager::cat->SetPosition(610, 450);
-
-	 }
-
-
-	if(MissionManager::missionManager->IsState("HallState") &&
-							MissionManager::missionManager->countHallState <= 1){
+	if(MissionManager::missionManager->IsState("HallState")){
 			MissionManager::player->SetBlocked(false);
 		//HallState++;
 		std::cout << MissionManager::missionManager->countHallState << std::endl;
@@ -206,7 +199,11 @@ void Mission3::Update(float dt){
 		}
 
 
-		MissionManager::cat->show = true;
+		if(MissionManager::cat->attractedTV){
+			MissionManager::cat->show = false;
+		}else{
+			MissionManager::cat->show = true;
+		}
 		countCat++;
 		//if(count == 1){
 		int dist = MissionManager::cat->box.DistanceRect(MissionManager::player->box);
@@ -214,7 +211,6 @@ void Mission3::Update(float dt){
 
 
 		if(countCat == 1  && atraidoNovelo == 0){
-					//MOVIMENTO Ã‰ COLOCADO DE TRÃ�S PARA FRENTE
 			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
 			MissionManager::cat->SetDestinationPath(Vec2(1000, 200));
@@ -235,25 +231,37 @@ void Mission3::Update(float dt){
 			MissionManager::cat->SetDestinationPath(Vec2(900, 200));
 		}*/
 
-		if(dist < 100){
-			if(meowcount%2 && ((int)time.Get())%5){
-				MissionManager::player->AddRuido(6);
-				Sound meow1 = Sound ("audio/cat-meow-1.wav");
-				meow1.Play(0);
+		if(dist < 100 && MissionManager::cat->show == true){
+			Sound meow1 = Sound ("audio/cat-meow-1.wav");
+			Sound meow2 = Sound ("audio/cat-meow-2.wav");
+			Sound meow3 = Sound ("audio/cat-meow-3.wav");
+			if(miado.Get() > 3){
+				somGato = false;
+				miado.Restart();
+			}else{
+				miado.Update(dt);
 			}
-			//Sound meow2 = Sound ("audio/cat-meow-2.wav");
-			//meow2.Play(0);
-			meowcount++;
+			if(somGato == false){
+				MissionManager::player->AddRuido(35);
+				if(meowcount == 0)
+					meow1.Play(0);
+				else if(meowcount == 1)
+					meow2.Play(0);
+				else if(meowcount == 2){
+					meow3.Play(0);
+					meowcount = -1;
+				}
+				somGato = true;
+				meowcount++;
+			}
 		}
 
 		if(MissionManager::cat->attractedWool == true && MissionManager::cat->attractedTV == false){
 			atraidoNovelo++;
 			if(atraidoNovelo == 1){
+				MissionManager::cat->PathFlush();
 				MissionManager::cat->SetDestinationPath(Vec2(1350, 450));
 				MissionManager::cat->SetDestinationPath(Vec2(980, 450));
-				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
-				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
-				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
 				MissionManager::cat->SetDestinationPath(Vec2(980, 300));
 				contador =  MissionManager::missionManager->countHallState;
 			}
@@ -300,7 +308,7 @@ void Mission3::Update(float dt){
 
 
 	} if(MissionManager::missionManager->IsState("LivingRoomState") &&
-				MissionManager::missionManager->countLivingRoomState > 1 && contador == 0){
+				MissionManager::missionManager->countLivingRoomState > 1){
 		MissionManager::cat->show = false;
 		MissionManager::enemy->show = false;
 		if(state != MissionManager::missionManager->changeState){
@@ -317,6 +325,7 @@ void Mission3::Update(float dt){
 
 			contador =  MissionManager::missionManager->countLivingRoomState;
 			if(atraidoTV == 1){
+				MissionManager::cat->PathFlush();
 				MissionManager::cat->SetPosition(230, 300);
 				//MissionManager::missionManager->cat->box.x = 400;
 				//MissionManager::missionManager->cat->box.y = 400;
@@ -331,10 +340,6 @@ void Mission3::Update(float dt){
 			else if (time.Get()>5){
 				MissionManager::cat->SetDestinationPath(Vec2(610, 450));
 			}
-
-			MissionManager::cat->SetDestinationPath(Vec2(610, 450));
-		}else if(MissionManager::cat->attractedWool == true && MissionManager::cat->attractedTV == true){
-			MissionManager::cat->attractedTV = false;
 		}
 
 
@@ -512,9 +517,6 @@ void Mission3::SetObjectStage(){
 	SceneObject* Bau = new SceneObject(300, 490,  "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
-
-	MovingObject* Box = new MovingObject(400, 500, "img/inventario/box.png");
-	objectStage.emplace_back(Box);
 
 	MovingObject* Cadeira = new MovingObject(730, 300, "img/cenario/geral/cadeira.png");
 	objectStage.emplace_back(Cadeira);
