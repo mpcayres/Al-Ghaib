@@ -106,7 +106,7 @@ void Mission4::Update(float dt){
 				ImageProfileBox(4);
 				falas.SetText("TINHA ALGO NAQUELE LEITE");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-				ultimoTempo = 15;
+				ultimoTempo = 5;
 				showBox = true;
 
 		}
@@ -115,7 +115,7 @@ void Mission4::Update(float dt){
 			ImageProfileBox(4);
 			falas.SetText("TEMOS QUE VOLTAR AO QUARTO DELA");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = 15;
+			ultimoTempo = 10;
 			showBox = true;
 
 		}
@@ -123,7 +123,7 @@ void Mission4::Update(float dt){
 			contFala++;
 			falas.SetText("CERTEZA QUE DEVE TER ALGO NAQUELE PORÃO");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = 20;
+			ultimoTempo = 15;
 			showBox = true;
 			MissionManager::player->SetBlocked(false);
 			MissionManager::enemy->show = false;
@@ -133,7 +133,7 @@ void Mission4::Update(float dt){
 			falas.SetText(" ");
 			ImageProfileBox(6);
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
-			ultimoTempo = 25;
+			ultimoTempo = 20;
 			showBox = false;
 			MissionManager::enemy->show = false;
 		}

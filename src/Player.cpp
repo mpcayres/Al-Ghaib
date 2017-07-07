@@ -124,6 +124,8 @@ void Player::Update(float dt){
 				}
 
 			} else if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryBook")){
+				Sound s = Sound("audio/weird8.wav");
+				s.Play(1);
 				animShowing = true;
 				timeCooldown.Restart();
 				if(inHand->Action(nullptr) == true){
