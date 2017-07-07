@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------------------------------
    
      AL-GHAIB
      INTRODUÇÃO AO DESENVOLVIMENTO DE JOGOS - 1/2017
@@ -47,6 +47,15 @@ Ingrid Santana Lopes
 Marcos Paulo Cayres Rosa
 
 Rennê Ruan Alves Oliveira
+	- implementação de tilesets e tilemaps
+	- implementação de lógica de colisões e limites do mapa
+	- lógica de pathfinding da mãe
+	- lógica de inventário, seleção e uso de objetos
+	- início da lógica de diferentes câmeras
+	- Ajustes nas missões e seus respectivos objetos
+	- Revisão geral de sons e músicas
+	- lógica de barulho emitido, e sua amostragem
+	- correção de erros
 
 * Dependencias e versões (Para instalar o jogo)
 
