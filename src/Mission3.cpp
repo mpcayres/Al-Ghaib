@@ -409,73 +409,53 @@ void Mission3::Update(float dt){
 			}
 			if(time.Get() > 19)
 				Game::GetInstance().GetCurrentState().ChangeState("MomRoomStage","StageState");
-		}if(MissionManager::missionManager->IsState("StageState") /*&& bronca*/){
-			std::cout << "entrei!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-			if(state != MissionManager::missionManager->changeState){
-				std::cout << time.Get() << std::endl;
-					MissionManager::player->SetPosition(805, 260);
-					state = MissionManager::missionManager->changeState;
-					MissionManager::enemy->show = false;
-					time.Restart();
-			}
-			if(time.Get() > 8 && time.Get() < 12){
-					showBox = true;
-					ImageProfileBox (4);
-					falas.SetText("U: É MELHOR BEBER SEU LEITE");
-					falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
-			if(time.Get() > 12){
-				showBox = false;
-				ImageProfileBox (6);
-				falas.SetText(" ");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
-
-			if(time.Get() > 40 && time.Get() < 44){
+		}
+	}
+	if(MissionManager::missionManager->IsState("StageState") /*&& bronca*/){
+		std::cout << "entrei!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+		if(state != MissionManager::missionManager->changeState){
+			std::cout << time.Get() << std::endl;
+				MissionManager::player->SetPosition(805, 260);
+				state = MissionManager::missionManager->changeState;
+				MissionManager::enemy->show = false;
+				time.Restart();
+		}
+		if(time.Get() > 8 && time.Get() < 12){
 				showBox = true;
 				ImageProfileBox (4);
-				falas.SetText("BEBAAAAAAAAAAAAAAAA");
+				falas.SetText("U: É MELHOR BEBER SEU LEITE");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
-			if(time.Get() > 44){
-				showBox = false;
-				ImageProfileBox (6);
-				falas.SetText(" ");
-				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-			}
-			Vec2 *leite = new Vec2(255, 405);
-			float dist = 0;
+		}
+		if(time.Get() > 12){
+			showBox = false;
+			ImageProfileBox (6);
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
 
-			dist = leite->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
-			if(dist<80 && InputManager::GetInstance().KeyPress(Z_KEY)){
-				drink = true;
-				endMission = true;
-			}
+		if(time.Get() > 40 && time.Get() < 44){
+			showBox = true;
+			ImageProfileBox (4);
+			falas.SetText("BEBAAAAAAAAAAAAAAAA");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		if(time.Get() > 44){
+			showBox = false;
+			ImageProfileBox (6);
+			falas.SetText(" ");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+		Vec2 *leite = new Vec2(255, 405);
+		float dist = 0;
 
-
+		dist = leite->Distance(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+		if(dist<80 && InputManager::GetInstance().KeyPress(Z_KEY)){
+			drink = true;
+			endMission = true;
 		}
 
 
-		//////////////// TROCAR PARA QUARTO DA MÃƒE 1
-				//else if(MissionManager::missionManager->IsState("MomState") &&
-				//						MissionManager::missionManager->countMomState > 1){
-					//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
-					// SE PERTO DEMAIS, MÃƒE APARECE
-
-					//MANDA IR PARA O QUARTO DORMIR
-
-
-				//}else if(MissionManager::missionManager->IsState("StageState") &&
-				//						bronca){
-					//PEGAR PROXIMIDADE AO ALÃ‡APÃƒO
-					// SE PERTO DEMAIS, MÃƒE APARECE
-
-					//MANDA IR PARA O QUARTO DORMIR
-
-
-				//}
 	}
-
 
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);
