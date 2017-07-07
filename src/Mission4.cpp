@@ -5,7 +5,7 @@
 #include "MissionManager.hpp"
 #include "Animation.hpp"
 
-Music Mission4::music;
+ Music Mission4::music;
 
 Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
@@ -16,7 +16,6 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	creepyEffect = Timer();
 	contCreepy = 0;
 	contFala = 0;
-	endMission = false;
 
 	MissionManager::player->drogado = true;
 
@@ -245,8 +244,8 @@ void Mission4::SetObjectStage(){
 
 void Mission4::SetObjectHall(){
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
-			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
-	objectHall.emplace_back(CriadoMudo);
+				"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png", 0, 1, 1, "InventoryKey", SceneObject::SAMEY_UP);
+		objectHall.emplace_back(CriadoMudo);
 
 	SceneDoor* DoorToMomRoom = new SceneDoor(970, 105, "MomRoomState", true,
 			"img/cenario/geral/door-closed.png", "img/cenario/geral/door-opened.png", 1);

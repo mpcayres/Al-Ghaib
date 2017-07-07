@@ -4,6 +4,8 @@
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
 #include "Geometry.hpp"
+#include "HallState.hpp"
+#include "LivingRoomState.hpp"
 
  Music Mission3::music;
 
@@ -88,18 +90,31 @@ void Mission3::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	time.Update(dt);
+	if(time.Get()<100)
+		time.Update(dt);
 	cooldown.Update(dt);
 
+	if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission && !gameOver){
+				gameOver = true;
+				MissionManager::enemy->SetPosition(MissionManager::player->box.x, MissionManager::player->box.y);
+				MissionManager::enemy->SetDestinationPath(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+				MissionManager::player->SetBlocked(true);
+				MissionManager::player->SetBloqHUD(true);
+				MissionManager::player->SetBloqInv(true);
+				time.Restart();
+				Camera::Follow(MissionManager::player, CAMERA_TYPE1);
+				Camera::Zoom(2, true);
+	}
+
 	if(gameOver){
-		if(time.Get() > 3){
-			Game::GetInstance().GetCurrentState().ChangeMission(3);
+			if(time.Get() > 3){
+				Game::GetInstance().GetCurrentState().ChangeMission(3);
+			}
 		}
+		if(endMission && drink){
+			Game::GetInstance().GetCurrentState().ChangeMission(4);
 	}
-	if(endMission && drink){
-		Game::GetInstance().GetCurrentState().ChangeMission(4);
-	}
-	//TROCAR PARA SALA DE ESTAR COMO COMODO INICIAL ////////////////////////////////////////////////////////////////////
+
 	if(MissionManager::missionManager->IsState("LivingRoomState") &&
 			MissionManager::missionManager->countLivingRoomState <= 1){
 		MissionManager::enemy->show = true;
@@ -242,7 +257,7 @@ void Mission3::Update(float dt){
 				miado.Update(dt);
 			}
 			if(somGato == false){
-				MissionManager::player->AddRuido(35);
+				MissionManager::player->AddRuido(45);
 				if(meowcount == 0)
 					meow1.Play(0);
 				else if(meowcount == 1)
@@ -282,6 +297,30 @@ void Mission3::Update(float dt){
 			SceneDoor::count = ABRE;
 			momcount ++;
 			std::cout << "momcount" << momcount << std::endl;
+			if(MissionManager::enemy->seen && MissionManager::enemy->canPursuit){
+						double posEnemyY = MissionManager::enemy->box.y+MissionManager::enemy->GetHeight();
+						double posEnemyX = MissionManager::enemy->box.x;
+
+						if(posEnemyY > MissionManager::player->limits.y+MissionManager::player->limits.h){
+							posEnemyY = MissionManager::player->limits.y+MissionManager::player->limits.h - 10;
+						}
+						if(posEnemyY < MissionManager::player->limits.y){
+							posEnemyY = MissionManager::player->limits.y+10;
+						}
+						if(posEnemyX > MissionManager::player->limits.x+MissionManager::player->limits.w){
+							posEnemyX = MissionManager::player->limits.x+MissionManager::player->limits.w -10;
+						}
+						if(posEnemyX < MissionManager::player->limits.x){
+							posEnemyX = MissionManager::player->limits.x + 10;
+						}
+			((HallState&) Game::GetInstance().GetCurrentState())
+					 			.tileMap.PathFind(Vec2(posEnemyX,posEnemyY),
+					 					Vec2(MissionManager::player->box.x+30,MissionManager::player->box.y+50) );
+							MissionManager::enemy->SetDestinationPursuit(((HallState&) Game::GetInstance().
+									GetCurrentState()).tileMap.GetPath());
+			}
+
+
 			if(MissionManager::enemy->show){
 				if(momcount == 1){
 
@@ -412,7 +451,6 @@ void Mission3::Update(float dt){
 		}
 	}
 	if(MissionManager::missionManager->IsState("StageState") /*&& bronca*/){
-		std::cout << "entrei!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 		if(state != MissionManager::missionManager->changeState){
 			std::cout << time.Get() << std::endl;
 				MissionManager::player->SetPosition(805, 260);
@@ -423,7 +461,7 @@ void Mission3::Update(float dt){
 		if(time.Get() > 8 && time.Get() < 12){
 				showBox = true;
 				ImageProfileBox (4);
-				falas.SetText("U: É MELHOR BEBER SEU LEITE");
+				falas.SetText("É MELHOR BEBER SEU LEITE");
 				falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
 		}
 		if(time.Get() > 12){
