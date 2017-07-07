@@ -107,6 +107,7 @@ void Player::Update(float dt){
 				if(inHand->Action(nullptr) == true){
 					MissionManager::player->DeleteInventory();
 					AddInventory("InventoryArame");
+					animShowing = false;
 				}
 			} else if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryControl")){
 				inHand->Action(nullptr);
@@ -122,6 +123,13 @@ void Player::Update(float dt){
 					}
 				}
 
+			} else if(InputManager::GetInstance().KeyPress(X_KEY) && inHand->IsObject("InventoryBook")){
+				animShowing = true;
+				timeCooldown.Restart();
+				if(inHand->Action(nullptr) == true){
+					MissionManager::player->DeleteInventory();
+					animShowing = false;
+				}
 			}
 			if(animShowing){
 				spAnimKinder.Update(dt);
@@ -595,7 +603,7 @@ void Player::AddInventory(std::string obj){
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryLine());
 	}else if(obj == "InventoryBook"){
-		spPicked = Sprite("img/cenario/geral/livro.png");
+		spPicked = Sprite("img/inventario/livro-simbolo.png");
 		spPicked.SetScaleX(5); spPicked.SetScaleY(5);
 		timePicked.Restart(); showPicked = true;
 		inventory.emplace_back(new InventoryBook());

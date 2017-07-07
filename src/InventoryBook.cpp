@@ -1,21 +1,16 @@
 #include "InventoryBook.hpp"
 #include "MissionManager.hpp"
 
-InventoryBook::InventoryBook() : InventoryObject("img/cenario/geral/livro.png") {
+InventoryBook::InventoryBook() : InventoryObject("img/inventario/livro-simbolo.png") {
 	timesPressed = 0;
 }
 
 InventoryBook::~InventoryBook(){ }
 
 bool InventoryBook::Action(GameObject* other){
-	/*if(Bear::bear->colliding){
-		timesPressed++;
-		MissionManager::player->AddRuido(0.2*50);
-		if(timesPressed >= 20){
-			Bear::bear->hasCostura = true;
-		}
-		return true;
-	}*/
+	timesPressed++;
+	MissionManager::player->AddRuido(0.2*50);
+	if(timesPressed >= 30) return true;
 	return false;
 }
 

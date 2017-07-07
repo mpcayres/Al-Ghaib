@@ -149,7 +149,7 @@ void HallFinalState::SetInitialObjectArray(){
 	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 340, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock4);
 
-	PickUpObject* Livro = new PickUpObject(4200, 320, "InventoryBook", "img/inventario/livro-simbolo.png",false, 0.4, 0.4);
+	PickUpObject* Livro = new PickUpObject(4200, 320, "InventoryBook", "img/inventario/livro-simbolo.png", false, 0.4, 0.4);
 	objectArray.emplace_back(Livro);
 
 	StealthObject* Armario = new StealthObject(4700, 210, "img/cenario/geral/armario-corredor-fechado.png");

@@ -4,13 +4,15 @@
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
 
- Music Mission5::music;
+Music Mission5::music;
 
 Mission5::Mission5() : Mission(), paradoUrso(false), paradoGato(false) {
 	initialState = "HallFinalState";
 	initialX = 450; initialY = 400;
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
+
+	time = Timer();
 
 	endMission = false;
 	momcount = 0;
@@ -44,11 +46,7 @@ Mission5::Mission5() : Mission(), paradoUrso(false), paradoGato(false) {
 	//intro.Play(1);
 
 	MissionManager::enemy->ChangeClothes(2);
-
-
-	MissionManager::enemy->SetPosition(30, 300);
-
-
+	MissionManager::enemy->SetPosition(0,0);
 }
 
 Mission5::~Mission5() {
@@ -62,7 +60,7 @@ void  Mission5::Resume(){ }
 void Mission5::Update(float dt){
 
 	InputManager instance = InputManager::GetInstance();
-	//bool trancada = false;
+
 	if(instance.KeyPress(ESCAPE_KEY)){
 		popRequested = true;
 	}
@@ -79,29 +77,25 @@ void Mission5::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	if(time.Get() < 100){
+	if(time.Get() < 25){
 		time.Update(dt);
 	}
 
-	if(gameOver){
+	if(gameOver && time.Get() > 4){
 		Game::GetInstance().GetCurrentState().ChangeMission(5);
 	} else if(endMission && time.Get() > 20){
 		Game::GetInstance().GetCurrentState().ChangeMission(6);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
-	std::cout << MissionManager::player->box.x << " X " << MissionManager::player->box.y << std::endl;
+	//std::cout << MissionManager::player->box.x << " X " << MissionManager::player->box.y << std::endl;
 
-	if(MissionManager::missionManager->IsState("StageState")) {
+	if(momcount == 1 && MissionManager::missionManager->IsState("StageState") && !gameOver) {
 		MissionManager::enemy->show = false;
 		endMission = true;
+		time.Restart();
 	}
 
-	if(MissionManager::missionManager->IsState("HallFinalState")){
-
-		if(time.Get() > 0 && time.Get() < 1){
-			SetPiscaPisca(10, 0.4);
-			MissionManager::player->drogado = true;
-		}
+	if(MissionManager::missionManager->IsState("HallFinalState") && !gameOver){
 
 		if(time.Get() > 4 && momcount == 0 && contFala == 0){
 			contFala++;
@@ -111,7 +105,7 @@ void Mission5::Update(float dt){
 			falas.SetPos(0, Game::GetInstance().GetHeight()-60, true, false);
 		}
 
-		if(time.Get() > 10 && momcount == 0){
+		if(time.Get() > 8 && MissionManager::player->box.x > 200 && momcount == 0){
 			momcount++;
 			MissionManager::enemy->show = true;
 			SceneDoor::count = ABRE;
@@ -123,6 +117,9 @@ void Mission5::Update(float dt){
 		}
 
 		if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show == true){
+			MissionManager::player->SetBlocked(true);
+			time.Restart();
+			Camera::Zoom(2, true);
 			gameOver = true;
 		}
 
@@ -141,22 +138,9 @@ void Mission5::Update(float dt){
 		if(time.Get() > 20 && time.Get() < 21){
 			SetPiscaPisca(10, 0.4);
 			MissionManager::player->drogado = true;
-		}
-
-		if(time.Get() > 25 && time.Get() < 26){
-			MissionManager::player->drogado = false;
-		}
-
-		if(time.Get() > 64 && time.Get() < 65){
-			SetPiscaPisca(10, 0.4);
-			MissionManager::player->drogado = true;
-		}
-
-		if(time.Get() > 70 && time.Get() < 71){
-			MissionManager::player->drogado = false;
+			time.Restart();
 		}
 	}
-
 
 	if(time.Get() >= 4 && fadeIn){
 		UpdateVariable(dt, 80);
@@ -176,10 +160,10 @@ void Mission5::Render(){
 	}
 
 	if(showBox){
-			falasBox.Render(falasBoxRect.x /*- Camera::pos.x*/, falasBoxRect.y /*- Camera::pos.y*/, 0);
-			profileBox.Render(profileBoxX, profileBoxY, 0);
-		}
+		falasBox.Render(falasBoxRect.x, falasBoxRect.y, 0);
+		profileBox.Render(profileBoxX, profileBoxY, 0);
 		falas.Render(0,0);
+	}
 }
 
 void Mission5::SetObjectStage(){
