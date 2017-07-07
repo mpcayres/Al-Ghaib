@@ -4,6 +4,7 @@
 #include "SceneDoor.hpp"
 #include "MissionManager.hpp"
 #include "Animation.hpp"
+#include "Sound.hpp"
 
  Music Mission4::music;
 
@@ -158,6 +159,8 @@ void Mission4::Update(float dt){
 			falas.SetText("I-ISSO QUE ELA TA COMENDO... É O GATO?");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 			showBox = true;
+			Sound s = Sound("audio/eating.wav");
+			s.Play(1);
 			Game::GetInstance().GetCurrentState().AddObject(
 			new Animation(350, 200, 0,
 				"img/sprite/mom-comendo-gato.png", 5, 0.3, false, 7 ,  7, true));
