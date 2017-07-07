@@ -333,7 +333,7 @@ void Mission2::Update(float dt){
 		}
 		Bear::bear->show = true;
 		Bear::bear->box.x = 300;
-		Bear::bear->box.y = 280;
+		Bear::bear->box.y = 265;
 		count++;
 		Bear::bear->retorno = true;
 		if(time.Get() > 0){
@@ -452,11 +452,11 @@ void Mission2::SetObjectStage(){
 	Bear* bear = new Bear(810, 210);
 	objectStage.emplace_back(bear);
 
-	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
+	SceneObject* Bau = new SceneObject(200, 490, "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
-	MovingObject* Box = new MovingObject(400, 500, "img/cenario/sala/banquinho.png");
+	MovingObject* Box = new MovingObject(280, 495, "img/cenario/sala/banquinho.png");
 	objectStage.emplace_back(Box);
 
 	//MovingObject* Cadeira = new MovingObject(650, 300, "img/cenario/geral/cadeira.png", true);

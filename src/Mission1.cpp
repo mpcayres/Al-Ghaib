@@ -466,16 +466,10 @@ void  Mission1::Render(){
 
 //!!!!!!!!! Colocar MovingObject por ultimo em todos os casos
 void Mission1::SetObjectStage(){
-	//StealthObject* Escrivaninha = new StealthObject(700, 400, "img/cenario/geral/escrivaninha-fechado.png");
-	//objectStage.emplace_back(Escrivaninha);
-
-	//SceneObject* Armario =  new SceneObject(400, 260, "img/cenario/filho/armario-quarto-fechado.png", "");
-	//objectStage.emplace_back(Armario);
-
 	SceneDoor* Door = new SceneDoor(800, 200, "HallState");
 	objectStage.emplace_back(Door);
 
-	SceneObject* Bau = new SceneObject(300, 490, "img/cenario/geral/bau-fechado.png",
+	SceneObject* Bau = new SceneObject(370, 490, "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
@@ -483,10 +477,10 @@ void Mission1::SetObjectStage(){
 			"img/cenario/geral/palhaco-dentro-caixa.png", true, 0.4, 0.4);
 	objectStage.emplace_back(Clown);
 
-	//MovingObject* Vaso = new MovingObject(900, 300, "img/cenario/geral/vaso.png");
-	//objectStage.emplace_back(Vaso);
+	MovingObject* Banco1 = new MovingObject(860, 450, "img/cenario/sala/banquinho.png", true);
+	objectStage.emplace_back(Banco1);
 
-	MovingObject* Cadeira = new MovingObject(700, 320, "img/cenario/geral/cadeira.png", true);
+	MovingObject* Cadeira = new MovingObject(665, 350, "img/cenario/geral/cadeira.png", true);
 	objectStage.emplace_back(Cadeira);
 }
 

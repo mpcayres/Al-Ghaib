@@ -10,8 +10,8 @@
 #include "SceneDoor.hpp"
 #include "MovingObject.hpp"
 #include "StealthObject.hpp"
+#include "SceneUntouchable.hpp"
 #include "EmptyBox.hpp"
-#include "Walls.hpp"
 #include "MissionManager.hpp"
 
 #include <iostream>
@@ -82,11 +82,11 @@ void StageState::Update(float dt){
 		ChangeState("StageState", "LivingRoomState");
 	} else if(instance.KeyPress(R_KEY)){
 		ChangeState("StageState", "MomRoomState");
-	}else if(instance.KeyPress(T_KEY)){
+	} else if(instance.KeyPress(T_KEY)){
 		ChangeState("StageState", "HallFinalState");
-	}else if(instance.KeyPress(KEY_1)){
+	} else if(instance.KeyPress(KEY_1)){
 		ChangeMission(1);
-	}else if(instance.KeyPress(KEY_2)){
+	} else if(instance.KeyPress(KEY_2)){
 		ChangeMission(2);
 	} else if(instance.KeyPress(KEY_3)){
 		ChangeMission(3);
@@ -152,12 +152,15 @@ void StageState::SetInitialObjectArray(){
 	EmptyBox* EB = new EmptyBox();
 	objectArray.emplace_back(EB);
 
+	SceneUntouchable* Rug = new SceneUntouchable(340, 350, "img/cenario/geral/tapete.png");
+	objectArray.emplace_back(Rug);
+
+	StealthObject* Mesa = new StealthObject(900, 430, "img/cenario/geral/mesa.png");
+	objectArray.emplace_back(Mesa);
+
 	SceneObject* Escrivaninha = new SceneObject(650, 440,
 			"img/cenario/geral/escrivaninha-fechado.png", "img/cenario/geral/escrivaninha-aberto.png");
 	objectArray.emplace_back(Escrivaninha);
-
-	StealthObject* Mesa = new StealthObject(900, 400, "img/cenario/geral/mesa.png");
-	objectArray.emplace_back(Mesa);
 
 	SceneObject* Window = new SceneObject(540, 200,
 			"img/cenario/geral/window-closed.png", "img/cenario/geral/window-opened.png", 0, 0.7, 0.7);
@@ -172,10 +175,10 @@ void StageState::SetInitialObjectArray(){
 	SceneObject* Abajur =  new SceneObject(600, 200, "img/cenario/geral/abajur.png", "");
 	objectArray.emplace_back(Abajur);
 
-	MovingObject* Vaso = new MovingObject(900, 300,  "img/cenario/geral/vaso.png");
-	objectArray.emplace_back(Vaso);
-
 	SceneObject* CriadoMudo = new SceneObject(210, 380,  "img/cenario/filho/criado-fechado.png",  "img/cenario/filho/criado-aberto.png");
 	objectArray.emplace_back(CriadoMudo);
+
+	MovingObject* Vaso = new MovingObject(900, 250,  "img/cenario/geral/vaso.png");
+	objectArray.emplace_back(Vaso);
 
 }
