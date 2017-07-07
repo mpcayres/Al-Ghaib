@@ -5,7 +5,7 @@
 #include "MissionManager.hpp"
 #include "Animation.hpp"
 
- Music Mission4::music;
+Music Mission4::music;
 
 Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	initialState = "StageState";
@@ -16,6 +16,7 @@ Mission4::Mission4() : Mission(), paradoUrso(false),paradoGato(false) {
 	creepyEffect = Timer();
 	contCreepy = 0;
 	contFala = 0;
+	endMission = false;
 
 	MissionManager::player->drogado = true;
 

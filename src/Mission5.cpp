@@ -12,10 +12,9 @@ Mission5::Mission5() : Mission(), paradoUrso(false), paradoGato(false) {
 	MissionManager::missionManager->SetPos(initialX, initialY);
 	MissionManager::missionManager->randomStates = true;
 
-	meowcount = 0;
+	endMission = false;
 	momcount = 0;
-	countBear = 0;
-	countCat = 0;
+	contFala = 0;
 
 	SDL_Color redwine = SDL_Color();
 	redwine.r = 102;
@@ -35,7 +34,7 @@ Mission5::Mission5() : Mission(), paradoUrso(false), paradoGato(false) {
 	falas = Text("font/AA_typewriter.ttf", 25, Text::TextStyle::BLENDED , " ", white, 0, 0);
 	falas.SetPos(0, Game::GetInstance().GetHeight()-POSY_FALA, true, false);
 	showBox = false;
-	//ultimoTempo = 3;
+
 	/*intro = Music("audio/menu-intro.wav");
 	music = Music("audio/menu-loop.wav");
 	intro.Play(1);
@@ -80,72 +79,90 @@ void Mission5::Update(float dt){
 			spFade.ChangeAlpha(alpha);
 		}
 	}
-	if(time.Get()<100)
+	if(time.Get() < 100){
 		time.Update(dt);
-	cooldown.Update(dt);
+	}
 
 	if(gameOver){
-			Game::GetInstance().GetCurrentState().ChangeMission(5);
-	}
-	else if(endMission && time.Get() > 4){
-			Game::GetInstance().GetCurrentState().ChangeMission(6);
+		Game::GetInstance().GetCurrentState().ChangeMission(5);
+	} else if(endMission && time.Get() > 20){
+		Game::GetInstance().GetCurrentState().ChangeMission(6);
 	}
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
-	std::cout << MissionManager::player->box.x << "e" << MissionManager::player->box.y << std::endl;
+	std::cout << MissionManager::player->box.x << " X " << MissionManager::player->box.y << std::endl;
 
-	if(time.Get()>0 && time.Get()<1)
-		MissionManager::player->drogado = true;
-	if(time.Get() > 8 && momcount == 0){
-		momcount++;
-		MissionManager::enemy->show = true;
-		SceneDoor::count = ABRE;
-		SceneDoor::ValorPassar = 15;
-		MissionManager::enemy->SetPosition(30, 300);
-		MissionManager::enemy->SetDestinationPath(Vec2(4550, 300));
-		MissionManager::enemy->SetDestinationPath(Vec2(4500, 300));
-		MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
-	}
 	if(MissionManager::missionManager->IsState("StageState")) {
+		MissionManager::enemy->show = false;
 		endMission = true;
 	}
 
-	if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show == true ){
-		gameOver = true;
-	}
-	if(time.Get()>4 && momcount == 0){
+	if(MissionManager::missionManager->IsState("HallFinalState")){
+
+		if(time.Get() > 0 && time.Get() < 1){
+			SetPiscaPisca(10, 0.4);
+			MissionManager::player->drogado = true;
+		}
+
+		if(time.Get() > 4 && momcount == 0 && contFala == 0){
+			contFala++;
 			ImageProfileBox (6);
 			showBox = true;
 			falas.SetText("CORRA!");
+			falas.SetPos(0, Game::GetInstance().GetHeight()-60, true, false);
+		}
+
+		if(time.Get() > 10 && momcount == 0){
+			momcount++;
+			MissionManager::enemy->show = true;
+			SceneDoor::count = ABRE;
+			SceneDoor::ValorPassar = 15;
+			MissionManager::enemy->SetPosition(30, 300);
+			MissionManager::enemy->SetDestinationPath(Vec2(4550, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4500, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
+		}
+
+		if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show == true){
+			gameOver = true;
+		}
+
+		if(time.Get() > 15 && contFala == 1){
+			contFala++;
+			ImageProfileBox (6);
+			showBox = false;
+			falas.SetText(" ");
 			falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
+		}
+
+		if(time.Get() > 10 && time.Get() < 11){
+			MissionManager::player->drogado = false;
+		}
+
+		if(time.Get() > 20 && time.Get() < 21){
+			SetPiscaPisca(10, 0.4);
+			MissionManager::player->drogado = true;
+		}
+
+		if(time.Get() > 25 && time.Get() < 26){
+			MissionManager::player->drogado = false;
+		}
+
+		if(time.Get() > 64 && time.Get() < 65){
+			SetPiscaPisca(10, 0.4);
+			MissionManager::player->drogado = true;
+		}
+
+		if(time.Get() > 70 && time.Get() < 71){
+			MissionManager::player->drogado = false;
+		}
 	}
-
-	if(time.Get()>15 ){
-		ImageProfileBox (6);
-
-		showBox = false;
-		falas.SetText(" ");
-		falas.SetPos(0, Game::GetInstance().GetHeight()-50, true, false);
-	}
-
-	if(time.Get()>10 && time.Get()<11)
-		MissionManager::player->drogado =false;
-	if(time.Get()>20 && time.Get()<21)
-			MissionManager::player->drogado=true;
-
-	if(time.Get()>25 && time.Get()<26)
-		MissionManager::player->drogado =false;
-	if(time.Get()>64 && time.Get()<65)
-		MissionManager::player->drogado=true;
-	if(time.Get()>70 && time.Get()<71)
-			MissionManager::player->drogado=false;
-	SetPiscaPisca(10, 0.4);
 
 
 	if(time.Get() >= 4 && fadeIn){
-			UpdateVariable(dt, 80);
+		UpdateVariable(dt, 80);
 	}
-	PiscaPisca(dt);
 
+	PiscaPisca(dt);
 
 }
 

@@ -16,25 +16,18 @@
 //NESSE STATE TUDO VAI SER SETADO DIRETO NELE
 HallFinalState::HallFinalState() :
 	State(), tileSet(192, 96, "img/tilesetHallFinal.png"), tileMap("map/tileMapHallFinal.txt", &tileSet) {
-	//std::cout << "TESTE 1" << std::endl;
-	limits = tileMap.FindLimits();
 
+	limits = tileMap.FindLimits();
 	SetPlayer(50, 310, CAMERA_TYPE2, limits);
-	//std::cout << "HFSC1.1" << std::endl;
+
 	SetInitialObjectArray();
 
 	std::vector<Rect> auxLimits = tileMap.GetInnerLimits();
 	for(unsigned i = 0; i < auxLimits.size(); i++){
 		MissionManager::player->AddWallLimits(auxLimits[i]);
 	}
-
-
-
 	objectArray.emplace_back(MissionManager::enemy);
-	//objectArray.emplace_back(MissionManager::cat);
 	objectArray.emplace_back(MissionManager::player);
-
-
 
 	LoadAssets();
 	std::cout << "HFSC2 " << objectArray.size() << std::endl;
@@ -64,32 +57,11 @@ void HallFinalState::Update(float dt){
 	if(instance.KeyPress(W_KEY)){
 		ChangeState("HallFinalState", "StageState");
 	}
+	if(instance.KeyPress(Q_KEY)){
+		ChangeState("HallState", "StageState");
+	}
 	quitRequested = instance.QuitRequested();
 
-	/* area de cheat de missao*/
-		if(instance.KeyPress(W_KEY)){
-			ChangeState("StageState", "HallState");
-		} else if(instance.KeyPress(E_KEY)){
-			ChangeState("StageState", "LivingRoomState");
-		} else if(instance.KeyPress(R_KEY)){
-			ChangeState("StageState", "MomRoomState");
-		}else if(instance.KeyPress(T_KEY)){
-			ChangeState("StageState", "HallFinalState");
-		}else if(instance.KeyPress(KEY_1)){
-			ChangeMission(1);
-		}else if(instance.KeyPress(KEY_2)){
-			ChangeMission(2);
-		} else if(instance.KeyPress(KEY_3)){
-			ChangeMission(3);
-		} else if(instance.KeyPress(KEY_4)){
-			ChangeMission(4);
-		} else if(instance.KeyPress(KEY_5)){
-			ChangeMission(5);
-		} else if(instance.KeyPress(KEY_6)){
-			ChangeMission(6);
-		}
-
-		/* fim de area de cheat de missao*/
 	Camera::Update(dt);
 	UpdateArray(dt);
 
@@ -97,7 +69,6 @@ void HallFinalState::Update(float dt){
 	posInvert = -1;
 	for(int i = objectArray.size() - 1; i >= 0; --i) {
 		if(objectArray[i].get()->Is("SceneDoor")){
-			//std::cout << "DOOR" << std::endl;
 			if(((SceneDoor*)objectArray[i].get())->GetChangeState()){
 				changeIndex = i;
 			}
@@ -153,10 +124,10 @@ void HallFinalState::SetInitialObjectArray(){
 	objectArray.emplace_back(Banquinho3);
 
 	MovingObject* Vaso1 = new MovingObject(1760, 369, "img/cenario/geral/vaso.png", false);
-			objectArray.emplace_back(Vaso1);
+	objectArray.emplace_back(Vaso1);
 
 	MovingObject* Vaso2 = new MovingObject(1900, 369, "img/cenario/geral/vaso.png", false);
-			objectArray.emplace_back(Vaso2);
+	objectArray.emplace_back(Vaso2);
 
 	SceneObject* Bau= new SceneObject(2900, 260,
 				"img/cenario/geral/bau-fechado.png", "img/cenario/geral/bau-aberto.png");
@@ -164,7 +135,7 @@ void HallFinalState::SetInitialObjectArray(){
 
 
 	MovingObject* Cadeira = new MovingObject(2320, 280, "img/cenario/geral/cadeira.png", true);
-		objectArray.emplace_back(Cadeira);
+	objectArray.emplace_back(Cadeira);
 
 	MovingObject* BanquinhoBlock1 = new MovingObject(4085, 280, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock1);
@@ -178,15 +149,12 @@ void HallFinalState::SetInitialObjectArray(){
 	MovingObject* BanquinhoBlock4 = new MovingObject(4200, 340, "img/cenario/sala/banquinho.png", true);
 	objectArray.emplace_back(BanquinhoBlock4);
 
-
-	PickUpObject* Livro= new PickUpObject(4200, 320, "InventoryBook","img/cenario/geral/livro.png",false, 0.4, 0.4);
+	PickUpObject* Livro = new PickUpObject(4200, 320, "InventoryBook", "img/inventario/livro-simbolo.png",false, 0.4, 0.4);
 	objectArray.emplace_back(Livro);
 
-
-
 	StealthObject* Armario = new StealthObject(4700, 210, "img/cenario/geral/armario-corredor-fechado.png");
-		objectArray.emplace_back(Armario);
+	objectArray.emplace_back(Armario);
 
 	SceneDoor* DoorToKidRoom = new SceneDoor(6000, 200, "StageState", false);
-		objectArray.emplace_back(DoorToKidRoom);
+	objectArray.emplace_back(DoorToKidRoom);
 }
