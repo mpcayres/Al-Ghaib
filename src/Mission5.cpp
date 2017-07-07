@@ -115,17 +115,17 @@ void Mission5::Update(float dt){
 			SceneDoor::count = ABRE;
 			SceneDoor::ValorPassar = 15;
 			MissionManager::enemy->SetPosition(30, 300);
-			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4900, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
-			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4900, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
-			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4900, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
-			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4900, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
-			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4900, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
-			MissionManager::enemy->SetDestinationPath(Vec2(4750, 300));
+			MissionManager::enemy->SetDestinationPath(Vec2(4900, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(5800, 300));
 			MissionManager::enemy->SetDestinationPath(Vec2(6000, 300));
 		}
@@ -168,7 +168,7 @@ void Mission5::Update(float dt){
 }
 
 void Mission5::Render(){
-	if(time.Get() < 4 && fadeIn){
+	if(time.Get() < 4 && fadeIn && !gameOver){
 		blackSquare.Render(0, 0, 0);
 		tx.Render(0,0);
 		creepy.Render(0,0);
