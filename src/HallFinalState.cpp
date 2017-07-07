@@ -29,6 +29,8 @@ HallFinalState::HallFinalState() :
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
+	music = Music("audio/boxmusic.wav");
+
 	LoadAssets();
 	std::cout << "HFSC2 " << objectArray.size() << std::endl;
 }
@@ -38,9 +40,11 @@ HallFinalState::~HallFinalState() {
 }
 
 void HallFinalState::Pause(){
+	music.Stop();
 }
 
 void HallFinalState::Resume(){
+	music.Play(-1);
 }
 
 void HallFinalState::LoadAssets(){

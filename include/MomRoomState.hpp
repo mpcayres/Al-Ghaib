@@ -6,6 +6,7 @@
 #include "Geometry.hpp"
 #include "TileSet.hpp"
 #include "TileMap.hpp"
+#include "Music.hpp"
 
 class MomRoomState : public State {
 public:
@@ -29,6 +30,8 @@ private:
 	TileSet tileSetParede;
 	TileMap tileMapChao;
 	TileMap tileMapParede;
+
+	Music music;
 };
 
 #endif /* SRC_MOMROOMSTATE_HPP_ */

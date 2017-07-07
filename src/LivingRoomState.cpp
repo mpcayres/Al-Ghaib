@@ -37,6 +37,8 @@ LivingRoomState::LivingRoomState(std::vector<std::unique_ptr<GameObject>> obj, b
 	objectArray.emplace_back(MissionManager::enemy);
 	objectArray.emplace_back(MissionManager::player);
 
+	music = Music("audio/ambiente.wav");
+
 	RandomState();
 	LoadAssets();
 	std::cout << "LR2 " << objectArray.size() << std::endl;
@@ -47,9 +49,11 @@ LivingRoomState::~LivingRoomState() {
 }
 
 void LivingRoomState::Pause(){
+	music.Stop();
 }
 
 void LivingRoomState::Resume(){
+	music.Play(-1);
 }
 
 void LivingRoomState::LoadAssets(){

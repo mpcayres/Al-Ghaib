@@ -53,6 +53,8 @@ HallState::HallState(std::vector<std::unique_ptr<GameObject>> obj, bool inicial,
 		}
 	}
 
+	music = Music("audio/ambiente.wav");
+
 	RandomState();
 	LoadAssets();
 	std::cout << "HSC2 " << objectArray.size() << std::endl;
@@ -63,9 +65,11 @@ HallState::~HallState() {
 }
 
 void HallState::Pause(){
+	music.Stop();
 }
 
 void HallState::Resume(){
+	music.Play(-1);
 }
 
 void HallState::LoadAssets(){
