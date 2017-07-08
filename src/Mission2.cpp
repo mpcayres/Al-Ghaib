@@ -130,26 +130,26 @@ void Mission2::Update(float dt){
 		Game::GetInstance().GetCurrentState().ChangeMission(3);
 	}*/
 	if(MissionManager::enemy->collidingPlayer && MissionManager::enemy->show && !endMission && !gameOver){
-					gameOver = true;
-					MissionManager::enemy->SetPosition(MissionManager::player->box.x, MissionManager::player->box.y);
-					MissionManager::enemy->SetDestinationPath(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
-					MissionManager::enemy->bloq=true;
-					MissionManager::player->SetBlocked(true);
-					MissionManager::player->SetBloqHUD(true);
-					MissionManager::player->SetBloqInv(true);
-					time.Restart();
-					Camera::Follow(MissionManager::player, CAMERA_TYPE1);
-					Camera::Zoom(2, true);
-		}
+		gameOver = true;
+		MissionManager::enemy->SetPosition(MissionManager::player->box.x, MissionManager::player->box.y);
+		MissionManager::enemy->SetDestinationPath(Vec2(MissionManager::player->box.x, MissionManager::player->box.y));
+		MissionManager::enemy->bloq=true;
+		MissionManager::player->SetBlocked(true);
+		MissionManager::player->SetBloqHUD(true);
+		MissionManager::player->SetBloqInv(true);
+		time.Restart();
+		Camera::Follow(MissionManager::player, CAMERA_TYPE1);
+		Camera::Zoom(2, true);
+	}
 
-		if(gameOver){
-				if(time.Get() > 3){
-					Game::GetInstance().GetCurrentState().ChangeMission(2);
-				}
+	if(gameOver){
+			if(time.Get() > 3){
+				Game::GetInstance().GetCurrentState().ChangeMission(2);
 			}
-			if(endMission){
-				Game::GetInstance().GetCurrentState().ChangeMission(3);
 		}
+		if(endMission){
+			Game::GetInstance().GetCurrentState().ChangeMission(3);
+	}
 
 	//URSO APARECE BATENDO NA PORTA. BOTAR SOM DE PORTA TENTANDO ABRIR ANTES DE ELE FALAR
 	if(MissionManager::missionManager->IsState("StageState") &&
@@ -521,7 +521,7 @@ void Mission2::SetObjectStage(){
 	Bear* bear = new Bear(810, 210);
 	objectStage.emplace_back(bear);
 
-	SceneObject* Bau = new SceneObject(200, 490, "img/cenario/geral/bau-fechado.png",
+	SceneObject* Bau = new SceneObject(450, 490, "img/cenario/geral/bau-fechado.png",
 			"img/cenario/geral/bau-aberto.png", 0, 1, 1, "", SceneObject::SAMEY_UP);
 	objectStage.emplace_back(Bau);
 
@@ -538,7 +538,7 @@ void Mission2::SetObjectHall(){
 	objectHall.emplace_back(DoorToMomRoom);
 
 	SceneObject* Armario2 = new SceneObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png", "");
-		objectHall.emplace_back(Armario2);
+	objectHall.emplace_back(Armario2);
 
 	SceneObject* CriadoMudo = new SceneObject(100, 160,
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png",

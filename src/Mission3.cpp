@@ -556,6 +556,9 @@ void Mission3::SetObjectHall(){
 			"img/cenario/filho/criado-fechado.png", "img/cenario/filho/criado-aberto.png");
 	objectHall.emplace_back(CriadoMudo);
 
+	SceneObject* Armario2 = new SceneObject(1450, 150, "img/cenario/geral/armario-corredor-fechado.png", "img/cenario/geral/armario-corredor-aberto.png");
+	objectHall.emplace_back(Armario2);
+
 	SceneObject* Apple = new SceneObject(1355, 325, "img/cenario/geral/maca.png", "", 0, 0.3, 0.3);
 	objectHall.emplace_back(Apple);
 
